@@ -39,7 +39,7 @@ namespace LGU.Core.EntityManagers
         {
             if (person != null)
             {
-                using (var process = new ConstructPersonMiddleInitials(person, Person.Options))
+                using (var process = new ConstructPersonMiddleInitials(person, PersonOptions.Default))
                 {
                     return process.Execute();
                 }
