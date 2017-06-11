@@ -1,7 +1,28 @@
-﻿namespace LGU.Core.Entities
+﻿using LGU.Core.EntityManagers;
+
+namespace LGU.Core.Entities
 {
     public class MACAddress
     {
+        private static IMACAddressManager _Manager;
+
+        public static IMACAddressManager Manager
+        {
+            get
+            {
+                if (_Manager == null)
+                {
+                    throw LGUException.NullReference($"{nameof(Manager)} is not initialized.");
+                }
+
+                return _Manager;
+            }
+            set
+            {
+                _Manager = value;
+            }
+        }
+        
         public byte Block1 { get; set; }
         public byte Block2 { get; set; }
         public byte Block3 { get; set; }
@@ -11,7 +32,22 @@
 
         public static implicit operator MACAddress(string value)
         {
-            return new MACAddress();
+            return Manager.ConvertFromString(value);
+        }
+
+        public static implicit operator string(MACAddress value)
+        {
+            return Manager.ConvertToString(value);
+        }
+
+        public static implicit operator MACAddress(byte[] value)
+        {
+            return Manager.ConvertFromByteArray(value);
+        }
+
+        public static implicit operator byte[](MACAddress value)
+        {
+            return Manager.ConvertToByteArray(value);
         }
 
         public static bool operator ==(MACAddress left, MACAddress right)
@@ -50,6 +86,11 @@
                 Block4.GetHashCode() ^
                 Block5.GetHashCode() ^
                 Block6.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return Manager.ConvertToString(this);
         }
     }
 }

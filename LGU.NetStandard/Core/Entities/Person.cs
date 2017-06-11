@@ -9,18 +9,24 @@ namespace LGU.Core.Entities
     /// </summary>
     public class Person : Entity<ulong>
     {
-        public static PersonOptions Options { get; }
+        private static IPersonNameManager _NameManager;
 
-        public Person() : this(new PersonNameManager())
+        public static IPersonNameManager NameManager
         {
-        }
+            get
+            {
+                if (_NameManager == null)
+                {
+                    throw LGUException.NullReference($"{nameof(NameManager)} is not initialized.");
+                }
 
-        public Person(IPersonNameManager nameManager)
-        {
-            NameManager = nameManager ?? throw new ArgumentNullException(nameof(nameManager));
+                return _NameManager;
+            }
+            set
+            {
+                _NameManager = value;
+            }
         }
-
-        private IPersonNameManager NameManager { get; }
 
         /// <summary>
         /// Backing field for <see cref="FirstName"/>
