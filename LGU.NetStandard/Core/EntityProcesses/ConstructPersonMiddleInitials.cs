@@ -7,8 +7,8 @@ namespace LGU.Core.EntityProcesses
     {
         public ConstructPersonMiddleInitials(Person person, PersonOptions options)
         {
-            Person = person ?? throw LGUException.ArgumentNullException(nameof(person), "Invalid person.");
-            Options = options ?? throw LGUException.ArgumentNullException(nameof(options), "Invalid options.");
+            Person = person ?? throw LGUException.ArgumentNull(nameof(person), "Invalid person.");
+            Options = options ?? throw LGUException.ArgumentNull(nameof(options), "Invalid options.");
         }
 
         public Person Person { get; private set; }
