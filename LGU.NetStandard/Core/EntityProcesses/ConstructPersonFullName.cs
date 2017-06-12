@@ -4,17 +4,14 @@ using System.Text;
 
 namespace LGU.Core.EntityProcesses
 {
-    /// <summary>
-    /// Implementation of <see cref="IConstructPersonFullName"/> interface; Constructs person's full name
-    /// </summary>
-    public sealed class ConstructPersonFullName : IConstructPersonFullName
+    public sealed class ConstructPersonFullName : IProcess<string>
     {
         public ConstructPersonFullName(Person person)
         {
             Person = person ?? throw new ArgumentNullException(nameof(person));
         }
 
-        public Person Person { get; private set; }
+        private Person Person;
         private StringBuilder FullNameBuilder;
         private bool HasLastName;
         private bool HasNameSuffix;

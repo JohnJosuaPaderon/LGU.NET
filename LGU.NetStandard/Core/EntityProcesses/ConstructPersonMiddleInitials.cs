@@ -3,7 +3,7 @@ using System.Text;
 
 namespace LGU.Core.EntityProcesses
 {
-    public sealed class ConstructPersonMiddleInitials : IConstructPersonMiddleInitials
+    public sealed class ConstructPersonMiddleInitials : IProcess<string>
     {
         public ConstructPersonMiddleInitials(Person person, PersonOptions options)
         {
@@ -11,7 +11,7 @@ namespace LGU.Core.EntityProcesses
             Options = options ?? throw LGUException.ArgumentNull(nameof(options), "Invalid options.");
         }
 
-        public Person Person { get; private set; }
+        private Person Person;
         private PersonOptions Options;
         private StringBuilder MiddleInitialsBuilder;
         private bool HasMiddleName;

@@ -4,14 +4,14 @@ using System.Text;
 
 namespace LGU.Core.EntityProcesses
 {
-    public sealed class ConvertMACAddressToString : IConvertMACAddressToString
+    public sealed class ConvertMACAddressToString : IProcess<string>
     {
         public ConvertMACAddressToString(MACAddress macAddress)
         {
             MACAddress = macAddress ?? throw LGUException.ArgumentNull(nameof(macAddress), "MAC Address cannot be null.");
         }
 
-        public MACAddress MACAddress { get; private set; }
+        private MACAddress MACAddress;
         private StringBuilder StringBuilder;
 
         public void Dispose()

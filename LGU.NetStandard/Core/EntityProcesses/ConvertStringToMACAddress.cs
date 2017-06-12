@@ -3,7 +3,7 @@ using LGU.Utilities;
 
 namespace LGU.Core.EntityProcesses
 {
-    public sealed class ConvertStringToMACAddress : IConvertStringToMACAddress
+    public sealed class ConvertStringToMACAddress : IProcess<MACAddress>
     {
         public ConvertStringToMACAddress(string macAddressString)
         {
@@ -15,8 +15,8 @@ namespace LGU.Core.EntityProcesses
             MACAddressString = macAddressString;
         }
 
-        public string MACAddressString { get; }
-        public string[] MACAddressBlocks;
+        private string MACAddressString;
+        private string[] MACAddressBlocks;
 
         public void Dispose()
         {

@@ -4,14 +4,14 @@ using System.Text;
 
 namespace LGU.Core.EntityProcesses
 {
-    public sealed class ConstructPersonInformalFullName : IConstructPersonInformalFullName
+    public sealed class ConstructPersonInformalFullName : IProcess<string>
     {
         public ConstructPersonInformalFullName(Person person)
         {
             Person = person ?? throw new ArgumentNullException(nameof(person));
         }
 
-        public Person Person { get; private set; }
+        private Person Person;
         private StringBuilder InformalFullNameBuilder;
         private bool HasFirstName;
         private bool HasMiddleInitials;
