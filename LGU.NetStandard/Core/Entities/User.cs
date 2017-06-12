@@ -19,6 +19,7 @@ namespace LGU.Core.Entities
         public Person Person { get; }
         public bool Active { get; set; }
         public UserStatus Status { get; set; }
+        public Accessibility Accessibility { get; set; }
 
         public string DisplayName
         {

@@ -1,9 +1,12 @@
-﻿using LGU.Entities;
-
-namespace LGU.Core.Entities
+﻿namespace LGU.Core.Entities
 {
-    public class SystemModule : Entity<uint>
+    public class Computer : Device
     {
+        public Computer() : base(DeviceType.Computer)
+        {
+
+        }
+
         public string Name { get; set; }
 
         public override string ToString()
