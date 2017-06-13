@@ -1,5 +1,4 @@
 ﻿using LGU.Core.Views;
-using LGU.HumanResource.Views;
 using Prism.Unity;
 using System.Windows;
 
