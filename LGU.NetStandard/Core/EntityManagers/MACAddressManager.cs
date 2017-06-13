@@ -1,5 +1,4 @@
-﻿using System;
-using LGU.Core.Entities;
+﻿using LGU.Core.Entities;
 using LGU.Core.EntityProcesses;
 
 namespace LGU.Core.EntityManagers
