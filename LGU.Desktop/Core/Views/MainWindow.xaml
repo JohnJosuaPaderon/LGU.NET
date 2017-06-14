@@ -9,7 +9,7 @@
                      Title="{Binding Title}" WindowState="{Binding WindowState}">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn,Duration=0:0:1}">
-            <ContentControl prism:RegionManager.RegionName="{x:Static viewModels:MainWindowViewModel.CONTENT_REGION}"/>
+            <ContentControl VerticalAlignment="Center" HorizontalAlignment="Center" prism:RegionManager.RegionName="{x:Static viewModels:MainWindowViewModel.CONTENT_REGION}"/>
         </materialDesign:TransitioningContent>
     </ScrollViewer>
 </mahApps:MetroWindow>
