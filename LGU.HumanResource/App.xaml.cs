@@ -7,8 +7,6 @@ namespace LGU.HumanResource
     /// </summary>
     public partial class App : Application
     {
-        public const string CONTENT_REGION = "ContentRegion";
-
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
