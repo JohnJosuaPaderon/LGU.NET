@@ -8,7 +8,7 @@
     <OutputType>library</OutputType>
     <RootNamespace>LGU</RootNamespace>
     <AssemblyName>LGU.Desktop</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -76,13 +76,30 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Models\UserLoginCredentials.cs" />
     <Compile Include="Core\ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Core\ViewModels\UserLoginViewModel.cs" />
     <Compile Include="Core\Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Views\UserAuthenticationView.xaml.cs">
+      <DependentUpon>UserAuthenticationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\Views\UserLoginView.xaml.cs">
       <DependentUpon>UserLoginView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Core\Views\UserSignUpView.xaml.cs">
+      <DependentUpon>UserSignUpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HumanResource\ViewModels\ContentSelectionViewModel.cs" />
+    <Compile Include="HumanResource\ViewModels\HumanResourceLauncherViewModel.cs" />
+    <Compile Include="HumanResource\Views\ContentSelectionView.xaml.cs">
+      <DependentUpon>ContentSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HumanResource\Views\HumanResourceLauncherView.xaml.cs">
+      <DependentUpon>HumanResourceLauncherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordBoxAssists.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -111,6 +128,22 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Core\Views\UserAuthenticationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Core\Views\UserSignUpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HumanResource\Views\ContentSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HumanResource\Views\HumanResourceLauncherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Button.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
