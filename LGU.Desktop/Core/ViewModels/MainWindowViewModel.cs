@@ -8,6 +8,7 @@ namespace LGU.Core.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         public const string CONTENT_REGION = "ContentRegion";
+        public static string ContentRegionMainTarget { get; set; } = nameof(UserAuthenticationView);
 
         public MainWindowViewModel(IRegionManager regionManager)
         {
@@ -18,7 +19,7 @@ namespace LGU.Core.ViewModels
 
         public void Initialize()
         {
-            RegionManager.RequestNavigate(CONTENT_REGION, nameof(UserLoginView));
+            RegionManager.RequestNavigate(CONTENT_REGION, nameof(UserAuthenticationView));
             Title = "Welcome to LGU.NET";
             WindowState = WindowState.Maximized;
         }
