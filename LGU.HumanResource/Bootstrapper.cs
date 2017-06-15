@@ -1,4 +1,6 @@
-﻿using LGU.Core.Views;
+﻿using LGU.Core.ViewModels;
+using LGU.Core.Views;
+using LGU.HumanResource.Views;
 using Prism.Unity;
 using System.Windows;
 
@@ -20,7 +22,9 @@ namespace LGU.HumanResource
         {
             base.ConfigureContainer();
 
-            Container.RegisterTypeForNavigation<UserLoginView>(nameof(UserLoginView));
+            Container.RegisterTypeForNavigation<UserAuthenticationView>(nameof(UserAuthenticationView));
+            Container.RegisterTypeForNavigation<HumanResourceLauncherView>(nameof(HumanResourceLauncherView));
+            MainWindowViewModel.ContentRegionMainTarget = nameof(HumanResourceLauncherView);
         }
     }
 }
