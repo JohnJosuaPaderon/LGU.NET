@@ -2,9 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:lgu="clr-namespace:LGU"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             prism:ViewModelLocator.AutoWireViewModel="True"
-             MinHeight="500" Width="400">
+             prism:ViewModelLocator.AutoWireViewModel="True" Width="400">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -12,43 +12,22 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <materialDesign:Flipper HorizontalAlignment="Stretch" Style="{DynamicResource MaterialDesignCardFlipper}">
-        <materialDesign:Flipper.FrontContent>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <materialDesign:ColorZone Grid.Row="0" Style="{DynamicResource FormHeaderColorZone}">
-                    <TextBlock Text="Login" Style="{DynamicResource FormHeaderTextBlock}"/>
-                </materialDesign:ColorZone>
-                <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="16">
-                    <materialDesign:PackIcon Kind="Account" Height="{DynamicResource FormFieldWidth}" Width="{DynamicResource FormFieldWidth}" Foreground="{DynamicResource AccentColorBrush}" Padding="0" Margin="0" HorizontalAlignment="Center"/>
-                    <TextBox materialDesign:HintAssist.Hint="Username" Style="{DynamicResource FormFieldTextBox}"/>
-                    <PasswordBox materialDesign:HintAssist.Hint="Password" Style="{DynamicResource FormFieldPasswordBox}"/>
-                    <Button Content="SIGN-IN" Style="{DynamicResource FormFieldButton}"/>
-                    <Button Content="I don't have an account" Style="{DynamicResource FormFieldNegativeButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}"/>
-                </StackPanel>
-            </Grid>
-        </materialDesign:Flipper.FrontContent>
-        <materialDesign:Flipper.BackContent>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <materialDesign:ColorZone Grid.Row="0" Style="{DynamicResource FormHeaderColorZone}">
-                    <TextBlock Text="Sign-Up Now" Style="{DynamicResource FormHeaderTextBlock}"/>
-                </materialDesign:ColorZone>
-                <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="16">
-                    <materialDesign:PackIcon Kind="AccountPlus" Height="{DynamicResource FormFieldWidth}" Width="{DynamicResource FormFieldWidth}" Foreground="{DynamicResource AccentColorBrush}" Padding="0" Margin="0" HorizontalAlignment="Center"/>
-                    <TextBox materialDesign:HintAssist.Hint="Username" Style="{DynamicResource FormFieldTextBox}"/>
-                    <PasswordBox materialDesign:HintAssist.Hint="Password" Style="{DynamicResource FormFieldPasswordBox}"/>
-                    <PasswordBox materialDesign:HintAssist.Hint="Confirm Password" Style="{DynamicResource FormFieldPasswordBox}"/>
-                    <Button Content="SIGN-UP" Style="{DynamicResource FormFieldButton}"/>
-                    <Button Content="Back to Login" Style="{DynamicResource FormFieldNegativeButton}" Command="{x:Static materialDesign:Flipper.FlipCommand}"/>
-                </StackPanel>
-            </Grid>
-        </materialDesign:Flipper.BackContent>
-    </materialDesign:Flipper>
+    <materialDesign:Card VerticalAlignment="Stretch">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <materialDesign:ColorZone Grid.Row="0" Style="{DynamicResource FormHeaderColorZone}">
+                <TextBlock Text="Login" Style="{DynamicResource FormHeaderTextBlock}"/>
+            </materialDesign:ColorZone>
+            <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="16">
+                <materialDesign:PackIcon Kind="Account" Height="{DynamicResource FormFieldWidth}" Width="{DynamicResource FormFieldWidth}" Foreground="{DynamicResource AccentColorBrush}" Padding="0" Margin="0" HorizontalAlignment="Center"/>
+                <TextBox materialDesign:HintAssist.Hint="Username" Style="{DynamicResource FormFieldTextBox}" Text="{Binding UserLoginCredentials.Username}"/>
+                <PasswordBox materialDesign:HintAssist.Hint="Password" lgu:PasswordBoxAssists.ListenPasswordChanged="True" lgu:PasswordBoxAssists.Password="{Binding UserLoginCredentials.Password, Mode=TwoWay}" Style="{DynamicResource FormFieldPasswordBox}"/>
+                <Button Content="SIGN-IN" Style="{DynamicResource FormFieldButton}" Command="{Binding SignInCommand}"/>
+                <Button Content="I don't have an account" Style="{DynamicResource FormFieldButtonVariant}" Command="{x:Static materialDesign:Flipper.FlipCommand}"/>
+            </StackPanel>
+        </Grid>
+    </materialDesign:Card>
 </UserControl>
