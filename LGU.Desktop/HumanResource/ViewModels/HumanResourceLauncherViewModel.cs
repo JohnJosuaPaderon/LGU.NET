@@ -1,20 +1,26 @@
-﻿using LGU.HumanResource.Views;
+﻿using LGU.Core.Events;
+using LGU.HumanResource.Views;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 
 namespace LGU.HumanResource.ViewModels
 {
-    public class HumanResourceLauncherViewModel : BindableBase
+    public class HumanResourceLauncherViewModel : BindableBase, INavigationAware
     {
         public const string CONTENT_REGION = "HumanResource_ContentRegion";
 
-        public HumanResourceLauncherViewModel(IRegionManager regionManager)
+        public HumanResourceLauncherViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             RegionManager = regionManager;
+            EventAggregator = eventAggregator;
+
+            RegionManager.Regions.Remove(CONTENT_REGION);
         }
 
         private IRegionManager RegionManager { get; }
+        private IEventAggregator EventAggregator { get; }
 
         private bool _IsMenuOpen;
         public bool IsMenuOpen
@@ -36,6 +42,21 @@ namespace LGU.HumanResource.ViewModels
         public void Initialize()
         {
             Navigate(nameof(ContentSelectionView));
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            EventAggregator.GetEvent<WindowTitleEvent>().Publish("You're now at Human Resource");
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return false;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+
         }
     }
 }
