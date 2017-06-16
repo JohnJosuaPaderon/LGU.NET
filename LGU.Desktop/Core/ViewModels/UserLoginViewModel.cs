@@ -2,7 +2,6 @@
 using Prism.Mvvm;
 using LGU.Core.Models;
 using Prism.Regions;
-using System;
 
 namespace LGU.Core.ViewModels
 {
