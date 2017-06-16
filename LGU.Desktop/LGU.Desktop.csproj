@@ -50,6 +50,9 @@
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Prism, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
     </Reference>
@@ -76,6 +79,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Controls\NavigatorButton.xaml.cs">
+      <DependentUpon>NavigatorButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core\Events\WindowTitleEvent.cs" />
     <Compile Include="Core\Models\UserLoginCredentials.cs" />
     <Compile Include="Core\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Core\ViewModels\UserLoginViewModel.cs" />
@@ -99,6 +106,10 @@
     <Compile Include="HumanResource\Views\HumanResourceLauncherView.xaml.cs">
       <DependentUpon>HumanResourceLauncherView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HumanResource\Views\TimeLogView.xaml.cs">
+      <DependentUpon>TimeLogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindowRedirectionOptions.cs" />
     <Compile Include="PasswordBoxAssists.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -126,8 +137,17 @@
   <ItemGroup>
     <Resource Include="logo.ico" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\LGU.NetStandard\LGU.NetStandard.csproj">
+      <Project>{c34ca274-3e85-459d-8d19-855c6bfa02ec}</Project>
+      <Name>LGU.NetStandard</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Core\Controls\NavigatorButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Core\Views\UserAuthenticationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HumanResource\Views\HumanResourceLauncherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HumanResource\Views\TimeLogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
