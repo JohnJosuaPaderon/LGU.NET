@@ -22,9 +22,12 @@ namespace LGU.HumanResource
         {
             base.ConfigureContainer();
 
-            Container.RegisterTypeForNavigation<UserAuthenticationView>(nameof(UserAuthenticationView));
-            Container.RegisterTypeForNavigation<HumanResourceLauncherView>(nameof(HumanResourceLauncherView));
-            MainWindowViewModel.ContentRegionMainTarget = nameof(HumanResourceLauncherView);
+            Container.RegisterTypeForNavigation<UserAuthenticationView>();
+            Container.RegisterTypeForNavigation<HumanResourceLauncherView>();
+            Container.RegisterTypeForNavigation<ContentSelectionView>();
+            Container.RegisterTypeForNavigation<TimeLogView>();
+
+            MainWindowViewModel.ContentRegionMainTarget = nameof(TimeLogView);
         }
     }
 }
