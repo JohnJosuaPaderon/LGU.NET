@@ -45,7 +45,9 @@
                         </Grid>
                     </materialDesign:ColorZone>
                 </materialDesign:TransitioningContent>
-                <ContentControl prism:RegionManager.RegionName="{x:Static viewModels:HumanResourceLauncherViewModel.CONTENT_REGION}"/>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ContentControl prism:RegionManager.RegionName="{x:Static viewModels:HumanResourceLauncherViewModel.CONTENT_REGION}"/>
+                </ScrollViewer>
             </Grid>
         </materialDesign:DrawerHost>
     </materialDesign:DialogHost>

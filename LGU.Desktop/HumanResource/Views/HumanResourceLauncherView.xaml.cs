@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using LGU.HumanResource.ViewModels;
+using System.Windows.Controls;
 
 namespace LGU.HumanResource.Views
 {
@@ -10,6 +11,9 @@ namespace LGU.HumanResource.Views
         public HumanResourceLauncherView()
         {
             InitializeComponent();
+            Loaded += (s, e) => ViewModel.Initialize();
         }
+
+        public HumanResourceLauncherViewModel ViewModel => DataContext as HumanResourceLauncherViewModel;
     }
 }
