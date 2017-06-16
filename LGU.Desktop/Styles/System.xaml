@@ -5,4 +5,5 @@
     <Thickness x:Key="FormFieldMargin">4 2</Thickness>
     <system:Double x:Key="FormFieldWidth">250</system:Double>
     <FontFamily x:Key="FormHeaderFontFamily">Roboto</FontFamily>
+    <Thickness x:Key="FormMargin">4</Thickness>
 </ResourceDictionary>
