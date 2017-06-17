@@ -10,7 +10,5 @@
     <mahApps:MetroWindow.Resources>
         <ResourceDictionary Source="../../Styles/Core.xaml" />
     </mahApps:MetroWindow.Resources>
-    <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn,Duration=0:0:1.5}">
-        <ContentControl prism:RegionManager.RegionName="{x:Static viewModels:MainWindowViewModel.CONTENT_REGION}"/>
-    </materialDesign:TransitioningContent>
+    <ContentControl prism:RegionManager.RegionName="{x:Static viewModels:MainWindowViewModel.CONTENT_REGION}"/>
 </mahApps:MetroWindow>

@@ -5,12 +5,14 @@
              xmlns:local="clr-namespace:LGU.Core.Views"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True" VerticalAlignment="Center" HorizontalAlignment="Center">
-    <materialDesign:Flipper HorizontalAlignment="Stretch" VerticalAlignment="Center">
-        <materialDesign:Flipper.FrontContent>
-            <local:UserLoginView/>
-        </materialDesign:Flipper.FrontContent>
-        <materialDesign:Flipper.BackContent>
-            <local:UserSignUpView/>
-        </materialDesign:Flipper.BackContent>
-    </materialDesign:Flipper>
+    <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn,Duration=0:0:1.5}">
+        <materialDesign:Flipper HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <materialDesign:Flipper.FrontContent>
+                <local:UserLoginView/>
+            </materialDesign:Flipper.FrontContent>
+            <materialDesign:Flipper.BackContent>
+                <local:UserSignUpView/>
+            </materialDesign:Flipper.BackContent>
+        </materialDesign:Flipper>
+    </materialDesign:TransitioningContent>
 </UserControl>
