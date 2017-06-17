@@ -25,7 +25,7 @@ namespace LGU.Core.ViewModels
             Title = "Welcome to LGU.NET";
             WindowState = WindowState.Maximized;
 
-            if (MainWindowRedirectionOptions.Instance.RedirectToTarget)
+            if (MainWindowRedirectionOptions.Instance?.RedirectToTarget ?? false)
             {
                 RegionManager.RequestNavigate(CONTENT_REGION, MainWindowRedirectionOptions.Instance.Target);
             }
