@@ -19,7 +19,7 @@
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Flyout.xaml" />
 
         <!--Custom styles -->
-        <ResourceDictionary Source="System.xaml"/>
+        <ResourceDictionary Source="Variable.xaml"/>
         <ResourceDictionary Source="TextBlock.xaml"/>
         <ResourceDictionary Source="ColorZone.xaml"/>
         <ResourceDictionary Source="TextBox.xaml"/>
