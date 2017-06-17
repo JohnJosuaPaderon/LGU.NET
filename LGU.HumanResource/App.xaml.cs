@@ -11,7 +11,7 @@ namespace LGU.HumanResource
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MainWindowRedirectionOptions.Redirect(nameof(TimeLogView));
+            //MainWindowRedirectionOptions.Redirect(nameof(TimeLogView));
 
             var bootstrapper = new Bootstrapper();
             bootstrapper.Run();
