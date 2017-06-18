@@ -12,6 +12,7 @@
   <ItemGroup>
     <Folder Include="HumanResource\EntityManagers\" />
     <Folder Include="HumanResource\EntityProcesses\" />
+    <Folder Include="Registration\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
