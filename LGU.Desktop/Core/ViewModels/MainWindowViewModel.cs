@@ -31,7 +31,7 @@ namespace LGU.Core.ViewModels
             }
             else
             {
-                RegionManager.RequestNavigate(CONTENT_REGION, nameof(UserAuthenticationView));
+                RegionManager.RequestNavigate(CONTENT_REGION, ContentRegionMainTarget);
             }
         }
 
