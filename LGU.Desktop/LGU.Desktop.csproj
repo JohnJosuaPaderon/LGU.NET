@@ -112,6 +112,7 @@
     </Compile>
     <Compile Include="HumanResource\ViewModels\ContentSelectionViewModel.cs" />
     <Compile Include="HumanResource\ViewModels\HumanResourceLauncherViewModel.cs" />
+    <Compile Include="HumanResource\ViewModels\TimeLogViewModel.cs" />
     <Compile Include="HumanResource\Views\ContentSelectionView.xaml.cs">
       <DependentUpon>ContentSelectionView.xaml</DependentUpon>
     </Compile>
