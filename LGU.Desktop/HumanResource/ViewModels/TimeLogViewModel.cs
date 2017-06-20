@@ -17,7 +17,7 @@ namespace LGU.HumanResource.ViewModels
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Application.Current.Dispatcher.Invoke(() => { CurrentTimeStamp = DateTime.Now; });
+            Application.Current?.Dispatcher.Invoke(() => { CurrentTimeStamp = DateTime.Now; });
         }
 
         private Timer Timer { get; }
@@ -48,6 +48,10 @@ namespace LGU.HumanResource.ViewModels
                 SelectedMinute2 = minutes[1];
                 SelectedSecond1 = seconds[0];
                 SelectedSecond2 = seconds[1];
+
+                SelectedResult =
+                    currentTimeStamp.Second % 3 == 0 ? 0 : 
+                    currentTimeStamp.Second % 2 == 0 ? 1 : 2;
             }); }
         }
 
@@ -98,6 +102,13 @@ namespace LGU.HumanResource.ViewModels
         {
             get { return _SelectedAmPm; }
             set { SetProperty(ref _SelectedAmPm, value); }
+        }
+
+        private int _SelectedResult;
+        public int SelectedResult
+        {
+            get { return _SelectedResult; }
+            set { SetProperty(ref _SelectedResult, value); }
         }
     }
 }
