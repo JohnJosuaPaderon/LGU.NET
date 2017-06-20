@@ -226,5 +226,11 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="HumanResource\Images\avatar_1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="HumanResource\Images\car_1.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
