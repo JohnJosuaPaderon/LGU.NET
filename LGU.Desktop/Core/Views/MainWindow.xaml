@@ -10,5 +10,9 @@
     <mahApps:MetroWindow.Resources>
         <ResourceDictionary Source="../../Styles/Core.xaml" />
     </mahApps:MetroWindow.Resources>
-    <ContentControl prism:RegionManager.RegionName="{x:Static viewModels:MainWindowViewModel.CONTENT_REGION}"/>
+    <materialDesign:DialogHost>
+        <materialDesign:DrawerHost>
+            <ContentControl prism:RegionManager.RegionName="{x:Static viewModels:MainWindowViewModel.CONTENT_REGION}"/>
+        </materialDesign:DrawerHost>
+    </materialDesign:DialogHost>
 </mahApps:MetroWindow>
