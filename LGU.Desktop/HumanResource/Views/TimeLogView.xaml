@@ -81,13 +81,13 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="75"/>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="75"/>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="150"/>
-                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="225"/>
                 </Grid.ColumnDefinitions>
                 <materialDesign:Transitioner Grid.Column="0" ItemsSource="{Binding Hour1Source}" SelectedItem="{Binding SelectedHour1}"/>
                 <materialDesign:Transitioner Grid.Column="1" ItemsSource="{Binding Hour2Source}" SelectedItem="{Binding SelectedHour2}"/>
