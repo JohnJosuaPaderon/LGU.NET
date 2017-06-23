@@ -23,7 +23,7 @@
             </materialDesign:ColorZone>
             <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="16">
                 <materialDesign:PackIcon Kind="Account" Height="{DynamicResource FormFieldWidth}" Width="{DynamicResource FormFieldWidth}" Foreground="{DynamicResource AccentColorBrush}" Padding="0" Margin="0" HorizontalAlignment="Center"/>
-                <TextBox materialDesign:HintAssist.Hint="Username" Style="{DynamicResource FormFieldTextBox}" Text="{Binding UserLoginCredentials.Username}"/>
+                <TextBox x:Name="txtUsername" TextChanged="txtUsername_TextChanged" materialDesign:HintAssist.Hint="Username" Style="{DynamicResource FormFieldTextBox}" Text="{Binding UserLoginCredentials.Username}"/>
                 <PasswordBox materialDesign:HintAssist.Hint="Password" lgu:PasswordBoxAssists.ListenPasswordChanged="True" lgu:PasswordBoxAssists.Password="{Binding UserLoginCredentials.Password, Mode=TwoWay}" Style="{DynamicResource FormFieldPasswordBox}"/>
                 <Button Content="SIGN-IN" Style="{DynamicResource FormFieldButton}" Command="{Binding SignInCommand}"/>
                 <Button Content="I don't have an account" Style="{DynamicResource FormFieldButtonVariant}" Command="{x:Static materialDesign:Flipper.FlipCommand}"/>
