@@ -8,6 +8,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <Authors>John Josua R. Paderon</Authors>
+    <Company>LGU.NET</Company>
+    <Description />
+    <Copyright>Copyright (c) 2017 John Josua R. Paderon</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="HumanResource\EntityManagers\" />
@@ -15,7 +19,7 @@
     <Folder Include="Registration\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="System.Runtime" Version="4.3.0" />
     <PackageReference Include="System.Security.SecureString" Version="4.3.0" />
   </ItemGroup>
