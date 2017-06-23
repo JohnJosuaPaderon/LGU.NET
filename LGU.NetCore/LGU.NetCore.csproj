@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <Authors>John Josua R. Paderon</Authors>
+    <Company>LGU.NET</Company>
+    <Description />
+    <Copyright>Copyright (c) 2017 John Josua R. Paderon</Copyright>
+    <RootNamespace>LGU</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\" />
+  </ItemGroup>
+
+</Project>
