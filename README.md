@@ -1,3 +1,5 @@
+{::nomarkdown}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -224,3 +226,5 @@
      </table>
 </body>
 </html>
+
+{:/}
