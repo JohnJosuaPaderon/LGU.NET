@@ -1,8 +1,7 @@
 ﻿<Application x:Class="LGU.HumanResource.TimeKeeping.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:LGU.HumanResource.TimeKeeping"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:LGU.HumanResource.TimeKeeping">
     <Application.Resources>
          
     </Application.Resources>
