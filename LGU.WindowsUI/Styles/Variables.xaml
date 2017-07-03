@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:LGU.Styles"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- DEFAULT -->
+    <system:TimeSpan x:Key="DefaultTransitionDuration">0:0:1</system:TimeSpan>
+    <FontFamily x:Key="DefaultFontFamily">Roboto</FontFamily>
+    <system:Double x:Key="DefaultFontSize">12</system:Double>
+    
+    <!-- LARGE HEADER -->
+    <system:Double x:Key="LargeHeaderFontSize">54</system:Double>
+    <FontWeight x:Key="LargeHeaderFontWeight">Bold</FontWeight>
+    <Thickness x:Key="LargeHeaderPadding">24</Thickness>
+    <materialDesign:ColorZoneMode x:Key="LargeHeaderColorZoneMode">PrimaryDark</materialDesign:ColorZoneMode>
+    <materialDesign:ShadowDepth x:Key="LargeHeaderShadowDepth">Depth5</materialDesign:ShadowDepth>
+    <HorizontalAlignment x:Key="LargeHeaderHorizontalAlignment">Center</HorizontalAlignment>
+
+</ResourceDictionary>
