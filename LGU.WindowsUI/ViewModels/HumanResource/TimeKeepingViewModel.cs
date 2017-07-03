@@ -20,7 +20,6 @@ namespace LGU.ViewModels.HumanResource
         public void Load()
         {
             EventAggregator.GetEvent<TitleEvent>().Publish("Time-Keeping");
-            RegionManager.RequestNavigate("SampleRegion", nameof(SampleView));
         }
     }
 }
