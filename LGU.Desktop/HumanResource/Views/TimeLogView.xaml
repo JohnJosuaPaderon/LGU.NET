@@ -104,9 +104,9 @@
                 <materialDesign:Transitioner Grid.Column="8" ItemsSource="{Binding AmPmSource}" SelectedItem="{Binding SelectedAmPm}"/>
                 <ContentControl x:Name="DateToday" Content="{Binding CurrentTimeStamp}" Visibility="Collapsed"/>
             </Grid>
-            <materialDesign:Card Grid.Row="1" Padding="8" Margin="2 0" HorizontalAlignment="Stretch">
-                <TextBlock Text="{Binding CurrentTimeStamp,StringFormat='MMMM dd, yyyy (dddd)'}" Style="{DynamicResource FormHeaderTextBlock}" HorizontalAlignment="Center"/>
-            </materialDesign:Card>
+            <Border Grid.Row="1" Padding="8" Margin="2 0" HorizontalAlignment="Stretch">
+                <TextBlock Text="{Binding CurrentTimeStamp,StringFormat='MMMM dd, yyyy (dddd)'}" Style="{DynamicResource TimeLogHeaderTextBlock}" HorizontalAlignment="Center"/>
+            </Border>
         </Grid>
         <materialDesign:Transitioner Grid.Row="2" SelectedIndex="{Binding SelectedResult,FallbackValue=0}" Style="{DynamicResource _Transitioner}">
             <materialDesign:Transitioner.Resources>
