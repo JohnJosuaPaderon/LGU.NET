@@ -1,0 +1,14 @@
+﻿<mahApps:MetroWindow x:Class="LGU.Views.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:prism="http://prismlibrary.com/"
+                     xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
+                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                     xmlns:viewModels="clr-namespace:LGU.ViewModels"
+                     prism:ViewModelLocator.AutoWireViewModel="True"
+                     Background="{DynamicResource MaterialDesignPaper}"
+                     Title="{Binding Title}" WindowState="{Binding WindowState}" WindowStartupLocation="CenterScreen">
+    <materialDesign:DialogHost Identifier="{x:Static viewModels:MainWindowViewModel.MainDialogName}">
+        <ContentControl prism:RegionManager.RegionName="{x:Static viewModels:MainWindowViewModel.MainContentRegionName}"/>
+    </materialDesign:DialogHost>
+</mahApps:MetroWindow>
