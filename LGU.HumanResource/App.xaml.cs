@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LGU.ViewModels;
+using LGU.Views.HumanResource;
 using System.Windows;
 
 namespace LGU.HumanResource
@@ -13,5 +9,12 @@ namespace LGU.HumanResource
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            MainWindowViewModel.InitialMainContentRegionSource = nameof(TimeKeepingView);
+            new Bootstrapper().Run();
+        }
     }
 }
