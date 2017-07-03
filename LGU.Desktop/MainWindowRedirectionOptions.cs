@@ -4,11 +4,6 @@
     {
         public static void Redirect(string target)
         {
-            if (string.IsNullOrWhiteSpace(target))
-            {
-                throw LGUException.ArgumentNullOrWhiteSpace(nameof(target), "Redirection target is null or white space.");
-            }
-
             Instance = new MainWindowRedirectionOptions(true, target);
         }
 

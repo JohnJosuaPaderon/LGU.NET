@@ -60,7 +60,7 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Prism, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
@@ -149,12 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="logo.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LGU.NetStandard\LGU.NetStandard.csproj">
-      <Project>{c34ca274-3e85-459d-8d19-855c6bfa02ec}</Project>
-      <Name>LGU.NetStandard</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Core\Controls\NavigatorButton.xaml">
