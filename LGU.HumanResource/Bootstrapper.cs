@@ -9,7 +9,6 @@ namespace LGU.HumanResource
         {
             base.ConfigureContainer();
             Container.RegisterTypeForNavigation<TimeKeepingView>();
-            Container.RegisterTypeForNavigation<SampleView>();
         }
     }
 }
