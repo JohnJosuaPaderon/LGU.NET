@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 
 namespace LGU.Entities.Core
 {
@@ -13,8 +14,8 @@ namespace LGU.Entities.Core
             Owner = owner ?? throw new ArgumentNullException(nameof(owner));
         }
 
-        public string SecureUsername { get; set; }
-        public string SecurePassword { get; set; }
+        public SecureString SecureUsername { get; set; }
+        public SecureString SecurePassword { get; set; }
         public UserStatus Status { get; set; }
         public UserType Type { get; set; }
         public Person Owner { get; }
