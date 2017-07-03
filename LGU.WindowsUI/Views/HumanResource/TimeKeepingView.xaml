@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="LGU.Views.HumanResource.TimeKeepingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <materialDesign:DrawerHost>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <materialDesign:TransitioningContent Grid.Row="0" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromTop,Duration=0:0:1}">
+                <materialDesign:ColorZone Style="{DynamicResource LargeHeaderColorZone}">
+                    <TextBlock Text="CITY GOVERNMENT OF NAVOTAS" Style="{DynamicResource LargeHeaderTextBlock}"/>
+                </materialDesign:ColorZone>
+            </materialDesign:TransitioningContent>
+            <Grid Grid.Row="1">
+                <ContentControl prism:RegionManager.RegionName="SampleRegion"/>
+            </Grid>
+        </Grid>
+    </materialDesign:DrawerHost>
+</UserControl>
