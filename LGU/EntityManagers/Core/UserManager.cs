@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public class UserManager : IUserManager, IAsyncUserManager, ICancellableAsyncUserManager
+    public sealed class UserManager : IUserManager, IAsyncUserManager, ICancellableAsyncUserManager
     {
-        protected static EntityCollection<User, ulong> StaticSource { get; } = new EntityCollection<User, ulong>();
+        private static EntityCollection<User, ulong> StaticSource { get; } = new EntityCollection<User, ulong>();
+
+        private readonly IDeleteUser DeleteUser;
+        private readonly IGetUserById GetUserById;
+        private readonly IGetUserList GetUserList;
+        private readonly IInsertUser InsertUser;
+        private readonly IUpdateUser UpdateUser;
 
         public UserManager(IDeleteUser deleteUser, IGetUserById getUserById, IGetUserList getUserList, IInsertUser insertUser, IUpdateUser updateUser)
         {
-            IDeleteUser = deleteUser;
-            IGetUserById = getUserById;
-            IGetUserList = getUserList;
-            IInsertUser = insertUser;
-            IUpdateUser = updateUser;
+            DeleteUser = deleteUser;
+            GetUserById = getUserById;
+            GetUserList = getUserList;
+            InsertUser = insertUser;
+            UpdateUser = updateUser;
         }
-
-        protected IDeleteUser IDeleteUser { get; }
-        protected IGetUserById IGetUserById { get; }
-        protected IGetUserList IGetUserList { get; }
-        protected IInsertUser IInsertUser { get; }
-        protected IUpdateUser IUpdateUser { get; }
 
         
         private static void InvokeIfSuccess(IDataProcessResult<User> result, Action action)
@@ -37,8 +37,8 @@ namespace LGU.EntityManagers.Core
 
         public IDataProcessResult<User> Delete(User user)
         {
-            IDeleteUser.User = user;
-            var result = IDeleteUser.Execute();
+            DeleteUser.User = user;
+            var result = DeleteUser.Execute();
             InvokeIfSuccess(result, () => StaticSource.Remove(result.Data));
 
             return result;
@@ -46,8 +46,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> DeleteAsync(User user, CancellationToken cancellationToken)
         {
-            IDeleteUser.User = user;
-            var result = await IDeleteUser.ExecuteAsync(cancellationToken);
+            DeleteUser.User = user;
+            var result = await DeleteUser.ExecuteAsync(cancellationToken);
             InvokeIfSuccess(result, () => StaticSource.Remove(result.Data));
 
             return result;
@@ -55,8 +55,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> DeleteAsync(User user)
         {
-            IDeleteUser.User = user;
-            var result = await IDeleteUser.ExecuteAsync();
+            DeleteUser.User = user;
+            var result = await DeleteUser.ExecuteAsync();
             InvokeIfSuccess(result, () => StaticSource.Remove(result.Data));
 
             return result;
@@ -64,8 +64,8 @@ namespace LGU.EntityManagers.Core
 
         public IDataProcessResult<User> GetById(ulong userId)
         {
-            IGetUserById.UserId = userId;
-            var result = IGetUserById.Execute();
+            GetUserById.UserId = userId;
+            var result = GetUserById.Execute();
             InvokeIfSuccess(result, () => StaticSource.AddUpdate(result.Data));
 
             return result;
@@ -73,8 +73,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> GetByIdAsync(ulong userId, CancellationToken cancellationToken)
         {
-            IGetUserById.UserId = userId;
-            var result = await IGetUserById.ExecuteAsync(cancellationToken);
+            GetUserById.UserId = userId;
+            var result = await GetUserById.ExecuteAsync(cancellationToken);
             InvokeIfSuccess(result, () => StaticSource.AddUpdate(result.Data));
 
             return result;
@@ -82,8 +82,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> GetByIdAsync(ulong userId)
         {
-            IGetUserById.UserId = userId;
-            var result = await IGetUserById.ExecuteAsync();
+            GetUserById.UserId = userId;
+            var result = await GetUserById.ExecuteAsync();
             InvokeIfSuccess(result, () => StaticSource.AddUpdate(result.Data));
 
             return result;
@@ -91,23 +91,23 @@ namespace LGU.EntityManagers.Core
 
         public IEnumerableDataProcessResult<User> GetList()
         {
-            return IGetUserList.Execute();
+            return GetUserList.Execute();
         }
 
         public Task<IEnumerableDataProcessResult<User>> GetListAsync(CancellationToken cancellationToken)
         {
-            return IGetUserList.ExecuteAsync(cancellationToken);
+            return GetUserList.ExecuteAsync(cancellationToken);
         }
 
         public Task<IEnumerableDataProcessResult<User>> GetListAsync()
         {
-            return IGetUserList.ExecuteAsync();
+            return GetUserList.ExecuteAsync();
         }
 
         public IDataProcessResult<User> Insert(User user)
         {
-            IInsertUser.User = user;
-            var result = IInsertUser.Execute();
+            InsertUser.User = user;
+            var result = InsertUser.Execute();
             InvokeIfSuccess(result, () => StaticSource.Add(user));
 
             return result;
@@ -115,8 +115,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> InsertAsync(User user, CancellationToken cancellationToken)
         {
-            IInsertUser.User = user;
-            var result = await IInsertUser.ExecuteAsync(cancellationToken);
+            InsertUser.User = user;
+            var result = await InsertUser.ExecuteAsync(cancellationToken);
             InvokeIfSuccess(result, () => StaticSource.Add(user));
 
             return result;
@@ -124,8 +124,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> InsertAsync(User user)
         {
-            IInsertUser.User = user;
-            var result = await IInsertUser.ExecuteAsync();
+            InsertUser.User = user;
+            var result = await InsertUser.ExecuteAsync();
             InvokeIfSuccess(result, () => StaticSource.Add(user));
 
             return result;
@@ -133,8 +133,8 @@ namespace LGU.EntityManagers.Core
 
         public IDataProcessResult<User> Update(User user)
         {
-            IUpdateUser.User = user;
-            var result = IUpdateUser.Execute();
+            UpdateUser.User = user;
+            var result = UpdateUser.Execute();
             InvokeIfSuccess(result, () => StaticSource.Update(user));
 
             return result;
@@ -142,8 +142,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> UpdateAsync(User user, CancellationToken cancellationToken)
         {
-            IUpdateUser.User = user;
-            var result = await IUpdateUser.ExecuteAsync(cancellationToken);
+            UpdateUser.User = user;
+            var result = await UpdateUser.ExecuteAsync(cancellationToken);
             InvokeIfSuccess(result, () => StaticSource.Update(user));
 
             return result;
@@ -151,8 +151,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> UpdateAsync(User user)
         {
-            IUpdateUser.User = user;
-            var result = await IUpdateUser.ExecuteAsync();
+            UpdateUser.User = user;
+            var result = await UpdateUser.ExecuteAsync();
             InvokeIfSuccess(result, () => StaticSource.Update(user));
 
             return result;
