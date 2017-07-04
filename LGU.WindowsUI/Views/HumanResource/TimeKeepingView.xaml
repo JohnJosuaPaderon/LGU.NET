@@ -4,6 +4,9 @@
              xmlns:prism="http://prismlibrary.com/"             
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../../Styles/Default.xaml"/>
+    </UserControl.Resources>
     <materialDesign:DrawerHost>
         <Grid>
             <Grid.RowDefinitions>
