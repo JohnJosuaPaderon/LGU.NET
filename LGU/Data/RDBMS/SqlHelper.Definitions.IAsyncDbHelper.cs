@@ -39,7 +39,7 @@ namespace LGU.Data.RDBMS
             }
         }
 
-        public async Task<IDataProcessResult<T>> ExecuteNonQueryAsync<T>(IDataDbQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
+        public async Task<IDataProcessResult<T>> ExecuteNonQueryAsync<T>(IDbDataQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync())
             {
@@ -51,7 +51,7 @@ namespace LGU.Data.RDBMS
                 {
                     using (var command = queryInfo.CreateCommand(connection, transaction))
                     {
-                        var result = queryInfo.GetProcessResult(command, await command.ExecuteNonQueryAsync());
+                        var result = queryInfo.GetProcessResult(queryInfo.Data, command, await command.ExecuteNonQueryAsync());
                         queryInfo.InvokeInTransaction(transaction.Commit);
 
                         return result;
@@ -76,7 +76,6 @@ namespace LGU.Data.RDBMS
                     {
                         if (reader.HasRows)
                         {
-                            await reader.ReadAsync();
                             return getFromReader(reader);
                         }
                         else
@@ -98,7 +97,6 @@ namespace LGU.Data.RDBMS
                     {
                         if (reader.HasRows)
                         {
-                            await reader.ReadAsync();
                             return await getFromReaderAsync(reader);
                         }
                         else

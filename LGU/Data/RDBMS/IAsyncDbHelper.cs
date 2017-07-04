@@ -12,7 +12,7 @@ namespace LGU.Data.RDBMS
         where TDataReader : DbDataReader
     {
         Task<IProcessResult> ExecuteNonQueryAsync(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo);
-        Task<IDataProcessResult<T>> ExecuteNonQueryAsync<T>(IDataDbQueryInfo<T, TConnection, TTransaction, TCommand, TParameter> queryInfo);
+        Task<IDataProcessResult<T>> ExecuteNonQueryAsync<T>(IDbDataQueryInfo<T, TConnection, TTransaction, TCommand, TParameter> queryInfo);
         Task<IDataProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, IDataProcessResult<T>> getFromReader);
         Task<IDataProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, Task<IDataProcessResult<T>>> getFromReaderAsync);
         Task<IEnumerableDataProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, IEnumerableDataProcessResult<T>> getFromReader);

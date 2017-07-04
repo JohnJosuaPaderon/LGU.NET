@@ -48,7 +48,7 @@ namespace LGU.Data.RDBMS
             }
         }
 
-        public IDataProcessResult<T> ExecuteNonQuery<T>(IDataDbQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
+        public IDataProcessResult<T> ExecuteNonQuery<T>(IDbDataQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
@@ -63,7 +63,7 @@ namespace LGU.Data.RDBMS
                 {
                     using (var command = queryInfo.CreateCommand(connection, transaction))
                     {
-                        var result = queryInfo.GetProcessResult(command, command.ExecuteNonQuery());
+                        var result = queryInfo.GetProcessResult(queryInfo.Data, command, command.ExecuteNonQuery());
                         queryInfo.InvokeInTransaction(transaction.Commit);
 
                         return result;

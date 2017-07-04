@@ -40,7 +40,7 @@ namespace LGU.Data.RDBMS
             }
         }
 
-        public async Task<IDataProcessResult<T>> ExecuteNonQueryAsync<T>(IDataDbQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, CancellationToken cancellationToken)
+        public async Task<IDataProcessResult<T>> ExecuteNonQueryAsync<T>(IDbDataQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, CancellationToken cancellationToken)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
@@ -52,7 +52,7 @@ namespace LGU.Data.RDBMS
                 {
                     using (var command = queryInfo.CreateCommand(connection, transaction))
                     {
-                        var result = queryInfo.GetProcessResult(command, await command.ExecuteNonQueryAsync(cancellationToken));
+                        var result = queryInfo.GetProcessResult(queryInfo.Data, command, await command.ExecuteNonQueryAsync(cancellationToken));
                         queryInfo.InvokeInTransaction(transaction.Commit);
 
                         return result;
@@ -77,7 +77,6 @@ namespace LGU.Data.RDBMS
                     {
                         if (reader.HasRows)
                         {
-                            await reader.ReadAsync(cancellationToken);
                             return await getFromReaderAsync(reader);
                         }
                         else
@@ -99,7 +98,6 @@ namespace LGU.Data.RDBMS
                     {
                         if (reader.HasRows)
                         {
-                            await reader.ReadAsync(cancellationToken);
                             return await getFromReaderAsync(reader, cancellationToken);
                         }
                         else
@@ -122,27 +120,6 @@ namespace LGU.Data.RDBMS
                         if (reader.HasRows)
                         {
                             return await getFromReaderAsync(reader, cancellationToken);
-                        }
-                        else
-                        {
-                            return new EnumerableDataProcessResult<T>(ProcessResultStatus.Success, "No result.");
-                        }
-                    }
-                }
-            }
-        }
-
-        public async Task<IEnumerableDataProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, Task<IEnumerableDataProcessResult<T>>> getFromReaderAsync, CancellationToken cancellationToken)
-        {
-            using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
-            {
-                using (var command = queryInfo.CreateCommand(connection))
-                {
-                    using (var reader = await command.ExecuteReaderAsync(cancellationToken))
-                    {
-                        if (reader.HasRows)
-                        {
-                            return await getFromReaderAsync(reader);
                         }
                         else
                         {

@@ -5,16 +5,17 @@ using System.Data.SqlClient;
 
 namespace LGU.Data.RDBMS
 {
-    public sealed class SqlQueryInfo : IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter>
+    public sealed class SqlDataQueryInfo<T> : IDbDataQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter>
     {
-        public static SqlQueryInfo CreateProcedureQueryInfo(string storedProcedure, Func<SqlCommand, int, IProcessResult> getProcessResult, bool useTransaction = false)
+        public static SqlDataQueryInfo<T> CreateProcedureQueryInfo(T data, string storedProcedure, Func<T, SqlCommand, int, IDataProcessResult<T>> getProcessResult, bool useTransaction = false)
         {
-            return new SqlQueryInfo()
+            return new SqlDataQueryInfo<T>()
             {
                 CommandText = storedProcedure,
                 CommandType = CommandType.StoredProcedure,
                 GetProcessResult = getProcessResult,
-                UseTransaction = useTransaction
+                UseTransaction = useTransaction,
+                Data = data
             };
         }
 
@@ -22,8 +23,9 @@ namespace LGU.Data.RDBMS
 
         public CommandType CommandType { get; set; }
         public string CommandText { get; set; }
-        public Func<SqlCommand, int, IProcessResult> GetProcessResult { get; set; }
+        public Func<T, SqlCommand, int, IDataProcessResult<T>> GetProcessResult { get; set; }
         public bool UseTransaction { get; set; }
+        public T Data { get; set; }
 
         public SqlCommand CreateCommand(SqlConnection connection)
         {

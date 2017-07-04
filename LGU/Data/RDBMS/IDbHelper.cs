@@ -11,7 +11,7 @@ namespace LGU.Data.RDBMS
         where TDataReader : DbDataReader
     {
         IProcessResult ExecuteNonQuery(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo);
-        IDataProcessResult<T> ExecuteNonQuery<T>(IDataDbQueryInfo<T, TConnection, TTransaction, TCommand, TParameter> queryInfo);
+        IDataProcessResult<T> ExecuteNonQuery<T>(IDbDataQueryInfo<T, TConnection, TTransaction, TCommand, TParameter> queryInfo);
         IDataProcessResult<T> ExecuteReader<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, IDataProcessResult<T>> getFromReader);
         IEnumerableDataProcessResult<T> ExecuteReaderEnumerable<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, IEnumerableDataProcessResult<T>> getFromReader);
         IDataProcessResult<T> ExecuteScalar<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<object, IDataProcessResult<T>> converter);
