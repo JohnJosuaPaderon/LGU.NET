@@ -12,6 +12,10 @@ namespace LGU
         {
         }
 
+        public DataProcessResult(T data) : this(data, ProcessResultStatus.Success)
+        {
+        }
+
         public DataProcessResult(string message, Exception exception) : this(default(T), ProcessResultStatus.Failed, message, exception)
         {
         }

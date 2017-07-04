@@ -20,4 +20,8 @@
     <PackageReference Include="System.Security.SecureString" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EntityProcessHelpers\Core\" />
+  </ItemGroup>
+
 </Project>

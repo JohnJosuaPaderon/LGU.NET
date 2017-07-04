@@ -13,6 +13,10 @@ namespace LGU
         {
         }
 
+        public EnumerableDataProcessResult(IEnumerable<T> dataList) : this(dataList, ProcessResultStatus.Success)
+        {
+        }
+
         public EnumerableDataProcessResult(string message, Exception exception) : this(null, ProcessResultStatus.Failed, message, exception)
         {
         }
