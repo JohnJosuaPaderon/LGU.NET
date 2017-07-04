@@ -18,7 +18,7 @@ namespace LGU.Data.Extensions
             }
         }
 
-        public static void InvokeInTransaction<TData, TConnection, TTransaction, TCommand, TParameter>(this IDataDbQueryInfo<TData, TConnection, TTransaction, TCommand, TParameter> dataDbQueryInfo, Action action)
+        public static void InvokeInTransaction<TData, TConnection, TTransaction, TCommand, TParameter>(this IDbDataQueryInfo<TData, TConnection, TTransaction, TCommand, TParameter> dataDbQueryInfo, Action action)
             where TConnection : DbConnection
             where TTransaction : DbTransaction
             where TCommand : DbCommand
