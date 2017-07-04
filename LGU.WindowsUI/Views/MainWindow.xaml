@@ -7,7 +7,18 @@
                      xmlns:viewModels="clr-namespace:LGU.ViewModels"
                      prism:ViewModelLocator.AutoWireViewModel="True"
                      Background="{DynamicResource MaterialDesignPaper}"
-                     Title="{Binding Title}" WindowState="{Binding WindowState}" WindowStartupLocation="CenterScreen">
+                     Title="{Binding Title}"
+                     WindowState="{Binding WindowState}"
+                     WindowStartupLocation="CenterScreen"
+                     TitleCaps="False">
+    <mahApps:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <TextBlock Text="{Binding}" FontFamily="Roboto" VerticalAlignment="Center" Margin="10 0" FontSize="18"/>
+        </DataTemplate>
+    </mahApps:MetroWindow.TitleTemplate>
+    <mahApps:MetroWindow.Resources>
+        <ResourceDictionary Source="../Styles/Default.xaml"/>
+    </mahApps:MetroWindow.Resources>
     <materialDesign:DialogHost Identifier="{x:Static viewModels:MainWindowViewModel.MainDialogName}">
         <ContentControl prism:RegionManager.RegionName="{x:Static viewModels:MainWindowViewModel.MainContentRegionName}"/>
     </materialDesign:DialogHost>
