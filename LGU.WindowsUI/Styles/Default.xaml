@@ -6,5 +6,6 @@
         <ResourceDictionary Source="ColorZone.xaml"/>
         <ResourceDictionary Source="TextBlock.xaml"/>
         <ResourceDictionary Source="Base.xaml"/>
+        <!--<ResourceDictionary Source="MaterialDesignThemes.Overrides.xaml"/>-->
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
