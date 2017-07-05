@@ -16,16 +16,13 @@ namespace LGU.EntityProcesses.HumanResource
         private SqlDataQueryInfo<Department> GetQueryInfo()
         {
             return SqlDataQueryInfo<Department>.CreateProcedureQueryInfo(Department, "DeleteDepartment", GetProcessResult, true)
-                .AddOutputParameter("Id")
-                .AddInputParameter("Description", Department.Description)
-                .AddInputParameter("Abbreviation", Department.Abbreviation);
+                .AddInputParameter("Id", Department.Id);
         }
 
         private IDataProcessResult<Department> GetProcessResult(Department department, SqlCommand command, int affectedRows)
         {
             if (affectedRows == 1)
             {
-                department.Id = command.Parameters.GetUInt32("Id");
                 return new DataProcessResult<Department>(department);
             }
             else
