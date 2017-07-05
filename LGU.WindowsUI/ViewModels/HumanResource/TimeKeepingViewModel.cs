@@ -1,23 +1,16 @@
 ﻿using LGU.Events;
-using LGU.Views.HumanResource;
 using Prism.Events;
-using Prism.Mvvm;
 using Prism.Regions;
 
 namespace LGU.ViewModels.HumanResource
 {
-    public class TimeKeepingViewModel : BindableBase
+    public class TimeKeepingViewModel : ViewModelBase
     {
-        private readonly IRegionManager RegionManager;
-        private readonly IEventAggregator EventAggregator;
-
-        public TimeKeepingViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
+        public TimeKeepingViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            RegionManager = regionManager;
-            EventAggregator = eventAggregator;
         }
 
-        public void Load()
+        public override void Load()
         {
             EventAggregator.GetEvent<TitleEvent>().Publish("Time-Keeping");
         }
