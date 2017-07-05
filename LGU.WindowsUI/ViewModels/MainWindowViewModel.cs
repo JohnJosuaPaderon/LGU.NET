@@ -1,23 +1,18 @@
 ﻿using LGU.Events;
 using Prism.Events;
-using Prism.Mvvm;
 using Prism.Regions;
 using System.Windows;
 
 namespace LGU.ViewModels
 {
-    public class MainWindowViewModel : BindableBase
+    public class MainWindowViewModel : ViewModelBase
     {
         public static string MainContentRegionName { get; } = "MainContentRegion";
         public static string MainDialogName { get; } = "MainDialog";
         public static string InitialMainContentRegionSource { get; set; }
-        private readonly IRegionManager RegionManager;
-        private readonly IEventAggregator EventAggregator;
 
-        public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
+        public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            RegionManager = regionManager;
-            EventAggregator = eventAggregator;
         }
 
         private string _Title = "Welcome to LGU.NET";
@@ -34,7 +29,7 @@ namespace LGU.ViewModels
             set { SetProperty(ref _WindowState, value); }
         }
 
-        public void Load()
+        public override void Load()
         {
             EventAggregator.GetEvent<TitleEvent>().Subscribe(t => Title = t);
             EventAggregator.GetEvent<WindowStateEvent>().Subscribe(ws => WindowState = ws);
