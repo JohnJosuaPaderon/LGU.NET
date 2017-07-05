@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 
@@ -15,7 +14,7 @@ namespace LGU.Data.RDBMS
         CommandType CommandType { get; set; }
         string CommandText { get; set; }
         TData Data { get; set; }
-        Func<TData, TCommand, int, IDataProcessResult<TData>> GetProcessResult { get; set; }
+        GetDataProcessResultDelegate<TData, TCommand> GetProcessResult { get; set; }
         TCommand CreateCommand(TConnection connection);
         TCommand CreateCommand(TConnection connection, TTransaction transaction);
         bool UseTransaction { get; set; }

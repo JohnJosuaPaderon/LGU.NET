@@ -7,7 +7,7 @@ namespace LGU.Data.RDBMS
 {
     public sealed class SqlQueryInfo : IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter>
     {
-        public static SqlQueryInfo CreateProcedureQueryInfo(string storedProcedure, Func<SqlCommand, int, IProcessResult> getProcessResult, bool useTransaction = false)
+        public static SqlQueryInfo CreateProcedureQueryInfo(string storedProcedure, GetProcessResultDelegate<SqlCommand> getProcessResult, bool useTransaction = false)
         {
             return new SqlQueryInfo()
             {
@@ -22,7 +22,7 @@ namespace LGU.Data.RDBMS
 
         public CommandType CommandType { get; set; }
         public string CommandText { get; set; }
-        public Func<SqlCommand, int, IProcessResult> GetProcessResult { get; set; }
+        public GetProcessResultDelegate<SqlCommand> GetProcessResult { get; set; }
         public bool UseTransaction { get; set; }
 
         public SqlCommand CreateCommand(SqlConnection connection)
