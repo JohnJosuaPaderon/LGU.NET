@@ -3,9 +3,18 @@
                     xmlns:local="clr-namespace:LGU.Styles">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Variables.xaml"/>
+
+        <ResourceDictionary Source="Card.xaml"/>
         <ResourceDictionary Source="ColorZone.xaml"/>
+        <ResourceDictionary Source="DataGrid.xaml"/>
         <ResourceDictionary Source="TextBlock.xaml"/>
+        <ResourceDictionary Source="TextBox.xaml"/>
+
         <ResourceDictionary Source="Base.xaml"/>
         <!--<ResourceDictionary Source="MaterialDesignThemes.Overrides.xaml"/>-->
     </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource _DataGrid}"/>
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource _TextBox}"/>
+
 </ResourceDictionary>

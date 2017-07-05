@@ -11,4 +11,14 @@
         <Setter Property="Mode" Value="{DynamicResource LargeHeaderColorZoneMode}"/>
         <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="{DynamicResource LargeHeaderShadowDepth}"/>
     </Style>
+
+    <Style x:Key="HeaderColorZone" TargetType="{x:Type materialDesign:ColorZone}">
+        <Setter Property="Padding" Value="{DynamicResource HeaderPadding}"/>
+        <Setter Property="Mode" Value="{DynamicResource HeaderColorZoneMode}"/>
+    </Style>
+
+    <Style x:Key="SmallHeaderColorZone" TargetType="{x:Type materialDesign:ColorZone}">
+        <Setter Property="Padding" Value="{DynamicResource SmallHeaderPadding}"/>
+        <Setter Property="Mode" Value="{DynamicResource SmallHeaderColorZoneMode}"/>
+    </Style>
 </ResourceDictionary>
