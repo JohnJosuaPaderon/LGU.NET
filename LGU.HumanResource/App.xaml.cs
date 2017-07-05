@@ -13,7 +13,7 @@ namespace LGU.HumanResource
         {
             base.OnStartup(e);
 
-            MainWindowViewModel.InitialMainContentRegionSource = nameof(TimeKeepingView);
+            MainWindowViewModel.InitialMainContentRegionSource = nameof(EmployeeFingerPrintEnrollmentView);
             new Bootstrapper().Run();
         }
     }

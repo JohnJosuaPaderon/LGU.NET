@@ -8,7 +8,7 @@ namespace LGU.HumanResource
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
-            Container.RegisterTypeForNavigation<TimeKeepingView>();
+            Container.RegisterTypeForNavigation<EmployeeFingerPrintEnrollmentView>();
         }
     }
 }
