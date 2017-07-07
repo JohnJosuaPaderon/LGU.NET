@@ -11,13 +11,7 @@ namespace LGU.ViewModels.HumanResource
 
         public PreviewEmployeeViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            EventAggregator.GetEvent<EmployeeEvent>().Subscribe(ed =>
-            {
-                if (ed.TargetViewModel == nameof(PreviewEmployeeViewModel))
-                {
-                    Employee = ed.Payload;
-                }
-            });
+            EventAggregator.GetEvent<EmployeeEvent>().Subscribe(pl => Employee = pl);
         }
 
         public override void Load()
