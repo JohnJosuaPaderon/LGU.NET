@@ -6,6 +6,11 @@ namespace LGU.Models.HumanResource
     {
         public EmployeeModel(Employee source) : base(source)
         {
+            FirstName = source.FirstName;
+            MiddleName = source.MiddleName;
+            LastName = source.LastName;
+            NameExtension = source.NameExtension;
+            Department = source.Department;
         }
 
         private string _FirstName;
@@ -27,6 +32,20 @@ namespace LGU.Models.HumanResource
         {
             get { return _LastName; }
             set { SetProperty(ref _LastName, value); }
+        }
+
+        private string _NameExtension;
+        public string NameExtension
+        {
+            get { return _NameExtension; }
+            set { SetProperty(ref _NameExtension, value); }
+        }
+
+        private Department _Department;
+        public Department Department
+        {
+            get { return _Department; }
+            set { SetProperty(ref _Department, value); }
         }
     }
 }
