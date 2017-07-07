@@ -10,12 +10,10 @@ namespace LGU
 
         public ProcessResult(Exception exception) : this(ProcessResultStatus.Failed, "An exception has been thrown.", exception)
         {
-
         }
 
         public ProcessResult(string message, Exception exception) : this(ProcessResultStatus.Failed, message, exception)
         {
-
         }
 
         public ProcessResult(ProcessResultStatus status, string message) : this(status, message, null)

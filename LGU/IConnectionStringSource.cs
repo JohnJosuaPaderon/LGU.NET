@@ -4,7 +4,6 @@ namespace LGU
 {
     public interface IConnectionStringSource
     {
-        SecureString Core { get; }
-        SecureString HumanResource { get; }
+        SecureString this[string key] { get; }
     }
 }
