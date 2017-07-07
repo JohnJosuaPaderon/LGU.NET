@@ -19,7 +19,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
             get
             {
-                return SqlDataQueryInfo<Department>.CreateProcedureQueryInfo(Department, "InsertDepartment", GetProcessResult)
+                return SqlDataQueryInfo<Department>.CreateProcedureQueryInfo(Department, "HumanResource.InsertDepartment", GetProcessResult)
                     .AddOutputParameter("Id")
                     .AddInputParameter("Description", Department.Description)
                     .AddInputParameter("Abbreviation", Department.Abbreviation);

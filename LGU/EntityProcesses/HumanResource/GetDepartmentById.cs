@@ -18,7 +18,7 @@ namespace LGU.EntityProcesses.HumanResource
 
         private SqlQueryInfo GetQueryInfo()
         {
-            return SqlQueryInfo.CreateProcedureQueryInfo("GetDepartmentById", GetProcessResult)
+            return SqlQueryInfo.CreateProcedureQueryInfo("HumanResource.GetDepartmentById", GetProcessResult)
                 .AddInputParameter("@_Id", DepartmentId);
         }
 
