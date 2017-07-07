@@ -3,7 +3,7 @@ using Prism.Events;
 
 namespace LGU.Events.HumanResource
 {
-    public sealed class EmployeeEvent : PubSubEvent<EventData<EmployeeModel>>
+    public sealed class EmployeeEvent : PubSubEvent<EmployeeModel>
     {
     }
 }
