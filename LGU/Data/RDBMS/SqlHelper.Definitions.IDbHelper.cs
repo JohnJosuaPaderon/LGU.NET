@@ -18,6 +18,11 @@ namespace LGU.Data.RDBMS
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
+                if (connection == null)
+                {
+                    return new ProcessResult(ProcessResultStatus.Failed, "Unable to connect to database.");
+                }
+
                 SqlTransaction transaction = null;
 
                 queryInfo.InvokeIfUsingTransaction(() =>
@@ -52,6 +57,11 @@ namespace LGU.Data.RDBMS
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
+                if (connection == null)
+                {
+                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                }
+
                 SqlTransaction transaction = null;
 
                 queryInfo.InvokeInTransaction(() =>
@@ -86,20 +96,33 @@ namespace LGU.Data.RDBMS
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
-                using (var command = queryInfo.CreateCommand(connection))
+                if (connection == null)
                 {
-                    using (var reader = command.ExecuteReader())
+                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                }
+
+                try
+                {
+                    using (var command = queryInfo.CreateCommand(connection))
                     {
-                        if (reader.HasRows)
+                        using (var reader = command.ExecuteReader())
                         {
-                            reader.Read();
-                            return getFromReader(reader);
-                        }
-                        else
-                        {
-                            return new DataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                return getFromReader(reader);
+                            }
+                            else
+                            {
+                                return new DataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                            }
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    return new DataProcessResult<T>(ex);
                 }
             }
         }
@@ -108,20 +131,34 @@ namespace LGU.Data.RDBMS
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
-                using (var command = queryInfo.CreateCommand(connection))
+                if (connection == null)
                 {
-                    using (var reader = command.ExecuteReader())
+                    return new EnumerableDataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                }
+
+                try
+                {
+                    using (var command = queryInfo.CreateCommand(connection))
                     {
-                        if (reader.HasRows)
+                        using (var reader = command.ExecuteReader())
                         {
-                            return getFromReader(reader);
-                        }
-                        else
-                        {
-                            return new EnumerableDataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                            if (reader.HasRows)
+                            {
+                                return getFromReader(reader);
+                            }
+                            else
+                            {
+                                return new EnumerableDataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    return new EnumerableDataProcessResult<T>(ex);
+                }
+                
             }
         }
 
@@ -129,9 +166,22 @@ namespace LGU.Data.RDBMS
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
-                using (var command = queryInfo.CreateCommand(connection))
+                if (connection == null)
                 {
-                    return converter(command.ExecuteScalar());
+                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                }
+
+                try
+                {
+                    using (var command = queryInfo.CreateCommand(connection))
+                    {
+                        return converter(command.ExecuteScalar());
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    return new DataProcessResult<T>(ex);
                 }
             }
         }

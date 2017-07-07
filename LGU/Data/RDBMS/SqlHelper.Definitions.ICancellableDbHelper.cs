@@ -13,6 +13,11 @@ namespace LGU.Data.RDBMS
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
+                if (connection == null)
+                {
+                    return new ProcessResult(ProcessResultStatus.Failed, "Unable to connect to database.");
+                }
+
                 SqlTransaction transaction = null;
 
                 queryInfo.InvokeIfUsingTransaction(() => transaction = connection.BeginTransaction());
@@ -44,6 +49,11 @@ namespace LGU.Data.RDBMS
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
+                if (connection == null)
+                {
+                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                }
+
                 SqlTransaction transaction = null;
 
                 queryInfo.InvokeInTransaction(() => transaction = connection.BeginTransaction());
@@ -71,19 +81,32 @@ namespace LGU.Data.RDBMS
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
-                using (var command = queryInfo.CreateCommand(connection))
+                if (connection == null)
                 {
-                    using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                }
+
+                try
+                {
+                    using (var command = queryInfo.CreateCommand(connection))
                     {
-                        if (reader.HasRows)
+                        using (var reader = await command.ExecuteReaderAsync(cancellationToken))
                         {
-                            return await getFromReaderAsync(reader);
-                        }
-                        else
-                        {
-                            return new DataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                            if (reader.HasRows)
+                            {
+                                return await getFromReaderAsync(reader);
+                            }
+                            else
+                            {
+                                return new DataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                            }
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    return new DataProcessResult<T>(ex);
                 }
             }
         }
@@ -92,19 +115,32 @@ namespace LGU.Data.RDBMS
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
-                using (var command = queryInfo.CreateCommand(connection))
+                if (connection == null)
                 {
-                    using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                }
+
+                try
+                {
+                    using (var command = queryInfo.CreateCommand(connection))
                     {
-                        if (reader.HasRows)
+                        using (var reader = await command.ExecuteReaderAsync(cancellationToken))
                         {
-                            return await getFromReaderAsync(reader, cancellationToken);
-                        }
-                        else
-                        {
-                            return new DataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                            if (reader.HasRows)
+                            {
+                                return await getFromReaderAsync(reader, cancellationToken);
+                            }
+                            else
+                            {
+                                return new DataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                            }
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    return new DataProcessResult<T>(ex);
                 }
             }
         }
@@ -113,19 +149,32 @@ namespace LGU.Data.RDBMS
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
-                using (var command = queryInfo.CreateCommand(connection))
+                if (connection == null)
                 {
-                    using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+                    return new EnumerableDataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                }
+
+                try
+                {
+                    using (var command = queryInfo.CreateCommand(connection))
                     {
-                        if (reader.HasRows)
+                        using (var reader = await command.ExecuteReaderAsync(cancellationToken))
                         {
-                            return await getFromReaderAsync(reader, cancellationToken);
-                        }
-                        else
-                        {
-                            return new EnumerableDataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                            if (reader.HasRows)
+                            {
+                                return await getFromReaderAsync(reader, cancellationToken);
+                            }
+                            else
+                            {
+                                return new EnumerableDataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                            }
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    return new EnumerableDataProcessResult<T>(ex);
                 }
             }
         }
@@ -134,9 +183,22 @@ namespace LGU.Data.RDBMS
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
-                using (var command = queryInfo.CreateCommand(connection))
+                if (connection == null)
                 {
-                    return converter(await command.ExecuteScalarAsync(cancellationToken));
+                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                }
+
+                try
+                {
+                    using (var command = queryInfo.CreateCommand(connection))
+                    {
+                        return converter(await command.ExecuteScalarAsync(cancellationToken));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    return new DataProcessResult<T>(ex);
                 }
             }
         }
