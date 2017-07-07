@@ -4,6 +4,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Variables.xaml"/>
 
+        <ResourceDictionary Source="Button.xaml"/>
         <ResourceDictionary Source="Card.xaml"/>
         <ResourceDictionary Source="ColorZone.xaml"/>
         <ResourceDictionary Source="DataGrid.xaml"/>

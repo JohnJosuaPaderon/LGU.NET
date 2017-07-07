@@ -20,7 +20,7 @@
     </Style>
 
     <Style x:Key="SmallHeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource _BaseTextBlock}">
-        <Setter Property="FontSize" Value="{DynamicResource SmallHeaderFontSize}"/>
+        <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}"/>
         <Setter Property="FontWeight" Value="{DynamicResource SmallHeaderFontWeight}"/>
     </Style>
 

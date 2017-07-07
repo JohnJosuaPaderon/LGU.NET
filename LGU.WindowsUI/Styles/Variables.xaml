@@ -9,7 +9,8 @@
     <system:Double x:Key="DefaultFontSize">12</system:Double>
     <Thickness x:Key="DefaultMargin">8</Thickness>
     <GridLength x:Key="DefaultGridSpace">8</GridLength>
-    
+    <SolidColorBrush x:Key="DefaultSelectionBrush" Color="Red"/>
+
     <!-- LARGE HEADER -->
     <system:Double x:Key="LargeHeaderFontSize">54</system:Double>
     <FontWeight x:Key="LargeHeaderFontWeight">Bold</FontWeight>
@@ -26,8 +27,13 @@
 
     <!-- SMALL HEADER -->
     <system:Double x:Key="SmallHeaderFontSize">15</system:Double>
-    <FontWeight x:Key="SmallHeaderFontWeight">Regular</FontWeight>
-    <Thickness x:Key="SmallHeaderPadding">12</Thickness>
+    <FontWeight x:Key="SmallHeaderFontWeight">SemiBold</FontWeight>
+    <Thickness x:Key="SmallHeaderPadding">12 18</Thickness>
     <materialDesign:ColorZoneMode x:Key="SmallHeaderColorZoneMode">PrimaryMid</materialDesign:ColorZoneMode>
+
+    <!-- OTHERS -->
+    <Thickness x:Key="ContainerMargin">12</Thickness>
+    <GridLength x:Key="ContainerGridSpace">12</GridLength>
+    <Thickness x:Key="SearchPadding">4</Thickness>
 
 </ResourceDictionary>

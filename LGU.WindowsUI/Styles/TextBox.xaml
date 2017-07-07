@@ -9,5 +9,16 @@
 
     <Style x:Key="_TextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
         <Setter Property="materialDesign:HintAssist.IsFloating" Value="True"/>
+        <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
+        <Setter Property="SelectionBrush" Value="{DynamicResource DefaultSelectionBrush}"/>
+    </Style>
+
+    <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
+        <Setter Property="materialDesign:HintAssist.IsFloating" Value="False"/>
+        <Setter Property="materialDesign:HintAssist.Hint" Value="Search"/>
+        <Setter Property="Padding" Value="{DynamicResource SearchPadding}"/>
+        <Setter Property="materialDesign:TextFieldAssist.DecorationVisibility" Value="Collapsed"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="SelectionBrush" Value="{DynamicResource DefaultSelectionBrush}"/>
     </Style>
 </ResourceDictionary>
