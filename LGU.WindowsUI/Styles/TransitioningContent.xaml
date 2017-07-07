@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                    xmlns:local="clr-namespace:LGU.Styles">
+    <Style x:Key="TileTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
+        <Setter Property="OpeningEffect">
+            <Setter.Value>
+                <materialDesign:TransitionEffect Kind="SlideInFromBottom" Duration="0:0:1"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="NavigationTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
+        <Setter Property="OpeningEffect">
+            <Setter.Value>
+                <materialDesign:TransitionEffect Kind="SlideInFromLeft" Duration="0:0:1"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LargeHeaderTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
+        <Setter Property="OpeningEffect">
+            <Setter.Value>
+                <materialDesign:TransitionEffect Kind="SlideInFromTop" Duration="0:0:1"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

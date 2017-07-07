@@ -12,16 +12,17 @@
     <SolidColorBrush x:Key="DefaultSelectionBrush" Color="Red"/>
 
     <!-- LARGE HEADER -->
-    <system:Double x:Key="LargeHeaderFontSize">54</system:Double>
+    <system:Double x:Key="LargeHeaderFontSize">24</system:Double>
     <FontWeight x:Key="LargeHeaderFontWeight">Bold</FontWeight>
-    <Thickness x:Key="LargeHeaderPadding">24</Thickness>
+    <Thickness x:Key="LargeHeaderPadding">12</Thickness>
     <materialDesign:ColorZoneMode x:Key="LargeHeaderColorZoneMode">PrimaryDark</materialDesign:ColorZoneMode>
-    <materialDesign:ShadowDepth x:Key="LargeHeaderShadowDepth">Depth5</materialDesign:ShadowDepth>
-    <HorizontalAlignment x:Key="LargeHeaderHorizontalAlignment">Center</HorizontalAlignment>
+    <materialDesign:ShadowDepth x:Key="LargeHeaderShadowDepth">Depth3</materialDesign:ShadowDepth>
+    <HorizontalAlignment x:Key="LargeHeaderHorizontalAlignment">Left</HorizontalAlignment>
+    <VerticalAlignment x:Key="LargeHeaderVerticalAlignment">Center</VerticalAlignment>
     
     <!-- HEADER -->
-    <system:Double x:Key="HeaderFontSize">36</system:Double>
-    <FontWeight x:Key="HeaderFontWeight">Bold</FontWeight>
+    <system:Double x:Key="HeaderFontSize">24</system:Double>
+    <FontWeight x:Key="HeaderFontWeight">SemiBold</FontWeight>
     <Thickness x:Key="HeaderPadding">12</Thickness>
     <materialDesign:ColorZoneMode x:Key="HeaderColorZoneMode">PrimaryMid</materialDesign:ColorZoneMode>
 

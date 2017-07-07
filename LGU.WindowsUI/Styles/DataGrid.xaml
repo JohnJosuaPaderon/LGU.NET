@@ -6,6 +6,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="_DataGrid" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource MaterialDesignDataGrid}">
-        
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="IsReadOnly" Value="True"/>
     </Style>
 </ResourceDictionary>

@@ -21,4 +21,8 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource DefaultSelectionBrush}"/>
     </Style>
+
+    <Style x:Key="PreviewFieldTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource _TextBox}">
+        <Setter Property="IsReadOnly" Value="True"/>
+    </Style>
 </ResourceDictionary>
