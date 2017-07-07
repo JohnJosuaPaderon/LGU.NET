@@ -1,4 +1,5 @@
-﻿using LGU.Views.HumanResource;
+﻿using LGU.Extensions;
+using LGU.Views.HumanResource;
 using Prism.Unity;
 
 namespace LGU.HumanResource
@@ -8,7 +9,14 @@ namespace LGU.HumanResource
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+            Container.RegisterTypeForNavigation<PreviewEmployeeView>();
             Container.RegisterTypeForNavigation<EmployeeFingerPrintEnrollmentView>();
+        }
+
+        protected override void InitializeServices()
+        {
+            ServiceCollection.SetConnectionStringSource();
+            ServiceCollection.UseSqlServer();
         }
     }
 }
