@@ -48,7 +48,7 @@ namespace LGU.ViewModels
 
             if (result.Status == ProcessResultStatus.Success)
             {
-                EventAggregator.GetEvent<TitleEvent>().Publish(result.Data.ToString("MMMM dd, yyyy hh:mm:ss"));
+                EventAggregator.GetEvent<TitleEvent>().Publish("LGU.NET (Administrator)");
             }
             else
             {

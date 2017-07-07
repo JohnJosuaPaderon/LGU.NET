@@ -1,6 +1,7 @@
 ﻿using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+using System.Diagnostics;
 
 namespace LGU.ViewModels
 {
@@ -17,7 +18,7 @@ namespace LGU.ViewModels
 
         public virtual void Load()
         {
-
+            Debug.WriteLine("ViewModel has been Loaded.");
         }
     }
 }
