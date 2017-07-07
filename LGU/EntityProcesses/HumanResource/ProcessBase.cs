@@ -8,7 +8,7 @@ namespace LGU.EntityProcesses.HumanResource
 
         public ProcessBase(IConnectionStringSource connectionStringSource)
         {
-            SqlHelper = new SqlHelper(new SqlConnectionEstablisher(connectionStringSource.HumanResource));
+            SqlHelper = new SqlHelper(new SqlConnectionEstablisher(connectionStringSource["HumanResource"]));
         }
     }
 }
