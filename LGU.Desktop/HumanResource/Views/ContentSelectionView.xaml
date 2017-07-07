@@ -12,7 +12,7 @@
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromBottom,Duration=0:0:1}">
-            <controls:NavigatorButton x:Name="HomeNavigatorButton" Icon="Camera" Caption="Home" NavigateCommand="{Binding NavigateWindowCommand}" NavigateCommandParameter="HumanResourceLauncherView"/>
+            <controls:NavigatorButton x:Name="HomeNavigatorButton" Icon="Home" Caption="Home" NavigateCommand="{Binding NavigateWindowCommand}" NavigateCommandParameter="HumanResourceLauncherView"/>
         </materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromBottom,Duration=0:0:1}" OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.075}">
             <controls:NavigatorButton Icon="Settings" Caption="Settings" NavigateCommand="{Binding NavigateWindowCommand}" NavigateCommandParameter="UserAuthenticationView"/>
