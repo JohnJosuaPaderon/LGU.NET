@@ -8,6 +8,17 @@
         <ResourceDictionary Source="../../Styles/Default.xaml"/>
     </UserControl.Resources>
     <materialDesign:Card>
-        
+        <StackPanel>
+            <materialDesign:ColorZone Style="{DynamicResource SmallHeaderColorZone}">
+                <TextBlock Text="Department's Details" Style="{DynamicResource SmallHeaderTextBlock}"/>
+            </materialDesign:ColorZone>
+            <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource PreviewFieldTextBox}"/>
+                </StackPanel.Resources>
+                <TextBox Text="{Binding Department.Description}" materialDesign:HintAssist.Hint="Description" IsReadOnly="True"/>
+                <TextBox Text="{Binding Department.Abbreviation}" materialDesign:HintAssist.Hint="Abbreviation" IsReadOnly="True"/>
+            </StackPanel>
+        </StackPanel>
     </materialDesign:Card>
 </UserControl>

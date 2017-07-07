@@ -13,6 +13,9 @@
                 <TextBlock Text="Employee's Details" Style="{DynamicResource SmallHeaderTextBlock}"/>
             </materialDesign:ColorZone>
             <StackPanel>
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource PreviewFieldTextBox}"/>
+                </StackPanel.Resources>
                 <TextBox Text="{Binding Employee.FirstName}" materialDesign:HintAssist.Hint="First Name"/>
                 <TextBox Text="{Binding Employee.MiddleName}" materialDesign:HintAssist.Hint="Middle Name"/>
                 <TextBox Text="{Binding Employee.LastName}" materialDesign:HintAssist.Hint="Last Name"/>
