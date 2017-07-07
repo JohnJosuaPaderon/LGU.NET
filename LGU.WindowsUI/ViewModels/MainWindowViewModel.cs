@@ -1,7 +1,9 @@
-﻿using LGU.Events;
+﻿using LGU.EntityManagers;
+using LGU.Events;
 using Prism.Events;
 using Prism.Regions;
 using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace LGU.ViewModels
 {
@@ -11,8 +13,11 @@ namespace LGU.ViewModels
         public static string MainDialogName { get; } = "MainDialog";
         public static string InitialMainContentRegionSource { get; set; }
 
+        private readonly ISystemManager SystemManager;
+
         public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
+            SystemManager = ServiceProvider.Current.GetService<ISystemManager>();
         }
 
         private string _Title = "Welcome to LGU.NET";
@@ -29,7 +34,7 @@ namespace LGU.ViewModels
             set { SetProperty(ref _WindowState, value); }
         }
 
-        public override void Load()
+        public async override void Load()
         {
             EventAggregator.GetEvent<TitleEvent>().Subscribe(t => Title = t);
             EventAggregator.GetEvent<WindowStateEvent>().Subscribe(ws => WindowState = ws);
@@ -37,6 +42,17 @@ namespace LGU.ViewModels
             if (!string.IsNullOrWhiteSpace(InitialMainContentRegionSource))
             {
                 RegionManager.RequestNavigate(MainContentRegionName, InitialMainContentRegionSource);
+            }
+
+            var result = await SystemManager.GetSystemDateAsync();
+
+            if (result.Status == ProcessResultStatus.Success)
+            {
+                EventAggregator.GetEvent<TitleEvent>().Publish(result.Data.ToString("MMMM dd, yyyy hh:mm:ss"));
+            }
+            else
+            {
+                MessageBox.Show("Failed to get system date.");
             }
         }
     }
