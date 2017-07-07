@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class UserManager : IUserManager, IAsyncUserManager, ICancellableAsyncUserManager
+    public sealed class UserManager : IUserManager
     {
         private static EntityCollection<User, ulong> StaticSource { get; } = new EntityCollection<User, ulong>();
 
