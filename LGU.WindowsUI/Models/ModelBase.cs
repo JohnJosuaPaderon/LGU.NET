@@ -11,9 +11,6 @@ namespace LGU.Models
 
         protected T Source { get; }
 
-        public virtual T GetSource()
-        {
-            return Source;
-        }
+        public abstract T GetSource();
     }
 }
