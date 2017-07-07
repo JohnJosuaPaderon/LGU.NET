@@ -12,8 +12,12 @@
             <materialDesign:ColorZone Style="{DynamicResource SmallHeaderColorZone}">
                 <TextBlock Text="Employee's Details" Style="{DynamicResource SmallHeaderTextBlock}"/>
             </materialDesign:ColorZone>
-            <StackPanel Margin="{DynamicResource DefaultMargin}">
+            <StackPanel>
                 <TextBox Text="{Binding Employee.FirstName}" materialDesign:HintAssist.Hint="First Name"/>
+                <TextBox Text="{Binding Employee.MiddleName}" materialDesign:HintAssist.Hint="Middle Name"/>
+                <TextBox Text="{Binding Employee.LastName}" materialDesign:HintAssist.Hint="Last Name"/>
+                <TextBox Text="{Binding Employee.NameExtension}" materialDesign:HintAssist.Hint="Name Extension"/>
+                <TextBox Text="{Binding Employee.Department.Description}" materialDesign:HintAssist.Hint="Department"/>
             </StackPanel>
         </StackPanel>
     </materialDesign:Card>

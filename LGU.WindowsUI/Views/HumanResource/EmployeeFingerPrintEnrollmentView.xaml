@@ -4,25 +4,57 @@
              xmlns:local="clr-namespace:LGU.Views.HumanResource"
              xmlns:prism="http://prismlibrary.com/"      
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <ResourceDictionary Source="../../Styles/Default.xaml"/>
     </UserControl.Resources>
-    <Grid Margin="{DynamicResource DefaultMargin}">
+    <Grid Margin="{DynamicResource ContainerMargin}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+            <ColumnDefinition Width="{DynamicResource ContainerGridSpace}"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <materialDesign:Card VerticalAlignment="Stretch">
-            <DataGrid ItemsSource="{Binding Employees}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Employee" Binding="{Binding}"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </materialDesign:Card>
-        <materialDesign:Card Grid.Column="2">
-            <local:PreviewEmployeeView Grid.Column="1"/>
-        </materialDesign:Card>
+        <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromLeft,Duration=0:0:1}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="{DynamicResource ContainerGridSpace}"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <materialDesign:Card Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding SearchKey, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource SearchTextBox}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="TextChanged">
+                                    <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
+                        <Button Grid.Column="1" Style="{DynamicResource SearchButton}"/>
+                    </Grid>
+                </materialDesign:Card>
+                <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
+                    <DataGrid ItemsSource="{Binding Employees}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedEmployee}" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                            <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                            <DataGridTextColumn Header="Middle Name" Binding="{Binding MiddleName}"/>
+                            <DataGridTextColumn Header="Name Extension" Binding="{Binding NameExtension}"/>
+                            <DataGridTextColumn Header="Department" Binding="{Binding Department}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </materialDesign:Card>
+            </Grid>
+        </materialDesign:TransitioningContent>
+        <materialDesign:TransitioningContent Grid.Column="2" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight,Duration=0:0:1}">
+            <materialDesign:Card>
+                <local:PreviewEmployeeView/>
+            </materialDesign:Card>
+        </materialDesign:TransitioningContent>
     </Grid>
 </UserControl>
