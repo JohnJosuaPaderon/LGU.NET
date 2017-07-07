@@ -2,15 +2,23 @@
 
 namespace LGU.Models.HumanResource
 {
-    public class EmployeeModel : ModelBase<Employee>
+    public sealed class EmployeeModel : ModelBase<Employee>
     {
         public EmployeeModel(Employee source) : base(source)
         {
+            Id = source.Id;
             FirstName = source.FirstName;
             MiddleName = source.MiddleName;
             LastName = source.LastName;
             NameExtension = source.NameExtension;
             Department = source.Department;
+        }
+
+        private ulong _Id;
+        public ulong Id
+        {
+            get { return _Id; }
+            set { SetProperty(ref _Id, value); }
         }
 
         private string _FirstName;
@@ -46,6 +54,19 @@ namespace LGU.Models.HumanResource
         {
             get { return _Department; }
             set { SetProperty(ref _Department, value); }
+        }
+
+        public override Employee GetSource()
+        {
+            return new Employee()
+            {
+                Id = Id,
+                FirstName = FirstName,
+                MiddleName = MiddleName,
+                LastName = LastName,
+                NameExtension = NameExtension,
+                Department = Department
+            };
         }
     }
 }
