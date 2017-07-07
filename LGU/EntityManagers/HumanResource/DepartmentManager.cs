@@ -3,14 +3,27 @@ using System.Threading;
 using System.Threading.Tasks;
 using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
+using LGU.Entities;
 
 namespace LGU.EntityManagers.HumanResource
 {
     public sealed class DepartmentManager : IDepartmentManager
     {
+        private readonly IDeleteDepartment DeleteDepartment;
+        private readonly IGetDepartmentById GetDepartmentById;
+        private readonly IGetDepartmentList GetDepartmentList;
+        private readonly IInsertDepartment InsertDepartment;
+        private readonly IUpdateDepartment UpdateDepartment;
+
+        private static EntityCollection<Department, uint> StaticSource { get; } = new EntityCollection<Department, uint>();
+
         public DepartmentManager(IDeleteDepartment deleteDepartment, IGetDepartmentById getDepartmentById, IGetDepartmentList getDepartmentList, IInsertDepartment insertDepartment, IUpdateDepartment updateDepartment)
         {
-
+            DeleteDepartment = deleteDepartment;
+            GetDepartmentById = getDepartmentById;
+            GetDepartmentList = getDepartmentList;
+            InsertDepartment = insertDepartment;
+            UpdateDepartment = updateDepartment;
         }
 
         public IDataProcessResult<Department> Delete(Department data)
