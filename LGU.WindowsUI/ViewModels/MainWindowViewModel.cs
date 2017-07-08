@@ -1,9 +1,9 @@
 ﻿using LGU.EntityManagers;
 using LGU.Events;
+using Microsoft.Extensions.DependencyInjection;
 using Prism.Events;
 using Prism.Regions;
 using System.Windows;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace LGU.ViewModels
 {
@@ -17,7 +17,7 @@ namespace LGU.ViewModels
 
         public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            SystemManager = ServiceProvider.Current.GetService<ISystemManager>();
+            SystemManager = SystemRuntime.ServiceProvider.GetService<ISystemManager>();
         }
 
         private string _Title = "Welcome to LGU.NET";
