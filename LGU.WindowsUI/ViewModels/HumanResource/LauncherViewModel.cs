@@ -1,7 +1,7 @@
-﻿using Prism.Commands;
+﻿using LGU.Views.HumanResource;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
-using LGU.Views.HumanResource;
 
 namespace LGU.ViewModels.HumanResource
 {

@@ -1,6 +1,6 @@
-﻿using System;
-using Prism.Events;
+﻿using Prism.Events;
 using Prism.Regions;
+using System;
 
 namespace LGU.ViewModels.HumanResource
 {
