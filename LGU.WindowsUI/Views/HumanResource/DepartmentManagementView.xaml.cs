@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using LGU.ViewModels.HumanResource;
+using System.Windows.Controls;
 
 namespace LGU.Views.HumanResource
 {
@@ -10,6 +11,9 @@ namespace LGU.Views.HumanResource
         public DepartmentManagementView()
         {
             InitializeComponent();
+            Loaded += (s, e) => ViewModel.Load();
         }
+
+        public DepartmentManagementViewModel ViewModel => DataContext as DepartmentManagementViewModel;
     }
 }

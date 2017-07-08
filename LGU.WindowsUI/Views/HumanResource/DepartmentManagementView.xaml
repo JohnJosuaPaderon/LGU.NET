@@ -4,9 +4,16 @@
              xmlns:prism="http://prismlibrary.com/"         
              xmlns:local="clr-namespace:LGU.Views.HumanResource"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:dialogs="clr-namespace:LGU.Views.HumanResource.Dialogs"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:converters="clr-namespace:LGU.Converters"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
-        <ResourceDictionary Source="../../Styles/Default.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Styles/Default.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid Margin="{DynamicResource ContainerMargin}">
         <Grid.ColumnDefinitions>
@@ -32,12 +39,43 @@
                     </Grid>
                 </materialDesign:Card>
                 <materialDesign:Card Grid.Row="2" Style="{DynamicResource ContainerCard}" Margin="0">
-                    <DataGrid ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                            <DataGridTextColumn Header="Abbreviation" Binding="{Binding Abbreviation}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <Grid>
+                        <DataGrid ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                                <DataGridTextColumn Header="Abbreviation" Binding="{Binding Abbreviation}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <materialDesign:PopupBox Style="{DynamicResource DataManagerPopupBox}">
+                            <StackPanel>
+                                <Button ToolTip="Add new Department" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding AddCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Button.CommandParameter>
+                                        <dialogs:AddEditDepartmentDialogView/>
+                                    </Button.CommandParameter>
+                                    <materialDesign:PackIcon Kind="Plus"/>
+                                </Button>
+                                <Button ToolTip="Edit selected Department" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" IsEnabled="{Binding SelectedDepartment,Converter={x:Static converters:NullableToBooleanConverter.Instance}}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding EditCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Button.CommandParameter>
+                                        <dialogs:AddEditDepartmentDialogView/>
+                                    </Button.CommandParameter>
+                                    <materialDesign:PackIcon Kind="Pencil"/>
+                                </Button>
+                                <Button ToolTip="Delete selected Department" IsEnabled="{Binding SelectedDepartment,Converter={x:Static converters:NullableToBooleanConverter.Instance}}">
+                                    <materialDesign:PackIcon Kind="Delete"/>
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                    </Grid>
                 </materialDesign:Card>
             </Grid>
         </materialDesign:TransitioningContent>
