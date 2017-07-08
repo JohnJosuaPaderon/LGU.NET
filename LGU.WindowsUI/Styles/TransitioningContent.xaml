@@ -13,7 +13,7 @@
     <Style x:Key="NavigationTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="SlideInFromLeft" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="SlideInFromBottom" Duration="0:0:1"/>
             </Setter.Value>
         </Setter>
     </Style>

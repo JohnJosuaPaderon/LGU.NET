@@ -16,12 +16,12 @@
     </Style>
 
     <Style x:Key="NavigationItemsControl" TargetType="{x:Type ItemsControl}">
-        <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <StackPanel/>
+                    <WrapPanel/>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>

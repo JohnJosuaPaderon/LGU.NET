@@ -15,9 +15,9 @@
         <Setter Property="VerticalAlignment" Value="{DynamicResource LargeHeaderVerticalAlignment}"/>
     </Style>
 
-    <Style x:Key="HeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource _BaseTextBlock}">
-        <Setter Property="FontSize" Value="{DynamicResource HeaderFontSize}"/>
-        <Setter Property="FontWeight" Value="{DynamicResource HeaderFontWeight}"/>
+    <Style x:Key="RegularHeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource _BaseTextBlock}">
+        <Setter Property="FontSize" Value="{DynamicResource RegularHeaderFontSize}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource RegularHeaderFontWeight}"/>
     </Style>
 
     <Style x:Key="SmallHeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource _BaseTextBlock}">

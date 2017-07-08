@@ -21,10 +21,10 @@
     <VerticalAlignment x:Key="LargeHeaderVerticalAlignment">Center</VerticalAlignment>
     
     <!-- HEADER -->
-    <system:Double x:Key="HeaderFontSize">24</system:Double>
-    <FontWeight x:Key="HeaderFontWeight">SemiBold</FontWeight>
-    <Thickness x:Key="HeaderPadding">12</Thickness>
-    <materialDesign:ColorZoneMode x:Key="HeaderColorZoneMode">PrimaryMid</materialDesign:ColorZoneMode>
+    <system:Double x:Key="RegularHeaderFontSize">20</system:Double>
+    <FontWeight x:Key="RegularHeaderFontWeight">SemiBold</FontWeight>
+    <Thickness x:Key="RegularHeaderPadding">12</Thickness>
+    <materialDesign:ColorZoneMode x:Key="RegularHeaderColorZoneMode">PrimaryMid</materialDesign:ColorZoneMode>
 
     <!-- SMALL HEADER -->
     <system:Double x:Key="SmallHeaderFontSize">15</system:Double>

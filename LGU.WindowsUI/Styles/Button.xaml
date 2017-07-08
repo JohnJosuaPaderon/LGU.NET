@@ -16,10 +16,13 @@
     </Style>
 
     <Style x:Key="NavigationButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
-        <Setter Property="Height" Value="NaN"/>
+        <Setter Property="Height" Value="150"/>
+        <Setter Property="Width" Value="200"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Padding" Value="12"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="4"/>
     </Style>
     
     <Style x:Key="SearchButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
@@ -30,5 +33,13 @@
                 <materialDesign:PackIcon Kind="Magnify" Height="20" Width="20"/>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="FooterActionButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+        <Setter Property="Width" Value="NaN"/>
+        <Setter Property="Height" Value="NaN"/>
+        <Setter Property="Padding" Value="12 8"/>
+        <Setter Property="MinWidth" Value="75"/>
+        <Setter Property="Margin" Value="2 0"/>
     </Style>
 </ResourceDictionary>

@@ -9,6 +9,7 @@
         <ResourceDictionary Source="ColorZone.xaml"/>
         <ResourceDictionary Source="DataGrid.xaml"/>
         <ResourceDictionary Source="ItemsControl.xaml"/>
+        <ResourceDictionary Source="PopupBox.xaml"/>
         <ResourceDictionary Source="TextBlock.xaml"/>
         <ResourceDictionary Source="TextBox.xaml"/>
         <ResourceDictionary Source="TransitioningContent.xaml"/>

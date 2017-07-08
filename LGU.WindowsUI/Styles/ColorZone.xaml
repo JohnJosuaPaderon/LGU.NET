@@ -11,13 +11,19 @@
         <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="{DynamicResource LargeHeaderShadowDepth}"/>
     </Style>
 
-    <Style x:Key="HeaderColorZone" TargetType="{x:Type materialDesign:ColorZone}">
-        <Setter Property="Padding" Value="{DynamicResource HeaderPadding}"/>
-        <Setter Property="Mode" Value="{DynamicResource HeaderColorZoneMode}"/>
+    <Style x:Key="RegularHeaderColorZone" TargetType="{x:Type materialDesign:ColorZone}">
+        <Setter Property="Padding" Value="{DynamicResource RegularHeaderPadding}"/>
+        <Setter Property="Mode" Value="{DynamicResource RegularHeaderColorZoneMode}"/>
     </Style>
 
     <Style x:Key="SmallHeaderColorZone" TargetType="{x:Type materialDesign:ColorZone}">
         <Setter Property="Padding" Value="{DynamicResource SmallHeaderPadding}"/>
         <Setter Property="Mode" Value="{DynamicResource SmallHeaderColorZoneMode}"/>
+    </Style>
+
+    <Style x:Key="FooterColorZone" TargetType="{x:Type materialDesign:ColorZone}">
+        <Setter Property="Padding" Value="{DynamicResource LargeHeaderPadding}"/>
+        <Setter Property="Mode" Value="Standard"/>
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="Depth2"/>
     </Style>
 </ResourceDictionary>
