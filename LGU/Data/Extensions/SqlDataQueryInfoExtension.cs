@@ -1,4 +1,5 @@
 ﻿using LGU.Data.RDBMS;
+using System.Data;
 
 namespace LGU.Data.Extensions
 {
@@ -10,9 +11,9 @@ namespace LGU.Data.Extensions
             return queryInfo;
         }
 
-        public static SqlDataQueryInfo<T> AddOutputParameter<T>(this SqlDataQueryInfo<T> queryInfo, string parameterName)
+        public static SqlDataQueryInfo<T> AddOutputParameter<T>(this SqlDataQueryInfo<T> queryInfo, string parameterName, DbType dbType)
         {
-            queryInfo.Parameters.AddOutput(parameterName);
+            queryInfo.Parameters.AddOutput(parameterName, dbType);
             return queryInfo;
         }
 

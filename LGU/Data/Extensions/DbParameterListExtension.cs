@@ -28,7 +28,7 @@ namespace LGU.Data.Extensions
             }
         }
 
-        public static void AddOutput<T>(this List<T> arg, string parameterName)
+        public static void AddOutput<T>(this List<T> arg, string parameterName, DbType dbType)
             where T : DbParameter, new()
         {
             if (ValidateParameterName(arg, parameterName))
@@ -37,7 +37,8 @@ namespace LGU.Data.Extensions
                     new T()
                     {
                         ParameterName = parameterName,
-                        Direction = ParameterDirection.Output
+                        Direction = ParameterDirection.Output,
+                        DbType = dbType
                     });
             }
         }
