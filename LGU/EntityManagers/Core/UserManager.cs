@@ -25,7 +25,6 @@ namespace LGU.EntityManagers.Core
             InsertUser = insertUser;
             UpdateUser = updateUser;
         }
-
         
         private static void InvokeIfSuccess(IDataProcessResult<User> result, Action action)
         {
