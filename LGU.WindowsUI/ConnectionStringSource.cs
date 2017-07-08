@@ -12,7 +12,7 @@ namespace LGU
     {
         public ConnectionStringSource()
         {
-            var connectionStringSourcePath = ConfigurationManager.AppSettings["ConnectionStringSource"];
+            var connectionStringSourcePath = SystemRuntime.ResolveSystemPath(ConfigurationManager.AppSettings["ConnectionStringSource"]);
 
             if (string.IsNullOrWhiteSpace(connectionStringSourcePath))
             {

@@ -1,6 +1,7 @@
 ﻿using LGU.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Unity;
+using System.Configuration;
 using System.Windows;
 
 namespace LGU
@@ -22,8 +23,10 @@ namespace LGU
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+            SystemRuntime.SystemDirectory = ConfigurationManager.AppSettings["SystemDirectory"];
             InitializeServices();
-            ServiceProvider.Instantiate(ServiceCollection);
+
+            SystemRuntime.Instantiate(ServiceCollection);
         }
 
         protected virtual void InitializeServices()

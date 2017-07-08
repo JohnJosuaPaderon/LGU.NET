@@ -184,7 +184,10 @@
   <ItemGroup>
     <Compile Include="BootstrapperBase.cs" />
     <Compile Include="ConnectionStringSource.cs" />
+    <Compile Include="Converters\NullableToBooleanConverter.cs" />
+    <Compile Include="Events\HumanResource\AddDepartmentEvent.cs" />
     <Compile Include="Events\HumanResource\DepartmentEvent.cs" />
+    <Compile Include="Events\HumanResource\EditDepartmentEvent.cs" />
     <Compile Include="Events\HumanResource\EmployeeEvent.cs" />
     <Compile Include="Events\TitleEvent.cs" />
     <Compile Include="Events\WindowStateEvent.cs" />
@@ -205,7 +208,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\DialogHelper.cs" />
+    <Compile Include="ViewModels\DialogMode.cs" />
+    <Compile Include="ViewModels\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\HumanResource\DepartmentManagementViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\AddEditDepartmentDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\EmployeeFingerPrintEnrollmentViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\LauncherViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\MainViewModel.cs" />
@@ -216,6 +223,9 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\HumanResource\DepartmentManagementView.xaml.cs">
       <DependentUpon>DepartmentManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\Dialogs\AddEditDepartmentDialogView.xaml.cs">
+      <DependentUpon>AddEditDepartmentDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\EmployeeFingerPrintEnrollmentView.xaml.cs">
       <DependentUpon>EmployeeFingerPrintEnrollmentView.xaml</DependentUpon>
@@ -286,6 +296,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\PopupBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\TextBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -303,6 +317,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\DepartmentManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\Dialogs\AddEditDepartmentDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
