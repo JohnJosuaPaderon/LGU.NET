@@ -9,6 +9,7 @@ namespace LGU.HumanResource
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+
             Container.RegisterTypeForNavigation<LauncherView>();
             Container.RegisterTypeForNavigation<PreviewEmployeeView>();
             Container.RegisterTypeForNavigation<DepartmentManagementView>();
