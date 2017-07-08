@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface IDepartmentManager : IEntityManager<Department, uint>, IAsyncEntityManager<Department, uint>, ICancellableAsyncEntityManager<Department, uint>
+    public interface IDepartmentManager : IEntityManager<Department, uint>
     {
         IEnumerableDataProcessResult<Department> Search(string searchKey);
         Task<IEnumerableDataProcessResult<Department>> SearchAsync(string searchKey);

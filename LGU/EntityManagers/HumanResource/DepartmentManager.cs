@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using LGU.Entities;
 using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
-using LGU.Entities;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
@@ -30,77 +29,257 @@ namespace LGU.EntityManagers.HumanResource
 
         public IDataProcessResult<Department> Delete(Department data)
         {
-            throw new NotImplementedException();
+            if (data != null)
+            {
+                DeleteDepartment.Department = data;
+                var result = DeleteDepartment.Execute();
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.Remove(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+            }
         }
 
-        public Task<IDataProcessResult<Department>> DeleteAsync(Department data)
+        public async Task<IDataProcessResult<Department>> DeleteAsync(Department data)
         {
-            throw new NotImplementedException();
+            if (data != null)
+            {
+                DeleteDepartment.Department = data;
+                var result = await DeleteDepartment.ExecuteAsync();
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.Remove(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+            }
         }
 
-        public Task<IDataProcessResult<Department>> DeleteAsync(Department data, CancellationToken cancellationToken)
+        public async Task<IDataProcessResult<Department>> DeleteAsync(Department data, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (data != null)
+            {
+                DeleteDepartment.Department = data;
+                var result = await DeleteDepartment.ExecuteAsync(cancellationToken);
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.Remove(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+            }
         }
 
         public IDataProcessResult<Department> GetById(uint id)
         {
-            throw new NotImplementedException();
+            if (id > 0)
+            {
+                GetDepartmentById.DepartmentId = id;
+                var result = GetDepartmentById.Execute();
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.AddUpdate(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department identifier.");
+            }
         }
 
-        public Task<IDataProcessResult<Department>> GetByIdAsync(uint id)
+        public async Task<IDataProcessResult<Department>> GetByIdAsync(uint id)
         {
-            throw new NotImplementedException();
+            if (id > 0)
+            {
+                GetDepartmentById.DepartmentId = id;
+                var result = await GetDepartmentById.ExecuteAsync();
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.AddUpdate(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department identifier.");
+            }
         }
 
-        public Task<IDataProcessResult<Department>> GetByIdAsync(uint id, CancellationToken cancellationToken)
+        public async Task<IDataProcessResult<Department>> GetByIdAsync(uint id, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (id > 0)
+            {
+                GetDepartmentById.DepartmentId = id;
+                var result = await GetDepartmentById.ExecuteAsync(cancellationToken);
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.AddUpdate(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department identifier.");
+            }
         }
 
         public IEnumerableDataProcessResult<Department> GetList()
         {
-            throw new NotImplementedException();
+            return GetDepartmentList.Execute();
         }
 
         public Task<IEnumerableDataProcessResult<Department>> GetListAsync()
         {
-            throw new NotImplementedException();
+            return GetDepartmentList.ExecuteAsync();
         }
 
         public Task<IEnumerableDataProcessResult<Department>> GetListAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return GetDepartmentList.ExecuteAsync(cancellationToken);
         }
 
         public IDataProcessResult<Department> Insert(Department data)
         {
-            throw new NotImplementedException();
+            if (data != null)
+            {
+                InsertDepartment.Department = data;
+                var result = InsertDepartment.Execute();
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.Add(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+            }
         }
 
-        public Task<IDataProcessResult<Department>> InsertAsync(Department data)
+        public async Task<IDataProcessResult<Department>> InsertAsync(Department data)
         {
-            throw new NotImplementedException();
+            if (data != null)
+            {
+                InsertDepartment.Department = data;
+                var result = await InsertDepartment.ExecuteAsync();
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.Add(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+            }
         }
 
-        public Task<IDataProcessResult<Department>> InsertAsync(Department data, CancellationToken cancellationToken)
+        public async Task<IDataProcessResult<Department>> InsertAsync(Department data, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (data != null)
+            {
+                InsertDepartment.Department = data;
+                var result = await InsertDepartment.ExecuteAsync(cancellationToken);
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.Add(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+            }
         }
 
         public IDataProcessResult<Department> Update(Department data)
         {
-            throw new NotImplementedException();
+            if (data != null)
+            {
+                UpdateDepartment.Department = data;
+                var result = UpdateDepartment.Execute();
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.Update(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+            }
         }
 
-        public Task<IDataProcessResult<Department>> UpdateAsync(Department data)
+        public async Task<IDataProcessResult<Department>> UpdateAsync(Department data)
         {
-            throw new NotImplementedException();
+            if (data != null)
+            {
+                UpdateDepartment.Department = data;
+                var result = await UpdateDepartment.ExecuteAsync();
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.Update(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+            }
         }
 
-        public Task<IDataProcessResult<Department>> UpdateAsync(Department data, CancellationToken cancellationToken)
+        public async Task<IDataProcessResult<Department>> UpdateAsync(Department data, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (data != null)
+            {
+                UpdateDepartment.Department = data;
+                var result = await UpdateDepartment.ExecuteAsync(cancellationToken);
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    StaticSource.Update(result.Data);
+                }
+
+                return result;
+            }
+            else
+            {
+                return new DataProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+            }
         }
 
         public IEnumerableDataProcessResult<Department> Search(string searchKey)
