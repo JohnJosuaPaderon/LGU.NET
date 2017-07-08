@@ -77,40 +77,6 @@ namespace LGU.Data.RDBMS
             }
         }
 
-        public async Task<IDataProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, Task<IDataProcessResult<T>>> getFromReaderAsync, CancellationToken cancellationToken)
-        {
-            using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
-            {
-                if (connection == null)
-                {
-                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
-                }
-
-                try
-                {
-                    using (var command = queryInfo.CreateCommand(connection))
-                    {
-                        using (var reader = await command.ExecuteReaderAsync(cancellationToken))
-                        {
-                            if (reader.HasRows)
-                            {
-                                return await getFromReaderAsync(reader);
-                            }
-                            else
-                            {
-                                return new DataProcessResult<T>(ProcessResultStatus.Success, "No result.");
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                    return new DataProcessResult<T>(ex);
-                }
-            }
-        }
-
         public async Task<IDataProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, CancellationToken, Task<IDataProcessResult<T>>> getFromReaderAsync, CancellationToken cancellationToken)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
