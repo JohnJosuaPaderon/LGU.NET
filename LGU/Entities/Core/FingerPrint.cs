@@ -1,4 +1,6 @@
-﻿namespace LGU.Entities.Core
+﻿using DPFP;
+
+namespace LGU.Entities.Core
 {
     public class FingerPrint
     {
@@ -10,7 +12,7 @@
 
         public FingerType FingerType { get; }
         public HandType HandType { get; }
-        public byte[] Data { get; set; }
+        public Template Data { get; set; }
 
         public static bool operator ==(FingerPrint left, FingerPrint right)
         {
