@@ -23,12 +23,12 @@ namespace LGU.EntityProcessHelpers.HumanResource
         {
             return new Employee()
             {
-                Id = reader.GetUInt64("Id"),
+                Id = reader.GetInt64("Id"),
                 FirstName = reader.GetString("FirstName"),
                 MiddleName = reader.GetString("MiddleName"),
                 LastName = reader.GetString("LastName"),
                 NameExtension = reader.GetString("NameExtension"),
-                Department = DepartmentManager.GetById(reader.GetUInt32("DepartmentId")).Data
+                Department = DepartmentManager.GetById(reader.GetInt32("DepartmentId")).Data
             };
         }
 
@@ -36,12 +36,12 @@ namespace LGU.EntityProcessHelpers.HumanResource
         {
             return new Employee()
             {
-                Id = reader.GetUInt64("Id"),
+                Id = reader.GetInt64("Id"),
                 FirstName = reader.GetString("FirstName"),
                 MiddleName = reader.GetString("MiddleName"),
                 LastName = reader.GetString("LastName"),
                 NameExtension = reader.GetString("NameExtension"),
-                Department = (await DepartmentManager.GetByIdAsync(reader.GetUInt32("DepartmentId"))).Data
+                Department = (await DepartmentManager.GetByIdAsync(reader.GetInt32("DepartmentId"))).Data
             };
         }
 
@@ -49,12 +49,12 @@ namespace LGU.EntityProcessHelpers.HumanResource
         {
             return new Employee()
             {
-                Id = reader.GetUInt64("Id"),
+                Id = reader.GetInt64("Id"),
                 FirstName = reader.GetString("FirstName"),
                 MiddleName = reader.GetString("MiddleName"),
                 LastName = reader.GetString("LastName"),
                 NameExtension = reader.GetString("NameExtension"),
-                Department = (await DepartmentManager.GetByIdAsync(reader.GetUInt32("DepartmentId"), cancellationToken)).Data
+                Department = (await DepartmentManager.GetByIdAsync(reader.GetInt32("DepartmentId"), cancellationToken)).Data
             };
         }
 

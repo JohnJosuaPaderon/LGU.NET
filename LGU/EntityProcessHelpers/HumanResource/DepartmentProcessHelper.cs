@@ -15,7 +15,7 @@ namespace LGU.EntityProcessHelpers.HumanResource
         {
             return new Department()
             {
-                Id = reader.GetUInt32("Id"),
+                Id = reader.GetInt32("Id"),
                 Description = reader.GetString("Description"),
                 Abbreviation = reader.GetString("Abbreviation")
             };
