@@ -6,7 +6,9 @@
 
         <ResourceDictionary Source="Button.xaml"/>
         <ResourceDictionary Source="Card.xaml"/>
+        <ResourceDictionary Source="CheckBox.xaml"/>
         <ResourceDictionary Source="ColorZone.xaml"/>
+        <ResourceDictionary Source="ComboBox.xaml"/>
         <ResourceDictionary Source="DataGrid.xaml"/>
         <ResourceDictionary Source="ItemsControl.xaml"/>
         <ResourceDictionary Source="PopupBox.xaml"/>
@@ -19,6 +21,8 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type materialDesign:Card}" BasedOn="{StaticResource _Card}"/>
+    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource _CheckBox}"/>
+    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource _ComboBox}"/>
     <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource _DataGrid}"/>
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource _BaseTextBlock}"/>
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource _TextBox}"/>
