@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
     {
         private SqlQueryInfo GetQueryInfo()
         {
-            return SqlQueryInfo.CreateProcedureQueryInfo("HumanResource.GetDepartmentList", GetProcessResult);
+            return SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName("GetDepartmentList"), GetProcessResult);
         }
 
         private static IProcessResult GetProcessResult(SqlCommand command, int affectedRows)

@@ -27,7 +27,8 @@ namespace LGU.EntityProcesses.HumanResource
                     .AddInputParameter("@_MiddleName", Employee.MiddleName)
                     .AddInputParameter("@_LastName", Employee.LastName)
                     .AddInputParameter("@_NameExtension", Employee.NameExtension)
-                    .AddInputParameter("@_DepartmentId", Employee.Department?.Id);
+                    .AddInputParameter("@_DepartmentId", Employee.Department?.Id)
+                    .AddLogByParameter();
             }
         }
 
@@ -35,7 +36,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
             if (affectedRows == 1)
             {
-                data.Id = command.Parameters.GetUInt64("@_Id");
+                data.Id = command.Parameters.GetInt64("@_Id");
                 return new DataProcessResult<Employee>(data);
             }
             else

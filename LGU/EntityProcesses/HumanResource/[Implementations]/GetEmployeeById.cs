@@ -14,7 +14,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public ulong EmployeeId { get; set; }
+        public long EmployeeId { get; set; }
 
         private SqlQueryInfo QueryInfo
         {

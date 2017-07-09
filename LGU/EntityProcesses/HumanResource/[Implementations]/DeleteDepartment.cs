@@ -16,7 +16,8 @@ namespace LGU.EntityProcesses.HumanResource
         private SqlDataQueryInfo<Department> GetQueryInfo()
         {
             return SqlDataQueryInfo<Department>.CreateProcedureQueryInfo(Department, GetQualifiedDbObjectName("DeleteDepartment"), GetProcessResult, true)
-                .AddInputParameter("Id", Department.Id);
+                .AddInputParameter("Id", Department.Id)
+                .AddLogByParameter();
         }
 
         private IDataProcessResult<Department> GetProcessResult(Department department, SqlCommand command, int affectedRows)

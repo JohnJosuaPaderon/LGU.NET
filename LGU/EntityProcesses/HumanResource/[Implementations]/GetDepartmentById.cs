@@ -14,7 +14,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public uint DepartmentId { get; set; }
+        public int DepartmentId { get; set; }
 
         private SqlQueryInfo GetQueryInfo()
         {

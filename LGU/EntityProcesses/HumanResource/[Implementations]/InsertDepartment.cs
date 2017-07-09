@@ -20,11 +20,11 @@ namespace LGU.EntityProcesses.HumanResource
         {
             get
             {
-                return SqlDataQueryInfo<Department>.CreateProcedureQueryInfo(Department, "HumanResource.InsertDepartment", GetProcessResult, true)
+                return SqlDataQueryInfo<Department>.CreateProcedureQueryInfo(Department, GetQualifiedDbObjectName("InsertDepartment"), GetProcessResult, true)
                     .AddOutputParameter("@_Id", DbType.Int32)
                     .AddInputParameter("@_Description", Department.Description)
                     .AddInputParameter("@_Abbreviation", Department.Abbreviation)
-                    .AddInputParameter("@_LogBy", SystemRuntime.LogByInfo);
+                    .AddLogByParameter();
             }
         }
 
@@ -32,7 +32,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
             if (affectedRows == 1)
             {
-                data.Id = command.Parameters.GetUInt32("@_Id");
+                data.Id = command.Parameters.GetInt32("@_Id");
                 return new DataProcessResult<Department>(Department);
             }
             else

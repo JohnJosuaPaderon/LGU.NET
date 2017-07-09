@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class InsertEmployeeFingerPrintSet : HumanResourceProcessBase, IInsertEmployeeFingerPrintSet
+    public sealed class UpdateEmployeeFingerPrintSet : HumanResourceProcessBase, IUpdateEmployeeFingerPrintSet
     {
-        public InsertEmployeeFingerPrintSet(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public UpdateEmployeeFingerPrintSet(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
         {
         }
 
@@ -19,7 +19,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
             get
             {
-                return SqlDataQueryInfo<EmployeeFingerPrintSet>.CreateProcedureQueryInfo(FingerPrintSet, GetQualifiedDbObjectName("InsertEmployeeFingerPrintSet"), GetProcessResult, true)
+                return SqlDataQueryInfo<EmployeeFingerPrintSet>.CreateProcedureQueryInfo(FingerPrintSet, GetQualifiedDbObjectName("UpdateEmployeeFingerPrintSet"), GetProcessResult, true)
                     .AddInputParameter("@_Id", FingerPrintSet.Employee?.Id)
                     .AddInputParameter("@_LeftThumb", FingerPrintSet.LeftThumb?.Data?.Bytes)
                     .AddInputParameter("@_LeftIndexFinger", FingerPrintSet.LeftIndexFinger?.Data?.Bytes)
@@ -37,15 +37,14 @@ namespace LGU.EntityProcesses.HumanResource
 
         private IDataProcessResult<EmployeeFingerPrintSet> GetProcessResult(EmployeeFingerPrintSet data, SqlCommand command, int affectedRows)
         {
-            if (affectedRows == 1)
+            if (affectedRows > 0)
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(data, ProcessResultStatus.Success);
+                return new DataProcessResult<EmployeeFingerPrintSet>(data);
             }
             else
             {
                 return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
-
         }
 
         public IDataProcessResult<EmployeeFingerPrintSet> Execute()

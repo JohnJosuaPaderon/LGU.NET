@@ -20,7 +20,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
             get
             {
-                return SqlQueryInfo.CreateProcedureQueryInfo("HumanResource.SearchDepartment", GetProcessResult)
+                return SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName("SearchDepartment"), GetProcessResult)
                     .AddInputParameter("@_SearchKey", SearchKey);
             }
         }

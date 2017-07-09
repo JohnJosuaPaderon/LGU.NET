@@ -1,16 +1,15 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.RDBMS;
 using LGU.Entities.HumanResource;
-using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class DeleteEmployee : HumanResourceProcessBase, IDeleteEmployee
+    public sealed class UpdateEmployee : HumanResourceProcessBase, IUpdateEmployee
     {
-        public DeleteEmployee(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public UpdateEmployee(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
         {
         }
 
@@ -20,8 +19,8 @@ namespace LGU.EntityProcesses.HumanResource
         {
             get
             {
-                return SqlDataQueryInfo<Employee>.CreateProcedureQueryInfo(Employee, GetQualifiedDbObjectName("DeleteEmployee"), GetProcessResult, true)
-                    .AddOutputParameter("@_Id", DbType.Int64)
+                return SqlDataQueryInfo<Employee>.CreateProcedureQueryInfo(Employee, GetQualifiedDbObjectName("UpdateEmployee"), GetProcessResult, true)
+                    .AddInputParameter("@_Id", Employee.Id)
                     .AddInputParameter("@_FirstName", Employee.FirstName)
                     .AddInputParameter("@_MiddleName", Employee.MiddleName)
                     .AddInputParameter("@_LastName", Employee.LastName)
@@ -33,10 +32,9 @@ namespace LGU.EntityProcesses.HumanResource
 
         private IDataProcessResult<Employee> GetProcessResult(Employee data, SqlCommand command, int affectedRows)
         {
-            if (affectedRows == 1)
+            if (affectedRows > 0)
             {
-                data.Id = command.Parameters.GetInt64("@_Id");
-                return new DataProcessResult<Employee>(data, ProcessResultStatus.Success);
+                return new DataProcessResult<Employee>(data);
             }
             else
             {
