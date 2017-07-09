@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.HumanResource
 {
-    public class Position : Entity<ulong>
+    public class Position : Entity<long>
     {
         public string Description { get; set; }
         public string Abbreviation { get; set; }

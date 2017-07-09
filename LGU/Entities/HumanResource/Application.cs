@@ -2,7 +2,7 @@
 
 namespace LGU.Entities.HumanResource
 {
-    public class Application : Entity<ulong>
+    public class Application : Entity<long>
     {
         public Application(Applicant applicant)
         {

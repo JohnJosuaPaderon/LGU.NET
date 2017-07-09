@@ -2,7 +2,7 @@
 
 namespace LGU.Entities.HumanResource
 {
-    public class Department : Entity<uint>
+    public class Department : Entity<int>
     {
         public string Description { get; set; }
         public string Abbreviation { get; set; }

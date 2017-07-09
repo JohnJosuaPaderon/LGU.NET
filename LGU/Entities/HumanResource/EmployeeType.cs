@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.HumanResource
 {
-    public class EmployeeType : Entity<ushort>
+    public class EmployeeType : Entity<short>
     {
         public string Description { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.HumanResource
 {
-    public class ApplicationDocumentCategory : Entity<ushort>
+    public class ApplicationDocumentCategory : Entity<short>
     {
         public string Description { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace LGU.Entities.HumanResource
 {
-    public class ApplicantExam : Entity<ulong>
+    public class ApplicantExam : Entity<long>
     {
         public ApplicantExam(Applicant applicant)
         {
