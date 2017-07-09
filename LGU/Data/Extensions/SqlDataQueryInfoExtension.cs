@@ -22,5 +22,11 @@ namespace LGU.Data.Extensions
             queryInfo.Parameters.AddInputOutput(parameterName, value);
             return queryInfo;
         }
+
+        public static SqlDataQueryInfo<T> AddLogByParameter<T>(this SqlDataQueryInfo<T> queryInfo)
+        {
+            queryInfo.Parameters.AddInput("@_LogBy", SystemRuntime.LogByInfo);
+            return queryInfo;
+        }
     }
 }

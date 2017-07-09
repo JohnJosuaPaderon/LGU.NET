@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace LGU.Data.Extensions
                     new T()
                     {
                         ParameterName = parameterName,
-                        Value = value,
+                        Value = value ?? DBNull.Value,
                         Direction = ParameterDirection.Input
                     });
             }
@@ -52,7 +53,7 @@ namespace LGU.Data.Extensions
                     new T()
                     {
                         ParameterName = parameterName,
-                        Value = value,
+                        Value = value ?? DBNull.Value,
                         Direction = ParameterDirection.InputOutput
                     });
             }
