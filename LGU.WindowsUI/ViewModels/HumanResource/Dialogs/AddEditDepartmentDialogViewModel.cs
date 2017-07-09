@@ -1,4 +1,5 @@
-﻿using LGU.EntityManagers.HumanResource;
+﻿using LGU.Entities.HumanResource;
+using LGU.EntityManagers.HumanResource;
 using LGU.Events.HumanResource;
 using LGU.Models.HumanResource;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,13 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             set { SetProperty(ref _Department, value); }
         }
 
+        private bool _Multiple;
+        public bool Multiple
+        {
+            get { return _Multiple; }
+            set { SetProperty(ref _Multiple, value); }
+        }
+
         public override void Load()
         {
             base.Load();
@@ -59,8 +67,16 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
             if (result.Status == ProcessResultStatus.Success)
             {
+                if (Multiple)
+                {
+                    Department = new DepartmentModel(new Department());
+                }
+                else
+                {
+                    DialogHelper.CloseDialog();
+                }
+
                 ShowInfoMessage("Department has been added successfully.");
-                DialogHelper.CloseDialog();
             }
             else if(result.Status == ProcessResultStatus.Failed)
             {
@@ -74,8 +90,8 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
             if (result.Status == ProcessResultStatus.Success)
             {
-                ShowInfoMessage("Department details has been updated successfully.");
                 DialogHelper.CloseDialog();
+                ShowInfoMessage("Department details has been updated successfully.");
             }
             else if (result.Status == ProcessResultStatus.Failed)
             {
