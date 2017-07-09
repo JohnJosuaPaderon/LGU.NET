@@ -19,9 +19,17 @@
             <ItemsControl.Resources>
                 <Style TargetType="{x:Type materialDesign:TransitioningContent}" BasedOn="{StaticResource NavigationTransitioningContent}"/>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource NavigationButton}"/>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource NavigationTextBlock}"/>
             </ItemsControl.Resources>
             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-                <Button Content="Department" Command="{Binding NavigateCommand}" CommandParameter="DepartmentManagementView"/>
+                <Button Command="{Binding NavigateCommand}" CommandParameter="DepartmentManagementView">
+                    <TextBlock Text="Departments"/>
+                </Button>
+            </materialDesign:TransitioningContent>
+            <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
+                <Button Command="{Binding NavigateCommand}" CommandParameter="EmployeeFingerPrintEnrollmentView">
+                    <TextBlock Text="Employee Finger Print Enrollment"/>
+                </Button>
             </materialDesign:TransitioningContent>
         </ItemsControl>
     </Grid>

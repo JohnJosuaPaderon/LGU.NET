@@ -45,16 +45,14 @@
                             <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
                             <DataGridTextColumn Header="Middle Name" Binding="{Binding MiddleName}"/>
                             <DataGridTextColumn Header="Name Extension" Binding="{Binding NameExtension}"/>
-                            <DataGridTextColumn Header="Department" Binding="{Binding Department}"/>
+                            <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </materialDesign:Card>
             </Grid>
         </materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent Grid.Column="2" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight,Duration=0:0:1}">
-            <materialDesign:Card>
-                <local:PreviewEmployeeView/>
-            </materialDesign:Card>
+            <local:PreviewEmployeeView/>
         </materialDesign:TransitioningContent>
     </Grid>
 </UserControl>
