@@ -11,8 +11,8 @@ namespace LGU.Models.HumanResource
             Abbreviation = source.Abbreviation;
         }
 
-        private uint _Id;
-        public uint Id
+        private int _Id;
+        public int Id
         {
             get { return _Id; }
             set { SetProperty(ref _Id, value); }

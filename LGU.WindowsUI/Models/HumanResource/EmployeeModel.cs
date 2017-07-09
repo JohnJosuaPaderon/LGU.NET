@@ -14,8 +14,8 @@ namespace LGU.Models.HumanResource
             Department = source.Department;
         }
 
-        private ulong _Id;
-        public ulong Id
+        private long _Id;
+        public long Id
         {
             get { return _Id; }
             set { SetProperty(ref _Id, value); }
