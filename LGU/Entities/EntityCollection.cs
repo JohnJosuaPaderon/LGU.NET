@@ -147,6 +147,13 @@ namespace LGU.Entities
             return UnsafeContains(item);
         }
 
+        public bool ContainsId(TIdentifier id)
+        {
+            if (!Source.Any()) return false;
+
+            return Source.ContainsKey(id);
+        }
+
         /// <summary>
         /// Copies <see cref="EntityCollection{T, TIdentifier}"/> elements to an existing one-dimensional <see cref="Array"/>, starting at the specified array index
         /// </summary>
