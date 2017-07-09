@@ -1,11 +1,12 @@
-﻿<UserControl x:Class="LGU.Views.HumanResource.Dialogs.AddEditDepartmentDialogView"
+﻿<UserControl x:Class="LGU.Views.HumanResource.Dialogs.AddEditEmployeeDialogView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:converters="clr-namespace:LGU.Converters"
-             MinHeight="{Binding MinDialogHeight}" MinWidth="{Binding MinDialogWidth}">
+             MinWidth="{Binding MinDialogWidth}"
+             MinHeight="{Binding MinDialogHeight}">
     <UserControl.Resources>
         <ResourceDictionary Source="../../../Styles/Default.xaml"/>
     </UserControl.Resources>
@@ -15,15 +16,20 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromTop,Duration=0:0:1}">
+        <materialDesign:TransitioningContent Grid.Row="0" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight,Duration=0:0:1}">
             <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
-                <TextBlock Text="{Binding HeaderTitle,FallbackValue='Add Or Edit Department'}" Style="{DynamicResource RegularHeaderTextBlock}"/>
+                <TextBlock Text="{Binding HeaderTitle,FallbackValue='Add or Edit Employee'}" Style="{DynamicResource RegularHeaderTextBlock}"/>
             </materialDesign:ColorZone>
         </materialDesign:TransitioningContent>
-        <StackPanel Grid.Row="1" Margin="{DynamicResource ContainerMargin}">
-            <TextBox Text="{Binding Department.Description}" materialDesign:HintAssist.Hint="Description"/>
-            <TextBox Text="{Binding Department.Abbreviation}" materialDesign:HintAssist.Hint="Abbreviation"/>
-        </StackPanel>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Grid.Row="1" Margin="{DynamicResource ContainerMargin}">
+                <TextBox Text="{Binding Employee.LastName}" materialDesign:HintAssist.Hint="Last Name"/>
+                <TextBox Text="{Binding Employee.FirstName}" materialDesign:HintAssist.Hint="First Name"/>
+                <TextBox Text="{Binding Employee.MiddleName}" materialDesign:HintAssist.Hint="Middle Name"/>
+                <TextBox Text="{Binding Employee.NameExtension}" materialDesign:HintAssist.Hint="Name Extension"/>
+                <ComboBox SelectedItem="{Binding Employee.Department}" materialDesign:HintAssist.Hint="Department"/>
+            </StackPanel>
+        </ScrollViewer>
         <materialDesign:TransitioningContent Grid.Row="2" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromBottom,Duration=0:0:1}">
             <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
                 <Grid>
