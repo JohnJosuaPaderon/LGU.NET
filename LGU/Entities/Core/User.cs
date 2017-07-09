@@ -3,7 +3,7 @@ using System.Security;
 
 namespace LGU.Entities.Core
 {
-    public class User : Entity<ulong>
+    public class User : Entity<long>
     {
         public User()
         {

@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.Core
 {
-    public class UserStatus : Entity<ushort>
+    public class UserStatus : Entity<short>
     {
         public string Description { get; set; }
 

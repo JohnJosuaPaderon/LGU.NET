@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.Core
 {
-    public class Gender : Entity<ushort>
+    public class Gender : Entity<short>
     {
         public string Description { get; set; }
 

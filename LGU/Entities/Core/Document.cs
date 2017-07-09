@@ -2,7 +2,7 @@
 
 namespace LGU.Entities.Core
 {
-    public class Document : Entity<ulong>
+    public class Document : Entity<long>
     {
         public string Title { get; set; }
         public string Description { get; set; }

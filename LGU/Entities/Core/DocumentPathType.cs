@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.Core
 {
-    public class DocumentPathType : Entity<ushort>
+    public class DocumentPathType : Entity<short>
     {
         public string Description { get; set; }
 

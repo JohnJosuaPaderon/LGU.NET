@@ -4,7 +4,7 @@ using System;
 
 namespace LGU.Entities.Core
 {
-    public class Person : Entity<ulong>
+    public class Person : Entity<long>
     {
         static Person()
         {
