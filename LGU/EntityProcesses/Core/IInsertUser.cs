@@ -2,7 +2,7 @@
 
 namespace LGU.EntityProcesses.Core
 {
-    public interface IInsertUser : IDataProcess<User>, IAsyncDataProcess<User>, ICancellableAsyncDataProcess<User>
+    public interface IInsertUser : IDataProcess<User>
     {
         User User { get; set; }
     }

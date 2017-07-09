@@ -2,8 +2,8 @@
 
 namespace LGU.EntityProcesses.Core
 {
-    public interface IGetUserById : IDataProcess<User>, IAsyncDataProcess<User>, ICancellableAsyncDataProcess<User>
+    public interface IGetUserById : IDataProcess<User>
     {
-        ulong UserId { get; set; }
+        long UserId { get; set; }
     }
 }

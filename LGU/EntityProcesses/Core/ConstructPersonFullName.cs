@@ -1,5 +1,8 @@
 ﻿using LGU.Entities.Core;
+using System;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.Core
 {
@@ -19,6 +22,16 @@ namespace LGU.EntityProcesses.Core
             }
 
             return new DataProcessResult<string>(data, status, message);
+        }
+
+        public Task<IDataProcessResult<string>> ExecuteAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataProcessResult<string>> ExecuteAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
 
         private static string Construct(Person person, ref ProcessResultStatus status, ref string message)

@@ -2,7 +2,7 @@
 
 namespace LGU.EntityProcesses.Core
 {
-    public interface IDeleteUser : IDataProcess<User>, IAsyncDataProcess<User>, ICancellableAsyncDataProcess<User>
+    public interface IDeleteUser : IDataProcess<User>
     {
         User User { get; set; }
     }
