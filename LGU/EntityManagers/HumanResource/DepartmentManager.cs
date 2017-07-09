@@ -15,9 +15,15 @@ namespace LGU.EntityManagers.HumanResource
         private readonly IUpdateDepartment UpdateDepartment;
         private readonly ISearchDepartment SearchDepartment;
 
-        private static EntityCollection<Department, uint> StaticSource { get; } = new EntityCollection<Department, uint>();
+        private static EntityCollection<Department, int> StaticSource { get; } = new EntityCollection<Department, int>();
 
-        public DepartmentManager(IDeleteDepartment deleteDepartment, IGetDepartmentById getDepartmentById, IGetDepartmentList getDepartmentList, IInsertDepartment insertDepartment, IUpdateDepartment updateDepartment, ISearchDepartment searchDepartment)
+        public DepartmentManager(
+            IDeleteDepartment deleteDepartment,
+            IGetDepartmentById getDepartmentById,
+            IGetDepartmentList getDepartmentList,
+            IInsertDepartment insertDepartment,
+            IUpdateDepartment updateDepartment,
+            ISearchDepartment searchDepartment)
         {
             DeleteDepartment = deleteDepartment;
             GetDepartmentById = getDepartmentById;
@@ -87,10 +93,15 @@ namespace LGU.EntityManagers.HumanResource
             }
         }
 
-        public IDataProcessResult<Department> GetById(uint id)
+        public IDataProcessResult<Department> GetById(int id)
         {
             if (id > 0)
             {
+                if (StaticSource.ContainsId(id))
+                {
+                    return new DataProcessResult<Department>(StaticSource[id]);
+                }
+
                 GetDepartmentById.DepartmentId = id;
                 var result = GetDepartmentById.Execute();
 
@@ -107,10 +118,15 @@ namespace LGU.EntityManagers.HumanResource
             }
         }
 
-        public async Task<IDataProcessResult<Department>> GetByIdAsync(uint id)
+        public async Task<IDataProcessResult<Department>> GetByIdAsync(int id)
         {
             if (id > 0)
             {
+                if (StaticSource.ContainsId(id))
+                {
+                    return new DataProcessResult<Department>(StaticSource[id]);
+                }
+
                 GetDepartmentById.DepartmentId = id;
                 var result = await GetDepartmentById.ExecuteAsync();
 
@@ -127,10 +143,15 @@ namespace LGU.EntityManagers.HumanResource
             }
         }
 
-        public async Task<IDataProcessResult<Department>> GetByIdAsync(uint id, CancellationToken cancellationToken)
+        public async Task<IDataProcessResult<Department>> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
+                if (StaticSource.ContainsId(id))
+                {
+                    return new DataProcessResult<Department>(StaticSource[id]);
+                }
+
                 GetDepartmentById.DepartmentId = id;
                 var result = await GetDepartmentById.ExecuteAsync(cancellationToken);
 
