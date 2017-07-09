@@ -184,6 +184,7 @@
   <ItemGroup>
     <Compile Include="BootstrapperBase.cs" />
     <Compile Include="ConnectionStringSource.cs" />
+    <Compile Include="Converters\DialogModeAddToVisibilityConverter.cs" />
     <Compile Include="Converters\NullableToBooleanConverter.cs" />
     <Compile Include="Events\HumanResource\AddDepartmentEvent.cs" />
     <Compile Include="Events\HumanResource\DepartmentEvent.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\HumanResource\DepartmentManagementViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditDepartmentDialogViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\AddEditEmployeeDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\EmployeeFingerPrintEnrollmentViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\LauncherViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\MainViewModel.cs" />
@@ -226,6 +228,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\Dialogs\AddEditDepartmentDialogView.xaml.cs">
       <DependentUpon>AddEditDepartmentDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\Dialogs\AddEditEmployeeDialogView.xaml.cs">
+      <DependentUpon>AddEditEmployeeDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\EmployeeFingerPrintEnrollmentView.xaml.cs">
       <DependentUpon>EmployeeFingerPrintEnrollmentView.xaml</DependentUpon>
@@ -276,7 +281,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\CheckBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\ColorZone.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -321,6 +334,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\Dialogs\AddEditDepartmentDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\Dialogs\AddEditEmployeeDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
