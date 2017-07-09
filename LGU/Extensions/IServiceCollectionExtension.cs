@@ -22,7 +22,16 @@ namespace LGU.Extensions
             serviceCollection.AddTransient<ISearchDepartment, SearchDepartment>();
             serviceCollection.AddTransient<IInsertDepartment, InsertDepartment>();
             serviceCollection.AddTransient<IUpdateDepartment, UpdateDepartment>();
-            serviceCollection.AddSingleton<IDepartmentManager, DepartmentManager>(); 
+            serviceCollection.AddSingleton<IDepartmentManager, DepartmentManager>();
+            #endregion
+
+            #region EmployeeManager
+            serviceCollection.AddTransient<IDeleteEmployee, DeleteEmployee>();
+            serviceCollection.AddTransient<IGetEmployeeById, GetEmployeeById>();
+            serviceCollection.AddTransient<IGetEmployeeList, GetEmployeeList>();
+            serviceCollection.AddTransient<IInsertEmployee, InsertEmployee>();
+            serviceCollection.AddTransient<IUpdateEmployee, UpdateEmployee>();
+            serviceCollection.AddSingleton<IEmployeeManager, EmployeeManager>();
             #endregion
 
             return serviceCollection;
