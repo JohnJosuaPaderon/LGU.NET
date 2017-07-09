@@ -2,7 +2,7 @@
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IInsertEmployeeFingerPrintSet : IDataProcess<EmployeeFingerPrintSet>
+    public interface IDeleteEmployeeFingerPrintSet : IDataProcess<EmployeeFingerPrintSet>
     {
         EmployeeFingerPrintSet FingerPrintSet { get; set; }
     }

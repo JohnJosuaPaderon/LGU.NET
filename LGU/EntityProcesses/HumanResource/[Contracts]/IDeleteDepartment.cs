@@ -2,7 +2,7 @@
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IDeleteDepartment : IDataProcess<Department>, IAsyncDataProcess<Department>, ICancellableAsyncDataProcess<Department>
+    public interface IDeleteDepartment : IDataProcess<Department>
     {
         Department Department { get; set; }
     }

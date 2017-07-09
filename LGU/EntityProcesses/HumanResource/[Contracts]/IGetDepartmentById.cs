@@ -2,8 +2,8 @@
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetDepartmentById : IDataProcess<Department>, IAsyncDataProcess<Department>, ICancellableAsyncDataProcess<Department>
+    public interface IGetDepartmentById : IDataProcess<Department>
     {
-        uint DepartmentId { get; set; }
+        int DepartmentId { get; set; }
     }
 }

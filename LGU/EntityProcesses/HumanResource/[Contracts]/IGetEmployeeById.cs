@@ -2,8 +2,8 @@
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetEmployeeById : IDataProcess<Employee>, IAsyncDataProcess<Employee>, ICancellableAsyncDataProcess<Employee>
+    public interface IGetEmployeeById : IDataProcess<Employee>
     {
-        ulong EmployeeId { get; set; }
+        long EmployeeId { get; set; }
     }
 }

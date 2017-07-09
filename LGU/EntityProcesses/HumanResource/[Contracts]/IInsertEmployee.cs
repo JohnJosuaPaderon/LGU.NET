@@ -2,7 +2,7 @@
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IInsertEmployee : IDataProcess<Employee>, IAsyncDataProcess<Employee>, ICancellableAsyncDataProcess<Employee>
+    public interface IInsertEmployee : IDataProcess<Employee>
     {
         Employee Employee { get; set; }
     }

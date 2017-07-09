@@ -2,7 +2,7 @@
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface ISearchDepartment : IEnumerableDataProcess<Department>, IAsyncEnumerableDataProcess<Department>, ICancellableEnumerableDataProcess<Department>
+    public interface ISearchDepartment : IEnumerableDataProcess<Department>
     {
         string SearchKey { get; set; }
     }
