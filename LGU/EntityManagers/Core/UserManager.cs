@@ -9,7 +9,7 @@ namespace LGU.EntityManagers.Core
 {
     public sealed class UserManager : IUserManager
     {
-        private static EntityCollection<User, ulong> StaticSource { get; } = new EntityCollection<User, ulong>();
+        private static EntityCollection<User, long> StaticSource { get; } = new EntityCollection<User, long>();
 
         private readonly IDeleteUser DeleteUser;
         private readonly IGetUserById GetUserById;
@@ -61,7 +61,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public IDataProcessResult<User> GetById(ulong userId)
+        public IDataProcessResult<User> GetById(long userId)
         {
             GetUserById.UserId = userId;
             var result = GetUserById.Execute();
@@ -70,7 +70,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IDataProcessResult<User>> GetByIdAsync(ulong userId, CancellationToken cancellationToken)
+        public async Task<IDataProcessResult<User>> GetByIdAsync(long userId, CancellationToken cancellationToken)
         {
             GetUserById.UserId = userId;
             var result = await GetUserById.ExecuteAsync(cancellationToken);
@@ -79,7 +79,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IDataProcessResult<User>> GetByIdAsync(ulong userId)
+        public async Task<IDataProcessResult<User>> GetByIdAsync(long userId)
         {
             GetUserById.UserId = userId;
             var result = await GetUserById.ExecuteAsync();

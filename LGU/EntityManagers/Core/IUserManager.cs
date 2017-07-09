@@ -3,7 +3,7 @@ using LGU.Entities.Core;
 
 namespace LGU.EntityManagers.Core
 {
-    public interface IUserManager : IEntityManager<User, ulong>
+    public interface IUserManager : IEntityManager<User, long>
     {
     }
 }
