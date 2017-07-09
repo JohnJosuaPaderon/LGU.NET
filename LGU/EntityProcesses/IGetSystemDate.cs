@@ -2,7 +2,7 @@
 
 namespace LGU.EntityProcesses
 {
-    public interface IGetSystemDate : IDataProcess<DateTime>, IAsyncDataProcess<DateTime>, ICancellableAsyncDataProcess<DateTime>
+    public interface IGetSystemDate : IDataProcess<DateTime>
     {
     }
 }
