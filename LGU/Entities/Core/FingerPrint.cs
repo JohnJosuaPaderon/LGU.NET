@@ -4,7 +4,7 @@ namespace LGU.Entities.Core
 {
     public class FingerPrint
     {
-        internal FingerPrint(FingerType fingerType, HandType handType)
+        public FingerPrint(FingerType fingerType, HandType handType)
         {
             FingerType = fingerType;
             HandType = handType;
