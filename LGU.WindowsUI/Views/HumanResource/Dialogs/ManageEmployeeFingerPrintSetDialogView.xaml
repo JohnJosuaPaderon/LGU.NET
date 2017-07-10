@@ -1,0 +1,188 @@
+﻿<UserControl x:Class="LGU.Views.HumanResource.Dialogs.ManageEmployeeFingerPrintSetDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"       
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:LGU.Converters"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             MinHeight="{Binding MinDialogHeight}" MinWidth="{Binding MinDialogWidth}">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../../../Styles/Default.xaml"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <materialDesign:TransitioningContent Grid.Row="0" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromTop,Duration=0:0:1}">
+            <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
+                <TextBlock Text="Manage Finger Prints" Style="{DynamicResource RegularHeaderTextBlock}"/>
+            </materialDesign:ColorZone>
+        </materialDesign:TransitioningContent>
+        <Grid Grid.Row="1">
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource PreviewFieldTextBox}"/>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <TextBox Text="{Binding FingerPrintSet.Employee.FullName,Mode=OneWay}" materialDesign:HintAssist.Hint="Employee"/>
+                <TextBox Text="{Binding FingerPrintSet.Employee.Department.Description}" materialDesign:HintAssist.Hint="Department"/>
+            </StackPanel>
+            <Grid Grid.Row="1" Margin="{DynamicResource ContainerMargin}">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Margin" Value="4"/>
+                    </Style>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                        <Setter Property="Height" Value="NaN"/>
+                        <Setter Property="Width" Value="NaN"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Row="0" Grid.Column="0" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.LeftThumb,Mode=TwoWay}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="{Binding FingerPrintSet.LeftThumb.Data,Converter={x:Static converters:NullableToPackIconStateConverter.Instance}}" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding FingerPrintSet.LeftThumb,Converter={x:Static converters:FingerPrintToDisplayConverter.Instance},FallbackValue='Finger Name'}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+                <Button Grid.Row="0" Grid.Column="2" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.RightThumb}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="{Binding FingerPrintSet.RightThumb.Data,Converter={x:Static converters:NullableToPackIconStateConverter.Instance}}" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding FingerPrintSet.RightThumb,Converter={x:Static converters:FingerPrintToDisplayConverter.Instance},FallbackValue='Finger Name'}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+                <Button Grid.Row="2" Grid.Column="0" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.LeftIndexFinger}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="{Binding FingerPrintSet.LeftIndexFinger.Data,Converter={x:Static converters:NullableToPackIconStateConverter.Instance}}" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding FingerPrintSet.LeftIndexFinger,Converter={x:Static converters:FingerPrintToDisplayConverter.Instance},FallbackValue='Finger Name'}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+                <Button Grid.Row="2" Grid.Column="2" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.RightIndexFinger}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="{Binding FingerPrintSet.RightIndexFinger.Data,Converter={x:Static converters:NullableToPackIconStateConverter.Instance}}" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding FingerPrintSet.RightIndexFinger,Converter={x:Static converters:FingerPrintToDisplayConverter.Instance},FallbackValue='Finger Name'}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+                <Button Grid.Row="4" Grid.Column="0" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.LeftMiddleFinger}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="{Binding FingerPrintSet.LeftMiddleFinger.Data,Converter={x:Static converters:NullableToPackIconStateConverter.Instance}}" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding FingerPrintSet.LeftMiddleFinger,Converter={x:Static converters:FingerPrintToDisplayConverter.Instance},FallbackValue='Finger Name'}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+                <Button Grid.Row="4" Grid.Column="2" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.RightMiddleFinger}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="{Binding FingerPrintSet.RightMiddleFinger.Data,Converter={x:Static converters:NullableToPackIconStateConverter.Instance}}" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding FingerPrintSet.RightMiddleFinger,Converter={x:Static converters:FingerPrintToDisplayConverter.Instance},FallbackValue='Finger Name'}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+                <Button Grid.Row="6" Grid.Column="0" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.LeftRingFinger}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="{Binding FingerPrintSet.LeftRingFinger.Data,Converter={x:Static converters:NullableToPackIconStateConverter.Instance}}" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding FingerPrintSet.LeftRingFinger,Converter={x:Static converters:FingerPrintToDisplayConverter.Instance},FallbackValue='Finger Name'}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+                <Button Grid.Row="6" Grid.Column="2" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.RightRingFinger}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="{Binding FingerPrintSet.RightRingFinger.Data,Converter={x:Static converters:NullableToPackIconStateConverter.Instance}}" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding FingerPrintSet.RightRingFinger,Converter={x:Static converters:FingerPrintToDisplayConverter.Instance},FallbackValue='Finger Name'}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+                <Button Grid.Row="8" Grid.Column="0" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.LeftLittleFinger}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="{Binding FingerPrintSet.LeftLittleFinger.Data,Converter={x:Static converters:NullableToPackIconStateConverter.Instance}}" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding FingerPrintSet.LeftLittleFinger,Converter={x:Static converters:FingerPrintToDisplayConverter.Instance},FallbackValue='Finger Name'}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+                <Button Grid.Row="8" Grid.Column="2" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.RightLittleFinger}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon Grid.Column="0" Kind="{Binding FingerPrintSet.RightLittleFinger.Data,Converter={x:Static converters:NullableToPackIconStateConverter.Instance}}" Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding FingerPrintSet.RightLittleFinger,Converter={x:Static converters:FingerPrintToDisplayConverter.Instance},FallbackValue='Finger Name'}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Grid>
+                </Button>
+            </Grid>
+            <StackPanel Grid.Row="2">
+                <TextBox Text="{Binding CurrentFingerPrint,Converter={x:Static converters:FingerPrintToDisplayConverter.Instance}}" materialDesign:HintAssist.Hint="Selected Finger"/>
+                <TextBox Text="{Binding RemainingScans}" materialDesign:HintAssist.Hint="Remaining Scans"/>
+                <TextBlock Text="{Binding ScannerLog}" TextWrapping="Wrap" TextAlignment="Justify" Margin="{DynamicResource DefaultMargin}"/>
+            </StackPanel>
+        </Grid>
+        <materialDesign:TransitioningContent Grid.Row="2" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromBottom,Duration=0:0:1}">
+            <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FooterActionButton}"/>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1" Content="Save" Command="{Binding SaveCommand}"/>
+                    <Button Grid.Column="2" Content="Cancel" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
+                </Grid>
+            </materialDesign:ColorZone>
+        </materialDesign:TransitioningContent>
+    </Grid>
+</UserControl>
