@@ -17,7 +17,7 @@ namespace LGU.ViewModels
             EventAggregator = eventAggregator;
         }
 
-        public virtual void Load()
+        public virtual void Initialize()
         {
             Debug.WriteLine("ViewModel has been Loaded.");
         }

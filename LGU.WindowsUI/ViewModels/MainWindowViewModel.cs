@@ -17,7 +17,7 @@ namespace LGU.ViewModels
 
         public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            SystemManager = SystemRuntime.ServiceProvider.GetService<ISystemManager>();
+            SystemManager = SystemRuntime.Services.GetService<ISystemManager>();
         }
 
         private string _Title = "Welcome to LGU.NET";
@@ -34,7 +34,7 @@ namespace LGU.ViewModels
             set { SetProperty(ref _WindowState, value); }
         }
 
-        public async override void Load()
+        public async override void Initialize()
         {
             EventAggregator.GetEvent<TitleEvent>().Subscribe(t => Title = t);
             EventAggregator.GetEvent<WindowStateEvent>().Subscribe(ws => WindowState = ws);
