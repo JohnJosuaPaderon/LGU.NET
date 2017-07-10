@@ -14,7 +14,7 @@ namespace LGU.EntityProcessHelpers.HumanResource
     {
         static EmployeeProcessHelper()
         {
-            DepartmentManager = SystemRuntime.ServiceProvider.GetService<IDepartmentManager>();
+            DepartmentManager = SystemRuntime.Services.GetService<IDepartmentManager>();
         }
 
         static readonly IDepartmentManager DepartmentManager;
