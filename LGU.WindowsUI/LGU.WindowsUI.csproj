@@ -185,16 +185,24 @@
     <Compile Include="BootstrapperBase.cs" />
     <Compile Include="ConnectionStringSource.cs" />
     <Compile Include="Converters\DialogModeAddToVisibilityConverter.cs" />
+    <Compile Include="Converters\FingerPrintToDisplayConverter.cs" />
     <Compile Include="Converters\NullableToBooleanConverter.cs" />
+    <Compile Include="Converters\FingerPrintToPackIconStateConverter.cs" />
+    <Compile Include="Converters\NullableToPackIconStateConverter.cs" />
     <Compile Include="Events\HumanResource\AddDepartmentEvent.cs" />
+    <Compile Include="Events\HumanResource\AddEmployeeEvent.cs" />
     <Compile Include="Events\HumanResource\DepartmentEvent.cs" />
     <Compile Include="Events\HumanResource\EditDepartmentEvent.cs" />
+    <Compile Include="Events\HumanResource\EditEmployeeEvent.cs" />
     <Compile Include="Events\HumanResource\EmployeeEvent.cs" />
+    <Compile Include="Events\HumanResource\ManageEmployeeFingerPrintSetEvent.cs" />
     <Compile Include="Events\TitleEvent.cs" />
     <Compile Include="Events\WindowStateEvent.cs" />
     <Compile Include="Extensions\IServiceCollectionExtension.cs" />
     <Compile Include="Models\HumanResource\DepartmentModel.cs" />
+    <Compile Include="Models\HumanResource\EmployeeFingerPrintSetModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeModel.cs" />
+    <Compile Include="Models\HumanResource\FingerPrintModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -215,6 +223,7 @@
     <Compile Include="ViewModels\HumanResource\DepartmentManagementViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditDepartmentDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditEmployeeDialogViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\EmployeeFingerPrintEnrollmentViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\LauncherViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\MainViewModel.cs" />
@@ -231,6 +240,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\Dialogs\AddEditEmployeeDialogView.xaml.cs">
       <DependentUpon>AddEditEmployeeDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogView.xaml.cs">
+      <DependentUpon>ManageEmployeeFingerPrintSetDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\EmployeeFingerPrintEnrollmentView.xaml.cs">
       <DependentUpon>EmployeeFingerPrintEnrollmentView.xaml</DependentUpon>
@@ -341,6 +353,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HumanResource\EmployeeFingerPrintEnrollmentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -371,6 +387,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LGU.DigitalPersona\LGU.DigitalPersona.csproj">
+      <Project>{789b5915-5dee-43c3-8acc-1313d7ede28a}</Project>
+      <Name>LGU.DigitalPersona</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LGU\LGU.csproj">
       <Project>{88191DC2-BD70-4984-B77B-54EE04966DB7}</Project>
       <Name>LGU</Name>
