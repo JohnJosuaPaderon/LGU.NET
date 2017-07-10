@@ -1,25 +1,43 @@
 ﻿using LGU.Entities.HumanResource;
+using LGU.EntityManagers.HumanResource;
 using LGU.Events.HumanResource;
 using LGU.Models.HumanResource;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using System.Collections.ObjectModel;
+using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace LGU.ViewModels.HumanResource
 {
     public class EmployeeFingerPrintEnrollmentViewModel : ViewModelBase
     {
+        private readonly IEmployeeManager EmployeeManager;
+        private readonly EmployeeEvent EmployeeEvent;
+        private readonly AddEmployeeEvent AddEmployeeEvent;
+        private readonly EditEmployeeEvent EditEmployeeEvent;
+        private readonly ManageEmployeeFingerPrintSetEvent ManageEmployeeFingerPrintSetEvent;
+
         public EmployeeFingerPrintEnrollmentViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
+            EmployeeManager = SystemRuntime.Services.GetService<IEmployeeManager>();
+
             EmployeeEvent = EventAggregator.GetEvent<EmployeeEvent>();
+            AddEmployeeEvent = EventAggregator.GetEvent<AddEmployeeEvent>();
+            EditEmployeeEvent = EventAggregator.GetEvent<EditEmployeeEvent>();
+            ManageEmployeeFingerPrintSetEvent = EventAggregator.GetEvent<ManageEmployeeFingerPrintSetEvent>();
             SearchCommand = new DelegateCommand(Search);
+            AddCommand = new DelegateCommand(Add);
+            EditCommand = new DelegateCommand(Edit);
+            ManageFingerPrintCommand = new DelegateCommand(ManageFingerPrint);
         }
 
-        private readonly EmployeeEvent EmployeeEvent;
-
         public ObservableCollection<EmployeeModel> Employees { get; } = new ObservableCollection<EmployeeModel>();
+        public DelegateCommand AddCommand { get; }
+        public DelegateCommand EditCommand { get; }
         public DelegateCommand SearchCommand { get; }
+        public DelegateCommand ManageFingerPrintCommand { get; }
 
         private EmployeeModel _SelectedEmployee;
         public EmployeeModel SelectedEmployee
@@ -38,26 +56,40 @@ namespace LGU.ViewModels.HumanResource
             set { SetProperty(ref _SearchKey, value); }
         }
 
-        private void Search()
+        private async void Search()
         {
             Employees.Clear();
 
-            for (int i = 0; i < SearchKey.Length; i++)
+            var result = await (string.IsNullOrWhiteSpace(SearchKey) ? EmployeeManager.GetListAsync() : EmployeeManager.SearchAsync(SearchKey));
+
+            if (result.Status == ProcessResultStatus.Success)
             {
-                Employees.Add(new EmployeeModel(new Employee
+                if (result.DataList != null && result.DataList.Any())
                 {
-                    FirstName = $"JOHN JOSUA ({i})",
-                    MiddleName = $"ROBLES ({i})",
-                    LastName = $"PADERON ({i})",
-                    Department = new Department()
+                    foreach (var item in result.DataList)
                     {
-                        Description = $"MANAGEMENT INFORMATION SYSTEMS OFFICE ({i})"
+                        Employees.Add(new EmployeeModel(item));
                     }
-                }));
+                }
             }
         }
 
-        public override void Load()
+        private void Add()
+        {
+            AddEmployeeEvent.Publish(new EmployeeModel(new Employee()));
+        }
+
+        private void Edit()
+        {
+            EditEmployeeEvent.Publish(SelectedEmployee);
+        }
+
+        private void ManageFingerPrint()
+        {
+            ManageEmployeeFingerPrintSetEvent.Publish(new EmployeeFingerPrintSetModel(new EmployeeFingerPrintSet(SelectedEmployee.GetSource())));
+        }
+
+        public override void Initialize()
         {
             
         }

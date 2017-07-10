@@ -21,7 +21,7 @@ namespace LGU.ViewModels.HumanResource
             RequestSearchCommand = new DelegateCommand(RequestSearch);
             AddCommand = new DelegateCommand(Add);
             EditCommand = new DelegateCommand(Edit);
-            DepartmentManager = SystemRuntime.ServiceProvider.GetService<IDepartmentManager>();
+            DepartmentManager = SystemRuntime.Services.GetService<IDepartmentManager>();
         }
 
         public ObservableCollection<DepartmentModel> Departments { get; } = new ObservableCollection<DepartmentModel>();
@@ -47,9 +47,9 @@ namespace LGU.ViewModels.HumanResource
             set { SetProperty(ref _SelectedDepartment, value, () => DepartmentEvent.Publish(value)); }
         }
 
-        public override void Load()
+        public override void Initialize()
         {
-            base.Load();
+            base.Initialize();
             DepartmentEvent = EventAggregator.GetEvent<DepartmentEvent>();
         }
 
