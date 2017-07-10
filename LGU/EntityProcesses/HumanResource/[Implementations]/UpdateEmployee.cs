@@ -25,6 +25,9 @@ namespace LGU.EntityProcesses.HumanResource
                     .AddInputParameter("@_MiddleName", Employee.MiddleName)
                     .AddInputParameter("@_LastName", Employee.LastName)
                     .AddInputParameter("@_NameExtension", Employee.NameExtension)
+                    .AddInputParameter("@_BirthDate", Employee.BirthDate)
+                    .AddInputParameter("@_GenderId", Employee.Gender?.Id)
+                    .AddInputParameter("@_Deceased", Employee.Deceased)
                     .AddInputParameter("@_DepartmentId", Employee.Department?.Id)
                     .AddLogByParameter();
             }
