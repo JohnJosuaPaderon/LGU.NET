@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.IO;
 
 namespace LGU.Data.Extensions
 {
@@ -320,6 +321,11 @@ namespace LGU.Data.Extensions
         public static ulong GetUInt64(this DbDataReader reader, string fieldName, IFormatProvider formatProvider)
         {
             return GetValueBase(reader, fieldName, formatProvider, DbValueConverter.ToUInt64);
+        }
+
+        public static Stream GetStream(this DbDataReader reader, string fieldName)
+        {
+            return GetValueBase(reader, fieldName, DbValueConverter.ToStream);
         }
 
         public static Dictionary<string, object> ToDictionary(this DbDataReader reader)

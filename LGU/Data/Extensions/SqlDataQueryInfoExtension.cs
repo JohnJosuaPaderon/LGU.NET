@@ -1,5 +1,7 @@
 ﻿using LGU.Data.RDBMS;
+using System;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace LGU.Data.Extensions
 {
@@ -8,6 +10,12 @@ namespace LGU.Data.Extensions
         public static SqlDataQueryInfo<T> AddInputParameter<T>(this SqlDataQueryInfo<T> queryInfo, string parameterName, object value)
         {
             queryInfo.Parameters.AddInput(parameterName, value);
+            return queryInfo;
+        }
+
+        public static SqlDataQueryInfo<T> AddInputParameter<T>(this SqlDataQueryInfo<T> queryInfo, string parameterName, object value, SqlDbType type)
+        {
+            queryInfo.Parameters.Add(new SqlParameter(parameterName, value ?? DBNull.Value) { SqlDbType = type });
             return queryInfo;
         }
 
