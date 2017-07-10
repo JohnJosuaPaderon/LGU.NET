@@ -11,7 +11,7 @@ namespace LGU.Views.HumanResource
         public PreviewDepartmentView()
         {
             InitializeComponent();
-            Loaded += (s, e) => ViewModel.Load();
+            Loaded += (s, e) => ViewModel.Initialize();
         }
 
         public PreviewDepartmentViewModel ViewModel => DataContext as PreviewDepartmentViewModel;

@@ -5,6 +5,8 @@
              xmlns:prism="http://prismlibrary.com/"      
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:dialogs="clr-namespace:LGU.Views.HumanResource.Dialogs"
+             xmlns:converters="clr-namespace:LGU.Converters"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <ResourceDictionary Source="../../Styles/Default.xaml"/>
@@ -28,26 +30,62 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Text="{Binding SearchKey, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource SearchTextBox}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                    <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TextBox>
-                        <Button Grid.Column="1" Style="{DynamicResource SearchButton}"/>
+                        <TextBox Text="{Binding SearchKey}" Style="{DynamicResource SearchTextBox}"/>
+                        <Button Grid.Column="1" Style="{DynamicResource SearchButton}" Command="{Binding SearchCommand}"/>
                     </Grid>
                 </materialDesign:Card>
                 <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
-                    <DataGrid ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
-                            <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
-                            <DataGridTextColumn Header="Middle Name" Binding="{Binding MiddleName}"/>
-                            <DataGridTextColumn Header="Name Extension" Binding="{Binding NameExtension}"/>
-                            <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <Grid>
+                        <DataGrid ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                                <DataGridTextColumn Header="Middle Name" Binding="{Binding MiddleName}"/>
+                                <DataGridTextColumn Header="Name Extension" Binding="{Binding NameExtension}"/>
+                                <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <materialDesign:PopupBox Style="{DynamicResource DataManagerPopupBox}">
+                            <StackPanel>
+                                <Button ToolTip="Add new Employee" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding AddCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Button.CommandParameter>
+                                        <dialogs:AddEditEmployeeDialogView/>
+                                    </Button.CommandParameter>
+                                    <materialDesign:PackIcon Kind="Plus"/>
+                                </Button>
+                                <Button ToolTip="Edit selected Employee" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" IsEnabled="{Binding SelectedEmployee,Converter={x:Static converters:NullableToBooleanConverter.Instance}}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding EditCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Button.CommandParameter>
+                                        <dialogs:AddEditEmployeeDialogView/>
+                                    </Button.CommandParameter>
+                                    <materialDesign:PackIcon Kind="Pencil"/>
+                                </Button>
+                                <Button ToolTip="Delete selected Employee" IsEnabled="{Binding SelectedEmployee,Converter={x:Static converters:NullableToBooleanConverter.Instance}}">
+                                    <materialDesign:PackIcon Kind="Delete"/>
+                                </Button>
+                                <Button ToolTip="Manage Finger Print of the Selected Employee" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" IsEnabled="{Binding SelectedEmployee,Converter={x:Static converters:NullableToBooleanConverter.Instance}}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding ManageFingerPrintCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Button.CommandParameter>
+                                        <dialogs:ManageEmployeeFingerPrintSetDialogView/>
+                                    </Button.CommandParameter>
+                                    <materialDesign:PackIcon Kind="Fingerprint"/>
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                    </Grid>
                 </materialDesign:Card>
             </Grid>
         </materialDesign:TransitioningContent>

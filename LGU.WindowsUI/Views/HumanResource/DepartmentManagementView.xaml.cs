@@ -11,7 +11,7 @@ namespace LGU.Views.HumanResource
         public DepartmentManagementView()
         {
             InitializeComponent();
-            Loaded += (s, e) => ViewModel.Load();
+            Loaded += (s, e) => ViewModel.Initialize();
         }
 
         public DepartmentManagementViewModel ViewModel => DataContext as DepartmentManagementViewModel;

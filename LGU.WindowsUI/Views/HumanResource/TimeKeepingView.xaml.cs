@@ -11,7 +11,7 @@ namespace LGU.Views.HumanResource
         public TimeKeepingView()
         {
             InitializeComponent();
-            Loaded += (s, e) => ViewModel.Load();
+            Loaded += (s, e) => ViewModel.Initialize();
         }
 
         public TimeKeepingViewModel ViewModel => DataContext as TimeKeepingViewModel;

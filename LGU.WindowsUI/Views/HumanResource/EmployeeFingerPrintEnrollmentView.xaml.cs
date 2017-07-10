@@ -11,7 +11,7 @@ namespace LGU.Views.HumanResource
         public EmployeeFingerPrintEnrollmentView()
         {
             InitializeComponent();
-            Loaded += (s, e) => ViewModel.Load();
+            Loaded += (s, e) => ViewModel.Initialize();
         }
 
         public EmployeeFingerPrintEnrollmentViewModel ViewModel => DataContext as EmployeeFingerPrintEnrollmentViewModel;

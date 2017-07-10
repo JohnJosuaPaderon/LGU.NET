@@ -16,11 +16,12 @@
             </Grid.RowDefinitions>
             <materialDesign:TransitioningContent Grid.Row="0" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromTop,Duration=0:0:1}">
                 <materialDesign:ColorZone Style="{DynamicResource LargeHeaderColorZone}">
-                    <TextBlock Text="CITY GOVERNMENT OF NAVOTAS" Style="{DynamicResource LargeHeaderTextBlock}"/>
+                    <TextBlock Text="{Binding ScannerLog}" Style="{DynamicResource LargeHeaderTextBlock}"/>
                 </materialDesign:ColorZone>
             </materialDesign:TransitioningContent>
             <Grid Grid.Row="1">
                 <ContentControl prism:RegionManager.RegionName="SampleRegion"/>
+                
             </Grid>
         </Grid>
     </materialDesign:DrawerHost>
