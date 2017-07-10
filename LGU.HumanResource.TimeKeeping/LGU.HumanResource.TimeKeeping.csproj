@@ -171,6 +171,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -196,6 +197,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LGU.DigitalPersona\LGU.DigitalPersona.csproj">
+      <Project>{789b5915-5dee-43c3-8acc-1313d7ede28a}</Project>
+      <Name>LGU.DigitalPersona</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LGU.WindowsUI\LGU.WindowsUI.csproj">
+      <Project>{f77ed949-3722-497f-97e3-d79c026c9916}</Project>
+      <Name>LGU.WindowsUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LGU\LGU.csproj">
+      <Project>{88191dc2-bd70-4984-b77b-54ee04966db7}</Project>
+      <Name>LGU</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
