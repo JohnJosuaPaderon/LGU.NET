@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LGU.Utilities;
+using System;
+using System.IO;
 
 namespace LGU.Data.Utilities
 {
@@ -37,6 +39,11 @@ namespace LGU.Data.Utilities
         private static TResult? NullableConversionBase<TResult, TArgument>(TArgument value, IFormatProvider formatProvider, Func<TArgument, IFormatProvider, TResult> converter) where TResult : struct
         {
             return Convertible(value) ? new TResult?(converter(value, formatProvider)) : null;
+        }
+
+        public static Stream ToStream(object value)
+        {
+            return ConversionBase(value, ValueConverter.ToStream);
         }
     }
 }
