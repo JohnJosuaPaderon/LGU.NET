@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace LGU.Utilities
 {
@@ -98,6 +99,18 @@ namespace LGU.Utilities
         private static TResult? NullableConversionBase<TResult, TArgument>(TArgument value, IFormatProvider formatProvider, Func<TArgument, IFormatProvider, TResult> converter) where TResult : struct
         {
             return Convertible(value) ? new TResult?(converter(value, formatProvider)) : null;
+        }
+
+        public static Stream ToStream(object value)
+        {
+            if (value != null)
+            {
+                return new MemoryStream((byte[])value);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
