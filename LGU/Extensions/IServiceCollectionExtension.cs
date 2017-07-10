@@ -31,6 +31,7 @@ namespace LGU.Extensions
             serviceCollection.AddTransient<IGetEmployeeList, GetEmployeeList>();
             serviceCollection.AddTransient<IInsertEmployee, InsertEmployee>();
             serviceCollection.AddTransient<IUpdateEmployee, UpdateEmployee>();
+            serviceCollection.AddTransient<ISearchEmployee, SearchEmployee>();
             serviceCollection.AddSingleton<IEmployeeManager, EmployeeManager>();
             #endregion
 
