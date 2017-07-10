@@ -18,11 +18,11 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         public AddEditDepartmentDialogViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            DepartmentManager = SystemRuntime.ServiceProvider.GetService<IDepartmentManager>();
+            DepartmentManager = SystemRuntime.Services.GetService<IDepartmentManager>();
             SaveCommand = new DelegateCommand(Save);
             AddDepartmentEvent = EventAggregator.GetEvent<AddDepartmentEvent>();
             EditDepartmentEvent = EventAggregator.GetEvent<EditDepartmentEvent>();
-            Load();
+            Initialize();
         }
 
         public DelegateCommand SaveCommand { get; }
@@ -41,9 +41,9 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             set { SetProperty(ref _Multiple, value); }
         }
 
-        public override void Load()
+        public override void Initialize()
         {
-            base.Load();
+            base.Initialize();
             AddDepartmentEvent.Subscribe(d => SetData(d, "Add new Department", DialogMode.Add));
             EditDepartmentEvent.Subscribe(d => SetData(d, "Edit Department", DialogMode.Edit));
         }
