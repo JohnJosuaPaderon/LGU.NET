@@ -8,34 +8,37 @@ namespace LGU.EntityManagers.HumanResource
 {
     public sealed class EmployeeManager : IEmployeeManager
     {
-        private readonly IDeleteEmployee DeleteEmployee;
-        private readonly IGetEmployeeById GetEmployeeById;
-        private readonly IGetEmployeeList GetEmployeeList;
-        private readonly IInsertEmployee InsertEmployee;
-        private readonly IUpdateEmployee UpdateEmployee;
+        private readonly IDeleteEmployee DeleteProc;
+        private readonly IGetEmployeeById GetByIdProc;
+        private readonly IGetEmployeeList GetListProc;
+        private readonly IInsertEmployee InsertProc;
+        private readonly IUpdateEmployee UpdateProc;
+        private readonly ISearchEmployee SearchProc;
 
         private static EntityCollection<Employee, long> StaticSource { get; } = new EntityCollection<Employee, long>();
 
         public EmployeeManager(
-            IDeleteEmployee deleteEmployee,
-            IGetEmployeeById getEmployeeById,
-            IGetEmployeeList getEmployeeList,
-            IInsertEmployee insertEmployee,
-            IUpdateEmployee updateEmployee)
+            IDeleteEmployee deleteProc,
+            IGetEmployeeById getByIdProc,
+            IGetEmployeeList getListProc,
+            IInsertEmployee insertProc,
+            IUpdateEmployee updateProc,
+            ISearchEmployee searchProc)
         {
-            DeleteEmployee = deleteEmployee;
-            GetEmployeeById = getEmployeeById;
-            GetEmployeeList = getEmployeeList;
-            InsertEmployee = insertEmployee;
-            UpdateEmployee = updateEmployee;
+            DeleteProc = deleteProc;
+            GetByIdProc = getByIdProc;
+            GetListProc = getListProc;
+            InsertProc = insertProc;
+            UpdateProc = updateProc;
+            SearchProc = searchProc;
         }
 
         public IDataProcessResult<Employee> Delete(Employee data)
         {
             if (data != null)
             {
-                DeleteEmployee.Employee = data;
-                var result = DeleteEmployee.Execute();
+                DeleteProc.Employee = data;
+                var result = DeleteProc.Execute();
 
                 if (result.Status == ProcessResultStatus.Success)
                 {
@@ -54,8 +57,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                DeleteEmployee.Employee = data;
-                var result = await DeleteEmployee.ExecuteAsync();
+                DeleteProc.Employee = data;
+                var result = await DeleteProc.ExecuteAsync();
 
                 if (result.Status == ProcessResultStatus.Success)
                 {
@@ -74,8 +77,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                DeleteEmployee.Employee = data;
-                var result = await DeleteEmployee.ExecuteAsync(cancellationToken);
+                DeleteProc.Employee = data;
+                var result = await DeleteProc.ExecuteAsync(cancellationToken);
 
                 if (result.Status == ProcessResultStatus.Success)
                 {
@@ -99,8 +102,8 @@ namespace LGU.EntityManagers.HumanResource
                     return new DataProcessResult<Employee>(StaticSource[id]);
                 }
 
-                GetEmployeeById.EmployeeId = id;
-                var result = GetEmployeeById.Execute();
+                GetByIdProc.EmployeeId = id;
+                var result = GetByIdProc.Execute();
 
                 if (result.Status == ProcessResultStatus.Success)
                 {
@@ -125,8 +128,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    GetEmployeeById.EmployeeId = id;
-                    var result = await GetEmployeeById.ExecuteAsync();
+                    GetByIdProc.EmployeeId = id;
+                    var result = await GetByIdProc.ExecuteAsync();
 
                     if (result.Status == ProcessResultStatus.Success)
                     {
@@ -152,8 +155,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    GetEmployeeById.EmployeeId = id;
-                    var result = await GetEmployeeById.ExecuteAsync(cancellationToken);
+                    GetByIdProc.EmployeeId = id;
+                    var result = await GetByIdProc.ExecuteAsync(cancellationToken);
 
                     if (result.Status == ProcessResultStatus.Success)
                     {
@@ -171,25 +174,25 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableDataProcessResult<Employee> GetList()
         {
-            return GetEmployeeList.Execute();
+            return GetListProc.Execute();
         }
 
         public Task<IEnumerableDataProcessResult<Employee>> GetListAsync()
         {
-            return GetEmployeeList.ExecuteAsync();
+            return GetListProc.ExecuteAsync();
         }
 
         public Task<IEnumerableDataProcessResult<Employee>> GetListAsync(CancellationToken cancellationToken)
         {
-            return GetEmployeeList.ExecuteAsync(cancellationToken);
+            return GetListProc.ExecuteAsync(cancellationToken);
         }
 
         public IDataProcessResult<Employee> Insert(Employee data)
         {
             if (data != null)
             {
-                InsertEmployee.Employee = data;
-                var result = InsertEmployee.Execute();
+                InsertProc.Employee = data;
+                var result = InsertProc.Execute();
 
                 if (result.Status == ProcessResultStatus.Success)
                 {
@@ -208,8 +211,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                InsertEmployee.Employee = data;
-                var result = await InsertEmployee.ExecuteAsync();
+                InsertProc.Employee = data;
+                var result = await InsertProc.ExecuteAsync();
 
                 if (result.Status == ProcessResultStatus.Success)
                 {
@@ -228,8 +231,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                InsertEmployee.Employee = data;
-                var result = await InsertEmployee.ExecuteAsync(cancellationToken);
+                InsertProc.Employee = data;
+                var result = await InsertProc.ExecuteAsync(cancellationToken);
 
                 if (result.Status == ProcessResultStatus.Success)
                 {
@@ -248,8 +251,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateEmployee.Employee = data;
-                var result = UpdateEmployee.Execute();
+                UpdateProc.Employee = data;
+                var result = UpdateProc.Execute();
 
                 if (result.Status == ProcessResultStatus.Success)
                 {
@@ -268,8 +271,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateEmployee.Employee = data;
-                var result = await UpdateEmployee.ExecuteAsync();
+                UpdateProc.Employee = data;
+                var result = await UpdateProc.ExecuteAsync();
 
                 if (result.Status == ProcessResultStatus.Success)
                 {
@@ -288,8 +291,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateEmployee.Employee = data;
-                var result = await UpdateEmployee.ExecuteAsync(cancellationToken);
+                UpdateProc.Employee = data;
+                var result = await UpdateProc.ExecuteAsync(cancellationToken);
 
                 if (result.Status == ProcessResultStatus.Success)
                 {
@@ -301,6 +304,45 @@ namespace LGU.EntityManagers.HumanResource
             else
             {
                 return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
+            }
+        }
+
+        public IEnumerableDataProcessResult<Employee> Search(string searchKey)
+        {
+            if (!string.IsNullOrWhiteSpace(searchKey))
+            {
+                SearchProc.SearchKey = searchKey;
+                return SearchProc.Execute();
+            }
+            else
+            {
+                return new EnumerableDataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
+            }
+        }
+
+        public async Task<IEnumerableDataProcessResult<Employee>> SearchAsync(string searchKey)
+        {
+            if (!string.IsNullOrWhiteSpace(searchKey))
+            {
+                SearchProc.SearchKey = searchKey;
+                return await SearchProc.ExecuteAsync();
+            }
+            else
+            {
+                return new EnumerableDataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
+            }
+        }
+
+        public async Task<IEnumerableDataProcessResult<Employee>> SearchAsync(string searchKey, CancellationToken cancellationToken)
+        {
+            if (!string.IsNullOrWhiteSpace(searchKey))
+            {
+                SearchProc.SearchKey = searchKey;
+                return await SearchProc.ExecuteAsync(cancellationToken);
+            }
+            else
+            {
+                return new EnumerableDataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
             }
         }
     }
