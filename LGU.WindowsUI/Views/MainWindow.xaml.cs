@@ -11,7 +11,7 @@ namespace LGU.Views
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += (s, e) => ViewModel.Load();
+            Loaded += (s, e) => ViewModel.Initialize();
         }
 
         public MainWindowViewModel ViewModel => DataContext as MainWindowViewModel;
