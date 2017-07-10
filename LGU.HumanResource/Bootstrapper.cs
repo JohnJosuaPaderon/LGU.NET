@@ -21,6 +21,7 @@ namespace LGU.HumanResource
         {
             ServiceCollection.SetConnectionStringSource();
             ServiceCollection.UseSqlServer();
+            ServiceCollection.UseDigitalPersona();
         }
     }
 }
