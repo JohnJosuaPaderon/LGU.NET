@@ -9,10 +9,10 @@ namespace LGU
     {
         public static void Instantiate(IServiceCollection serviceCollection)
         {
-            ServiceProvider = serviceCollection.BuildServiceProvider();
+            Services = serviceCollection.BuildServiceProvider();
         }
 
-        public static IServiceProvider ServiceProvider { get; private set; }
+        public static IServiceProvider Services { get; private set; }
         public static string SystemDirectory { get; set; }
         public static User CurrentUser { get; set; }
 
