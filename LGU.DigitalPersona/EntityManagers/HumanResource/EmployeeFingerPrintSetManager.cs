@@ -11,17 +11,20 @@ namespace LGU.EntityManagers.HumanResource
         private readonly IGetEmployeeFingerPrintSetList GetListProc;
         private readonly IInsertEmployeeFingerPrintSet InsertProc;
         private readonly IUpdateEmployeeFingerPrintSet UpdateProc;
+        private readonly IGetEmployeeFingerPrintSetById GetByIdProc;
 
         public EmployeeFingerPrintSetManager(
             IDeleteEmployeeFingerPrintSet deleteProc,
             IGetEmployeeFingerPrintSetList getListProc,
             IInsertEmployeeFingerPrintSet insertProc,
-            IUpdateEmployeeFingerPrintSet updateProc)
+            IUpdateEmployeeFingerPrintSet updateProc,
+            IGetEmployeeFingerPrintSetById getByIdProc)
         {
             DeleteProc = deleteProc;
             GetListProc = getListProc;
             InsertProc = insertProc;
             UpdateProc = updateProc;
+            GetByIdProc = getByIdProc;
         }
 
         public IDataProcessResult<EmployeeFingerPrintSet> Delete(EmployeeFingerPrintSet data)
@@ -60,6 +63,45 @@ namespace LGU.EntityManagers.HumanResource
             else
             {
                 return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed, "Invalid finger print set.");
+            }
+        }
+
+        public IDataProcessResult<EmployeeFingerPrintSet> GetById(Employee employee)
+        {
+            if (employee != null)
+            {
+                GetByIdProc.Employee = employee;
+                return GetByIdProc.Execute();
+            }
+            else
+            {
+                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+            }
+        }
+
+        public async Task<IDataProcessResult<EmployeeFingerPrintSet>> GetByIdAsync(Employee employee)
+        {
+            if (employee != null)
+            {
+                GetByIdProc.Employee = employee;
+                return await GetByIdProc.ExecuteAsync();
+            }
+            else
+            {
+                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+            }
+        }
+
+        public async Task<IDataProcessResult<EmployeeFingerPrintSet>> GetByIdAsync(Employee employee, CancellationToken cancellationToken)
+        {
+            if (employee != null)
+            {
+                GetByIdProc.Employee = employee;
+                return await GetByIdProc.ExecuteAsync(cancellationToken);
+            }
+            else
+            {
+                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
         }
 
