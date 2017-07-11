@@ -13,6 +13,7 @@ namespace LGU.Extensions
             serviceCollection.AddTransient<IGetEmployeeFingerPrintSetList, GetEmployeeFingerPrintSetList>();
             serviceCollection.AddTransient<IInsertEmployeeFingerPrintSet, InsertEmployeeFingerPrintSet>();
             serviceCollection.AddTransient<IUpdateEmployeeFingerPrintSet, UpdateEmployeeFingerPrintSet>();
+            serviceCollection.AddTransient<IGetEmployeeFingerPrintSetById, GetEmployeeFingerPrintSetById>();
             serviceCollection.AddSingleton<IEmployeeFingerPrintSetManager, EmployeeFingerPrintSetManager>();
             #endregion
 
