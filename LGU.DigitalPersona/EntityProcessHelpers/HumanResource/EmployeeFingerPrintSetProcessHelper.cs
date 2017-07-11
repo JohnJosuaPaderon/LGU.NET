@@ -1,5 +1,4 @@
-﻿using DPFP;
-using LGU.Data.Extensions;
+﻿using LGU.Data.Extensions;
 using LGU.Entities.HumanResource;
 using LGU.EntityManagers.HumanResource;
 using Microsoft.Extensions.DependencyInjection;
