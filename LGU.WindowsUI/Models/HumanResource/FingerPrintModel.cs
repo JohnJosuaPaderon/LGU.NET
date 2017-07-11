@@ -1,5 +1,6 @@
 ﻿using DPFP;
 using LGU.Entities.Core;
+using System.Diagnostics;
 
 namespace LGU.Models.HumanResource
 {
@@ -30,14 +31,15 @@ namespace LGU.Models.HumanResource
         public Template Data
         {
             get { return _Data; }
-            set { SetProperty(ref _Data, value); }
+            set { SetProperty(ref _Data, value, () => Debug.WriteLine("Set Data : HandType = {0}; FingerType = {1}", HandType, FingerType)); }
         }
 
         public override FingerPrint GetSource()
         {
-            var fingerPrint = new FingerPrint(FingerType, HandType);
-            fingerPrint.Data = Data;
-
+            var fingerPrint = new FingerPrint(FingerType, HandType)
+            {
+                Data = Data
+            };
             return fingerPrint;
         }
     }
