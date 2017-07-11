@@ -14,6 +14,7 @@ namespace LGU.ViewModels.HumanResource
     public class EmployeeFingerPrintEnrollmentViewModel : ViewModelBase
     {
         private readonly IEmployeeManager EmployeeManager;
+        private readonly IEmployeeFingerPrintSetManager EmployeeFingerPrintSetManager;
         private readonly EmployeeEvent EmployeeEvent;
         private readonly AddEmployeeEvent AddEmployeeEvent;
         private readonly EditEmployeeEvent EditEmployeeEvent;
@@ -22,6 +23,7 @@ namespace LGU.ViewModels.HumanResource
         public EmployeeFingerPrintEnrollmentViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
             EmployeeManager = SystemRuntime.Services.GetService<IEmployeeManager>();
+            EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
 
             EmployeeEvent = EventAggregator.GetEvent<EmployeeEvent>();
             AddEmployeeEvent = EventAggregator.GetEvent<AddEmployeeEvent>();
@@ -84,9 +86,19 @@ namespace LGU.ViewModels.HumanResource
             EditEmployeeEvent.Publish(SelectedEmployee);
         }
 
-        private void ManageFingerPrint()
+        private async void ManageFingerPrint()
         {
-            ManageEmployeeFingerPrintSetEvent.Publish(new EmployeeFingerPrintSetModel(new EmployeeFingerPrintSet(SelectedEmployee.GetSource())));
+            var source = SelectedEmployee.GetSource();
+            var result = await EmployeeFingerPrintSetManager.GetByIdAsync(source);
+
+            if (result.Status == ProcessResultStatus.Success && result.Data != null)
+            {
+                ManageEmployeeFingerPrintSetEvent.Publish(new EmployeeFingerPrintSetModel(result.Data));
+            }
+            else
+            {
+                ManageEmployeeFingerPrintSetEvent.Publish(new EmployeeFingerPrintSetModel(new EmployeeFingerPrintSet(source)));
+            }
         }
 
         public override void Initialize()
