@@ -61,7 +61,7 @@
                     <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Row="0" Grid.Column="0" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.LeftThumb,Mode=TwoWay}">
+                <Button Grid.Row="0" Grid.Column="0" Command="{Binding ChangeCurrentFingerPrintCommand}" CommandParameter="{Binding FingerPrintSet.LeftThumb}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
