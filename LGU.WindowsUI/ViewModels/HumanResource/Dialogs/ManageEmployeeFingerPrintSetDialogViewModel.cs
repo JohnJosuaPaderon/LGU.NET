@@ -9,6 +9,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using System;
+using System.Diagnostics;
 using System.Windows;
 
 namespace LGU.ViewModels.HumanResource.Dialogs
@@ -18,7 +19,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
         private readonly IEmployeeFingerPrintSetManager EmployeeFingerPrintSetManager;
         private readonly ManageEmployeeFingerPrintSetEvent ManageEmployeeFingerPrintSetEvent;
         private readonly Capture Capture;
-        private readonly Enrollment Enrollment;
+        private Enrollment Enrollment;
 
         public ManageEmployeeFingerPrintSetDialogViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
@@ -26,7 +27,6 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
             ManageEmployeeFingerPrintSetEvent = EventAggregator.GetEvent<ManageEmployeeFingerPrintSetEvent>();
             Capture = new Capture();
-            Enrollment = new Enrollment();
             ChangeCurrentFingerPrintCommand = new DelegateCommand<FingerPrintModel>(ChangeCurrentFingerPrint);
             SaveCommand = new DelegateCommand(Save);
             Initialize();
@@ -65,8 +65,12 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         private void ChangeCurrentFingerPrint(FingerPrintModel fingerPrint)
         {
-            CurrentFingerPrint = fingerPrint;
-            StartScanner();
+            if (fingerPrint != null)
+            {
+                CurrentFingerPrint = fingerPrint;
+                CurrentFingerPrint.Data = null;
+                StartScanner();
+            }
         }
 
         private async void Save()
@@ -98,6 +102,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         private void StartScanner()
         {
+            Enrollment = new Enrollment();
             StopScanner();
 
             Invoke(() => RemainingScans = Enrollment.FeaturesNeeded);
@@ -162,7 +167,9 @@ namespace LGU.ViewModels.HumanResource.Dialogs
                             StartScanner();
                             break;
                         case Enrollment.Status.Ready:
+                            Debug.WriteLine("Enrollment Start : Hand Type = {0}; Finger Type = {1}", CurrentFingerPrint.HandType, CurrentFingerPrint.FingerType);
                             Invoke(() => CurrentFingerPrint.Data = Enrollment.Template);
+                            Debug.WriteLine("Enrollment End : Hand Type = {0}; Finger Type = {1}", CurrentFingerPrint.HandType, CurrentFingerPrint.FingerType);
                             Invoke(() => ScannerLog = "Fingerprint successfully set.");
                             StopScanner();
                             break;
