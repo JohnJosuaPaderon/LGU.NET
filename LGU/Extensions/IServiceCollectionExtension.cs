@@ -1,6 +1,8 @@
 ﻿using LGU.EntityManagers;
+using LGU.EntityManagers.Core;
 using LGU.EntityManagers.HumanResource;
 using LGU.EntityProcesses;
+using LGU.EntityProcesses.Core;
 using LGU.EntityProcesses.HumanResource;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +15,15 @@ namespace LGU.Extensions
             #region SystemManager
             serviceCollection.AddTransient<IGetSystemDate, GetSystemDate>();
             serviceCollection.AddSingleton<ISystemManager, SystemManager>();
+            #endregion
+
+            #region GenderManager
+            serviceCollection.AddTransient<IGetGenderById, GetGenderById>();
+            serviceCollection.AddTransient<IGetGenderList, GetGenderList>();
+            serviceCollection.AddSingleton<IGenderManager, GenderManager>();
+            #endregion
+
+            #region PersonManager
             #endregion
 
             #region DepartmentManager
