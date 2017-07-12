@@ -4,13 +4,40 @@
              xmlns:prism="http://prismlibrary.com/"    
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:viewModels="clr-namespace:LGU.ViewModels.HumanResource"
+             xmlns:lgu="clr-namespace:LGU"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <ResourceDictionary Source="../../Styles/Default.xaml"/>
     </UserControl.Resources>
     <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding IsMenuOpen}">
         <materialDesign:DrawerHost.LeftDrawerContent>
-            <Grid Width="450"/>
+            <Grid Width="450">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <materialDesign:ColorZone Grid.Row="0" Style="{DynamicResource LargeHeaderColorZone}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Style="{DynamicResource LargeHeaderTextBlock}" Text="Menu"/>
+                        <ToggleButton Grid.Column="1" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" IsChecked="{Binding IsMenuOpen}"/>
+                    </Grid>
+                </materialDesign:ColorZone>
+                <ListBox x:Name="_Menu" Grid.Row="1" Style="{DynamicResource MenuListBox}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding ElementName=_Menu,Path=SelectedItem.ViewName}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <lgu:MenuItem HeaderText="Departments" Icon="ChartBar" ViewName="DepartmentManagementView"/>
+                    <lgu:MenuItem HeaderText="Employee Finger Print Enrollment" Icon="Fingerprint" ViewName="EmployeeFingerPrintEnrollmentView"/>
+                </ListBox>
+            </Grid>
         </materialDesign:DrawerHost.LeftDrawerContent>
         <Grid>
             <Grid.RowDefinitions>
