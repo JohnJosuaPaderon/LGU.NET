@@ -9,5 +9,11 @@ namespace LGU.Extensions
             serviceCollection.AddSingleton<IConnectionStringSource, ConnectionStringSource>();
             return serviceCollection;
         }
+
+        public static IServiceCollection SetSystemAdministratorManager(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddSingleton<ISystemAdministratorManager, SystemAdministratorManager>();
+            return serviceCollection;
+        }
     }
 }
