@@ -19,8 +19,8 @@ namespace LGU.HumanResource
 
         protected override void InitializeServices()
         {
-            ServiceCollection.SetConnectionStringSource();
-            ServiceCollection.UseSqlServer();
+            base.InitializeServices();
+            
             ServiceCollection.UseDigitalPersona();
         }
     }
