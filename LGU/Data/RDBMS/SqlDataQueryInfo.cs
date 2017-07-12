@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using LGU.Entities.Core;
 
 namespace LGU.Data.RDBMS
 {
