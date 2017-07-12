@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <materialDesign:TransitioningContent Grid.Row="0" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromTop,Duration=0:0:1}">
+        <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource HeaderTransitioningContent}">
             <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
                 <TextBlock Text="Manage Finger Prints" Style="{DynamicResource RegularHeaderTextBlock}"/>
             </materialDesign:ColorZone>
@@ -168,7 +168,7 @@
                 <TextBlock Text="{Binding ScannerLog}" TextWrapping="Wrap" TextAlignment="Justify" Margin="{DynamicResource DefaultMargin}"/>
             </StackPanel>
         </Grid>
-        <materialDesign:TransitioningContent Grid.Row="2" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromBottom,Duration=0:0:1}">
+        <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
             <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
                 <Grid>
                     <Grid.Resources>

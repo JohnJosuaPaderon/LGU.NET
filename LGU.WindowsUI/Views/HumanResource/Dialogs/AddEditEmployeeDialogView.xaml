@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <materialDesign:TransitioningContent Grid.Row="0" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromTop,Duration=0:0:1}">
+        <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource HeaderTransitioningContent}">
             <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
                 <TextBlock Text="{Binding HeaderTitle,FallbackValue='Add or Edit Employee'}" Style="{DynamicResource RegularHeaderTextBlock}"/>
             </materialDesign:ColorZone>
@@ -30,7 +30,7 @@
                 <ComboBox ItemsSource="{Binding Departments}" SelectedItem="{Binding Employee.Department}" materialDesign:HintAssist.Hint="Department"/>
             </StackPanel>
         </ScrollViewer>
-        <materialDesign:TransitioningContent Grid.Row="2" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromBottom,Duration=0:0:1}">
+        <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
             <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
                 <Grid>
                     <Grid.Resources>

@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromTop,Duration=0:0:1}">
+        <materialDesign:TransitioningContent Style="{DynamicResource HeaderTransitioningContent}">
             <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
                 <TextBlock Text="{Binding HeaderTitle,FallbackValue='Add Or Edit Department'}" Style="{DynamicResource RegularHeaderTextBlock}"/>
             </materialDesign:ColorZone>
@@ -24,7 +24,7 @@
             <TextBox Text="{Binding Department.Description}" materialDesign:HintAssist.Hint="Description"/>
             <TextBox Text="{Binding Department.Abbreviation}" materialDesign:HintAssist.Hint="Abbreviation"/>
         </StackPanel>
-        <materialDesign:TransitioningContent Grid.Row="2" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromBottom,Duration=0:0:1}">
+        <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
             <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
                 <Grid>
                     <Grid.Resources>
