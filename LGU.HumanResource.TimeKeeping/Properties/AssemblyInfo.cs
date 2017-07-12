@@ -10,9 +10,9 @@ using System.Windows;
 [assembly: AssemblyTitle("LGU.HumanResource.TimeKeeping")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("LGU.NET Development")]
 [assembly: AssemblyProduct("LGU.HumanResource.TimeKeeping")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("Copyright © 2017 John Josua R. Paderon")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
