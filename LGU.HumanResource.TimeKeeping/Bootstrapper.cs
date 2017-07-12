@@ -9,19 +9,14 @@ namespace LGU.HumanResource
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
-
-            Container.RegisterTypeForNavigation<LauncherView>();
-            Container.RegisterTypeForNavigation<PreviewEmployeeView>();
-            Container.RegisterTypeForNavigation<DepartmentManagementView>();
-            Container.RegisterTypeForNavigation<MainView>();
-            Container.RegisterTypeForNavigation<EmployeeFingerPrintEnrollmentView>();
+            
             Container.RegisterTypeForNavigation<TimeKeepingView>();
         }
 
         protected override void InitializeServices()
         {
-            ServiceCollection.SetConnectionStringSource();
-            ServiceCollection.UseSqlServer();
+            base.InitializeServices();
+
             ServiceCollection.UseDigitalPersona();
         }
     }
