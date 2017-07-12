@@ -1,4 +1,5 @@
-﻿using Prism.Events;
+﻿using Prism.Commands;
+using Prism.Events;
 using Prism.Regions;
 using System;
 
@@ -10,13 +11,22 @@ namespace LGU.ViewModels.HumanResource
 
         public MainViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
+            NavigateCommand = new DelegateCommand<string>(Navigate);
         }
+
+        public DelegateCommand<string> NavigateCommand { get; }
 
         private bool _IsMenuOpen;
         public bool IsMenuOpen
         {
             get { return _IsMenuOpen; }
             set { SetProperty(ref _IsMenuOpen, value); }
+        }
+
+        private void Navigate(string viewName)
+        {
+            RegionManager.RequestNavigate(MainViewContentRegion, viewName);
+            IsMenuOpen = false;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
