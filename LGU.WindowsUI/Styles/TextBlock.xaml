@@ -13,6 +13,7 @@
         <Setter Property="FontWeight" Value="{DynamicResource LargeHeaderFontWeight}"/>
         <Setter Property="HorizontalAlignment" Value="{DynamicResource LargeHeaderHorizontalAlignment}"/>
         <Setter Property="VerticalAlignment" Value="{DynamicResource LargeHeaderVerticalAlignment}"/>
+        <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
     </Style>
 
     <Style x:Key="RegularHeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource _BaseTextBlock}">
