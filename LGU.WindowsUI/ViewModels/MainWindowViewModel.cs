@@ -34,7 +34,7 @@ namespace LGU.ViewModels
             set { SetProperty(ref _WindowState, value); }
         }
 
-        public async override void Initialize()
+        public override void Initialize()
         {
             EventAggregator.GetEvent<TitleEvent>().Subscribe(t => Title = t);
             EventAggregator.GetEvent<WindowStateEvent>().Subscribe(ws => WindowState = ws);
@@ -42,17 +42,6 @@ namespace LGU.ViewModels
             if (!string.IsNullOrWhiteSpace(InitialMainContentRegionSource))
             {
                 RegionManager.RequestNavigate(MainContentRegionName, InitialMainContentRegionSource);
-            }
-
-            var result = await SystemManager.GetSystemDateAsync();
-
-            if (result.Status == ProcessResultStatus.Success)
-            {
-                EventAggregator.GetEvent<TitleEvent>().Publish("LGU.NET (Administrator)");
-            }
-            else
-            {
-                MessageBox.Show("Failed to get system date.");
             }
         }
     }
