@@ -1,4 +1,5 @@
-﻿using LGU.Views;
+﻿using LGU.Extensions;
+using LGU.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Unity;
 using System.Configuration;
@@ -31,6 +32,8 @@ namespace LGU
 
         protected virtual void InitializeServices()
         {
+            ServiceCollection.SetConnectionStringSource();
+            ServiceCollection.UseSqlServer();
         }
     }
 }

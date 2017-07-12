@@ -199,11 +199,14 @@
     <Compile Include="Events\TitleEvent.cs" />
     <Compile Include="Events\WindowStateEvent.cs" />
     <Compile Include="Extensions\IServiceCollectionExtension.cs" />
+    <Compile Include="MenuItem.cs" />
     <Compile Include="Models\HumanResource\DepartmentModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeFingerPrintSetModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeModel.cs" />
     <Compile Include="Models\HumanResource\FingerPrintModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\SystemAdministration\ConnectionStringModel.cs" />
+    <Compile Include="PasswordBoxAssists.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -217,6 +220,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SystemAdministratorManager.cs" />
     <Compile Include="ViewModels\DialogHelper.cs" />
     <Compile Include="ViewModels\DialogMode.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
@@ -231,7 +235,12 @@
     <Compile Include="ViewModels\HumanResource\PreviewEmployeeViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\TimeKeepingViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\SystemAdministration\ConnectionStringSourceViewModel.cs" />
+    <Compile Include="ViewModels\SystemAdministration\LauncherViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\Core\UserSignUpView.xaml.cs">
+      <DependentUpon>UserSignUpView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HumanResource\DepartmentManagementView.xaml.cs">
       <DependentUpon>DepartmentManagementView.xaml</DependentUpon>
     </Compile>
@@ -264,6 +273,15 @@
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SystemAdministration\ConnectionStringSourceView.xaml.cs">
+      <DependentUpon>ConnectionStringSourceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SystemAdministration\LauncherView.xaml.cs">
+      <DependentUpon>LauncherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SystemAdministration\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -317,7 +335,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\ListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\MaterialDesignThemes.Overrides.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\PasswordBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -338,6 +364,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Variables.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Core\UserSignUpView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -382,6 +412,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SystemAdministration\ConnectionStringSourceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SystemAdministration\LauncherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SystemAdministration\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
