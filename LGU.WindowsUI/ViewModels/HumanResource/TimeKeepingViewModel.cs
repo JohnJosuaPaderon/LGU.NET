@@ -27,7 +27,6 @@ namespace LGU.ViewModels.HumanResource
         private readonly IEmployeeFingerPrintSetManager EmployeeFingerPrintSetManager;
         private readonly Capture Capture;
         private readonly Verification Verification;
-        private readonly LogEmployeeEvent LogEmployeeEvent;
 
         public TimeKeepingViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
@@ -40,7 +39,6 @@ namespace LGU.ViewModels.HumanResource
             ResultDisplayTimer.Elapsed += ResultDisplayTimer_Elapsed;
             TestCommand = new DelegateCommand(Test);
             NotFoundCommand = new DelegateCommand(NotFound);
-            LogEmployeeEvent = EventAggregator.GetEvent<LogEmployeeEvent>();
             LogResults.Add(NotYetReadyResult);
             LogResults.Add(EmployeeNotFoundResult);
             LogResults.Add(ScanYourFingerNowResult);
