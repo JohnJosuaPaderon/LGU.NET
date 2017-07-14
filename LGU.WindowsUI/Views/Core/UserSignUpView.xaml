@@ -13,8 +13,10 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <materialDesign:TransitioningContent Grid.Row="0" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromTop}">
-            
+        <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
+            <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
+                <TextBlock Text="Sign up" Style="{DynamicResource RegularHeaderTextBlock}"/>
+            </materialDesign:ColorZone>
         </materialDesign:TransitioningContent>
     </Grid>
 </UserControl>
