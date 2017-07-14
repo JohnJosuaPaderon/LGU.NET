@@ -3,9 +3,59 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:LGU.Views.HumanResource"
+             xmlns:viewModels="clr-namespace:LGU.ViewModels.HumanResource"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
-        <ResourceDictionary Source="../../Styles/Default.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../Styles/Default.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate x:Key="_MessageTemplate" DataType="{x:Type viewModels:TimeKeepingResult}">
+                <TextBlock Text="{Binding Message}" Style="{DynamicResource ExtraLargeHeaderTextBlock}"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="_LogEmployeeTemplate" DataType="{x:Type viewModels:TimeKeepingResult}">
+                <Grid x:Name="_Content" Margin="{DynamicResource ContainerMargin}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Employee.FullName}" FontFamily="{DynamicResource DefaultFontFamily}" FontSize="48" FontWeight="Bold"/>
+                        <Separator/>
+                        <TextBlock Text="{Binding Employee.Department.Description}" FontFamily="{DynamicResource DefaultFontFamily}" FontSize="28" TextWrapping="Wrap" TextAlignment="Left"/>
+                    </StackPanel>
+                    <Grid Grid.Column="1" Width="450" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding LogType}" Style="{DynamicResource ExtraLargeTextBlock}" FontSize="150"/>
+                        <TextBlock Grid.Row="1" Text="{Binding LogDate,StringFormat='hh:mm:ss tt'}" Style="{DynamicResource LargeHeaderTextBlock}" FontSize="50" HorizontalAlignment="Center"/>
+                    </Grid>
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="_TransitionerTemplate" DataType="{x:Type viewModels:TimeKeepingResult}">
+                <materialDesign:Card VerticalAlignment="Stretch" Margin="{DynamicResource DefaultMargin}" Content="{Binding}">
+                    <materialDesign:Card.Style>
+                        <Style TargetType="{x:Type materialDesign:Card}">
+                            <Setter Property="ContentTemplate" Value="{DynamicResource _MessageTemplate}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Type}" Value="Logged">
+                                    <Setter Property="ContentTemplate" Value="{DynamicResource _LogEmployeeTemplate}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </materialDesign:Card.Style>
+                </materialDesign:Card>
+            </DataTemplate>
+
+            <Style x:Key="_Transitioner" TargetType="{x:Type materialDesign:Transitioner}">
+                <Setter Property="ItemTemplate" Value="{DynamicResource _TransitionerTemplate}"/>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
     <materialDesign:DrawerHost>
         <Grid>
@@ -14,15 +64,98 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <materialDesign:TransitioningContent Grid.Row="0" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromTop,Duration=0:0:1}">
-                <materialDesign:ColorZone Style="{DynamicResource LargeHeaderColorZone}">
-                    <TextBlock Text="{Binding ScannerLog}" Style="{DynamicResource LargeHeaderTextBlock}"/>
+            <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource ExtraLargeHeaderTransitioningContent}">
+                <materialDesign:ColorZone Style="{DynamicResource ExtraLargeHeaderColorZone}">
+                    <TextBlock Text="CITY GOVERNMENT OF NAVOTAS" Style="{DynamicResource ExtraLargeHeaderTextBlock}"/>
                 </materialDesign:ColorZone>
             </materialDesign:TransitioningContent>
-            <Grid Grid.Row="1">
-                <ContentControl prism:RegionManager.RegionName="SampleRegion"/>
-                
+            <Grid Grid.Row="1" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" HorizontalAlignment="Center">
+                    <Grid.Resources>
+                        <Style x:Key="_Card" TargetType="{x:Type materialDesign:Card}">
+                            <Setter Property="Padding" Value="8 32"/>
+                            <Setter Property="FontSize" Value="96"/>
+                            <Setter Property="FontFamily" Value="Roboto"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Margin" Value="4"/>
+                        </Style>
+                        <Style x:Key="_TextBlock" TargetType="{x:Type TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="FontFamily" Value="96"/>
+                        </Style>
+                        <Style TargetType="{x:Type materialDesign:Transitioner}">
+                            <Setter Property="ItemTemplate">
+                                <Setter.Value>
+                                    <DataTemplate>
+                                        <materialDesign:Card Style="{DynamicResource _Card}">
+                                            <TextBlock Text="{Binding}" Style="{DynamicResource _TextBlock}"/>
+                                        </materialDesign:Card>
+                                    </DataTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style TargetType="{x:Type materialDesign:TransitionerSlide}">
+                            <Setter Property="ForwardWipe">
+                                <Setter.Value>
+                                    <materialDesign:SlideOutWipe/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="BackwardWipe">
+                                <Setter.Value>
+                                    <materialDesign:SlideOutWipe/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="225"/>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:Transitioner Grid.Column="0" ItemsSource="{Binding Hour1Source}" SelectedItem="{Binding SelectedHour1}"/>
+                    <materialDesign:Transitioner Grid.Column="1" ItemsSource="{Binding Hour2Source}" SelectedItem="{Binding SelectedHour2}"/>
+                    <materialDesign:Card Grid.Column="2" Style="{DynamicResource _Card}">
+                        <TextBlock Text=":" Style="{DynamicResource _TextBlock}"/>
+                    </materialDesign:Card>
+                    <materialDesign:Transitioner Grid.Column="3" ItemsSource="{Binding Minute1Source}" SelectedItem="{Binding SelectedMinute1}"/>
+                    <materialDesign:Transitioner Grid.Column="4" ItemsSource="{Binding Minute2Source}" SelectedItem="{Binding SelectedMinute2}"/>
+                    <materialDesign:Card Grid.Column="5" Style="{DynamicResource _Card}">
+                        <TextBlock Text=":" Style="{DynamicResource _TextBlock}"/>
+                    </materialDesign:Card>
+                    <materialDesign:Transitioner Grid.Column="6" ItemsSource="{Binding Second1Source}" SelectedItem="{Binding SelectedSecond1}"/>
+                    <materialDesign:Transitioner Grid.Column="7" ItemsSource="{Binding Second2Source}" SelectedItem="{Binding SelectedSecond2}"/>
+                    <materialDesign:Transitioner Grid.Column="8" ItemsSource="{Binding AmPmSource}" SelectedItem="{Binding SelectedAmPm}"/>
+                </Grid>
+                <Border Grid.Row="1" Padding="8" Margin="2 0" HorizontalAlignment="Stretch">
+                    <TextBlock Text="{Binding CurrentTimeStamp,StringFormat='MMMM dd, yyyy (dddd)'}" Style="{DynamicResource ExtraLargeHeaderTextBlock}" HorizontalAlignment="Center"/>
+                </Border>
             </Grid>
+            <materialDesign:Transitioner Grid.Row="2" ItemsSource="{Binding LogResults}" SelectedItem="{Binding SelectedLogResult}" Style="{DynamicResource _Transitioner}">
+                <materialDesign:Transitioner.Resources>
+                    <Style TargetType="{x:Type materialDesign:TransitionerSlide}">
+                        <Setter Property="ForwardWipe">
+                            <Setter.Value>
+                                <materialDesign:SlideOutWipe/>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="BackwardWipe">
+                            <Setter.Value>
+                                <materialDesign:SlideOutWipe/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </materialDesign:Transitioner.Resources>
+            </materialDesign:Transitioner>
         </Grid>
     </materialDesign:DrawerHost>
 </UserControl>
