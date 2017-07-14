@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <materialDesign:TransitioningContent Style="{DynamicResource HeaderTransitioningContent}">
+        <materialDesign:TransitioningContent Style="{DynamicResource RegularHeaderTransitioningContent}">
             <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
                 <TextBlock Text="{Binding HeaderTitle,FallbackValue='Add Or Edit Department'}" Style="{DynamicResource RegularHeaderTextBlock}"/>
             </materialDesign:ColorZone>
