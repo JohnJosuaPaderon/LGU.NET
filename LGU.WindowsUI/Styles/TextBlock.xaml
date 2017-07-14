@@ -8,6 +8,14 @@
         <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}"/>
     </Style>
 
+    <Style x:Key="ExtraLargeHeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource _BaseTextBlock}">
+        <Setter Property="FontSize" Value="{DynamicResource ExtraLargeHeaderFontSize}"/>
+        <Setter Property="FontWeight" Value="{DynamicResource ExtraLargeHeaderFontWeight}"/>
+        <Setter Property="HorizontalAlignment" Value="{DynamicResource ExtraLargeHeaderHorizontalAlignment}"/>
+        <Setter Property="VerticalAlignment" Value="{DynamicResource ExtraLargeHeaderVerticalAlignment}"/>
+        <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
+    </Style>
+
     <Style x:Key="LargeHeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource _BaseTextBlock}">
         <Setter Property="FontSize" Value="{DynamicResource LargeHeaderFontSize}"/>
         <Setter Property="FontWeight" Value="{DynamicResource LargeHeaderFontWeight}"/>

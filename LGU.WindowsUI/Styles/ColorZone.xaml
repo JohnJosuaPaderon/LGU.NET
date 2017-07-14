@@ -5,6 +5,12 @@
         <ResourceDictionary Source="Variables.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="ExtraLargeHeaderColorZone" TargetType="{x:Type materialDesign:ColorZone}">
+        <Setter Property="Padding" Value="{DynamicResource ExtraLargeHeaderPadding}"/>
+        <Setter Property="Mode" Value="{DynamicResource ExtraLargeHeaderColorZoneMode}"/>
+        <Setter Property="materialDesign:ShadowAssist.ShadowDepth" Value="{DynamicResource ExtraLargeHeaderShadowDepth}"/>
+    </Style>
+
     <Style x:Key="LargeHeaderColorZone" TargetType="{x:Type materialDesign:ColorZone}">
         <Setter Property="Padding" Value="{DynamicResource LargeHeaderPadding}"/>
         <Setter Property="Mode" Value="{DynamicResource LargeHeaderColorZoneMode}"/>

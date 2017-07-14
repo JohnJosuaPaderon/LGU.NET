@@ -17,6 +17,14 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ExtraLargeHeaderTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
+        <Setter Property="OpeningEffect">
+            <Setter.Value>
+                <materialDesign:TransitionEffect Kind="SlideInFromTop" Duration="0:0:1"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="LargeHeaderTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
@@ -25,7 +33,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="HeaderTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
+    <Style x:Key="RegularHeaderTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
                 <materialDesign:TransitionEffect Kind="SlideInFromTop" Duration="0:0:1"/>

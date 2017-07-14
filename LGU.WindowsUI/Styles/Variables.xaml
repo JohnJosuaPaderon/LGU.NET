@@ -11,6 +11,15 @@
     <GridLength x:Key="DefaultGridSpace">8</GridLength>
     <SolidColorBrush x:Key="DefaultSelectionBrush" Color="Red"/>
 
+    <!-- EXTRA LARGE HEADER -->
+    <system:Double x:Key="ExtraLargeHeaderFontSize">54</system:Double>
+    <FontWeight x:Key="ExtraLargeHeaderFontWeight">Bold</FontWeight>
+    <Thickness x:Key="ExtraLargeHeaderPadding">12</Thickness>
+    <materialDesign:ColorZoneMode x:Key="ExtraLargeHeaderColorZoneMode">PrimaryDark</materialDesign:ColorZoneMode>
+    <materialDesign:ShadowDepth x:Key="ExtraLargeHeaderShadowDepth">Depth3</materialDesign:ShadowDepth>
+    <HorizontalAlignment x:Key="ExtraLargeHeaderHorizontalAlignment">Center</HorizontalAlignment>
+    <VerticalAlignment x:Key="ExtraLargeHeaderVerticalAlignment">Center</VerticalAlignment>
+    
     <!-- LARGE HEADER -->
     <system:Double x:Key="LargeHeaderFontSize">24</system:Double>
     <FontWeight x:Key="LargeHeaderFontWeight">Bold</FontWeight>
