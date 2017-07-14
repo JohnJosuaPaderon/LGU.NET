@@ -15,9 +15,11 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <materialDesign:ColorZone Grid.Row="0" Style="{DynamicResource RegularHeaderColorZone}">
-                <TextBlock Text="Administrator's Key" Style="{DynamicResource RegularHeaderTextBlock}"/>
-            </materialDesign:ColorZone>
+            <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
+                <materialDesign:ColorZone Grid.Row="0" Style="{DynamicResource RegularHeaderColorZone}">
+                    <TextBlock Text="Administrator's Key" Style="{DynamicResource RegularHeaderTextBlock}"/>
+                </materialDesign:ColorZone>
+            </materialDesign:TransitioningContent>
             <StackPanel Grid.Row="1">
                 <PasswordBox materialDesign:HintAssist.Hint="Enter Administrator's Key" lgu:PasswordBoxAssists.ListenPasswordChanged="True" lgu:PasswordBoxAssists.Password="{Binding AdministratorKey,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
