@@ -230,13 +230,16 @@
     <Compile Include="ViewModels\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\EmployeeFingerPrintEnrollmentViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\LauncherViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\LogType.cs" />
     <Compile Include="ViewModels\HumanResource\MainViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PreviewDepartmentViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PreviewEmployeeViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\TimeKeepingResult.cs" />
     <Compile Include="ViewModels\HumanResource\TimeKeepingViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SystemAdministration\ConnectionStringSourceViewModel.cs" />
     <Compile Include="ViewModels\SystemAdministration\LauncherViewModel.cs" />
+    <Compile Include="ViewModels\TimeKeepingResultType.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Core\UserSignUpView.xaml.cs">
       <DependentUpon>UserSignUpView.xaml</DependentUpon>
