@@ -25,28 +25,36 @@ namespace LGU.Models.HumanResource
         public string FirstName
         {
             get { return _FirstName; }
-            set { SetProperty(ref _FirstName, value); }
+            set { SetProperty(ref _FirstName, value, RaiseFullName); }
         }
 
         private string _MiddleName;
         public string MiddleName
         {
             get { return _MiddleName; }
-            set { SetProperty(ref _MiddleName, value); }
+            set { SetProperty(ref _MiddleName, value, RaiseFullName); }
         }
 
         private string _LastName;
         public string LastName
         {
             get { return _LastName; }
-            set { SetProperty(ref _LastName, value); }
+            set { SetProperty(ref _LastName, value, RaiseFullName); }
         }
 
         private string _NameExtension;
         public string NameExtension
         {
             get { return _NameExtension; }
-            set { SetProperty(ref _NameExtension, value); }
+            set { SetProperty(ref _NameExtension, value, RaiseFullName); }
+        }
+
+        public string FullName
+        {
+            get
+            {
+                return GetSource().FullName;
+            }
         }
 
         private Department _Department;
@@ -54,6 +62,11 @@ namespace LGU.Models.HumanResource
         {
             get { return _Department; }
             set { SetProperty(ref _Department, value); }
+        }
+
+        private void RaiseFullName()
+        {
+            RaisePropertyChanged(nameof(FullName));
         }
 
         public override Employee GetSource()
