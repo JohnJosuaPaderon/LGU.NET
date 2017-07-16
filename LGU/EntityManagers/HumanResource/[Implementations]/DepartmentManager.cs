@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class DepartmentManager : IDepartmentManager
+    public sealed class DepartmentManager : ManagerBase, IDepartmentManager
     {
         private readonly IDeleteDepartment DeleteDepartment;
         private readonly IGetDepartmentById GetDepartmentById;
@@ -39,11 +39,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 DeleteDepartment.Department = data;
                 var result = DeleteDepartment.Execute();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Remove(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Remove(result.Data));
 
                 return result;
             }
@@ -59,11 +55,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 DeleteDepartment.Department = data;
                 var result = await DeleteDepartment.ExecuteAsync();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Remove(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Remove(result.Data));
 
                 return result;
             }
@@ -79,11 +71,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 DeleteDepartment.Department = data;
                 var result = await DeleteDepartment.ExecuteAsync(cancellationToken);
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Remove(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Remove(result.Data));
 
                 return result;
             }
@@ -104,11 +92,7 @@ namespace LGU.EntityManagers.HumanResource
 
                 GetDepartmentById.DepartmentId = id;
                 var result = GetDepartmentById.Execute();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.AddUpdate(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
 
                 return result;
             }
@@ -129,11 +113,7 @@ namespace LGU.EntityManagers.HumanResource
 
                 GetDepartmentById.DepartmentId = id;
                 var result = await GetDepartmentById.ExecuteAsync();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.AddUpdate(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
 
                 return result;
             }
@@ -154,11 +134,7 @@ namespace LGU.EntityManagers.HumanResource
 
                 GetDepartmentById.DepartmentId = id;
                 var result = await GetDepartmentById.ExecuteAsync(cancellationToken);
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.AddUpdate(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
 
                 return result;
             }
@@ -170,17 +146,26 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableDataProcessResult<Department> GetList()
         {
-            return GetDepartmentList.Execute();
+            var result = GetDepartmentList.Execute();
+            InvokeIfSuccessAndListNotEmpty(result, d => StaticSource.AddUpdate(d));
+
+            return result;
         }
 
-        public Task<IEnumerableDataProcessResult<Department>> GetListAsync()
+        public async Task<IEnumerableDataProcessResult<Department>> GetListAsync()
         {
-            return GetDepartmentList.ExecuteAsync();
+            var result = await GetDepartmentList.ExecuteAsync();
+            InvokeIfSuccessAndListNotEmpty(result, d => StaticSource.AddUpdate(d));
+
+            return result;
         }
 
-        public Task<IEnumerableDataProcessResult<Department>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableDataProcessResult<Department>> GetListAsync(CancellationToken cancellationToken)
         {
-            return GetDepartmentList.ExecuteAsync(cancellationToken);
+            var result = await GetDepartmentList.ExecuteAsync(cancellationToken);
+            InvokeIfSuccessAndListNotEmpty(result, d => StaticSource.AddUpdate(d));
+
+            return result;
         }
 
         public IDataProcessResult<Department> Insert(Department data)
@@ -189,11 +174,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 InsertDepartment.Department = data;
                 var result = InsertDepartment.Execute();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Add(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Add(result.Data));
 
                 return result;
             }
@@ -209,11 +190,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 InsertDepartment.Department = data;
                 var result = await InsertDepartment.ExecuteAsync();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Add(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Add(result.Data));
 
                 return result;
             }
@@ -229,11 +206,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 InsertDepartment.Department = data;
                 var result = await InsertDepartment.ExecuteAsync(cancellationToken);
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Add(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Add(result.Data));
 
                 return result;
             }
@@ -249,11 +222,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 UpdateDepartment.Department = data;
                 var result = UpdateDepartment.Execute();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Update(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Update(result.Data));
 
                 return result;
             }
@@ -269,11 +238,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 UpdateDepartment.Department = data;
                 var result = await UpdateDepartment.ExecuteAsync();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Update(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Update(result.Data));
 
                 return result;
             }
@@ -289,11 +254,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 UpdateDepartment.Department = data;
                 var result = await UpdateDepartment.ExecuteAsync(cancellationToken);
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Update(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Update(result.Data));
 
                 return result;
             }
@@ -308,7 +269,10 @@ namespace LGU.EntityManagers.HumanResource
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
                 SearchDepartment.SearchKey = searchKey;
-                return SearchDepartment.Execute();
+                var result = SearchDepartment.Execute();
+                InvokeIfSuccessAndListNotEmpty(result, d => StaticSource.AddUpdate(d));
+
+                return result;
             }
             else
             {
@@ -321,7 +285,10 @@ namespace LGU.EntityManagers.HumanResource
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
                 SearchDepartment.SearchKey = searchKey;
-                return await SearchDepartment.ExecuteAsync();
+                var result = await SearchDepartment.ExecuteAsync();
+                InvokeIfSuccessAndListNotEmpty(result, d => StaticSource.AddUpdate(d));
+
+                return result;
             }
             else
             {
@@ -334,7 +301,10 @@ namespace LGU.EntityManagers.HumanResource
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
                 SearchDepartment.SearchKey = searchKey;
-                return await SearchDepartment.ExecuteAsync(cancellationToken);
+                var result = await SearchDepartment.ExecuteAsync(cancellationToken);
+                InvokeIfSuccessAndListNotEmpty(result, d => StaticSource.AddUpdate(d));
+
+                return result;
             }
             else
             {

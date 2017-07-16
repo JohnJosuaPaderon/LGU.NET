@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class EmployeeManager : IEmployeeManager
+    public sealed class EmployeeManager : ManagerBase, IEmployeeManager
     {
         private readonly IDeleteEmployee DeleteProc;
         private readonly IGetEmployeeById GetByIdProc;
@@ -39,11 +39,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 DeleteProc.Employee = data;
                 var result = DeleteProc.Execute();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Remove(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Remove(result.Data));
 
                 return result;
             }
@@ -59,11 +55,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 DeleteProc.Employee = data;
                 var result = await DeleteProc.ExecuteAsync();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Remove(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Remove(result.Data));
 
                 return result;
             }
@@ -79,11 +71,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 DeleteProc.Employee = data;
                 var result = await DeleteProc.ExecuteAsync(cancellationToken);
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Remove(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Remove(result.Data));
 
                 return result;
             }
@@ -104,11 +92,7 @@ namespace LGU.EntityManagers.HumanResource
 
                 GetByIdProc.EmployeeId = id;
                 var result = GetByIdProc.Execute();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.AddUpdate(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
 
                 return result;
             }
@@ -130,11 +114,7 @@ namespace LGU.EntityManagers.HumanResource
                 {
                     GetByIdProc.EmployeeId = id;
                     var result = await GetByIdProc.ExecuteAsync();
-
-                    if (result.Status == ProcessResultStatus.Success)
-                    {
-                        StaticSource.AddUpdate(result.Data);
-                    }
+                    InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
 
                     return result;
                 }
@@ -157,11 +137,7 @@ namespace LGU.EntityManagers.HumanResource
                 {
                     GetByIdProc.EmployeeId = id;
                     var result = await GetByIdProc.ExecuteAsync(cancellationToken);
-
-                    if (result.Status == ProcessResultStatus.Success)
-                    {
-                        StaticSource.AddUpdate(result.Data);
-                    }
+                    InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
 
                     return result;
                 }
@@ -174,12 +150,18 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableDataProcessResult<Employee> GetList()
         {
-            return GetListProc.Execute();
+            var result = GetListProc.Execute();
+            InvokeIfSuccessAndListNotEmpty(result, e => StaticSource.AddUpdate(e));
+
+            return result;
         }
 
-        public Task<IEnumerableDataProcessResult<Employee>> GetListAsync()
+        public async Task<IEnumerableDataProcessResult<Employee>> GetListAsync()
         {
-            return GetListProc.ExecuteAsync();
+            var result = await GetListProc.ExecuteAsync();
+            InvokeIfSuccessAndListNotEmpty(result, e => StaticSource.AddUpdate(e));
+
+            return result;
         }
 
         public Task<IEnumerableDataProcessResult<Employee>> GetListAsync(CancellationToken cancellationToken)
@@ -193,11 +175,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 InsertProc.Employee = data;
                 var result = InsertProc.Execute();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Add(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Add(result.Data));
 
                 return result;
             }
@@ -213,11 +191,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 InsertProc.Employee = data;
                 var result = await InsertProc.ExecuteAsync();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Add(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Add(result.Data));
 
                 return result;
             }
@@ -233,11 +207,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 InsertProc.Employee = data;
                 var result = await InsertProc.ExecuteAsync(cancellationToken);
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Add(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Add(result.Data));
 
                 return result;
             }
@@ -253,11 +223,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 UpdateProc.Employee = data;
                 var result = UpdateProc.Execute();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Update(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Update(result.Data));
 
                 return result;
             }
@@ -273,11 +239,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 UpdateProc.Employee = data;
                 var result = await UpdateProc.ExecuteAsync();
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Update(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Update(result.Data));
 
                 return result;
             }
@@ -293,11 +255,7 @@ namespace LGU.EntityManagers.HumanResource
             {
                 UpdateProc.Employee = data;
                 var result = await UpdateProc.ExecuteAsync(cancellationToken);
-
-                if (result.Status == ProcessResultStatus.Success)
-                {
-                    StaticSource.Update(result.Data);
-                }
+                InvokeIfSuccess(result.Status, () => StaticSource.Update(result.Data));
 
                 return result;
             }
@@ -312,7 +270,10 @@ namespace LGU.EntityManagers.HumanResource
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
                 SearchProc.SearchKey = searchKey;
-                return SearchProc.Execute();
+                var result = SearchProc.Execute();
+                InvokeIfSuccessAndListNotEmpty(result, e => StaticSource.AddUpdate(e));
+
+                return result;
             }
             else
             {
@@ -325,7 +286,10 @@ namespace LGU.EntityManagers.HumanResource
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
                 SearchProc.SearchKey = searchKey;
-                return await SearchProc.ExecuteAsync();
+                var result = await SearchProc.ExecuteAsync();
+                InvokeIfSuccessAndListNotEmpty(result, e => StaticSource.AddUpdate(e));
+
+                return result;
             }
             else
             {
@@ -338,7 +302,10 @@ namespace LGU.EntityManagers.HumanResource
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
                 SearchProc.SearchKey = searchKey;
-                return await SearchProc.ExecuteAsync(cancellationToken);
+                var result = await SearchProc.ExecuteAsync(cancellationToken);
+                InvokeIfSuccessAndListNotEmpty(result, e => StaticSource.AddUpdate(e));
+
+                return result;
             }
             else
             {
