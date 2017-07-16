@@ -8,29 +8,29 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.Core
 {
-    public sealed class GetPersonById : PersonProcess, IGetPersonById
+    public sealed class GetUserTypeById : UserTypeProcess, IGetUserTypeById
     {
-        public GetPersonById(IConnectionStringSource connectionStringSource, IPersonConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetUserTypeById(IConnectionStringSource connectionStringSource, IUserTypeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
-        public long PersonId { get; set; }
+        public short UserTypeId { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
-            .AddInputParameter("@_Id", PersonId);
+            .AddInputParameter("@_Id", UserTypeId);
 
-        public IDataProcessResult<Person> Execute()
+        public IDataProcessResult<UserType> Execute()
         {
             return SqlHelper.ExecuteReader(QueryInfo, Converter.FromReader);
         }
 
-        public Task<IDataProcessResult<Person>> ExecuteAsync()
+        public Task<IDataProcessResult<UserType>> ExecuteAsync()
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync);
         }
 
-        public Task<IDataProcessResult<Person>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IDataProcessResult<UserType>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync, cancellationToken);
         }

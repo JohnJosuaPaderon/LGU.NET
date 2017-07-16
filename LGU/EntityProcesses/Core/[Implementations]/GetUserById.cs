@@ -1,50 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using LGU.Data.Extensions;
+using LGU.Data.RDBMS;
+using LGU.Entities.Core;
+using LGU.EntityConverters.Core;
+using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
-using LGU.Entities.Core;
-using LGU.Data.RDBMS;
-using System.Data.SqlClient;
-using LGU.Data.Extensions;
 
 namespace LGU.EntityProcesses.Core
 {
-    public sealed class GetUserById : CoreProcessBase, IGetUserById
+    public sealed class GetUserById : UserProcess, IGetUserById
     {
-        public GetUserById(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public GetUserById(IConnectionStringSource connectionStringSource, IUserConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
         public long UserId { get; set; }
 
-        private SqlQueryInfo QueryInfo
-        {
-            get
-            {
-                return SqlQueryInfo.CreateProcedureQueryInfo("GetUserById", GetProcessResult)
-                    .AddInputParameter("@_Id", UserId);
-            }
-        }
-
-        private IProcessResult GetProcessResult(SqlCommand command, int affectedRows)
-        {
-            return new ProcessResult(ProcessResultStatus.Success);
-        }
+        private SqlQueryInfo QueryInfo =>
+            SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
+            .AddInputParameter("@_Id", UserId);
 
         public IDataProcessResult<User> Execute()
         {
-            throw new NotImplementedException();
+            return SqlHelper.ExecuteReader(QueryInfo, Converter.FromReader);
         }
 
         public Task<IDataProcessResult<User>> ExecuteAsync()
         {
-            throw new NotImplementedException();
+            return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync);
         }
 
         public Task<IDataProcessResult<User>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync, cancellationToken);
         }
     }
 }

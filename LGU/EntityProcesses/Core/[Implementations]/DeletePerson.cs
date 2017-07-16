@@ -1,29 +1,25 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.RDBMS;
 using LGU.Entities.Core;
+using LGU.EntityConverters.Core;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.Core
 {
-    public sealed class DeletePerson : CoreProcessBase, IDeletePerson
+    public sealed class DeletePerson : PersonProcess, IDeletePerson
     {
-        public DeletePerson(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public DeletePerson(IConnectionStringSource connectionStringSource, IPersonConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
         public Person Person { get; set; }
 
-        private SqlDataQueryInfo<Person> QueryInfo
-        {
-            get
-            {
-                return SqlDataQueryInfo<Person>.CreateProcedureQueryInfo(Person, GetQualifiedDbObjectName("DeletePerson"), GetProcessResult, true)
-                    .AddInputParameter("@_Id", Person.Id)
-                    .AddLogByParameter();
-            }
-        }
+        private SqlDataQueryInfo<Person> QueryInfo =>
+            SqlDataQueryInfo<Person>.CreateProcedureQueryInfo(Person, GetQualifiedDbObjectName(), GetProcessResult, true)
+            .AddInputParameter("@_Id", Person.Id)
+            .AddLogByParameter();
 
         private IDataProcessResult<Person> GetProcessResult(Person data, SqlCommand command, int affectedRows)
         {

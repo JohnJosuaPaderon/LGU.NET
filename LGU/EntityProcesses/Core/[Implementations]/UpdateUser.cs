@@ -1,34 +1,36 @@
-﻿using LGU.Data.Extensions;
-using LGU.Data.RDBMS;
+﻿using LGU.Data.RDBMS;
 using LGU.Entities.Core;
+using LGU.EntityConverters.Core;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.Core
 {
-    public sealed class DeleteUser : CoreProcessBase, IDeleteUser
+    public sealed class UpdateUser : UserProcess, IUpdateUser
     {
-        public DeleteUser(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public UpdateUser(IConnectionStringSource connectionStringSource, IUserConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
         public User User { get; set; }
 
         private SqlDataQueryInfo<User> QueryInfo =>
-            SqlDataQueryInfo<User>.CreateProcedureQueryInfo(User, GetQualifiedDbObjectName(), GetProcessResult, true)
-            .AddInputParameter("@_Id", User.Id)
-            .AddLogByParameter();
+            SqlDataQueryInfo<User>.CreateProcedureQueryInfo(User, GetQualifiedDbObjectName(), GetProcessResult, true);
 
         private IDataProcessResult<User> GetProcessResult(User data, SqlCommand command, int affectedRows)
         {
             if (affectedRows == 1)
             {
+                data.SecureUsername?.Dispose();
+                data.SecurePassword?.Dispose();
+                data.SecureUsername = null;
+                data.SecurePassword = null;
                 return new DataProcessResult<User>(data);
             }
             else
             {
-                return new DataProcessResult<User>(ProcessResultStatus.Failed);
+                return new DataProcessResult<User>(data, ProcessResultStatus.Failed, "Failed to update user.");
             }
         }
 

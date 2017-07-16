@@ -8,29 +8,29 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.Core
 {
-    public sealed class GetPersonById : PersonProcess, IGetPersonById
+    public sealed class GetUserStatusById : UserStatusProcess, IGetUserStatusById
     {
-        public GetPersonById(IConnectionStringSource connectionStringSource, IPersonConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetUserStatusById(IConnectionStringSource connectionStringSource, IUserStatusConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
-        public long PersonId { get; set; }
+        public short UserStatusId { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
-            .AddInputParameter("@_Id", PersonId);
+            .AddInputParameter("@_Id", UserStatusId);
 
-        public IDataProcessResult<Person> Execute()
+        public IDataProcessResult<UserStatus> Execute()
         {
             return SqlHelper.ExecuteReader(QueryInfo, Converter.FromReader);
         }
 
-        public Task<IDataProcessResult<Person>> ExecuteAsync()
+        public Task<IDataProcessResult<UserStatus>> ExecuteAsync()
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync);
         }
 
-        public Task<IDataProcessResult<Person>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IDataProcessResult<UserStatus>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync, cancellationToken);
         }

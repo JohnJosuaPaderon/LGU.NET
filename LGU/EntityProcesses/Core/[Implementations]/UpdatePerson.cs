@@ -1,36 +1,32 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.RDBMS;
 using LGU.Entities.Core;
+using LGU.EntityConverters.Core;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.Core
 {
-    public sealed class UpdatePerson : CoreProcessBase, IUpdatePerson
+    public sealed class UpdatePerson : PersonProcess, IUpdatePerson
     {
-        public UpdatePerson(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public UpdatePerson(IConnectionStringSource connectionStringSource, IPersonConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
         public Person Person { get; set; }
 
-        private SqlDataQueryInfo<Person> QueryInfo
-        {
-            get
-            {
-                return SqlDataQueryInfo<Person>.CreateProcedureQueryInfo(Person, GetQualifiedDbObjectName("UpdatePerson"), GetProcessResult, true)
-                    .AddInputParameter("@_Id", Person.Id)
-                    .AddInputParameter("@_FirstName", Person.FirstName)
-                    .AddInputParameter("@_MiddleName", Person.MiddleName)
-                    .AddInputParameter("@_LastName", Person.LastName)
-                    .AddInputParameter("@_NameExtension", Person.NameExtension)
-                    .AddInputParameter("@_GenderId", Person.Gender?.Id)
-                    .AddInputParameter("@_BirthDate", Person.BirthDate)
-                    .AddInputParameter("@_Deceased", Person.Deceased)
-                    .AddLogByParameter();
-            }
-        }
+        private SqlDataQueryInfo<Person> QueryInfo =>
+            SqlDataQueryInfo<Person>.CreateProcedureQueryInfo(Person, GetQualifiedDbObjectName(), GetProcessResult, true)
+            .AddInputParameter("@_Id", Person.Id)
+            .AddInputParameter("@_FirstName", Person.FirstName)
+            .AddInputParameter("@_MiddleName", Person.MiddleName)
+            .AddInputParameter("@_LastName", Person.LastName)
+            .AddInputParameter("@_NameExtension", Person.NameExtension)
+            .AddInputParameter("@_GenderId", Person.Gender?.Id)
+            .AddInputParameter("@_BirthDate", Person.BirthDate)
+            .AddInputParameter("@_Deceased", Person.Deceased)
+            .AddLogByParameter();
 
         private IDataProcessResult<Person> GetProcessResult(Person data, SqlCommand command, int affectedRows)
         {
