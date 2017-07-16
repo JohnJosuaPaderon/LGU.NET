@@ -1,7 +1,6 @@
 ﻿using LGU.Data.RDBMS;
 using LGU.Data.Utilities;
 using System;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,28 +10,17 @@ namespace LGU.EntityProcesses
     {
         private readonly SqlHelper SqlHelper;
 
-        private SqlQueryInfo QueryInfo
-        {
-            get
+        private SqlQueryInfo QueryInfo =>
+            new SqlQueryInfo()
             {
-                return new SqlQueryInfo()
-                {
-                    CommandText = "SELECT dbo.GetSystemDate();",
-                    GetProcessResult = GetProcessResult
-                };
-            }
-        }
+                CommandText = "SELECT dbo.GetSystemDate();"
+            };
 
         private IDataProcessResult<DateTime> Converter(object arg)
         {
             var result = DbValueConverter.ToNullableDateTime(arg);
 
             return new DataProcessResult<DateTime>(result ?? default(DateTime), result == null ? ProcessResultStatus.Failed : ProcessResultStatus.Success);
-        }
-
-        private IProcessResult GetProcessResult(SqlCommand command, int affectedRows)
-        {
-            throw new NotImplementedException();
         }
 
         public GetSystemDate(IConnectionStringSource connectionStringSource)

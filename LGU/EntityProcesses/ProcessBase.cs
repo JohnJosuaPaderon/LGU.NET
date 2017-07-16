@@ -17,5 +17,10 @@ namespace LGU.EntityProcesses
         {
             return $"{SchemaName}.{dbObjectName}";
         }
+
+        protected string GetQualifiedDbObjectName()
+        {
+            return GetQualifiedDbObjectName(GetType().Name);
+        }
     }
 }
