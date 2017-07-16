@@ -18,6 +18,11 @@ namespace LGU.Data.RDBMS
             };
         }
 
+        public static SqlQueryInfo CreateProcedureQueryInfo(string storedProcedure, bool useTransaction = false)
+        {
+            return CreateProcedureQueryInfo(storedProcedure, null, useTransaction);
+        }
+
         public List<SqlParameter> Parameters { get; } = new List<SqlParameter>();
 
         public CommandType CommandType { get; set; }
