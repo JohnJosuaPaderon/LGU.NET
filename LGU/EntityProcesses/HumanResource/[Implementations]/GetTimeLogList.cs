@@ -7,26 +7,25 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class GetEmployeeList : EmployeeProcess, IGetEmployeeList
+    public sealed class GetTimeLogList : TimeLogProcess, IGetTimeLogList
     {
-        public GetEmployeeList(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetTimeLogList(IConnectionStringSource connectionStringSource, ITimeLogConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
-        private SqlQueryInfo QueryInfo =>
-            SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName());
+        private SqlQueryInfo QueryInfo => SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName());
 
-        public IEnumerableDataProcessResult<Employee> Execute()
+        public IEnumerableDataProcessResult<TimeLog> Execute()
         {
             return SqlHelper.ExecuteReaderEnumerable(QueryInfo, Converter.EnumerableFromReader);
         }
 
-        public Task<IEnumerableDataProcessResult<Employee>> ExecuteAsync()
+        public Task<IEnumerableDataProcessResult<TimeLog>> ExecuteAsync()
         {
             return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter.EnumerableFromReaderAsync);
         }
 
-        public Task<IEnumerableDataProcessResult<Employee>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableDataProcessResult<TimeLog>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter.EnumerableFromReaderAsync, cancellationToken);
         }

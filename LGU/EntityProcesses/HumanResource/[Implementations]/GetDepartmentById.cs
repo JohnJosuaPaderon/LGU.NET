@@ -1,7 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.RDBMS;
 using LGU.Entities.HumanResource;
-using LGU.EntityProcessHelpers.HumanResource;
+using LGU.EntityConverters.HumanResource;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,36 +10,32 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetDepartmentById : HumanResourceProcessBase, IGetDepartmentById
     {
-        public GetDepartmentById(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        private readonly IDepartmentConverter<SqlDataReader> Converter;
+
+        public GetDepartmentById(IConnectionStringSource connectionStringSource, IDepartmentConverter<SqlDataReader> converter) : base(connectionStringSource)
         {
+            Converter = converter;
         }
 
         public int DepartmentId { get; set; }
 
-        private SqlQueryInfo GetQueryInfo()
-        {
-            return SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName("GetDepartmentById"), GetProcessResult)
+        private SqlQueryInfo QueryInfo =>
+            SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
                 .AddInputParameter("@_Id", DepartmentId);
-        }
-
-        private IProcessResult GetProcessResult(SqlCommand command, int affectedRows)
-        {
-            return new ProcessResult(ProcessResultStatus.Success);
-        }
 
         public IDataProcessResult<Department> Execute()
         {
-            return SqlHelper.ExecuteReader(GetQueryInfo(), DepartmentProcessHelper.FromReader);
+            return SqlHelper.ExecuteReader(QueryInfo, Converter.FromReader);
         }
 
         public Task<IDataProcessResult<Department>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteReaderAsync(GetQueryInfo(), DepartmentProcessHelper.FromReaderAsync);
+            return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync);
         }
 
         public Task<IDataProcessResult<Department>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteReaderAsync(GetQueryInfo(), DepartmentProcessHelper.FromReaderAsync, cancellationToken);
+            return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync, cancellationToken);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.RDBMS;
 using LGU.Entities.HumanResource;
-using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,20 +15,10 @@ namespace LGU.EntityProcesses.HumanResource
 
         public Employee Employee { get; set; }
 
-        private SqlDataQueryInfo<Employee> QueryInfo
-        {
-            get
-            {
-                return SqlDataQueryInfo<Employee>.CreateProcedureQueryInfo(Employee, GetQualifiedDbObjectName("DeleteEmployee"), GetProcessResult, true)
-                    .AddOutputParameter("@_Id", DbType.Int64)
-                    .AddInputParameter("@_FirstName", Employee.FirstName)
-                    .AddInputParameter("@_MiddleName", Employee.MiddleName)
-                    .AddInputParameter("@_LastName", Employee.LastName)
-                    .AddInputParameter("@_NameExtension", Employee.NameExtension)
-                    .AddInputParameter("@_DepartmentId", Employee.Department?.Id)
-                    .AddLogByParameter();
-            }
-        }
+        private SqlDataQueryInfo<Employee> QueryInfo =>
+            SqlDataQueryInfo<Employee>.CreateProcedureQueryInfo(Employee, GetQualifiedDbObjectName(), GetProcessResult, true)
+            .AddInputParameter("@_Id", Employee.Id)
+            .AddLogByParameter();
 
         private IDataProcessResult<Employee> GetProcessResult(Employee data, SqlCommand command, int affectedRows)
         {

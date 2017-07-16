@@ -15,23 +15,18 @@ namespace LGU.EntityProcesses.HumanResource
 
         public Employee Employee { get; set; }
 
-        private SqlDataQueryInfo<Employee> QueryInfo
-        {
-            get
-            {
-                return SqlDataQueryInfo<Employee>.CreateProcedureQueryInfo(Employee, GetQualifiedDbObjectName("UpdateEmployee"), GetProcessResult, true)
-                    .AddInputParameter("@_Id", Employee.Id)
-                    .AddInputParameter("@_FirstName", Employee.FirstName)
-                    .AddInputParameter("@_MiddleName", Employee.MiddleName)
-                    .AddInputParameter("@_LastName", Employee.LastName)
-                    .AddInputParameter("@_NameExtension", Employee.NameExtension)
-                    .AddInputParameter("@_BirthDate", Employee.BirthDate)
-                    .AddInputParameter("@_GenderId", Employee.Gender?.Id)
-                    .AddInputParameter("@_Deceased", Employee.Deceased)
-                    .AddInputParameter("@_DepartmentId", Employee.Department?.Id)
-                    .AddLogByParameter();
-            }
-        }
+        private SqlDataQueryInfo<Employee> QueryInfo =>
+            SqlDataQueryInfo<Employee>.CreateProcedureQueryInfo(Employee, GetQualifiedDbObjectName(), GetProcessResult, true)
+            .AddInputParameter("@_Id", Employee.Id)
+            .AddInputParameter("@_FirstName", Employee.FirstName)
+            .AddInputParameter("@_MiddleName", Employee.MiddleName)
+            .AddInputParameter("@_LastName", Employee.LastName)
+            .AddInputParameter("@_NameExtension", Employee.NameExtension)
+            .AddInputParameter("@_BirthDate", Employee.BirthDate)
+            .AddInputParameter("@_GenderId", Employee.Gender?.Id)
+            .AddInputParameter("@_Deceased", Employee.Deceased)
+            .AddInputParameter("@_DepartmentId", Employee.Department?.Id)
+            .AddLogByParameter();
 
         private IDataProcessResult<Employee> GetProcessResult(Employee data, SqlCommand command, int affectedRows)
         {

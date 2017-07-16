@@ -16,17 +16,12 @@ namespace LGU.EntityProcesses.HumanResource
 
         public Department Department { get; set; }
 
-        private SqlDataQueryInfo<Department> QueryInfo
-        {
-            get
-            {
-                return SqlDataQueryInfo<Department>.CreateProcedureQueryInfo(Department, GetQualifiedDbObjectName("InsertDepartment"), GetProcessResult, true)
-                    .AddOutputParameter("@_Id", DbType.Int32)
-                    .AddInputParameter("@_Description", Department.Description)
-                    .AddInputParameter("@_Abbreviation", Department.Abbreviation)
-                    .AddLogByParameter();
-            }
-        }
+        private SqlDataQueryInfo<Department> QueryInfo =>
+            SqlDataQueryInfo<Department>.CreateProcedureQueryInfo(Department, GetQualifiedDbObjectName(), GetProcessResult, true)
+            .AddOutputParameter("@_Id", DbType.Int32)
+            .AddInputParameter("@_Description", Department.Description)
+            .AddInputParameter("@_Abbreviation", Department.Abbreviation)
+            .AddLogByParameter();
 
         private IDataProcessResult<Department> GetProcessResult(Department data, SqlCommand command, int affectedRows)
         {

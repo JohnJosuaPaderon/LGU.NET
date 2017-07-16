@@ -8,29 +8,29 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class GetEmployeeById : EmployeeProcess, IGetEmployeeById
+    public sealed class GetTimeLogTypeById : TimeLogTypeProcess, IGetTimeLogTypeById
     {
-        public GetEmployeeById(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetTimeLogTypeById(IConnectionStringSource connectionStringSource, ITimeLogTypeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
-        public long EmployeeId { get; set; }
+        public short TimeLogTypeId { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
-            .AddInputParameter("@_Id", EmployeeId);
+            .AddInputParameter("@_Id", TimeLogTypeId);
 
-        public IDataProcessResult<Employee> Execute()
+        public IDataProcessResult<TimeLogType> Execute()
         {
             return SqlHelper.ExecuteReader(QueryInfo, Converter.FromReader);
         }
 
-        public Task<IDataProcessResult<Employee>> ExecuteAsync()
+        public Task<IDataProcessResult<TimeLogType>> ExecuteAsync()
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync);
         }
 
-        public Task<IDataProcessResult<Employee>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IDataProcessResult<TimeLogType>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync, cancellationToken);
         }

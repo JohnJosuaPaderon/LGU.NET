@@ -13,12 +13,10 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        private SqlDataQueryInfo<Department> GetQueryInfo()
-        {
-            return SqlDataQueryInfo<Department>.CreateProcedureQueryInfo(Department, GetQualifiedDbObjectName("DeleteDepartment"), GetProcessResult, true)
+        private SqlDataQueryInfo<Department> QueryInfo =>
+            SqlDataQueryInfo<Department>.CreateProcedureQueryInfo(Department, GetQualifiedDbObjectName(), GetProcessResult, true)
                 .AddInputParameter("Id", Department.Id)
                 .AddLogByParameter();
-        }
 
         private IDataProcessResult<Department> GetProcessResult(Department department, SqlCommand command, int affectedRows)
         {
@@ -36,17 +34,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IDataProcessResult<Department> Execute()
         {
-            return SqlHelper.ExecuteNonQuery(GetQueryInfo());
+            return SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
         public Task<IDataProcessResult<Department>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteNonQueryAsync(GetQueryInfo());
+            return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
         public Task<IDataProcessResult<Department>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteNonQueryAsync(GetQueryInfo(), cancellationToken);
+            return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }
     }
 }
