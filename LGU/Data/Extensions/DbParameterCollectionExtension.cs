@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Utilities;
 using System;
 using System.Data.Common;
+using System.IO;
 
 namespace LGU.Data.Extensions
 {
@@ -319,6 +320,16 @@ namespace LGU.Data.Extensions
         public static ulong GetUInt64(this DbParameterCollection parameters, string parameterName, IFormatProvider formatProvider)
         {
             return GetValueBase(parameters, parameterName, formatProvider, DbValueConverter.ToUInt64);
+        }
+
+        public static Stream GetStream(this DbParameterCollection parameters, string fieldName)
+        {
+            return GetValueBase(parameters, fieldName, DbValueConverter.ToStream);
+        }
+
+        public static TimeSpan GetTimeSpan(this DbParameterCollection parameters, string fieldName)
+        {
+            return GetValueBase(parameters, fieldName, DbValueConverter.ToTimeSpan);
         }
     }
 }

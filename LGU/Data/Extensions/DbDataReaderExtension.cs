@@ -328,6 +328,11 @@ namespace LGU.Data.Extensions
             return GetValueBase(reader, fieldName, DbValueConverter.ToStream);
         }
 
+        public static TimeSpan GetTimeSpan(this DbDataReader reader, string fieldName)
+        {
+            return GetValueBase(reader, fieldName, DbValueConverter.ToTimeSpan);
+        }
+
         public static Dictionary<string, object> ToDictionary(this DbDataReader reader)
         {
             var dictionary = new Dictionary<string, object>();
