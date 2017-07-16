@@ -26,21 +26,6 @@ namespace LGU.Data.Utilities
             return Convertible(value) ? converter(value, formatProvider) : default(TResult);
         }
 
-        private static TResult? NullableConversionBase<TResult, TArgument>(TArgument value, Func<TArgument, TResult> converter) where TResult : struct
-        {
-            return (value != null) ? new TResult?(converter(value)) : null;
-        }
-
-        private static TResult? NullableConversionBase<TResult, TArgument>(TArgument value, int fromToBase, Func<TArgument, int, TResult> converter) where TResult : struct
-        {
-            return Convertible(value) ? new TResult?(converter(value, fromToBase)) : null;
-        }
-
-        private static TResult? NullableConversionBase<TResult, TArgument>(TArgument value, IFormatProvider formatProvider, Func<TArgument, IFormatProvider, TResult> converter) where TResult : struct
-        {
-            return Convertible(value) ? new TResult?(converter(value, formatProvider)) : null;
-        }
-
         public static Stream ToStream(object value)
         {
             return ConversionBase(value, ValueConverter.ToStream);
@@ -49,6 +34,11 @@ namespace LGU.Data.Utilities
         public static TimeSpan ToTimeSpan(object value)
         {
             return ConversionBase(value, ValueConverter.ToTimeSpan);
+        }
+
+        public static TimeSpan? ToNullableTimeSpan(object value)
+        {
+            return ConversionBase(value, ValueConverter.ToNullableTimeSpan);
         }
     }
 }
