@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace LGU.EntityProcesses.Core
+﻿namespace LGU.EntityProcesses.Core
 {
     public abstract class CoreProcessBase : ProcessBase
     {
