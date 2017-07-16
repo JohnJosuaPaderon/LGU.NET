@@ -112,5 +112,29 @@ namespace LGU.Utilities
                 return null;
             }
         }
+
+        public static TimeSpan ToTimeSpan(object value)
+        {
+            if (value != null)
+            {
+                return new TimeSpan(ToInt64(value));
+            }
+            else
+            {
+                return default(TimeSpan);
+            }
+        }
+
+        public static TimeSpan? ToNullableTimeSpan(object value)
+        {
+            if (value != null)
+            {
+                return ToTimeSpan(value);
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
