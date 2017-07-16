@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LGU.Utilities;
+using System;
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -20,9 +22,19 @@ namespace LGU.Security
             return ComputeHash(value, SHA256.Create());
         }
 
+        public static string ComputeSHA256(SecureString secureValue)
+        {
+            return ComputeSHA256(SecureStringConverter.Convert(secureValue));
+        }
+
         public static string ComputeSHA512(string value)
         {
             return ComputeHash(value, SHA512.Create());
+        }
+
+        public static string ComputeSHA512(SecureString secureValue)
+        {
+            return ComputeSHA512(SecureStringConverter.Convert(secureValue));
         }
     }
 }
