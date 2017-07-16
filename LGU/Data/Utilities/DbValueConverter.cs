@@ -45,5 +45,10 @@ namespace LGU.Data.Utilities
         {
             return ConversionBase(value, ValueConverter.ToStream);
         }
+
+        public static TimeSpan ToTimeSpan(object value)
+        {
+            return ConversionBase(value, ValueConverter.ToTimeSpan);
+        }
     }
 }
