@@ -18,5 +18,24 @@
                 <TextBlock Text="Sign up" Style="{DynamicResource RegularHeaderTextBlock}"/>
             </materialDesign:ColorZone>
         </materialDesign:TransitioningContent>
+        <StackPanel Grid.Row="1">
+            
+        </StackPanel>
+        <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
+            <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FooterActionButton}"/>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1" Content="Save"/>
+                    <Button Grid.Column="2" Content="Cancel"/>
+                </Grid>
+            </materialDesign:ColorZone>
+        </materialDesign:TransitioningContent>
     </Grid>
 </UserControl>
