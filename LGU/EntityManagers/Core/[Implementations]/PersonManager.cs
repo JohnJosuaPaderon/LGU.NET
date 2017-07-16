@@ -14,6 +14,7 @@ namespace LGU.EntityManagers.Core
         private readonly IGetPersonList GetListProc;
         private readonly IInsertPerson InsertProc;
         private readonly IUpdatePerson UpdateProc;
+        private readonly ISearchPerson SearchProc;
 
         private static EntityCollection<Person, long> StaticSource { get; } = new EntityCollection<Person, long>();
 
@@ -22,13 +23,15 @@ namespace LGU.EntityManagers.Core
             IGetPersonById getByIdProc,
             IGetPersonList getListProc,
             IInsertPerson insertProc,
-            IUpdatePerson updateProc)
+            IUpdatePerson updateProc,
+            ISearchPerson searchProc)
         {
             DeleteProc = deleteProc;
             GetByIdProc = getByIdProc;
             GetListProc = getListProc;
             InsertProc = insertProc;
             UpdateProc = updateProc;
+            SearchProc = searchProc;
         }
 
         private static void InvokeIfSuccess(IDataProcessResult<Person> result, Action expression)
@@ -231,6 +234,45 @@ namespace LGU.EntityManagers.Core
             else
             {
                 return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+            }
+        }
+
+        public IEnumerableDataProcessResult<Person> Search(string searchKey)
+        {
+            if (string.IsNullOrWhiteSpace(searchKey))
+            {
+                return new EnumerableDataProcessResult<Person>(ProcessResultStatus.Failed, "Invalid search key.");
+            }
+            else
+            {
+                SearchProc.SearchKey = searchKey;
+                return SearchProc.Execute();
+            }
+        }
+
+        public async Task<IEnumerableDataProcessResult<Person>> SearchAsync(string searchKey)
+        {
+            if (string.IsNullOrWhiteSpace(searchKey))
+            {
+                return new EnumerableDataProcessResult<Person>(ProcessResultStatus.Failed, "Invalid search key.");
+            }
+            else
+            {
+                SearchProc.SearchKey = searchKey;
+                return await SearchProc.ExecuteAsync();
+            }
+        }
+
+        public async Task<IEnumerableDataProcessResult<Person>> SearchAsync(string searchKey, CancellationToken cancellationToken)
+        {
+            if (string.IsNullOrWhiteSpace(searchKey))
+            {
+                return new EnumerableDataProcessResult<Person>(ProcessResultStatus.Failed, "Invalid search key.");
+            }
+            else
+            {
+                SearchProc.SearchKey = searchKey;
+                return await SearchProc.ExecuteAsync(cancellationToken);
             }
         }
     }

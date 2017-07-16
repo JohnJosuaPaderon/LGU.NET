@@ -11,19 +11,27 @@ namespace LGU.EntityManagers.Core
     {
         private static EntityCollection<User, long> StaticSource { get; } = new EntityCollection<User, long>();
 
-        private readonly IDeleteUser DeleteUser;
-        private readonly IGetUserById GetUserById;
-        private readonly IGetUserList GetUserList;
-        private readonly IInsertUser InsertUser;
-        private readonly IUpdateUser UpdateUser;
+        private readonly IDeleteUser DeleteProc;
+        private readonly IGetUserById GetByIdProc;
+        private readonly IGetUserList GetListProc;
+        private readonly IInsertUser InsertProc;
+        private readonly IUpdateUser UpdateProc;
+        private readonly ILoginUser LoginProc;
 
-        public UserManager(IDeleteUser deleteUser, IGetUserById getUserById, IGetUserList getUserList, IInsertUser insertUser, IUpdateUser updateUser)
+        public UserManager(
+            IDeleteUser deleteProc, 
+            IGetUserById getByIdProc,
+            IGetUserList getListProc,
+            IInsertUser insertProc,
+            IUpdateUser updateProc,
+            ILoginUser loginProc)
         {
-            DeleteUser = deleteUser;
-            GetUserById = getUserById;
-            GetUserList = getUserList;
-            InsertUser = insertUser;
-            UpdateUser = updateUser;
+            DeleteProc = deleteProc;
+            GetByIdProc = getByIdProc;
+            GetListProc = getListProc;
+            InsertProc = insertProc;
+            UpdateProc = updateProc;
+            LoginProc = loginProc;
         }
         
         private static void InvokeIfSuccess(IDataProcessResult<User> result, Action action)
@@ -36,8 +44,8 @@ namespace LGU.EntityManagers.Core
 
         public IDataProcessResult<User> Delete(User user)
         {
-            DeleteUser.User = user;
-            var result = DeleteUser.Execute();
+            DeleteProc.User = user;
+            var result = DeleteProc.Execute();
             InvokeIfSuccess(result, () => StaticSource.Remove(result.Data));
 
             return result;
@@ -45,8 +53,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> DeleteAsync(User user, CancellationToken cancellationToken)
         {
-            DeleteUser.User = user;
-            var result = await DeleteUser.ExecuteAsync(cancellationToken);
+            DeleteProc.User = user;
+            var result = await DeleteProc.ExecuteAsync(cancellationToken);
             InvokeIfSuccess(result, () => StaticSource.Remove(result.Data));
 
             return result;
@@ -54,8 +62,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> DeleteAsync(User user)
         {
-            DeleteUser.User = user;
-            var result = await DeleteUser.ExecuteAsync();
+            DeleteProc.User = user;
+            var result = await DeleteProc.ExecuteAsync();
             InvokeIfSuccess(result, () => StaticSource.Remove(result.Data));
 
             return result;
@@ -63,8 +71,8 @@ namespace LGU.EntityManagers.Core
 
         public IDataProcessResult<User> GetById(long userId)
         {
-            GetUserById.UserId = userId;
-            var result = GetUserById.Execute();
+            GetByIdProc.UserId = userId;
+            var result = GetByIdProc.Execute();
             InvokeIfSuccess(result, () => StaticSource.AddUpdate(result.Data));
 
             return result;
@@ -72,8 +80,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> GetByIdAsync(long userId, CancellationToken cancellationToken)
         {
-            GetUserById.UserId = userId;
-            var result = await GetUserById.ExecuteAsync(cancellationToken);
+            GetByIdProc.UserId = userId;
+            var result = await GetByIdProc.ExecuteAsync(cancellationToken);
             InvokeIfSuccess(result, () => StaticSource.AddUpdate(result.Data));
 
             return result;
@@ -81,8 +89,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> GetByIdAsync(long userId)
         {
-            GetUserById.UserId = userId;
-            var result = await GetUserById.ExecuteAsync();
+            GetByIdProc.UserId = userId;
+            var result = await GetByIdProc.ExecuteAsync();
             InvokeIfSuccess(result, () => StaticSource.AddUpdate(result.Data));
 
             return result;
@@ -90,23 +98,23 @@ namespace LGU.EntityManagers.Core
 
         public IEnumerableDataProcessResult<User> GetList()
         {
-            return GetUserList.Execute();
+            return GetListProc.Execute();
         }
 
         public Task<IEnumerableDataProcessResult<User>> GetListAsync(CancellationToken cancellationToken)
         {
-            return GetUserList.ExecuteAsync(cancellationToken);
+            return GetListProc.ExecuteAsync(cancellationToken);
         }
 
         public Task<IEnumerableDataProcessResult<User>> GetListAsync()
         {
-            return GetUserList.ExecuteAsync();
+            return GetListProc.ExecuteAsync();
         }
 
         public IDataProcessResult<User> Insert(User user)
         {
-            InsertUser.User = user;
-            var result = InsertUser.Execute();
+            InsertProc.User = user;
+            var result = InsertProc.Execute();
             InvokeIfSuccess(result, () => StaticSource.Add(user));
 
             return result;
@@ -114,8 +122,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> InsertAsync(User user, CancellationToken cancellationToken)
         {
-            InsertUser.User = user;
-            var result = await InsertUser.ExecuteAsync(cancellationToken);
+            InsertProc.User = user;
+            var result = await InsertProc.ExecuteAsync(cancellationToken);
             InvokeIfSuccess(result, () => StaticSource.Add(user));
 
             return result;
@@ -123,8 +131,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> InsertAsync(User user)
         {
-            InsertUser.User = user;
-            var result = await InsertUser.ExecuteAsync();
+            InsertProc.User = user;
+            var result = await InsertProc.ExecuteAsync();
             InvokeIfSuccess(result, () => StaticSource.Add(user));
 
             return result;
@@ -132,8 +140,8 @@ namespace LGU.EntityManagers.Core
 
         public IDataProcessResult<User> Update(User user)
         {
-            UpdateUser.User = user;
-            var result = UpdateUser.Execute();
+            UpdateProc.User = user;
+            var result = UpdateProc.Execute();
             InvokeIfSuccess(result, () => StaticSource.Update(user));
 
             return result;
@@ -141,8 +149,8 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> UpdateAsync(User user, CancellationToken cancellationToken)
         {
-            UpdateUser.User = user;
-            var result = await UpdateUser.ExecuteAsync(cancellationToken);
+            UpdateProc.User = user;
+            var result = await UpdateProc.ExecuteAsync(cancellationToken);
             InvokeIfSuccess(result, () => StaticSource.Update(user));
 
             return result;
@@ -150,11 +158,29 @@ namespace LGU.EntityManagers.Core
 
         public async Task<IDataProcessResult<User>> UpdateAsync(User user)
         {
-            UpdateUser.User = user;
-            var result = await UpdateUser.ExecuteAsync();
+            UpdateProc.User = user;
+            var result = await UpdateProc.ExecuteAsync();
             InvokeIfSuccess(result, () => StaticSource.Update(user));
 
             return result;
+        }
+
+        public IDataProcessResult<User> Login(UserCredentials userCredentials)
+        {
+            LoginProc.UserCredentials = userCredentials;
+            return LoginProc.Execute();
+        }
+
+        public Task<IDataProcessResult<User>> LoginAsync(UserCredentials userCredentials)
+        {
+            LoginProc.UserCredentials = userCredentials;
+            return LoginProc.ExecuteAsync();
+        }
+
+        public Task<IDataProcessResult<User>> LoginAsync(UserCredentials userCredentials, CancellationToken cancellationToken)
+        {
+            LoginProc.UserCredentials = userCredentials;
+            return LoginProc.ExecuteAsync(cancellationToken);
         }
     }
 }
