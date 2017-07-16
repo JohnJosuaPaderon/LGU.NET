@@ -333,6 +333,11 @@ namespace LGU.Data.Extensions
             return GetValueBase(reader, fieldName, DbValueConverter.ToTimeSpan);
         }
 
+        public static TimeSpan? GetNullableTimeSpan(this DbDataReader reader, string fieldName)
+        {
+            return GetValueBase(reader, fieldName, DbValueConverter.ToNullableTimeSpan);
+        }
+
         public static Dictionary<string, object> ToDictionary(this DbDataReader reader)
         {
             var dictionary = new Dictionary<string, object>();

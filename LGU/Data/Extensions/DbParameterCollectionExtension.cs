@@ -331,5 +331,10 @@ namespace LGU.Data.Extensions
         {
             return GetValueBase(parameters, fieldName, DbValueConverter.ToTimeSpan);
         }
+
+        public static TimeSpan? GetNullableTimeSpan(this DbParameterCollection parameters, string fieldName)
+        {
+            return GetValueBase(parameters, fieldName, DbValueConverter.ToNullableTimeSpan);
+        }
     }
 }
