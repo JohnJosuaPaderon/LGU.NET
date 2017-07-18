@@ -29,7 +29,7 @@ namespace LGU.Models.SystemAdministration
             return new ConnectionString()
             {
                 Key = Key,
-                Value = SecureStringConverter.ConvertToSecureString(Value)
+                Value = SecureStringConverter.Convert(Value)
             };
         }
     }
