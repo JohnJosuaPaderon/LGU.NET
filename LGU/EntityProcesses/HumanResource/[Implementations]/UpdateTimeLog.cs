@@ -2,6 +2,7 @@
 using LGU.Data.RDBMS;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
+using LGU.Processes;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,29 +26,29 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_TypeId", TimeLog.Type?.Id)
             .AddLogByParameter();
 
-        private IDataProcessResult<TimeLog> GetProcessResult(TimeLog data, SqlCommand command, int affectedRows)
+        private IProcessResult<TimeLog> GetProcessResult(TimeLog data, SqlCommand command, int affectedRows)
         {
             if (affectedRows == 1)
             {
-                return new DataProcessResult<TimeLog>(data);
+                return new ProcessResult<TimeLog>(data);
             }
             else
             {
-                return new DataProcessResult<TimeLog>(ProcessResultStatus.Failed, "Failed to update time log.");
+                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Failed to update time log.");
             }
         }
 
-        public IDataProcessResult<TimeLog> Execute()
+        public IProcessResult<TimeLog> Execute()
         {
             return SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IDataProcessResult<TimeLog>> ExecuteAsync()
+        public Task<IProcessResult<TimeLog>> ExecuteAsync()
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IDataProcessResult<TimeLog>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<TimeLog>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

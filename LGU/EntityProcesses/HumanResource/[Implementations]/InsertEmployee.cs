@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.RDBMS;
 using LGU.Entities.HumanResource;
+using LGU.Processes;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
@@ -29,30 +30,30 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_DepartmentId", Employee.Department?.Id)
             .AddLogByParameter();
 
-        private IDataProcessResult<Employee> GetProcessResult(Employee data, SqlCommand command, int affectedRows)
+        private IProcessResult<Employee> GetProcessResult(Employee data, SqlCommand command, int affectedRows)
         {
             if (affectedRows == 1)
             {
                 data.Id = command.Parameters.GetInt64("@_Id");
-                return new DataProcessResult<Employee>(data);
+                return new ProcessResult<Employee>(data);
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed);
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed);
             }
         }
 
-        public IDataProcessResult<Employee> Execute()
+        public IProcessResult<Employee> Execute()
         {
             return SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IDataProcessResult<Employee>> ExecuteAsync()
+        public Task<IProcessResult<Employee>> ExecuteAsync()
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IDataProcessResult<Employee>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<Employee>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }
