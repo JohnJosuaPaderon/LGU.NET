@@ -32,7 +32,7 @@ namespace LGU.EntityProcesses.Core
 
         private IProcessResult<User> GetProcessResult(User data, SqlCommand command, int affectedRows)
         {
-            if (affectedRows == 1)
+            if (affectedRows > 0)
             {
                 data.Id = command.Parameters.GetInt64("@_Id");
                 data.SecureUsername.Dispose();

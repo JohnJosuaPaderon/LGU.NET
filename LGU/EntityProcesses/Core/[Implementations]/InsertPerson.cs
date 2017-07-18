@@ -37,7 +37,7 @@ namespace LGU.EntityProcesses.Core
 
         private IProcessResult<Person> GetProcessResult(Person data, SqlCommand command, int affectedRows)
         {
-            if (affectedRows == 1)
+            if (affectedRows > 0)
             {
                 data.Id = command.Parameters.GetInt16("@_Id");
                 return new ProcessResult<Person>(data);

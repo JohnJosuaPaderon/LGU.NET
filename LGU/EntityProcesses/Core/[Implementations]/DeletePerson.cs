@@ -24,7 +24,7 @@ namespace LGU.EntityProcesses.Core
 
         private IProcessResult<Person> GetProcessResult(Person data, SqlCommand command, int affectedRows)
         {
-            if (affectedRows == 1)
+            if (affectedRows > 0)
             {
                 return new ProcessResult<Person>(data);
             }
