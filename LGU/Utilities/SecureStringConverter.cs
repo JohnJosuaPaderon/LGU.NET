@@ -27,7 +27,7 @@ namespace LGU.Utilities
             }
         }
 
-        public static SecureString ConvertToSecureString(string value)
+        public static SecureString Convert(string value)
         {
             if (!string.IsNullOrWhiteSpace(value))
             {
