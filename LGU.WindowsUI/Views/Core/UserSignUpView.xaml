@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"       
+             xmlns:lgu="clr-namespace:LGU"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
@@ -19,7 +20,10 @@
             </materialDesign:ColorZone>
         </materialDesign:TransitioningContent>
         <StackPanel Grid.Row="1">
-            
+            <TextBox materialDesign:HintAssist.Hint="Display Name" Text="{Binding User.DisplayName}"/>
+            <TextBox materialDesign:HintAssist.Hint="User name" Text="{Binding User.Username}"/>
+            <PasswordBox materialDesign:HintAssist.Hint="Password" lgu:PasswordBoxAssists.ListenPasswordChanged="True" lgu:PasswordBoxAssists.Password="{Binding User.Password}"/>
+            <PasswordBox materialDesign:HintAssist.Hint="Confirm Password" lgu:PasswordBoxAssists.ListenPasswordChanged="True" lgu:PasswordBoxAssists.Password="{Binding User.ConfirmPassword}"/>
         </StackPanel>
         <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
             <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
@@ -32,8 +36,8 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="1" Content="Save"/>
-                    <Button Grid.Column="2" Content="Cancel"/>
+                    <Button Grid.Column="1" Content="Save" Command="{Binding SaveCommand}"/>
+                    <Button Grid.Column="2" Content="Cancel" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
                 </Grid>
             </materialDesign:ColorZone>
         </materialDesign:TransitioningContent>
