@@ -1,6 +1,6 @@
 ﻿using LGU.Data.Rdbms;
-using LGU.Data.Utilities;
 using LGU.Processes;
+using LGU.Utilities;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,13 +17,6 @@ namespace LGU.EntityProcesses
                 CommandText = "SELECT dbo.GetSystemDate();"
             };
 
-        private IProcessResult<DateTime> Converter(object arg)
-        {
-            var result = DbValueConverter.ToNullableDateTime(arg);
-
-            return new ProcessResult<DateTime>(result ?? default(DateTime), result == null ? ProcessResultStatus.Failed : ProcessResultStatus.Success);
-        }
-
         public GetSystemDate(IConnectionStringSource connectionStringSource)
         {
             SqlHelper = new SqlHelper(new SqlConnectionEstablisher(connectionStringSource["Core"]));
@@ -31,17 +24,17 @@ namespace LGU.EntityProcesses
 
         public IProcessResult<DateTime> Execute()
         {
-            return SqlHelper.ExecuteScalar(QueryInfo, Converter);
+            return SqlHelper.ExecuteScalar(QueryInfo, DbValueConverter.ToDateTime);
         }
 
         public Task<IProcessResult<DateTime>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteScalarAsync(QueryInfo, Converter);
+            return SqlHelper.ExecuteScalarAsync(QueryInfo, DbValueConverter.ToDateTime);
         }
 
         public Task<IProcessResult<DateTime>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteScalarAsync(QueryInfo, Converter, cancellationToken);
+            return SqlHelper.ExecuteScalarAsync(QueryInfo, DbValueConverter.ToDateTime, cancellationToken);
         }
     }
 }
