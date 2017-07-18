@@ -3,6 +3,7 @@ using System.Text;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using LGU.Processes;
 
 namespace LGU.EntityProcesses.Core
 {
@@ -10,7 +11,7 @@ namespace LGU.EntityProcesses.Core
     {
         public Person Person { get; set; }
 
-        public IDataProcessResult<string> Execute()
+        public IProcessResult<string> Execute()
         {
             string data = null;
             ProcessResultStatus status = ProcessResultStatus.Undefined;
@@ -77,15 +78,15 @@ namespace LGU.EntityProcesses.Core
                 }
             }
 
-            return new DataProcessResult<string>(data, status, message);
+            return new ProcessResult<string>(data, status, message);
         }
 
-        public Task<IDataProcessResult<string>> ExecuteAsync()
+        public Task<IProcessResult<string>> ExecuteAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IDataProcessResult<string>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<string>> ExecuteAsync(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

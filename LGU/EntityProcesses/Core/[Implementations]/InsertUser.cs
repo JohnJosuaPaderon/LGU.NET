@@ -2,6 +2,7 @@
 using LGU.Data.RDBMS;
 using LGU.Entities.Core;
 using LGU.EntityConverters.Core;
+using LGU.Processes;
 using LGU.Security;
 using System.Data;
 using System.Data.SqlClient;
@@ -29,7 +30,7 @@ namespace LGU.EntityProcesses.Core
             .AddInputParameter("@_DisplayName", User.DisplayName)
             .AddLogByParameter();
 
-        private IDataProcessResult<User> GetProcessResult(User data, SqlCommand command, int affectedRows)
+        private IProcessResult<User> GetProcessResult(User data, SqlCommand command, int affectedRows)
         {
             if (affectedRows == 1)
             {
@@ -38,25 +39,25 @@ namespace LGU.EntityProcesses.Core
                 data.SecurePassword.Dispose();
                 data.SecureUsername = null;
                 data.SecurePassword = null;
-                return new DataProcessResult<User>(data);
+                return new ProcessResult<User>(data);
             }
             else
             {
-                return new DataProcessResult<User>(data, ProcessResultStatus.Failed, "Failed to insert user.");
+                return new ProcessResult<User>(data, ProcessResultStatus.Failed, "Failed to insert user.");
             }
         }
 
-        public IDataProcessResult<User> Execute()
+        public IProcessResult<User> Execute()
         {
             return SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IDataProcessResult<User>> ExecuteAsync()
+        public Task<IProcessResult<User>> ExecuteAsync()
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IDataProcessResult<User>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<User>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

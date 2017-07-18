@@ -2,6 +2,7 @@
 using LGU.Data.RDBMS;
 using LGU.Entities.Core;
 using LGU.EntityConverters.Core;
+using LGU.Processes;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,29 +29,29 @@ namespace LGU.EntityProcesses.Core
             .AddInputParameter("@_Deceased", Person.Deceased)
             .AddLogByParameter();
 
-        private IDataProcessResult<Person> GetProcessResult(Person data, SqlCommand command, int affectedRows)
+        private IProcessResult<Person> GetProcessResult(Person data, SqlCommand command, int affectedRows)
         {
             if (affectedRows == 1)
             {
-                return new DataProcessResult<Person>(data);
+                return new ProcessResult<Person>(data);
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed, "Failed to update person.");
+                return new ProcessResult<Person>(ProcessResultStatus.Failed, "Failed to update person.");
             }
         }
 
-        public IDataProcessResult<Person> Execute()
+        public IProcessResult<Person> Execute()
         {
             return SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IDataProcessResult<Person>> ExecuteAsync()
+        public Task<IProcessResult<Person>> ExecuteAsync()
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IDataProcessResult<Person>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<Person>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

@@ -2,6 +2,7 @@
 using LGU.Data.RDBMS;
 using LGU.Entities.Core;
 using LGU.EntityConverters.Core;
+using LGU.Processes;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,17 +21,17 @@ namespace LGU.EntityProcesses.Core
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
             .AddInputParameter("@_GenderId", GenderId);
 
-        public IDataProcessResult<Gender> Execute()
+        public IProcessResult<Gender> Execute()
         {
             return SqlHelper.ExecuteReader(QueryInfo, Converter.FromReader);
         }
 
-        public Task<IDataProcessResult<Gender>> ExecuteAsync()
+        public Task<IProcessResult<Gender>> ExecuteAsync()
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync);
         }
 
-        public Task<IDataProcessResult<Gender>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<Gender>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync, cancellationToken);
         }

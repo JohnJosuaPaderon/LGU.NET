@@ -2,6 +2,7 @@
 using LGU.Data.RDBMS;
 using LGU.Entities.Core;
 using LGU.EntityConverters.Core;
+using LGU.Processes;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
@@ -34,30 +35,30 @@ namespace LGU.EntityProcesses.Core
             }
         }
 
-        private IDataProcessResult<Person> GetProcessResult(Person data, SqlCommand command, int affectedRows)
+        private IProcessResult<Person> GetProcessResult(Person data, SqlCommand command, int affectedRows)
         {
             if (affectedRows == 1)
             {
                 data.Id = command.Parameters.GetInt16("@_Id");
-                return new DataProcessResult<Person>(data);
+                return new ProcessResult<Person>(data);
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed, "Failed to insert person.");
+                return new ProcessResult<Person>(ProcessResultStatus.Failed, "Failed to insert person.");
             }
         }
 
-        public IDataProcessResult<Person> Execute()
+        public IProcessResult<Person> Execute()
         {
             return SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IDataProcessResult<Person>> ExecuteAsync()
+        public Task<IProcessResult<Person>> ExecuteAsync()
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IDataProcessResult<Person>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<Person>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

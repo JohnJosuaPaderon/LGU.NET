@@ -2,6 +2,7 @@
 using LGU.Data.RDBMS;
 using LGU.Entities.Core;
 using LGU.EntityConverters.Core;
+using LGU.Processes;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,17 +21,17 @@ namespace LGU.EntityProcesses.Core
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
             .AddInputParameter("@_Id", UserTypeId);
 
-        public IDataProcessResult<UserType> Execute()
+        public IProcessResult<UserType> Execute()
         {
             return SqlHelper.ExecuteReader(QueryInfo, Converter.FromReader);
         }
 
-        public Task<IDataProcessResult<UserType>> ExecuteAsync()
+        public Task<IProcessResult<UserType>> ExecuteAsync()
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync);
         }
 
-        public Task<IDataProcessResult<UserType>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<UserType>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync, cancellationToken);
         }

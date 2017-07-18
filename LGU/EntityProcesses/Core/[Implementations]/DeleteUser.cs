@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.RDBMS;
 using LGU.Entities.Core;
+using LGU.Processes;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,29 +21,29 @@ namespace LGU.EntityProcesses.Core
             .AddInputParameter("@_Id", User.Id)
             .AddLogByParameter();
 
-        private IDataProcessResult<User> GetProcessResult(User data, SqlCommand command, int affectedRows)
+        private IProcessResult<User> GetProcessResult(User data, SqlCommand command, int affectedRows)
         {
             if (affectedRows == 1)
             {
-                return new DataProcessResult<User>(data);
+                return new ProcessResult<User>(data);
             }
             else
             {
-                return new DataProcessResult<User>(ProcessResultStatus.Failed);
+                return new ProcessResult<User>(ProcessResultStatus.Failed);
             }
         }
 
-        public IDataProcessResult<User> Execute()
+        public IProcessResult<User> Execute()
         {
             return SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IDataProcessResult<User>> ExecuteAsync()
+        public Task<IProcessResult<User>> ExecuteAsync()
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IDataProcessResult<User>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<User>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

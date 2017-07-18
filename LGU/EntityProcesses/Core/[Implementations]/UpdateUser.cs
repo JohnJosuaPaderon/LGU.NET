@@ -1,6 +1,9 @@
-﻿using LGU.Data.RDBMS;
+﻿using LGU.Data.Extensions;
+using LGU.Data.RDBMS;
 using LGU.Entities.Core;
 using LGU.EntityConverters.Core;
+using LGU.Processes;
+using LGU.Security;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,9 +19,17 @@ namespace LGU.EntityProcesses.Core
         public User User { get; set; }
 
         private SqlDataQueryInfo<User> QueryInfo =>
-            SqlDataQueryInfo<User>.CreateProcedureQueryInfo(User, GetQualifiedDbObjectName(), GetProcessResult, true);
+            SqlDataQueryInfo<User>.CreateProcedureQueryInfo(User, GetQualifiedDbObjectName(), GetProcessResult, true)
+            .AddInputParameter("@_Id", "@_Id")
+            .AddInputParameter("@_OwnerId", User.Owner?.Id)
+            .AddInputParameter("@_Username", SecureHash.ComputeSHA512(User.SecureUsername))
+            .AddInputParameter("@_Password", SecureHash.ComputeSHA512(User.SecurePassword))
+            .AddInputParameter("@_StatusId", User.Status?.Id)
+            .AddInputParameter("@_TypeId", User.Type?.Id)
+            .AddInputParameter("@_DisplayName", User.DisplayName)
+            .AddLogByParameter();
 
-        private IDataProcessResult<User> GetProcessResult(User data, SqlCommand command, int affectedRows)
+        private IProcessResult<User> GetProcessResult(User data, SqlCommand command, int affectedRows)
         {
             if (affectedRows == 1)
             {
@@ -26,25 +37,25 @@ namespace LGU.EntityProcesses.Core
                 data.SecurePassword?.Dispose();
                 data.SecureUsername = null;
                 data.SecurePassword = null;
-                return new DataProcessResult<User>(data);
+                return new ProcessResult<User>(data);
             }
             else
             {
-                return new DataProcessResult<User>(data, ProcessResultStatus.Failed, "Failed to update user.");
+                return new ProcessResult<User>(data, ProcessResultStatus.Failed, "Failed to update user.");
             }
         }
 
-        public IDataProcessResult<User> Execute()
+        public IProcessResult<User> Execute()
         {
             return SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IDataProcessResult<User>> ExecuteAsync()
+        public Task<IProcessResult<User>> ExecuteAsync()
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IDataProcessResult<User>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<User>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }
