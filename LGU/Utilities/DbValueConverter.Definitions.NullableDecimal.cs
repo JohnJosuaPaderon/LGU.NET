@@ -1,7 +1,6 @@
-﻿using LGU.Utilities;
-using System;
+﻿using System;
 
-namespace LGU.Data.Utilities
+namespace LGU.Utilities
 {
     partial class DbValueConverter
     {

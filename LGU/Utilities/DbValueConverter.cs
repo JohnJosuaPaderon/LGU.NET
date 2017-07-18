@@ -1,8 +1,7 @@
-﻿using LGU.Utilities;
-using System;
+﻿using System;
 using System.IO;
 
-namespace LGU.Data.Utilities
+namespace LGU.Utilities
 {
     public static partial class DbValueConverter
     {
