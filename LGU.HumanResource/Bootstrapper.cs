@@ -1,4 +1,5 @@
 ﻿using LGU.Extensions;
+using LGU.Views.Core;
 using LGU.Views.HumanResource;
 using Prism.Unity;
 
@@ -14,6 +15,7 @@ namespace LGU.HumanResource
             Container.RegisterTypeForNavigation<PreviewEmployeeView>();
             Container.RegisterTypeForNavigation<DepartmentManagementView>();
             Container.RegisterTypeForNavigation<MainView>();
+            Container.RegisterTypeForNavigation<UserSignUpView>();
             Container.RegisterTypeForNavigation<EmployeeFingerPrintEnrollmentView>();
         }
 
