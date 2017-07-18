@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Entities.Core;
 using LGU.EntityManagers.Core;
+using LGU.Processes;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -69,46 +70,46 @@ namespace LGU.EntityConverters.Core
             };
         }
 
-        public IDataProcessResult<Person> FromReader(SqlDataReader reader)
+        public IProcessResult<Person> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new DataProcessResult<Person>(GetData(reader));
+                return new ProcessResult<Person>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<Person>(ex);
+                return new ProcessResult<Person>(ex);
             }
         }
 
-        public async Task<IDataProcessResult<Person>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<Person>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new DataProcessResult<Person>(await GetDataAsync(reader));
+                return new ProcessResult<Person>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<Person>(ex);
+                return new ProcessResult<Person>(ex);
             }
         }
 
-        public async Task<IDataProcessResult<Person>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<Person>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new DataProcessResult<Person>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<Person>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<Person>(ex);
+                return new ProcessResult<Person>(ex);
             }
         }
 
-        public IEnumerableDataProcessResult<Person> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<Person> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
@@ -119,15 +120,15 @@ namespace LGU.EntityConverters.Core
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableDataProcessResult<Person>(list);
+                return new EnumerableProcessResult<Person>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<Person>(ex);
+                return new EnumerableProcessResult<Person>(ex);
             }
         }
 
-        public async Task<IEnumerableDataProcessResult<Person>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<Person>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
@@ -138,15 +139,15 @@ namespace LGU.EntityConverters.Core
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableDataProcessResult<Person>(list);
+                return new EnumerableProcessResult<Person>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<Person>(ex);
+                return new EnumerableProcessResult<Person>(ex);
             }
         }
 
-        public  async Task<IEnumerableDataProcessResult<Person>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public  async Task<IEnumerableProcessResult<Person>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -157,11 +158,11 @@ namespace LGU.EntityConverters.Core
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableDataProcessResult<Person>(list);
+                return new EnumerableProcessResult<Person>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<Person>(ex);
+                return new EnumerableProcessResult<Person>(ex);
             }
         }
     }

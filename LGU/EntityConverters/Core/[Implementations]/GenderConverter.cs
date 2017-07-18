@@ -1,5 +1,6 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Entities.Core;
+using LGU.Processes;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -19,7 +20,7 @@ namespace LGU.EntityConverters.Core
             };
         }
 
-        public IEnumerableDataProcessResult<Gender> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<Gender> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
@@ -30,15 +31,15 @@ namespace LGU.EntityConverters.Core
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableDataProcessResult<Gender>(list);
+                return new EnumerableProcessResult<Gender>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<Gender>(ex);
+                return new EnumerableProcessResult<Gender>(ex);
             }
         }
 
-        public async Task<IEnumerableDataProcessResult<Gender>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<Gender>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
@@ -49,15 +50,15 @@ namespace LGU.EntityConverters.Core
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableDataProcessResult<Gender>(list);
+                return new EnumerableProcessResult<Gender>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<Gender>(ex);
+                return new EnumerableProcessResult<Gender>(ex);
             }
         }
 
-        public async Task<IEnumerableDataProcessResult<Gender>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<Gender>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -68,50 +69,50 @@ namespace LGU.EntityConverters.Core
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableDataProcessResult<Gender>(list);
+                return new EnumerableProcessResult<Gender>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<Gender>(ex);
+                return new EnumerableProcessResult<Gender>(ex);
             }
         }
 
-        public IDataProcessResult<Gender> FromReader(SqlDataReader reader)
+        public IProcessResult<Gender> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new DataProcessResult<Gender>(GetData(reader));
+                return new ProcessResult<Gender>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<Gender>(ex);
+                return new ProcessResult<Gender>(ex);
             }
         }
 
-        public async Task<IDataProcessResult<Gender>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<Gender>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new DataProcessResult<Gender>(GetData(reader));
+                return new ProcessResult<Gender>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<Gender>(ex);
+                return new ProcessResult<Gender>(ex);
             }
         }
 
-        public async Task<IDataProcessResult<Gender>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<Gender>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new DataProcessResult<Gender>(GetData(reader));
+                return new ProcessResult<Gender>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<Gender>(ex);
+                return new ProcessResult<Gender>(ex);
             }
         }
     }
