@@ -4,42 +4,45 @@
              xmlns:prism="http://prismlibrary.com/"       
              xmlns:lgu="clr-namespace:LGU"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             prism:ViewModelLocator.AutoWireViewModel="True" Width="450" VerticalAlignment="Center">
     <UserControl.Resources>
         <ResourceDictionary Source="../../Styles/Default.xaml"/>
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
-            <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
-                <TextBlock Text="Sign up" Style="{DynamicResource RegularHeaderTextBlock}"/>
-            </materialDesign:ColorZone>
-        </materialDesign:TransitioningContent>
-        <StackPanel Grid.Row="1">
-            <TextBox materialDesign:HintAssist.Hint="Display Name" Text="{Binding User.DisplayName}"/>
-            <TextBox materialDesign:HintAssist.Hint="User name" Text="{Binding User.Username}"/>
-            <PasswordBox materialDesign:HintAssist.Hint="Password" lgu:PasswordBoxAssists.ListenPasswordChanged="True" lgu:PasswordBoxAssists.Password="{Binding User.Password}"/>
-            <PasswordBox materialDesign:HintAssist.Hint="Confirm Password" lgu:PasswordBoxAssists.ListenPasswordChanged="True" lgu:PasswordBoxAssists.Password="{Binding User.ConfirmPassword}"/>
-        </StackPanel>
-        <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
-            <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
-                <Grid>
-                    <Grid.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FooterActionButton}"/>
-                    </Grid.Resources>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <Button Grid.Column="1" Content="Save" Command="{Binding SaveCommand}"/>
-                    <Button Grid.Column="2" Content="Cancel" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
-                </Grid>
-            </materialDesign:ColorZone>
-        </materialDesign:TransitioningContent>
-    </Grid>
+    <materialDesign:Card>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
+                <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
+                    <TextBlock Text="Sign up" Style="{DynamicResource RegularHeaderTextBlock}"/>
+                </materialDesign:ColorZone>
+            </materialDesign:TransitioningContent>
+            <StackPanel Grid.Row="1">
+                <TextBox materialDesign:HintAssist.Hint="Display Name" Text="{Binding User.DisplayName}"/>
+                <TextBox materialDesign:HintAssist.Hint="User name" Text="{Binding User.Username}"/>
+                <PasswordBox materialDesign:HintAssist.Hint="Password" lgu:PasswordBoxAssists.ListenPasswordChanged="True" lgu:PasswordBoxAssists.Password="{Binding User.Password,Mode=TwoWay}"/>
+                <PasswordBox materialDesign:HintAssist.Hint="Confirm Password" lgu:PasswordBoxAssists.ListenPasswordChanged="True" lgu:PasswordBoxAssists.Password="{Binding User.ConfirmPassword,Mode=TwoWay}"/>
+            </StackPanel>
+            <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
+                <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FooterActionButton}"/>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding MessageLog}"/>
+                        <Button Grid.Column="1" Content="Save" Command="{Binding SaveCommand}"/>
+                        <Button Grid.Column="2" Content="Cancel" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
+                    </Grid>
+                </materialDesign:ColorZone>
+            </materialDesign:TransitioningContent>
+        </Grid>
+    </materialDesign:Card>
 </UserControl>
