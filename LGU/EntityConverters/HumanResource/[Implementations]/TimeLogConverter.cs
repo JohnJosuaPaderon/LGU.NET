@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Entities.HumanResource;
 using LGU.EntityManagers.HumanResource;
+using LGU.Processes;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -88,7 +89,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IEnumerableDataProcessResult<TimeLog> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<TimeLog> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
@@ -99,15 +100,15 @@ namespace LGU.EntityConverters.HumanResource
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableDataProcessResult<TimeLog>(list);
+                return new EnumerableProcessResult<TimeLog>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<TimeLog>(ex);
+                return new EnumerableProcessResult<TimeLog>(ex);
             }
         }
 
-        public async Task<IEnumerableDataProcessResult<TimeLog>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<TimeLog>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
@@ -118,15 +119,15 @@ namespace LGU.EntityConverters.HumanResource
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableDataProcessResult<TimeLog>(list);
+                return new EnumerableProcessResult<TimeLog>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<TimeLog>(ex);
+                return new EnumerableProcessResult<TimeLog>(ex);
             }
         }
 
-        public async Task<IEnumerableDataProcessResult<TimeLog>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<TimeLog>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -137,50 +138,50 @@ namespace LGU.EntityConverters.HumanResource
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableDataProcessResult<TimeLog>(list);
+                return new EnumerableProcessResult<TimeLog>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<TimeLog>(ex);
+                return new EnumerableProcessResult<TimeLog>(ex);
             }
         }
 
-        public IDataProcessResult<TimeLog> FromReader(SqlDataReader reader)
+        public IProcessResult<TimeLog> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new DataProcessResult<TimeLog>(GetData(reader));
+                return new ProcessResult<TimeLog>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<TimeLog>(ex);
+                return new ProcessResult<TimeLog>(ex);
             }
         }
 
-        public async Task<IDataProcessResult<TimeLog>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<TimeLog>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new DataProcessResult<TimeLog>(await GetDataAsync(reader));
+                return new ProcessResult<TimeLog>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<TimeLog>(ex);
+                return new ProcessResult<TimeLog>(ex);
             }
         }
 
-        public async Task<IDataProcessResult<TimeLog>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<TimeLog>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new DataProcessResult<TimeLog>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<TimeLog>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<TimeLog>(ex);
+                return new ProcessResult<TimeLog>(ex);
             }
         }
     }
