@@ -1,6 +1,7 @@
 ﻿using LGU.Entities;
 using LGU.Entities.Core;
 using LGU.EntityProcesses.Core;
+using LGU.Processes;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace LGU.EntityManagers.Core
             SearchProc = searchProc;
         }
 
-        private static void InvokeIfSuccess(IDataProcessResult<Person> result, Action expression)
+        private static void InvokeIfSuccess(IProcessResult<Person> result, Action expression)
         {
             if (result.Status == ProcessResultStatus.Success)
             {
@@ -42,7 +43,7 @@ namespace LGU.EntityManagers.Core
             }
         }
 
-        public IDataProcessResult<Person> Delete(Person data)
+        public IProcessResult<Person> Delete(Person data)
         {
             if (data != null)
             {
@@ -53,11 +54,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<Person>> DeleteAsync(Person data)
+        public async Task<IProcessResult<Person>> DeleteAsync(Person data)
         {
             if (data != null)
             {
@@ -68,11 +69,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<Person>> DeleteAsync(Person data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<Person>> DeleteAsync(Person data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -83,11 +84,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public IDataProcessResult<Person> GetById(long id)
+        public IProcessResult<Person> GetById(long id)
         {
             if (id > 0)
             {
@@ -98,11 +99,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<Person>> GetByIdAsync(long id)
+        public async Task<IProcessResult<Person>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
@@ -113,11 +114,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<Person>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<Person>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
@@ -128,26 +129,26 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public IEnumerableDataProcessResult<Person> GetList()
+        public IEnumerableProcessResult<Person> GetList()
         {
             return GetListProc.Execute();
         }
 
-        public Task<IEnumerableDataProcessResult<Person>> GetListAsync()
+        public Task<IEnumerableProcessResult<Person>> GetListAsync()
         {
             return GetListProc.ExecuteAsync();
         }
 
-        public Task<IEnumerableDataProcessResult<Person>> GetListAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<Person>> GetListAsync(CancellationToken cancellationToken)
         {
             return GetListProc.ExecuteAsync(cancellationToken);
         }
 
-        public IDataProcessResult<Person> Insert(Person data)
+        public IProcessResult<Person> Insert(Person data)
         {
             if (data != null)
             {
@@ -158,11 +159,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<Person>> InsertAsync(Person data)
+        public async Task<IProcessResult<Person>> InsertAsync(Person data)
         {
             if (data != null)
             {
@@ -173,11 +174,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<Person>> InsertAsync(Person data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<Person>> InsertAsync(Person data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -188,11 +189,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public IDataProcessResult<Person> Update(Person data)
+        public IProcessResult<Person> Update(Person data)
         {
             if (data != null)
             {
@@ -203,11 +204,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<Person>> UpdateAsync(Person data)
+        public async Task<IProcessResult<Person>> UpdateAsync(Person data)
         {
             if (data != null)
             {
@@ -218,11 +219,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<Person>> UpdateAsync(Person data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<Person>> UpdateAsync(Person data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -233,15 +234,15 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Person>(ProcessResultStatus.Failed);
+                return new ProcessResult<Person>(ProcessResultStatus.Failed);
             }
         }
 
-        public IEnumerableDataProcessResult<Person> Search(string searchKey)
+        public IEnumerableProcessResult<Person> Search(string searchKey)
         {
             if (string.IsNullOrWhiteSpace(searchKey))
             {
-                return new EnumerableDataProcessResult<Person>(ProcessResultStatus.Failed, "Invalid search key.");
+                return new EnumerableProcessResult<Person>(ProcessResultStatus.Failed, "Invalid search key.");
             }
             else
             {
@@ -250,11 +251,11 @@ namespace LGU.EntityManagers.Core
             }
         }
 
-        public async Task<IEnumerableDataProcessResult<Person>> SearchAsync(string searchKey)
+        public async Task<IEnumerableProcessResult<Person>> SearchAsync(string searchKey)
         {
             if (string.IsNullOrWhiteSpace(searchKey))
             {
-                return new EnumerableDataProcessResult<Person>(ProcessResultStatus.Failed, "Invalid search key.");
+                return new EnumerableProcessResult<Person>(ProcessResultStatus.Failed, "Invalid search key.");
             }
             else
             {
@@ -263,11 +264,11 @@ namespace LGU.EntityManagers.Core
             }
         }
 
-        public async Task<IEnumerableDataProcessResult<Person>> SearchAsync(string searchKey, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<Person>> SearchAsync(string searchKey, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(searchKey))
             {
-                return new EnumerableDataProcessResult<Person>(ProcessResultStatus.Failed, "Invalid search key.");
+                return new EnumerableProcessResult<Person>(ProcessResultStatus.Failed, "Invalid search key.");
             }
             else
             {

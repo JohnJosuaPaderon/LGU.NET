@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using LGU.Entities;
 using LGU.Entities.Core;
 using LGU.EntityProcesses.Core;
-using LGU.Entities;
+using LGU.Processes;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
@@ -30,13 +29,13 @@ namespace LGU.EntityManagers.Core
             }
         }
 
-        public IDataProcessResult<UserType> GetById(short id)
+        public IProcessResult<UserType> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<UserType>(StaticSource[id]);
+                    return new ProcessResult<UserType>(StaticSource[id]);
                 }
                 else
                 {
@@ -49,17 +48,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<UserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
+                return new ProcessResult<UserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
             }
         }
 
-        public async Task<IDataProcessResult<UserType>> GetByIdAsync(short id)
+        public async Task<IProcessResult<UserType>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<UserType>(StaticSource[id]);
+                    return new ProcessResult<UserType>(StaticSource[id]);
                 }
                 else
                 {
@@ -72,17 +71,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<UserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
+                return new ProcessResult<UserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
             }
         }
 
-        public async Task<IDataProcessResult<UserType>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<UserType>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<UserType>(StaticSource[id]);
+                    return new ProcessResult<UserType>(StaticSource[id]);
                 }
                 else
                 {
@@ -95,21 +94,21 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<UserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
+                return new ProcessResult<UserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
             }
         }
 
-        public IEnumerableDataProcessResult<UserType> GetList()
+        public IEnumerableProcessResult<UserType> GetList()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerableDataProcessResult<UserType>> GetListAsync()
+        public Task<IEnumerableProcessResult<UserType>> GetListAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerableDataProcessResult<UserType>> GetListAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<UserType>> GetListAsync(CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

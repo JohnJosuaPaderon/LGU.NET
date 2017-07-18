@@ -1,6 +1,7 @@
 ﻿using LGU.Entities;
 using LGU.Entities.Core;
 using LGU.EntityProcesses.Core;
+using LGU.Processes;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,13 +31,13 @@ namespace LGU.EntityManagers.Core
             }
         }
 
-        public IDataProcessResult<UserStatus> GetById(short id)
+        public IProcessResult<UserStatus> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<UserStatus>(StaticSource[id]);
+                    return new ProcessResult<UserStatus>(StaticSource[id]);
                 }
                 else
                 {
@@ -49,17 +50,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<UserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
+                return new ProcessResult<UserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
             }
         }
 
-        public async Task<IDataProcessResult<UserStatus>> GetByIdAsync(short id)
+        public async Task<IProcessResult<UserStatus>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<UserStatus>(StaticSource[id]);
+                    return new ProcessResult<UserStatus>(StaticSource[id]);
                 }
                 else
                 {
@@ -72,17 +73,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<UserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
+                return new ProcessResult<UserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
             }
         }
 
-        public async Task<IDataProcessResult<UserStatus>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<UserStatus>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<UserStatus>(StaticSource[id]);
+                    return new ProcessResult<UserStatus>(StaticSource[id]);
                 }
                 else
                 {
@@ -95,21 +96,21 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<UserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
+                return new ProcessResult<UserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
             }
         }
 
-        public IEnumerableDataProcessResult<UserStatus> GetList()
+        public IEnumerableProcessResult<UserStatus> GetList()
         {
             return GetListProc.Execute();
         }
 
-        public Task<IEnumerableDataProcessResult<UserStatus>> GetListAsync()
+        public Task<IEnumerableProcessResult<UserStatus>> GetListAsync()
         {
             return GetListProc.ExecuteAsync();
         }
 
-        public Task<IEnumerableDataProcessResult<UserStatus>> GetListAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<UserStatus>> GetListAsync(CancellationToken cancellationToken)
         {
             return GetListProc.ExecuteAsync(cancellationToken);
         }

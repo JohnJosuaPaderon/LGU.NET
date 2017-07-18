@@ -1,5 +1,6 @@
 ﻿using LGU.Entities.Core;
 using LGU.EntityProcesses.Core;
+using LGU.Processes;
 using System;
 
 namespace LGU.EntityManagers.Core
@@ -17,18 +18,18 @@ namespace LGU.EntityManagers.Core
             ConstructPersonMiddleInitials = constructPersonMiddleInitials;
         }
 
-        public IDataProcessResult<string> ConstructFullName(Person person)
+        public IProcessResult<string> ConstructFullName(Person person)
         {
             ConstructPersonFullName.Person = person;
             return ConstructPersonFullName.Execute();
         }
 
-        public IDataProcessResult<string> ConstructInformalFullName(Person person)
+        public IProcessResult<string> ConstructInformalFullName(Person person)
         {
             throw new NotImplementedException();
         }
 
-        public IDataProcessResult<string> ConstructMiddleInitials(Person person)
+        public IProcessResult<string> ConstructMiddleInitials(Person person)
         {
             ConstructPersonMiddleInitials.Person = person;
             return ConstructPersonMiddleInitials.Execute();

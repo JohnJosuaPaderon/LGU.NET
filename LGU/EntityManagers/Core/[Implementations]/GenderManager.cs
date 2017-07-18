@@ -1,6 +1,7 @@
 ﻿using LGU.Entities;
 using LGU.Entities.Core;
 using LGU.EntityProcesses.Core;
+using LGU.Processes;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,13 +22,13 @@ namespace LGU.EntityManagers.Core
             GetListProc = getListProc;
         }
 
-        public IDataProcessResult<Gender> GetById(short id)
+        public IProcessResult<Gender> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<Gender>(StaticSource[id]);
+                    return new ProcessResult<Gender>(StaticSource[id]);
                 }
                 else
                 {
@@ -44,17 +45,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Gender>(ProcessResultStatus.Failed);
+                return new ProcessResult<Gender>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<Gender>> GetByIdAsync(short id)
+        public async Task<IProcessResult<Gender>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<Gender>(StaticSource[id]);
+                    return new ProcessResult<Gender>(StaticSource[id]);
                 }
                 else
                 {
@@ -71,17 +72,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Gender>(ProcessResultStatus.Failed);
+                return new ProcessResult<Gender>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<Gender>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<Gender>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<Gender>(StaticSource[id]);
+                    return new ProcessResult<Gender>(StaticSource[id]);
                 }
                 else
                 {
@@ -98,21 +99,21 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new DataProcessResult<Gender>(ProcessResultStatus.Failed);
+                return new ProcessResult<Gender>(ProcessResultStatus.Failed);
             }
         }
 
-        public IEnumerableDataProcessResult<Gender> GetList()
+        public IEnumerableProcessResult<Gender> GetList()
         {
             return GetListProc.Execute();
         }
 
-        public Task<IEnumerableDataProcessResult<Gender>> GetListAsync()
+        public Task<IEnumerableProcessResult<Gender>> GetListAsync()
         {
             return GetListProc.ExecuteAsync();
         }
 
-        public Task<IEnumerableDataProcessResult<Gender>> GetListAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<Gender>> GetListAsync(CancellationToken cancellationToken)
         {
             return GetListProc.ExecuteAsync(cancellationToken);
         }
