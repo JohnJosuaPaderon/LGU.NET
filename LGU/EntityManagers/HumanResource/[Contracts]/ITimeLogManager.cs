@@ -1,5 +1,6 @@
 ﻿using LGU.Entities;
 using LGU.Entities.HumanResource;
+using LGU.Processes;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -7,8 +8,8 @@ namespace LGU.EntityManagers.HumanResource
 {
     public interface ITimeLogManager : IEntityManager<TimeLog, long>
     {
-        IDataProcessResult<TimeLog> Log(Employee employee);
-        Task<IDataProcessResult<TimeLog>> LogAsync(Employee employee);
-        Task<IDataProcessResult<TimeLog>> LogAsync(Employee employee, CancellationToken cancellationToken);
+        IProcessResult<TimeLog> Log(Employee employee);
+        Task<IProcessResult<TimeLog>> LogAsync(Employee employee);
+        Task<IProcessResult<TimeLog>> LogAsync(Employee employee, CancellationToken cancellationToken);
     }
 }
