@@ -4,6 +4,7 @@ using DPFP.Processing;
 using LGU.EntityManagers.HumanResource;
 using LGU.Events.HumanResource;
 using LGU.Models.HumanResource;
+using LGU.Processes;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
