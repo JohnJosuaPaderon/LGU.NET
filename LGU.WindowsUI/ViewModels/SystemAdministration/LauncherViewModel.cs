@@ -1,4 +1,5 @@
-﻿using LGU.Utilities;
+﻿using LGU.Processes;
+using LGU.Utilities;
 using LGU.Views.SystemAdministration;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
@@ -45,7 +46,7 @@ namespace LGU.ViewModels.SystemAdministration
                 }
                 else
                 {
-                    var result = SystemAdministratorManager.Verify(SecureStringConverter.ConvertToSecureString(AdministratorKey));
+                    var result = SystemAdministratorManager.Verify(SecureStringConverter.Convert(AdministratorKey));
 
                     if (result.Status == ProcessResultStatus.Success)
                     {
