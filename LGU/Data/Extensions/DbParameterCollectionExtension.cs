@@ -1,4 +1,4 @@
-﻿using LGU.Data.Utilities;
+﻿using LGU.Utilities;
 using System;
 using System.Data.Common;
 using System.IO;
