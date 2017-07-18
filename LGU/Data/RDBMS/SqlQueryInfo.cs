@@ -17,6 +17,15 @@ namespace LGU.Data.Rdbms
             };
         }
 
+        public static SqlQueryInfo CreateFunctionQueryInfo(string functionName, string parameters)
+        {
+            return new SqlQueryInfo()
+            {
+                CommandText = $"SELECT {functionName}({parameters})",
+                CommandType = CommandType.Text
+            };
+        }
+
         public static SqlQueryInfo CreateProcedureQueryInfo(string storedProcedure, bool useTransaction = false)
         {
             return CreateProcedureQueryInfo(storedProcedure, null, useTransaction);
@@ -40,7 +49,7 @@ namespace LGU.Data.Rdbms
 
             Parameters.ForEach((p) => command.Parameters.Add(p));
 
-            return command;
+            return command; 
         }
 
         public SqlCommand CreateCommand(SqlConnection connection, SqlTransaction transaction)

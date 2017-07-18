@@ -163,7 +163,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public IProcessResult<T> ExecuteScalar<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<object, IProcessResult<T>> converter)
+        public IProcessResult<T> ExecuteScalar<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<object, T> converter)
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
@@ -176,7 +176,7 @@ namespace LGU.Data.Rdbms
                 {
                     using (var command = queryInfo.CreateCommand(connection))
                     {
-                        return converter(command.ExecuteScalar());
+                        return new ProcessResult<T>(converter(command.ExecuteScalar()));
                     }
                 }
                 catch (Exception ex)

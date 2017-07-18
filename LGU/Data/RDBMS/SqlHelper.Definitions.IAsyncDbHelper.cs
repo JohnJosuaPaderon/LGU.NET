@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LGU.Data.Rdbms
 {
-    partial class SqlHelper : IAsyncDbHelper<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader>
+    partial class SqlHelper
     {
         public async Task<IProcessResult> ExecuteNonQueryAsync(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
         {
@@ -213,7 +213,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public async Task<IProcessResult<T>> ExecuteScalarAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<object, IProcessResult<T>> converter)
+        public async Task<IProcessResult<T>> ExecuteScalarAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<object, T> converter)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync())
             {
@@ -226,7 +226,7 @@ namespace LGU.Data.Rdbms
                 {
                     using (var command = queryInfo.CreateCommand(connection))
                     {
-                        return converter(await command.ExecuteScalarAsync());
+                        return new ProcessResult<T>(converter(await command.ExecuteScalarAsync()));
                     }
                 }
                 catch (Exception ex)
