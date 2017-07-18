@@ -5,6 +5,7 @@ using LGU.Processes;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Security;
 
 namespace LGU.EntityManagers.Core
 {
@@ -18,6 +19,7 @@ namespace LGU.EntityManagers.Core
         private readonly IInsertUser InsertProc;
         private readonly IUpdateUser UpdateProc;
         private readonly ILoginUser LoginProc;
+        private readonly IIsUsernameExists IsUsernameExistsProc;
 
         public UserManager(
             IDeleteUser deleteProc, 
@@ -25,7 +27,8 @@ namespace LGU.EntityManagers.Core
             IGetUserList getListProc,
             IInsertUser insertProc,
             IUpdateUser updateProc,
-            ILoginUser loginProc)
+            ILoginUser loginProc,
+            IIsUsernameExists isUsernameExistsProc)
         {
             DeleteProc = deleteProc;
             GetByIdProc = getByIdProc;
@@ -33,6 +36,7 @@ namespace LGU.EntityManagers.Core
             InsertProc = insertProc;
             UpdateProc = updateProc;
             LoginProc = loginProc;
+            IsUsernameExistsProc = isUsernameExistsProc;
         }
         
         private static void InvokeIfSuccess(IProcessResult<User> result, Action action)
@@ -182,6 +186,45 @@ namespace LGU.EntityManagers.Core
         {
             LoginProc.UserCredentials = userCredentials;
             return LoginProc.ExecuteAsync(cancellationToken);
+        }
+
+        public IProcessResult<bool> IsUsernameExists(SecureString secureUsername)
+        {
+            if (secureUsername == null || secureUsername.Length <= 0)
+            {
+                return new ProcessResult<bool>(ProcessResultStatus.Failed, "Username is invalid.");
+            }
+            else
+            {
+                IsUsernameExistsProc.SecureUsername = secureUsername;
+                return IsUsernameExistsProc.Execute();
+            }
+        }
+
+        public async Task<IProcessResult<bool>> IsUsernameExistsAsync(SecureString secureUsername)
+        {
+            if (secureUsername == null || secureUsername.Length <= 0)
+            {
+                return new ProcessResult<bool>(ProcessResultStatus.Failed, "Username is invalid.");
+            }
+            else
+            {
+                IsUsernameExistsProc.SecureUsername = secureUsername;
+                return await IsUsernameExistsProc.ExecuteAsync();
+            }
+        }
+
+        public async Task<IProcessResult<bool>> IsUsernameExistsAsync(SecureString secureUsername, CancellationToken cancellationToken)
+        {
+            if (secureUsername == null || secureUsername.Length <= 0)
+            {
+                return new ProcessResult<bool>(ProcessResultStatus.Failed, "Username is invalid.");
+            }
+            else
+            {
+                IsUsernameExistsProc.SecureUsername = secureUsername;
+                return await IsUsernameExistsProc.ExecuteAsync(cancellationToken);
+            }
         }
     }
 }
