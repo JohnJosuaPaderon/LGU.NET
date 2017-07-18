@@ -1,5 +1,6 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
+using LGU.Processes;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,7 +28,7 @@ namespace LGU.EntityManagers.HumanResource
             GetByIdProc = getByIdProc;
         }
 
-        public IDataProcessResult<EmployeeFingerPrintSet> Delete(EmployeeFingerPrintSet data)
+        public IProcessResult<EmployeeFingerPrintSet> Delete(EmployeeFingerPrintSet data)
         {
             if (data != null)
             {
@@ -36,11 +37,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed, "Invalid finger print set.");
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed, "Invalid finger print set.");
             }
         }
 
-        public async Task<IDataProcessResult<EmployeeFingerPrintSet>> DeleteAsync(EmployeeFingerPrintSet data)
+        public async Task<IProcessResult<EmployeeFingerPrintSet>> DeleteAsync(EmployeeFingerPrintSet data)
         {
             if (data != null)
             {
@@ -49,11 +50,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed, "Invalid finger print set.");
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed, "Invalid finger print set.");
             }
         }
 
-        public async Task<IDataProcessResult<EmployeeFingerPrintSet>> DeleteAsync(EmployeeFingerPrintSet data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<EmployeeFingerPrintSet>> DeleteAsync(EmployeeFingerPrintSet data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -62,11 +63,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed, "Invalid finger print set.");
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed, "Invalid finger print set.");
             }
         }
 
-        public IDataProcessResult<EmployeeFingerPrintSet> GetById(Employee employee)
+        public IProcessResult<EmployeeFingerPrintSet> GetById(Employee employee)
         {
             if (employee != null)
             {
@@ -75,11 +76,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<EmployeeFingerPrintSet>> GetByIdAsync(Employee employee)
+        public async Task<IProcessResult<EmployeeFingerPrintSet>> GetByIdAsync(Employee employee)
         {
             if (employee != null)
             {
@@ -88,11 +89,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<EmployeeFingerPrintSet>> GetByIdAsync(Employee employee, CancellationToken cancellationToken)
+        public async Task<IProcessResult<EmployeeFingerPrintSet>> GetByIdAsync(Employee employee, CancellationToken cancellationToken)
         {
             if (employee != null)
             {
@@ -101,26 +102,26 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
         }
 
-        public IEnumerableDataProcessResult<EmployeeFingerPrintSet> GetList()
+        public IEnumerableProcessResult<EmployeeFingerPrintSet> GetList()
         {
             return GetListProc.Execute();
         }
 
-        public Task<IEnumerableDataProcessResult<EmployeeFingerPrintSet>> GetListAsync()
+        public Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> GetListAsync()
         {
             return GetListProc.ExecuteAsync();
         }
 
-        public Task<IEnumerableDataProcessResult<EmployeeFingerPrintSet>> GetListAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> GetListAsync(CancellationToken cancellationToken)
         {
             return GetListProc.ExecuteAsync(cancellationToken);
         }
 
-        public IDataProcessResult<EmployeeFingerPrintSet> Insert(EmployeeFingerPrintSet data)
+        public IProcessResult<EmployeeFingerPrintSet> Insert(EmployeeFingerPrintSet data)
         {
             if (data != null)
             {
@@ -129,11 +130,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<EmployeeFingerPrintSet>> InsertAsync(EmployeeFingerPrintSet data)
+        public async Task<IProcessResult<EmployeeFingerPrintSet>> InsertAsync(EmployeeFingerPrintSet data)
         {
             if (data != null)
             {
@@ -142,11 +143,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<EmployeeFingerPrintSet>> InsertAsync(EmployeeFingerPrintSet data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<EmployeeFingerPrintSet>> InsertAsync(EmployeeFingerPrintSet data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -155,11 +156,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
         }
 
-        public IDataProcessResult<EmployeeFingerPrintSet> Update(EmployeeFingerPrintSet data)
+        public IProcessResult<EmployeeFingerPrintSet> Update(EmployeeFingerPrintSet data)
         {
             if (data != null)
             {
@@ -168,11 +169,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<EmployeeFingerPrintSet>> UpdateAsync(EmployeeFingerPrintSet data)
+        public async Task<IProcessResult<EmployeeFingerPrintSet>> UpdateAsync(EmployeeFingerPrintSet data)
         {
             if (data != null)
             {
@@ -181,11 +182,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
         }
 
-        public async Task<IDataProcessResult<EmployeeFingerPrintSet>> UpdateAsync(EmployeeFingerPrintSet data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<EmployeeFingerPrintSet>> UpdateAsync(EmployeeFingerPrintSet data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -194,7 +195,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
         }
     }
