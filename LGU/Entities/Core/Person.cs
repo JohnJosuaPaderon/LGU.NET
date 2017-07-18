@@ -1,5 +1,6 @@
 ﻿using LGU.EntityManagers.Core;
 using LGU.EntityProcesses.Core;
+using LGU.Processes;
 using System;
 
 namespace LGU.Entities.Core
