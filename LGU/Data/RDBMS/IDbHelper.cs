@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LGU.Processes;
+using System;
 using System.Data.Common;
 
 namespace LGU.Data.RDBMS
@@ -11,9 +12,9 @@ namespace LGU.Data.RDBMS
         where TDataReader : DbDataReader
     {
         IProcessResult ExecuteNonQuery(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo);
-        IDataProcessResult<T> ExecuteNonQuery<T>(IDbDataQueryInfo<T, TConnection, TTransaction, TCommand, TParameter> queryInfo);
-        IDataProcessResult<T> ExecuteReader<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, IDataProcessResult<T>> getFromReader);
-        IEnumerableDataProcessResult<T> ExecuteReaderEnumerable<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, IEnumerableDataProcessResult<T>> getFromReader);
-        IDataProcessResult<T> ExecuteScalar<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<object, IDataProcessResult<T>> converter);
-    }
+        IProcessResult<T> ExecuteNonQuery<T>(IDbDataQueryInfo<T, TConnection, TTransaction, TCommand, TParameter> queryInfo);
+        IProcessResult<T> ExecuteReader<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, IProcessResult<T>> getFromReader);
+        IEnumerableProcessResult<T> ExecuteReaderEnumerable<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, IEnumerableProcessResult<T>> getFromReader);
+        IProcessResult<T> ExecuteScalar<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<object, IProcessResult<T>> converter);
+    }   
 }

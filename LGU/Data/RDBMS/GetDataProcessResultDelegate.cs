@@ -1,4 +1,6 @@
-﻿namespace LGU.Data.RDBMS
+﻿using LGU.Processes;
+
+namespace LGU.Data.RDBMS
 {
-    public delegate IDataProcessResult<T> GetDataProcessResultDelegate<T, TCommand>(T data, TCommand command, int affectedRows);
+    public delegate IProcessResult<T> GetDataProcessResultDelegate<T, TCommand>(T data, TCommand command, int affectedRows);
 }

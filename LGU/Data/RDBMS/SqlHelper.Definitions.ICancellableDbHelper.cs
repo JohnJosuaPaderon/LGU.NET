@@ -1,4 +1,5 @@
 ﻿using LGU.Data.Extensions;
+using LGU.Processes;
 using System;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -45,13 +46,13 @@ namespace LGU.Data.RDBMS
             }
         }
 
-        public async Task<IDataProcessResult<T>> ExecuteNonQueryAsync<T>(IDbDataQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, CancellationToken cancellationToken)
+        public async Task<IProcessResult<T>> ExecuteNonQueryAsync<T>(IDbDataQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, CancellationToken cancellationToken)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
                 if (connection == null)
                 {
-                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                    return new ProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
                 }
 
                 SqlTransaction transaction = null;
@@ -72,18 +73,18 @@ namespace LGU.Data.RDBMS
                 {
                     queryInfo.InvokeInTransaction(transaction.Rollback);
                     Debug.WriteLine(ex);
-                    return new DataProcessResult<T>(ex);
+                    return new ProcessResult<T>(ex);
                 }
             }
         }
 
-        public async Task<IDataProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, CancellationToken, Task<IDataProcessResult<T>>> getFromReaderAsync, CancellationToken cancellationToken)
+        public async Task<IProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, CancellationToken, Task<IProcessResult<T>>> getFromReaderAsync, CancellationToken cancellationToken)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
                 if (connection == null)
                 {
-                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                    return new ProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
                 }
 
                 try
@@ -98,7 +99,7 @@ namespace LGU.Data.RDBMS
                             }
                             else
                             {
-                                return new DataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                                return new ProcessResult<T>(ProcessResultStatus.Success, "No result.");
                             }
                         }
                     }
@@ -106,18 +107,18 @@ namespace LGU.Data.RDBMS
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
-                    return new DataProcessResult<T>(ex);
+                    return new ProcessResult<T>(ex);
                 }
             }
         }
 
-        public async Task<IEnumerableDataProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, CancellationToken, Task<IEnumerableDataProcessResult<T>>> getFromReaderAsync, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, CancellationToken, Task<IEnumerableProcessResult<T>>> getFromReaderAsync, CancellationToken cancellationToken)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
                 if (connection == null)
                 {
-                    return new EnumerableDataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                    return new EnumerableProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
                 }
 
                 try
@@ -132,7 +133,7 @@ namespace LGU.Data.RDBMS
                             }
                             else
                             {
-                                return new EnumerableDataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                                return new EnumerableProcessResult<T>(ProcessResultStatus.Success, "No result.");
                             }
                         }
                     }
@@ -140,18 +141,18 @@ namespace LGU.Data.RDBMS
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
-                    return new EnumerableDataProcessResult<T>(ex);
+                    return new EnumerableProcessResult<T>(ex);
                 }
             }
         }
 
-        public async Task<IDataProcessResult<T>> ExecuteScalarAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<object, IDataProcessResult<T>> converter, CancellationToken cancellationToken)
+        public async Task<IProcessResult<T>> ExecuteScalarAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<object, IProcessResult<T>> converter, CancellationToken cancellationToken)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
                 if (connection == null)
                 {
-                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                    return new ProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
                 }
 
                 try
@@ -164,7 +165,7 @@ namespace LGU.Data.RDBMS
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
-                    return new DataProcessResult<T>(ex);
+                    return new ProcessResult<T>(ex);
                 }
             }
         }

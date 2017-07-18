@@ -1,4 +1,5 @@
 ﻿using LGU.Data.Extensions;
+using LGU.Processes;
 using System;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -53,13 +54,13 @@ namespace LGU.Data.RDBMS
             }
         }
 
-        public IDataProcessResult<T> ExecuteNonQuery<T>(IDbDataQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
+        public IProcessResult<T> ExecuteNonQuery<T>(IDbDataQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
                 if (connection == null)
                 {
-                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                    return new ProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
                 }
 
                 SqlTransaction transaction = null;
@@ -83,7 +84,7 @@ namespace LGU.Data.RDBMS
                 {
                     queryInfo.InvokeInTransaction(transaction.Rollback);
                     Debug.WriteLine(ex);
-                    return new DataProcessResult<T>(ex);
+                    return new ProcessResult<T>(ex);
                 }
                 finally
                 {
@@ -92,13 +93,13 @@ namespace LGU.Data.RDBMS
             }
         }
 
-        public IDataProcessResult<T> ExecuteReader<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, IDataProcessResult<T>> getFromReader)
+        public IProcessResult<T> ExecuteReader<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, IProcessResult<T>> getFromReader)
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
                 if (connection == null)
                 {
-                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                    return new ProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
                 }
 
                 try
@@ -114,7 +115,7 @@ namespace LGU.Data.RDBMS
                             }
                             else
                             {
-                                return new DataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                                return new ProcessResult<T>(ProcessResultStatus.Success, "No result.");
                             }
                         }
                     }
@@ -122,18 +123,18 @@ namespace LGU.Data.RDBMS
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
-                    return new DataProcessResult<T>(ex);
+                    return new ProcessResult<T>(ex);
                 }
             }
         }
 
-        public IEnumerableDataProcessResult<T> ExecuteReaderEnumerable<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, IEnumerableDataProcessResult<T>> getFromReader)
+        public IEnumerableProcessResult<T> ExecuteReaderEnumerable<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, IEnumerableProcessResult<T>> getFromReader)
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
                 if (connection == null)
                 {
-                    return new EnumerableDataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                    return new EnumerableProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
                 }
 
                 try
@@ -148,7 +149,7 @@ namespace LGU.Data.RDBMS
                             }
                             else
                             {
-                                return new EnumerableDataProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                                return new EnumerableProcessResult<T>(ProcessResultStatus.Success, "No result.");
                             }
                         }
                     }
@@ -156,19 +157,19 @@ namespace LGU.Data.RDBMS
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
-                    return new EnumerableDataProcessResult<T>(ex);
+                    return new EnumerableProcessResult<T>(ex);
                 }
                 
             }
         }
 
-        public IDataProcessResult<T> ExecuteScalar<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<object, IDataProcessResult<T>> converter)
+        public IProcessResult<T> ExecuteScalar<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<object, IProcessResult<T>> converter)
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
                 if (connection == null)
                 {
-                    return new DataProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
+                    return new ProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
                 }
 
                 try
@@ -181,7 +182,7 @@ namespace LGU.Data.RDBMS
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
-                    return new DataProcessResult<T>(ex);
+                    return new ProcessResult<T>(ex);
                 }
             }
         }
