@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Entities.HumanResource;
 using LGU.EntityManagers.HumanResource;
+using LGU.Processes;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -97,7 +98,7 @@ namespace LGU.EntityProcessHelpers.HumanResource
             }
         }
 
-        public static IEnumerableDataProcessResult<EmployeeFingerPrintSet> EnumerableFromReader(SqlDataReader reader)
+        public static IEnumerableProcessResult<EmployeeFingerPrintSet> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
@@ -108,15 +109,15 @@ namespace LGU.EntityProcessHelpers.HumanResource
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableDataProcessResult<EmployeeFingerPrintSet>(list);
+                return new EnumerableProcessResult<EmployeeFingerPrintSet>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<EmployeeFingerPrintSet>(ex);
+                return new EnumerableProcessResult<EmployeeFingerPrintSet>(ex);
             }
         }
 
-        public static async Task<IEnumerableDataProcessResult<EmployeeFingerPrintSet>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public static async Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
@@ -127,15 +128,15 @@ namespace LGU.EntityProcessHelpers.HumanResource
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableDataProcessResult<EmployeeFingerPrintSet>(list);
+                return new EnumerableProcessResult<EmployeeFingerPrintSet>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<EmployeeFingerPrintSet>(ex);
+                return new EnumerableProcessResult<EmployeeFingerPrintSet>(ex);
             }
         }
 
-        public static async Task<IEnumerableDataProcessResult<EmployeeFingerPrintSet>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public static async Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -146,50 +147,50 @@ namespace LGU.EntityProcessHelpers.HumanResource
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableDataProcessResult<EmployeeFingerPrintSet>(list);
+                return new EnumerableProcessResult<EmployeeFingerPrintSet>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableDataProcessResult<EmployeeFingerPrintSet>(ex);
+                return new EnumerableProcessResult<EmployeeFingerPrintSet>(ex);
             }
         }
 
-        public static IDataProcessResult<EmployeeFingerPrintSet> FromReader(SqlDataReader reader)
+        public static IProcessResult<EmployeeFingerPrintSet> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new DataProcessResult<EmployeeFingerPrintSet>(GetData(reader));
+                return new ProcessResult<EmployeeFingerPrintSet>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ex);
+                return new ProcessResult<EmployeeFingerPrintSet>(ex);
             }
         }
 
-        public static async Task<IDataProcessResult<EmployeeFingerPrintSet>> FromReaderAsync(SqlDataReader reader)
+        public static async Task<IProcessResult<EmployeeFingerPrintSet>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new DataProcessResult<EmployeeFingerPrintSet>(await GetDataAsync(reader));
+                return new ProcessResult<EmployeeFingerPrintSet>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ex);
+                return new ProcessResult<EmployeeFingerPrintSet>(ex);
             }
         }
 
-        public static async Task<IDataProcessResult<EmployeeFingerPrintSet>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public static async Task<IProcessResult<EmployeeFingerPrintSet>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new DataProcessResult<EmployeeFingerPrintSet>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<EmployeeFingerPrintSet>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ex);
+                return new ProcessResult<EmployeeFingerPrintSet>(ex);
             }
         }
     }
