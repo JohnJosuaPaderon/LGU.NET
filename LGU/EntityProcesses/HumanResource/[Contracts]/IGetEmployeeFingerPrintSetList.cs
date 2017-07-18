@@ -1,8 +1,9 @@
 ﻿using LGU.Entities.HumanResource;
+using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetEmployeeFingerPrintSetList : IEnumerableDataProcess<EmployeeFingerPrintSet>
+    public interface IGetEmployeeFingerPrintSetList : IEnumerableProcess<EmployeeFingerPrintSet>
     {
     }
 }
