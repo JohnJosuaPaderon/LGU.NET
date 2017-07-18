@@ -36,6 +36,7 @@
                     </i:Interaction.Triggers>
                     <lgu:MenuItem HeaderText="Departments" Icon="ChartBar" ViewName="DepartmentManagementView"/>
                     <lgu:MenuItem HeaderText="Employee Finger Print Enrollment" Icon="Fingerprint" ViewName="EmployeeFingerPrintEnrollmentView"/>
+                    <lgu:MenuItem HeaderText="User Sign-Up" Icon="AccountPlus" ViewName="UserSignUpView"/>
                 </ListBox>
             </Grid>
         </materialDesign:DrawerHost.LeftDrawerContent>
