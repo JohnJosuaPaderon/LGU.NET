@@ -2,6 +2,7 @@
 using LGU.Data.RDBMS;
 using LGU.Entities.HumanResource;
 using LGU.EntityProcessHelpers.HumanResource;
+using LGU.Processes;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,17 +31,17 @@ namespace LGU.EntityProcesses.HumanResource
             return new ProcessResult(ProcessResultStatus.Success);
         }
 
-        public IDataProcessResult<EmployeeFingerPrintSet> Execute()
+        public IProcessResult<EmployeeFingerPrintSet> Execute()
         {
             return SqlHelper.ExecuteReader(QueryInfo, EmployeeFingerPrintSetProcessHelper.FromReader);
         }
 
-        public Task<IDataProcessResult<EmployeeFingerPrintSet>> ExecuteAsync()
+        public Task<IProcessResult<EmployeeFingerPrintSet>> ExecuteAsync()
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, EmployeeFingerPrintSetProcessHelper.FromReaderAsync);
         }
 
-        public Task<IDataProcessResult<EmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<EmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteReaderAsync(QueryInfo, EmployeeFingerPrintSetProcessHelper.FromReaderAsync, cancellationToken);
         }

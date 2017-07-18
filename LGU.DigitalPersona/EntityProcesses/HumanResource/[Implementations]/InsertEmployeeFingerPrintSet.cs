@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.RDBMS;
 using LGU.Entities.HumanResource;
+using LGU.Processes;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
@@ -36,30 +37,30 @@ namespace LGU.EntityProcesses.HumanResource
             }
         }
 
-        private IDataProcessResult<EmployeeFingerPrintSet> GetProcessResult(EmployeeFingerPrintSet data, SqlCommand command, int affectedRows)
+        private IProcessResult<EmployeeFingerPrintSet> GetProcessResult(EmployeeFingerPrintSet data, SqlCommand command, int affectedRows)
         {
             if (affectedRows == 1)
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(data, ProcessResultStatus.Success);
+                return new ProcessResult<EmployeeFingerPrintSet>(data, ProcessResultStatus.Success);
             }
             else
             {
-                return new DataProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
 
         }
 
-        public IDataProcessResult<EmployeeFingerPrintSet> Execute()
+        public IProcessResult<EmployeeFingerPrintSet> Execute()
         {
             return SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IDataProcessResult<EmployeeFingerPrintSet>> ExecuteAsync()
+        public Task<IProcessResult<EmployeeFingerPrintSet>> ExecuteAsync()
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IDataProcessResult<EmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<EmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }
