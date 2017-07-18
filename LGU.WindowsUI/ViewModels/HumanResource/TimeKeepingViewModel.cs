@@ -207,7 +207,7 @@ namespace LGU.ViewModels.HumanResource
 
                     foreach (var item in result.DataList)
                     {
-                        if (FingerPrintSetCollection[parentIndex].Count > 50)
+                        if (FingerPrintSetCollection[parentIndex].Count > (result.DataList.Count() / 10))
                         {
                             FingerPrintSetCollection.Add(new List<EmployeeFingerPrintSet>());
                             parentIndex = FingerPrintSetCollection.Count - 1;
@@ -323,7 +323,7 @@ namespace LGU.ViewModels.HumanResource
 
         private bool EmployeeFound;
 
-        private async Task ProcessFingerPrintAsync(Sample sample)
+        private void ProcessFingerPrintAsync(Sample sample)
         {
             var features = FingerPrintScannerHelper.ExtractFeatures(sample, DataPurpose.Verification);
 
@@ -333,12 +333,17 @@ namespace LGU.ViewModels.HumanResource
                 EmployeeFound = false;
                 var tasks = new List<Task>();
 
-                foreach (var item in FingerPrintSetCollection)
-                {
-                    tasks.Add(SearchFingerPrintAsync(item, features));
-                }
+                Debug.WriteLine("Start-Loading-Tasks: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
+                Parallel.ForEach(FingerPrintSetCollection, async (f) => await SearchFingerPrintAsync(f, features));
+                //foreach (var item in FingerPrintSetCollection)
+                //{
+                //    tasks.Add(SearchFingerPrintAsync(item, features));
+                //}
+                Debug.WriteLine("End-Loading-Tasks: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
 
-                await Task.WhenAll(tasks);
+                Debug.WriteLine("Start-Tasks: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
+                //await Task.WhenAll(tasks);
+                Debug.WriteLine("End-Tasks: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
 
                 if (!EmployeeFound)
                 {
@@ -381,12 +386,14 @@ namespace LGU.ViewModels.HumanResource
                     var timeLogResult = await TimeLogManager.LogAsync(fingerPrintSet.Employee);
                     if (timeLogResult.Status == ProcessResultStatus.Success)
                     {
+                        Debug.WriteLine("Start: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
                         var timeLog = timeLogResult.Data;
                         var result = LogResults.FirstOrDefault(r => r.Key == timeLog.Employee.Id.ToString());
-                        result.LogDate = (timeLog.LoginDate ?? timeLog.LogoutDate) ?? DateTime.Now;
+                        result.LogDate = (timeLog.LogoutDate ?? timeLog.LoginDate) ?? DateTime.Now;
                         result.LogType = (timeLog.LogoutDate == null) ? LogType.IN : LogType.OUT;
-                        SelectedLogResult = result;
+                        Invoke(() => SelectedLogResult = result);
                         EmployeeFound = true;
+                        Debug.WriteLine("End: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
                         break;
                     }
                 }
@@ -428,10 +435,10 @@ namespace LGU.ViewModels.HumanResource
         }
 
         #region Finger Print Events
-        public async void OnComplete(object capture, string readerSerialNumber, Sample sample)
+        public void OnComplete(object capture, string readerSerialNumber, Sample sample)
         {
             Invoke(() => ScannerLog = "The finger print sample was captured.");
-            await ProcessFingerPrintAsync(sample);
+            //await ProcessFingerPrintAsync(sample);
         }
 
         public void OnFingerGone(object capture, string readerSerialNumber)
