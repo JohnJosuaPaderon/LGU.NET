@@ -1,5 +1,5 @@
 ﻿using LGU.Data.Extensions;
-using LGU.Data.RDBMS;
+using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
@@ -17,8 +17,8 @@ namespace LGU.EntityProcesses.HumanResource
 
         public TimeLogType TimeLogType { get; set; }
 
-        private SqlDataQueryInfo<TimeLogType> QueryInfo =>
-            SqlDataQueryInfo<TimeLogType>.CreateProcedureQueryInfo(TimeLogType, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<TimeLogType> QueryInfo =>
+            SqlQueryInfo<TimeLogType>.CreateProcedureQueryInfo(TimeLogType, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", TimeLogType.Id)
             .AddInputParameter("@_Description", TimeLogType.Description)
             .AddInputParameter("@_WorkTimeLength", TimeLogType.WorkTimeLength.Ticks)

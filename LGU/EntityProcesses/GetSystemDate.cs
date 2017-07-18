@@ -1,4 +1,4 @@
-﻿using LGU.Data.RDBMS;
+﻿using LGU.Data.Rdbms;
 using LGU.Data.Utilities;
 using LGU.Processes;
 using System;

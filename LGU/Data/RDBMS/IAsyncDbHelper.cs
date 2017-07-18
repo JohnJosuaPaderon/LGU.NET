@@ -3,7 +3,7 @@ using System;
 using System.Data.Common;
 using System.Threading.Tasks;
 
-namespace LGU.Data.RDBMS
+namespace LGU.Data.Rdbms
 {
     public interface IAsyncDbHelper<TConnection, TTransaction, TCommand, TParameter, TDataReader>
         where TConnection : DbConnection
@@ -13,7 +13,7 @@ namespace LGU.Data.RDBMS
         where TDataReader : DbDataReader
     {
         Task<IProcessResult> ExecuteNonQueryAsync(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo);
-        Task<IProcessResult<T>> ExecuteNonQueryAsync<T>(IDbDataQueryInfo<T, TConnection, TTransaction, TCommand, TParameter> queryInfo);
+        Task<IProcessResult<T>> ExecuteNonQueryAsync<T>(IDbQueryInfo<T, TConnection, TTransaction, TCommand, TParameter> queryInfo);
         Task<IProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, IProcessResult<T>> getFromReader);
         Task<IProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, Task<IProcessResult<T>>> getFromReaderAsync);
         Task<IEnumerableProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<TConnection, TTransaction, TCommand, TParameter> queryInfo, Func<TDataReader, IEnumerableProcessResult<T>> getFromReader);

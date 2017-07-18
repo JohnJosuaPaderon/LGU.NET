@@ -1,5 +1,5 @@
 ﻿using LGU.Data.Extensions;
-using LGU.Data.RDBMS;
+using LGU.Data.Rdbms;
 using LGU.Entities.Core;
 using LGU.EntityConverters.Core;
 using LGU.Processes;
@@ -18,11 +18,11 @@ namespace LGU.EntityProcesses.Core
 
         public Person Person { get; set; }
 
-        private SqlDataQueryInfo<Person> QueryInfo
+        private SqlQueryInfo<Person> QueryInfo
         {
             get
             {
-                return SqlDataQueryInfo<Person>.CreateProcedureQueryInfo(Person, GetQualifiedDbObjectName(), GetProcessResult, true)
+                return SqlQueryInfo<Person>.CreateProcedureQueryInfo(Person, GetQualifiedDbObjectName(), GetProcessResult, true)
                     .AddOutputParameter("@_Id", DbType.Int16)
                     .AddInputParameter("@_FirstName", Person.FirstName)
                     .AddInputParameter("@_MiddleName", Person.MiddleName)

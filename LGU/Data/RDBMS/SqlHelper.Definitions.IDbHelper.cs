@@ -4,7 +4,7 @@ using System;
 using System.Data.SqlClient;
 using System.Diagnostics;
 
-namespace LGU.Data.RDBMS
+namespace LGU.Data.Rdbms
 {
     public partial class SqlHelper : IDbHelper<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader>
     {
@@ -54,7 +54,7 @@ namespace LGU.Data.RDBMS
             }
         }
 
-        public IProcessResult<T> ExecuteNonQuery<T>(IDbDataQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
+        public IProcessResult<T> ExecuteNonQuery<T>(IDbQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
         {
             using (var connection = ConnectionEstablisher.Establish())
             {

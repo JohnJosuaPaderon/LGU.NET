@@ -1,5 +1,5 @@
 ﻿using LGU.Data.Extensions;
-using LGU.Data.RDBMS;
+using LGU.Data.Rdbms;
 using LGU.Entities.Core;
 using LGU.Processes;
 using System.Data.SqlClient;
@@ -16,8 +16,8 @@ namespace LGU.EntityProcesses.Core
 
         public User User { get; set; }
 
-        private SqlDataQueryInfo<User> QueryInfo =>
-            SqlDataQueryInfo<User>.CreateProcedureQueryInfo(User, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<User> QueryInfo =>
+            SqlQueryInfo<User>.CreateProcedureQueryInfo(User, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", User.Id)
             .AddLogByParameter();
 

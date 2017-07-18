@@ -1,4 +1,4 @@
-﻿using LGU.Data.RDBMS;
+﻿using LGU.Data.Rdbms;
 using System;
 using System.Data;
 using System.Data.SqlClient;

@@ -1,4 +1,4 @@
-﻿using LGU.Data.RDBMS;
+﻿using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;

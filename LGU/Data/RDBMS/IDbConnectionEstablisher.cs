@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LGU.Data.RDBMS
+namespace LGU.Data.Rdbms
 {
     public interface IDbConnectionEstablisher<TConnection>
         where TConnection : DbConnection

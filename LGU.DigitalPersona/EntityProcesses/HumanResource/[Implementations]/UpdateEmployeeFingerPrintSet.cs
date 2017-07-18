@@ -1,5 +1,5 @@
 ﻿using LGU.Data.Extensions;
-using LGU.Data.RDBMS;
+using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System.Data;
@@ -17,11 +17,11 @@ namespace LGU.EntityProcesses.HumanResource
 
         public EmployeeFingerPrintSet FingerPrintSet { get; set; }
 
-        private SqlDataQueryInfo<EmployeeFingerPrintSet> QueryInfo
+        private SqlQueryInfo<EmployeeFingerPrintSet> QueryInfo
         {
             get
             {
-                return SqlDataQueryInfo<EmployeeFingerPrintSet>.CreateProcedureQueryInfo(FingerPrintSet, GetQualifiedDbObjectName("UpdateEmployeeFingerPrintSet"), GetProcessResult, true)
+                return SqlQueryInfo<EmployeeFingerPrintSet>.CreateProcedureQueryInfo(FingerPrintSet, GetQualifiedDbObjectName("UpdateEmployeeFingerPrintSet"), GetProcessResult, true)
                     .AddInputParameter("@_Id", FingerPrintSet.Employee?.Id)
                     .AddInputParameter("@_LeftThumb", FingerPrintSet.LeftThumb?.Data?.Bytes, SqlDbType.VarBinary)
                     .AddInputParameter("@_LeftIndexFinger", FingerPrintSet.LeftIndexFinger?.Data?.Bytes, SqlDbType.VarBinary)

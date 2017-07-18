@@ -1,5 +1,5 @@
 ﻿using LGU.Data.Extensions;
-using LGU.Data.RDBMS;
+using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System.Data;
@@ -17,8 +17,8 @@ namespace LGU.EntityProcesses.HumanResource
 
         public Department Department { get; set; }
 
-        private SqlDataQueryInfo<Department> QueryInfo =>
-            SqlDataQueryInfo<Department>.CreateProcedureQueryInfo(Department, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<Department> QueryInfo =>
+            SqlQueryInfo<Department>.CreateProcedureQueryInfo(Department, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddOutputParameter("@_Id", DbType.Int32)
             .AddInputParameter("@_Description", Department.Description)
             .AddInputParameter("@_Abbreviation", Department.Abbreviation)

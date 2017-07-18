@@ -1,5 +1,5 @@
 ﻿using LGU.Data.Extensions;
-using LGU.Data.RDBMS;
+using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.EntityManagers.HumanResource;
@@ -22,8 +22,8 @@ namespace LGU.EntityProcesses.HumanResource
 
         public Employee Employee { get; set; }
 
-        private SqlDataQueryInfo<TimeLog> QueryInfo =>
-            SqlDataQueryInfo<TimeLog>.CreateProcedureQueryInfo(new TimeLog(Employee), GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<TimeLog> QueryInfo =>
+            SqlQueryInfo<TimeLog>.CreateProcedureQueryInfo(new TimeLog(Employee), GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddOutputParameter("@_Id", DbType.Int64)
             .AddInputParameter("@_EmployeeId", Employee.Id)
             .AddOutputParameter("@_LoginDate", DbType.DateTime)

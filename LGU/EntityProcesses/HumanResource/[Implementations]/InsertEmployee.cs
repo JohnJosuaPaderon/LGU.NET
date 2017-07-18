@@ -1,5 +1,5 @@
 ﻿using LGU.Data.Extensions;
-using LGU.Data.RDBMS;
+using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System.Data;
@@ -17,8 +17,8 @@ namespace LGU.EntityProcesses.HumanResource
 
         public Employee Employee { get; set; }
 
-        private SqlDataQueryInfo<Employee> QueryInfo =>
-            SqlDataQueryInfo<Employee>.CreateProcedureQueryInfo(Employee, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<Employee> QueryInfo =>
+            SqlQueryInfo<Employee>.CreateProcedureQueryInfo(Employee, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddOutputParameter("@_Id", DbType.Int64)
             .AddInputParameter("@_FirstName", Employee.FirstName)
             .AddInputParameter("@_MiddleName", Employee.MiddleName)

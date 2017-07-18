@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace LGU.Data.RDBMS
+namespace LGU.Data.Rdbms
 {
     partial class SqlHelper : IAsyncDbHelper<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader>
     {
@@ -45,7 +45,7 @@ namespace LGU.Data.RDBMS
             }
         }
 
-        public async Task<IProcessResult<T>> ExecuteNonQueryAsync<T>(IDbDataQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
+        public async Task<IProcessResult<T>> ExecuteNonQueryAsync<T>(IDbQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync())
             {

@@ -1,4 +1,4 @@
-﻿using LGU.Data.RDBMS;
+﻿using LGU.Data.Rdbms;
 
 namespace LGU.EntityProcesses
 {
