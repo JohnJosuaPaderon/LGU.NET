@@ -7,6 +7,7 @@ using LGU.Entities.HumanResource;
 using LGU.EntityManagers.HumanResource;
 using LGU.Events;
 using LGU.Models.HumanResource;
+using LGU.Processes;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
@@ -24,12 +25,14 @@ namespace LGU.ViewModels.HumanResource
     public class TimeKeepingViewModel : ViewModelBase, DPFP.Capture.EventHandler
     {
         private readonly IEmployeeFingerPrintSetManager EmployeeFingerPrintSetManager;
+        private readonly ITimeLogManager TimeLogManager;
         private readonly Capture Capture;
         private readonly Verification Verification;
 
         public TimeKeepingViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
             EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
+            TimeLogManager = SystemRuntime.Services.GetService<ITimeLogManager>();
             Capture = new Capture();
             Verification = new Verification();
             Timer = new Timer(1000);
@@ -364,28 +367,30 @@ namespace LGU.ViewModels.HumanResource
             }
         }
 
-        private Task SearchFingerPrintAsync(IEnumerable<EmployeeFingerPrintSet> fingerPrintSetList, FeatureSet features)
+        private async Task SearchFingerPrintAsync(IEnumerable<EmployeeFingerPrintSet> fingerPrintSetList, FeatureSet features)
         {
-            return Task.Run(() =>
+            foreach (var fingerPrintSet in fingerPrintSetList)
             {
-                foreach (var fingerPrintSet in fingerPrintSetList)
+                if (EmployeeFound)
                 {
-                    if (EmployeeFound)
-                    {
-                        break;
-                    }
+                    break;
+                }
 
-                    if (Compare(features, fingerPrintSet))
+                if (Compare(features, fingerPrintSet))
+                {
+                    var timeLogResult = await TimeLogManager.LogAsync(fingerPrintSet.Employee);
+                    if (timeLogResult.Status == ProcessResultStatus.Success)
                     {
-                        var result = LogResults.FirstOrDefault(r => r.Key == fingerPrintSet.Employee.Id.ToString());
-                        result.LogDate = CurrentTimeStamp ?? DateTime.Now;
-                        result.LogType = result.LogType == LogType.IN ? LogType.OUT : LogType.IN;
+                        var timeLog = timeLogResult.Data;
+                        var result = LogResults.FirstOrDefault(r => r.Key == timeLog.Employee.Id.ToString());
+                        result.LogDate = (timeLog.LoginDate ?? timeLog.LogoutDate) ?? DateTime.Now;
+                        result.LogType = (timeLog.LogoutDate == null) ? LogType.IN : LogType.OUT;
                         SelectedLogResult = result;
                         EmployeeFound = true;
                         break;
                     }
                 }
-            });
+            }
         }
 
         private bool Compare(FeatureSet features, EmployeeFingerPrintSet fingerPrintSet)

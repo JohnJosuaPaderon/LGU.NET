@@ -8,6 +8,7 @@ using Prism.Regions;
 using System.Collections.ObjectModel;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using LGU.Processes;
 
 namespace LGU.ViewModels.HumanResource
 {
