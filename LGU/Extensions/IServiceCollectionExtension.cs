@@ -62,6 +62,7 @@ namespace LGU.Extensions
             serviceCollection.AddSingleton<IInsertUser, InsertUser>();
             serviceCollection.AddSingleton<IUpdateUser, UpdateUser>();
             serviceCollection.AddSingleton<ILoginUser, LoginUser>();
+            serviceCollection.AddSingleton<IIsUsernameExists, IsUsernameExists>();
             serviceCollection.AddSingleton<IUserManager, UserManager>();
             #endregion
 
@@ -93,6 +94,7 @@ namespace LGU.Extensions
             serviceCollection.AddSingleton<ITimeLogTypeConverter<SqlDataReader>, TimeLogTypeConverter>();
             serviceCollection.AddSingleton<IDeleteTimeLogType, DeleteTimeLogType>();
             serviceCollection.AddSingleton<IGetTimeLogTypeById, GetTimeLogTypeById>();
+            serviceCollection.AddSingleton<IGetTimeLogTypeList, GetTimeLogTypeList>();
             serviceCollection.AddSingleton<IInsertTimeLogType, InsertTimeLogType>();
             serviceCollection.AddSingleton<IUpdateTimeLogType, UpdateTimeLogType>();
             serviceCollection.AddSingleton<ITimeLogTypeManager, TimeLogTypeManager>();
