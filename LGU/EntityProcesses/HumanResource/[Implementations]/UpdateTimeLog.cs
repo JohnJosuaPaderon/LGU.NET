@@ -28,7 +28,7 @@ namespace LGU.EntityProcesses.HumanResource
 
         private IProcessResult<TimeLog> GetProcessResult(TimeLog data, SqlCommand command, int affectedRows)
         {
-            if (affectedRows == 1)
+            if (affectedRows > 0)
             {
                 return new ProcessResult<TimeLog>(data);
             }

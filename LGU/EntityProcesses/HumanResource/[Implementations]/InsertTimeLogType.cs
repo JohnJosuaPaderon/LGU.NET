@@ -28,7 +28,7 @@ namespace LGU.EntityProcesses.HumanResource
 
         private IProcessResult<TimeLogType> GetProcessResult(TimeLogType data, SqlCommand command, int affectedRows)
         {
-            if (affectedRows == 1)
+            if (affectedRows > 0)
             {
                 data.Id = command.Parameters.GetInt16("@_Id");
                 return new ProcessResult<TimeLogType>(data);

@@ -26,7 +26,7 @@ namespace LGU.EntityProcesses.HumanResource
 
         private IProcessResult<Department> GetProcessResult(Department data, SqlCommand command, int affectedRows)
         {
-            if (affectedRows == 1)
+            if (affectedRows > 0)
             {
                 data.Id = command.Parameters.GetInt32("@_Id");
                 return new ProcessResult<Department>(Department);
