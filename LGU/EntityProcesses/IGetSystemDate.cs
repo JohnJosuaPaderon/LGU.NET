@@ -1,8 +1,9 @@
-﻿using System;
+﻿using LGU.Processes;
+using System;
 
 namespace LGU.EntityProcesses
 {
-    public interface IGetSystemDate : IDataProcess<DateTime>
+    public interface IGetSystemDate : IProcess<DateTime>
     {
     }
 }
