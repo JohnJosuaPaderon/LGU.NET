@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using LGU.Processes;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.Entities
@@ -6,8 +7,8 @@ namespace LGU.Entities
     public interface IEntityManager<T, TIdentifier> : IDataManager<T>
         where T : IEntity<TIdentifier>
     {
-        IDataProcessResult<T> GetById(TIdentifier id);
-        Task<IDataProcessResult<T>> GetByIdAsync(TIdentifier id);
-        Task<IDataProcessResult<T>> GetByIdAsync(TIdentifier id, CancellationToken cancellationToken);
+        IProcessResult<T> GetById(TIdentifier id);
+        Task<IProcessResult<T>> GetByIdAsync(TIdentifier id);
+        Task<IProcessResult<T>> GetByIdAsync(TIdentifier id, CancellationToken cancellationToken);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using LGU.Processes;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.Entities
@@ -6,11 +7,11 @@ namespace LGU.Entities
     public interface IStaticEntityManager<T, TIdentifier>
         where T : IEntity<TIdentifier>
     {
-        IDataProcessResult<T> GetById(TIdentifier id);
-        Task<IDataProcessResult<T>> GetByIdAsync(TIdentifier id);
-        Task<IDataProcessResult<T>> GetByIdAsync(TIdentifier id, CancellationToken cancellationToken);
-        IEnumerableDataProcessResult<T> GetList();
-        Task<IEnumerableDataProcessResult<T>> GetListAsync();
-        Task<IEnumerableDataProcessResult<T>> GetListAsync(CancellationToken cancellationToken);
+        IProcessResult<T> GetById(TIdentifier id);
+        Task<IProcessResult<T>> GetByIdAsync(TIdentifier id);
+        Task<IProcessResult<T>> GetByIdAsync(TIdentifier id, CancellationToken cancellationToken);
+        IEnumerableProcessResult<T> GetList();
+        Task<IEnumerableProcessResult<T>> GetListAsync();
+        Task<IEnumerableProcessResult<T>> GetListAsync(CancellationToken cancellationToken);
     }
 }
