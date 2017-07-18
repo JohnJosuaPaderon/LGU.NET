@@ -18,6 +18,13 @@ namespace LGU.ViewModels
             set { SetProperty(ref _HeaderTitle, value); }
         }
 
+        private string _MessageLog;
+        public string MessageLog
+        {
+            get { return _MessageLog; }
+            set { SetProperty(ref _MessageLog, value); }
+        }
+
         private double _MinDialogHeight;
         public double MinDialogHeight
         {
