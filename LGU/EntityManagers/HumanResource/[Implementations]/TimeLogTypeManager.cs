@@ -1,6 +1,7 @@
 ﻿using LGU.Entities;
 using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
+using LGU.Processes;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,7 +31,7 @@ namespace LGU.EntityManagers.HumanResource
             UpdateProc = updateProc;
         }
 
-        public IDataProcessResult<TimeLogType> Delete(TimeLogType data)
+        public IProcessResult<TimeLogType> Delete(TimeLogType data)
         {
             if (data != null)
             {
@@ -42,11 +43,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
             }
         }
 
-        public async Task<IDataProcessResult<TimeLogType>> DeleteAsync(TimeLogType data)
+        public async Task<IProcessResult<TimeLogType>> DeleteAsync(TimeLogType data)
         {
             if (data != null)
             {
@@ -58,11 +59,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
             }
         }
 
-        public async Task<IDataProcessResult<TimeLogType>> DeleteAsync(TimeLogType data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<TimeLogType>> DeleteAsync(TimeLogType data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -74,17 +75,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
             }
         }
 
-        public IDataProcessResult<TimeLogType> GetById(short id)
+        public IProcessResult<TimeLogType> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<TimeLogType>(StaticSource[id]);
+                    return new ProcessResult<TimeLogType>(StaticSource[id]);
                 }
                 else
                 {
@@ -97,17 +98,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
             }
         }
 
-        public async Task<IDataProcessResult<TimeLogType>> GetByIdAsync(short id)
+        public async Task<IProcessResult<TimeLogType>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<TimeLogType>(StaticSource[id]);
+                    return new ProcessResult<TimeLogType>(StaticSource[id]);
                 }
                 else
                 {
@@ -120,17 +121,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
             }
         }
 
-        public async Task<IDataProcessResult<TimeLogType>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<TimeLogType>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<TimeLogType>(StaticSource[id]);
+                    return new ProcessResult<TimeLogType>(StaticSource[id]);
                 }
                 else
                 {
@@ -143,11 +144,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
             }
         }
 
-        public IEnumerableDataProcessResult<TimeLogType> GetList()
+        public IEnumerableProcessResult<TimeLogType> GetList()
         {
             var result = GetListProc.Execute();
             InvokeIfSuccessAndListNotEmpty(result, tlt => StaticSource.AddUpdate(tlt));
@@ -155,7 +156,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableDataProcessResult<TimeLogType>> GetListAsync()
+        public async Task<IEnumerableProcessResult<TimeLogType>> GetListAsync()
         {
             var result = await GetListProc.ExecuteAsync();
             InvokeIfSuccessAndListNotEmpty(result, tlt => StaticSource.AddUpdate(tlt));
@@ -163,7 +164,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableDataProcessResult<TimeLogType>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<TimeLogType>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await GetListProc.ExecuteAsync(cancellationToken);
             InvokeIfSuccessAndListNotEmpty(result, tlt => StaticSource.AddUpdate(tlt));
@@ -171,7 +172,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public IDataProcessResult<TimeLogType> Insert(TimeLogType data)
+        public IProcessResult<TimeLogType> Insert(TimeLogType data)
         {
             if (data != null)
             {
@@ -183,11 +184,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
             }
         }
 
-        public async Task<IDataProcessResult<TimeLogType>> InsertAsync(TimeLogType data)
+        public async Task<IProcessResult<TimeLogType>> InsertAsync(TimeLogType data)
         {
             if (data != null)
             {
@@ -199,11 +200,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
             }
         }
 
-        public async Task<IDataProcessResult<TimeLogType>> InsertAsync(TimeLogType data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<TimeLogType>> InsertAsync(TimeLogType data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -215,11 +216,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
             }
         }
 
-        public IDataProcessResult<TimeLogType> Update(TimeLogType data)
+        public IProcessResult<TimeLogType> Update(TimeLogType data)
         {
             if (data != null)
             {
@@ -231,11 +232,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
             }
         }
 
-        public async Task<IDataProcessResult<TimeLogType>> UpdateAsync(TimeLogType data)
+        public async Task<IProcessResult<TimeLogType>> UpdateAsync(TimeLogType data)
         {
             if (data != null)
             {
@@ -247,11 +248,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
             }
         }
 
-        public async Task<IDataProcessResult<TimeLogType>> UpdateAsync(TimeLogType data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<TimeLogType>> UpdateAsync(TimeLogType data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -263,7 +264,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
+                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type.");
             }
         }
     }

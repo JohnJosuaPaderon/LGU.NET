@@ -1,6 +1,7 @@
 ﻿using LGU.Entities;
 using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
+using LGU.Processes;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,7 +34,7 @@ namespace LGU.EntityManagers.HumanResource
             SearchProc = searchProc;
         }
 
-        public IDataProcessResult<Employee> Delete(Employee data)
+        public IProcessResult<Employee> Delete(Employee data)
         {
             if (data != null)
             {
@@ -45,11 +46,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IDataProcessResult<Employee>> DeleteAsync(Employee data)
+        public async Task<IProcessResult<Employee>> DeleteAsync(Employee data)
         {
             if (data != null)
             {
@@ -61,11 +62,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IDataProcessResult<Employee>> DeleteAsync(Employee data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<Employee>> DeleteAsync(Employee data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -77,17 +78,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public IDataProcessResult<Employee> GetById(long id)
+        public IProcessResult<Employee> GetById(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<Employee>(StaticSource[id]);
+                    return new ProcessResult<Employee>(StaticSource[id]);
                 }
 
                 GetByIdProc.EmployeeId = id;
@@ -98,17 +99,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee identifier.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee identifier.");
             }
         }
 
-        public async Task<IDataProcessResult<Employee>> GetByIdAsync(long id)
+        public async Task<IProcessResult<Employee>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<Employee>(StaticSource[id]);
+                    return new ProcessResult<Employee>(StaticSource[id]);
                 }
                 else
                 {
@@ -121,17 +122,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee identifier.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee identifier.");
             }
         }
 
-        public async Task<IDataProcessResult<Employee>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<Employee>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new DataProcessResult<Employee>(StaticSource[id]);
+                    return new ProcessResult<Employee>(StaticSource[id]);
                 }
                 else
                 {
@@ -144,11 +145,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee identifier.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee identifier.");
             }
         }
 
-        public IEnumerableDataProcessResult<Employee> GetList()
+        public IEnumerableProcessResult<Employee> GetList()
         {
             var result = GetListProc.Execute();
             InvokeIfSuccessAndListNotEmpty(result, e => StaticSource.AddUpdate(e));
@@ -156,7 +157,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableDataProcessResult<Employee>> GetListAsync()
+        public async Task<IEnumerableProcessResult<Employee>> GetListAsync()
         {
             var result = await GetListProc.ExecuteAsync();
             InvokeIfSuccessAndListNotEmpty(result, e => StaticSource.AddUpdate(e));
@@ -164,12 +165,12 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public Task<IEnumerableDataProcessResult<Employee>> GetListAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<Employee>> GetListAsync(CancellationToken cancellationToken)
         {
             return GetListProc.ExecuteAsync(cancellationToken);
         }
 
-        public IDataProcessResult<Employee> Insert(Employee data)
+        public IProcessResult<Employee> Insert(Employee data)
         {
             if (data != null)
             {
@@ -181,11 +182,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IDataProcessResult<Employee>> InsertAsync(Employee data)
+        public async Task<IProcessResult<Employee>> InsertAsync(Employee data)
         {
             if (data != null)
             {
@@ -197,11 +198,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IDataProcessResult<Employee>> InsertAsync(Employee data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<Employee>> InsertAsync(Employee data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -213,11 +214,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public IDataProcessResult<Employee> Update(Employee data)
+        public IProcessResult<Employee> Update(Employee data)
         {
             if (data != null)
             {
@@ -229,11 +230,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IDataProcessResult<Employee>> UpdateAsync(Employee data)
+        public async Task<IProcessResult<Employee>> UpdateAsync(Employee data)
         {
             if (data != null)
             {
@@ -245,11 +246,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IDataProcessResult<Employee>> UpdateAsync(Employee data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<Employee>> UpdateAsync(Employee data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -261,11 +262,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new DataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public IEnumerableDataProcessResult<Employee> Search(string searchKey)
+        public IEnumerableProcessResult<Employee> Search(string searchKey)
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
@@ -277,11 +278,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableDataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
+                return new EnumerableProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
             }
         }
 
-        public async Task<IEnumerableDataProcessResult<Employee>> SearchAsync(string searchKey)
+        public async Task<IEnumerableProcessResult<Employee>> SearchAsync(string searchKey)
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
@@ -293,11 +294,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableDataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
+                return new EnumerableProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
             }
         }
 
-        public async Task<IEnumerableDataProcessResult<Employee>> SearchAsync(string searchKey, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<Employee>> SearchAsync(string searchKey, CancellationToken cancellationToken)
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
@@ -309,7 +310,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableDataProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
+                return new EnumerableProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
             }
         }
     }
