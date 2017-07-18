@@ -200,6 +200,7 @@
     <Compile Include="Events\WindowStateEvent.cs" />
     <Compile Include="Extensions\IServiceCollectionExtension.cs" />
     <Compile Include="MenuItem.cs" />
+    <Compile Include="Models\Core\UserSignUpModel.cs" />
     <Compile Include="Models\HumanResource\DepartmentModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeFingerPrintSetModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeModel.cs" />
@@ -221,6 +222,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SystemAdministratorManager.cs" />
+    <Compile Include="ViewModels\Core\UserSignUpViewModel.cs" />
     <Compile Include="ViewModels\DialogHelper.cs" />
     <Compile Include="ViewModels\DialogMode.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />

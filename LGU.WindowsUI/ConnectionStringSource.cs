@@ -57,7 +57,7 @@ namespace LGU
             foreach (JObject item in JConnectionStrings)
             {
                 var raw = (string)item["Value"];
-                var secure = SecureStringConverter.ConvertToSecureString(IsEncrypted ? Crypto.Decrypt(raw, nameof(IConnectionStringSource)) : raw);
+                var secure = SecureStringConverter.Convert(IsEncrypted ? Crypto.Decrypt(raw, nameof(IConnectionStringSource)) : raw);
                 ConnectionStrings.Add((string)item["Key"], secure);
             }
         }
