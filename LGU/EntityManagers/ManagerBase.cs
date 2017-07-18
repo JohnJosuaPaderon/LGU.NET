@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LGU.Processes;
+using System;
 using System.Linq;
 
 namespace LGU.EntityManagers
@@ -13,7 +14,7 @@ namespace LGU.EntityManagers
             }
         }
 
-        protected void InvokeIfSuccessAndListNotEmpty<T>(IEnumerableDataProcessResult<T> result, Action<T> expression)
+        protected void InvokeIfSuccessAndListNotEmpty<T>(IEnumerableProcessResult<T> result, Action<T> expression)
         {
             if (result.Status == ProcessResultStatus.Success && result.DataList != null && result.DataList.Any())
             {

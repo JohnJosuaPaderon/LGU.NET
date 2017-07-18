@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LGU.Processes;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,8 +7,8 @@ namespace LGU.EntityManagers
 {
     public interface ISystemManager
     {
-        IDataProcessResult<DateTime> GetSystemDate();
-        Task<IDataProcessResult<DateTime>> GetSystemDateAsync();
-        Task<IDataProcessResult<DateTime>> GetSystemDateAsync(CancellationToken cancellationToken);
+        IProcessResult<DateTime> GetSystemDate();
+        Task<IProcessResult<DateTime>> GetSystemDateAsync();
+        Task<IProcessResult<DateTime>> GetSystemDateAsync(CancellationToken cancellationToken);
     }
 }

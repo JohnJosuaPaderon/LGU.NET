@@ -1,4 +1,5 @@
 ﻿using LGU.EntityProcesses;
+using LGU.Processes;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,17 +15,17 @@ namespace LGU.EntityManagers
             GetSystemDateProc = getSystemDate;
         }
 
-        public IDataProcessResult<DateTime> GetSystemDate()
+        public IProcessResult<DateTime> GetSystemDate()
         {
             return GetSystemDateProc.Execute();
         }
 
-        public Task<IDataProcessResult<DateTime>> GetSystemDateAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<DateTime>> GetSystemDateAsync(CancellationToken cancellationToken)
         {
             return GetSystemDateProc.ExecuteAsync(cancellationToken);
         }
 
-        public Task<IDataProcessResult<DateTime>> GetSystemDateAsync()
+        public Task<IProcessResult<DateTime>> GetSystemDateAsync()
         {
             return GetSystemDateProc.ExecuteAsync();
         }
