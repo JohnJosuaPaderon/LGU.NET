@@ -323,6 +323,11 @@ namespace LGU.Data.Extensions
             return GetValueBase(reader, fieldName, formatProvider, DbValueConverter.ToUInt64);
         }
 
+        public static byte[] GetByteArray(this DbDataReader reader, string fieldName)
+        {
+            return GetValueBase(reader, fieldName, DbValueConverter.ToByteArray);
+        }
+
         public static Stream GetStream(this DbDataReader reader, string fieldName)
         {
             return GetValueBase(reader, fieldName, DbValueConverter.ToStream);
