@@ -2,7 +2,7 @@
 {
     public class MultipleChoiceQuestion : ExamQuestion
     {
-        public MultipleChoiceQuestion(ExamSet set, bool isMultipleAnswer) : base(set)
+        public MultipleChoiceQuestion(ExamSet set, bool isMultipleAnswer) : base(set, ExamQuestionType.MultipleChoice)
         {
             IsMultipleAnswer = isMultipleAnswer;
         }

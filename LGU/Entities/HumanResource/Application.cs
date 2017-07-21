@@ -11,7 +11,7 @@ namespace LGU.Entities.HumanResource
 
         public Applicant Applicant { get; set; }
         public ApplicationStatus Status { get; set; }
-        public DateTime DateApplied { get; set; }
+        public DateTime Date { get; set; }
         public Position ApplyingPosition { get; set; }
 
         public override string ToString()
