@@ -42,11 +42,10 @@
     </Style>
 
     <Style x:Key="NavigationTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource _BaseTextBlock}">
-        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontSize" Value="18"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="TextAlignment" Value="Center"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
-        <Setter Property="LineHeight" Value="35"/>
     </Style>
 </ResourceDictionary>
