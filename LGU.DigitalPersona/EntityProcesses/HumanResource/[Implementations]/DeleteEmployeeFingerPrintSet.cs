@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
+using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
 using System.Data.SqlClient;
 using System.Threading;
@@ -8,23 +9,18 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class DeleteEmployeeFingerPrintSet : HumanResourceProcessBase, IDeleteEmployeeFingerPrintSet
+    public sealed class DeleteEmployeeFingerPrintSet : EmployeeFingerPrintSetProcess, IDeleteEmployeeFingerPrintSet
     {
-        public DeleteEmployeeFingerPrintSet(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public DeleteEmployeeFingerPrintSet(IConnectionStringSource connectionStringSource, IEmployeeFingerPrintSetConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
         public EmployeeFingerPrintSet FingerPrintSet { get; set; }
 
-        private SqlQueryInfo<EmployeeFingerPrintSet> QueryInfo
-        {
-            get
-            {
-                return SqlQueryInfo<EmployeeFingerPrintSet>.CreateProcedureQueryInfo(FingerPrintSet, GetQualifiedDbObjectName("DeleteEmployeeFingerPrintSet"), GetProcessResult, true)
-                    .AddInputParameter("@_Id", FingerPrintSet.Employee?.Id)
-                    .AddLogByParameter();
-            }
-        }
+        private SqlQueryInfo<EmployeeFingerPrintSet> QueryInfo =>
+            SqlQueryInfo<EmployeeFingerPrintSet>.CreateProcedureQueryInfo(FingerPrintSet, GetQualifiedDbObjectName("DeleteEmployeeFingerPrintSet"), GetProcessResult, true)
+            .AddInputParameter("@_Id", FingerPrintSet.Employee?.Id)
+            .AddLogByParameter();
 
         private IProcessResult<EmployeeFingerPrintSet> GetProcessResult(EmployeeFingerPrintSet data, SqlCommand command, int affectedRows)
         {

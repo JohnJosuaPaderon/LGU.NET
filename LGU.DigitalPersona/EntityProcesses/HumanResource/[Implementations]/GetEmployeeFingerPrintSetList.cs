@@ -1,6 +1,6 @@
 ﻿using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
-using LGU.EntityProcessHelpers.HumanResource;
+using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
 using System.Data.SqlClient;
 using System.Threading;
@@ -8,19 +8,13 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class GetEmployeeFingerPrintSetList : HumanResourceProcessBase, IGetEmployeeFingerPrintSetList
+    public sealed class GetEmployeeFingerPrintSetList : EmployeeFingerPrintSetProcess, IGetEmployeeFingerPrintSetList
     {
-        public GetEmployeeFingerPrintSetList(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public GetEmployeeFingerPrintSetList(IConnectionStringSource connectionStringSource, IEmployeeFingerPrintSetConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
-        private SqlQueryInfo QueryInfo
-        {
-            get
-            {
-                return SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName("GetEmployeeFingerPrintSetList"), GetProcessResult);
-            }
-        }
+        private SqlQueryInfo QueryInfo => SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName(), GetProcessResult);
 
         private IProcessResult GetProcessResult(SqlCommand command, int affectedRows)
         {
@@ -29,17 +23,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IEnumerableProcessResult<EmployeeFingerPrintSet> Execute()
         {
-            return SqlHelper.ExecuteReaderEnumerable(QueryInfo, EmployeeFingerPrintSetProcessHelper.EnumerableFromReader);
+            return SqlHelper.ExecuteReaderEnumerable(QueryInfo, Converter);
         }
 
         public Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, EmployeeFingerPrintSetProcessHelper.EnumerableFromReaderAsync);
+            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter);
         }
 
         public Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, EmployeeFingerPrintSetProcessHelper.EnumerableFromReaderAsync, cancellationToken);
+            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter, cancellationToken);
         }
     }
 }
