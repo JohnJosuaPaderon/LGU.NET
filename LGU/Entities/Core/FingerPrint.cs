@@ -1,5 +1,4 @@
 ﻿using DPFP;
-using GriauleFingerprintLibrary.DataTypes;
 
 namespace LGU.Entities.Core
 {
@@ -20,21 +19,21 @@ namespace LGU.Entities.Core
             get => _RawData;
             set
             {
-                if (value != null)
-                {
-                    GraiuleTempate = new FingerprintTemplate()
-                    {
-                        Buffer = value,
-                        Size = value.Length,
-                        Quality = 2
-                    };
-                }
+                //if (value != null)
+                //{
+                //    GraiuleTempate = new FingerprintTemplate()
+                //    {
+                //        Buffer = value,
+                //        Size = value.Length,
+                //        Quality = 2
+                //    };
+                //}
 
                 _RawData = value;
             }
         }
         public Template Data { get; set; }
-        public FingerprintTemplate GraiuleTempate { get; private set; }
+        //public FingerprintTemplate GraiuleTempate { get; private set; }
 
         public static bool operator ==(FingerPrint left, FingerPrint right)
         {
