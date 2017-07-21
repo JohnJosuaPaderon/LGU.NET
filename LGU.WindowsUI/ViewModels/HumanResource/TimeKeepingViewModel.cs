@@ -28,9 +28,18 @@ namespace LGU.ViewModels.HumanResource
         private readonly ITimeLogManager TimeLogManager;
         private readonly Capture Capture;
         private readonly Verification Verification;
+        //private readonly FingerprintCore FingerPrint;
+        //private FingerprintRawImage RawImage { get; set; }
+        //private FingerprintTemplate Template { get; set; }
 
         public TimeKeepingViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
+            // GRAIULE
+            //FingerPrint = new FingerprintCore();
+            //FingerPrint.onFinger += FingerPrint_onFinger;
+            //FingerPrint.onImage += FingerPrint_onImage;
+            //FingerPrint.onStatus += FingerPrint_onStatus;
+
             EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
             TimeLogManager = SystemRuntime.Services.GetService<ITimeLogManager>();
             Capture = new Capture();
@@ -44,6 +53,105 @@ namespace LGU.ViewModels.HumanResource
             LogResults.Add(NotYetReadyResult);
             LogResults.Add(EmployeeNotFoundResult);
             LogResults.Add(ScanYourFingerNowResult);
+        }
+
+        //private void FingerPrint_onStatus(object source, StatusEventArgs se)
+        //{
+        //    if (se.StatusEventType == StatusEventType.SENSOR_PLUG)
+        //    {
+        //        FingerPrint.StartCapture(source.ToString());
+        //    }
+        //    else
+        //    {
+        //        FingerPrint.StopCapture(source.ToString());
+        //    }
+        //}
+
+        //private void FingerPrint_onImage(object source, ImageEventArgs ie)
+        //{
+        //    RawImage = ie.RawImage;
+        //    ExtractTemplate();
+        //    Identify();
+        //    //SetFingerStatus();
+        //}
+
+        //private void ExtractTemplate()
+        //{
+        //    if (RawImage != null)
+        //    {
+        //        try
+        //        {
+        //            FingerprintTemplate template = null;
+        //            FingerPrint.Extract(RawImage, ref template);
+        //            Template = template;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ShowErrorMessage(ex.Message);
+        //        }
+        //    }
+        //}
+
+        //private void Identify()
+        //{
+        //    try
+        //    {
+        //        if (Template != null && Template.Size > 0)
+        //        {
+        //            FingerPrint.IdentifyPrepare(Template);
+        //            foreach (var item in FingerPrintSetCollection)
+        //            {
+        //                foreach (var fingerPrintSet in item)
+        //                {
+        //                    if (Compare(fingerPrintSet, out int score))
+        //                    {
+        //                        ShowInfoMessage(fingerPrintSet.Employee?.ToString());
+        //                        return;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ShowErrorMessage(ex.Message);
+        //    }
+        //}
+
+        //private bool Compare(FingerPrintSet set, out int score)
+        //{
+        //    return
+        //        Compare(set.LeftThumb, out score) ||
+        //        Compare(set.LeftIndexFinger, out score) ||
+        //        Compare(set.LeftMiddleFinger, out score) ||
+        //        Compare(set.LeftRingFinger, out score) ||
+        //        Compare(set.LeftLittleFinger, out score) ||
+        //        Compare(set.RightThumb, out score) ||
+        //        Compare(set.RightIndexFinger, out score) ||
+        //        Compare(set.RightMiddleFinger, out score) ||
+        //        Compare(set.RightRingFinger, out score) ||
+        //        Compare(set.RightLittleFinger, out score);
+        //}
+
+        //private bool Compare(FingerPrint fingerPrint, out int score)
+        //{
+        //    if (fingerPrint.RawData == null)
+        //    {
+        //        score = -1;
+        //        return false;
+        //    }
+
+        //    return FingerPrint.Identify(fingerPrint.GraiuleTempate, out score) == 1;
+        //}
+
+        //private void FingerPrint_onFinger(object source, FingerEventArgs fe)
+        //{
+        //    //ShowInfoMessage("On Finger");
+        //}
+
+        private void SetFingerStatus()
+        {
+
         }
 
         private List<List<EmployeeFingerPrintSet>> FingerPrintSetCollection { get; set; }
@@ -207,7 +315,7 @@ namespace LGU.ViewModels.HumanResource
 
                     foreach (var item in result.DataList)
                     {
-                        if (FingerPrintSetCollection[parentIndex].Count > (result.DataList.Count() / 10))
+                        if (FingerPrintSetCollection[parentIndex].Count > (result.DataList.Count() / 3))
                         {
                             FingerPrintSetCollection.Add(new List<EmployeeFingerPrintSet>());
                             parentIndex = FingerPrintSetCollection.Count - 1;
@@ -228,6 +336,10 @@ namespace LGU.ViewModels.HumanResource
                 LogResults.AddRange(list);
 
             }
+            else
+            {
+                ShowErrorMessage(result.Message);
+            }
         }
 
         public async override void Initialize()
@@ -240,6 +352,8 @@ namespace LGU.ViewModels.HumanResource
             Timer.Start();
             SelectedLogResult = ScanYourFingerNowResult;
 
+            //FingerPrint.Initialize();
+            //FingerPrint.CaptureInitialize();
             StartScanner();
         }
 
@@ -334,16 +448,20 @@ namespace LGU.ViewModels.HumanResource
                 var tasks = new List<Task>();
 
                 Debug.WriteLine("Start-Loading-Tasks: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
+                //Parallel.ForEach(FingerPrintSetCollection, f => SearchFingerPrint(f, features));
+                
                 Parallel.ForEach(FingerPrintSetCollection, async (f) => await SearchFingerPrintAsync(f, features));
+                
+                
                 //foreach (var item in FingerPrintSetCollection)
                 //{
                 //    tasks.Add(SearchFingerPrintAsync(item, features));
                 //}
                 Debug.WriteLine("End-Loading-Tasks: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
 
-                Debug.WriteLine("Start-Tasks: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
+                //Debug.WriteLine("Start-Tasks: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
                 //await Task.WhenAll(tasks);
-                Debug.WriteLine("End-Tasks: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
+                //Debug.WriteLine("End-Tasks: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
 
                 if (!EmployeeFound)
                 {
@@ -386,35 +504,105 @@ namespace LGU.ViewModels.HumanResource
                     var timeLogResult = await TimeLogManager.LogAsync(fingerPrintSet.Employee);
                     if (timeLogResult.Status == ProcessResultStatus.Success)
                     {
-                        Debug.WriteLine("Start: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
+                        //Debug.WriteLine("Start: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
                         var timeLog = timeLogResult.Data;
                         var result = LogResults.FirstOrDefault(r => r.Key == timeLog.Employee.Id.ToString());
                         result.LogDate = (timeLog.LogoutDate ?? timeLog.LoginDate) ?? DateTime.Now;
                         result.LogType = (timeLog.LogoutDate == null) ? LogType.IN : LogType.OUT;
                         Invoke(() => SelectedLogResult = result);
                         EmployeeFound = true;
-                        Debug.WriteLine("End: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
+                        //Debug.WriteLine("End: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
                         break;
                     }
                 }
             }
         }
 
+        private void SearchFingerPrint(IEnumerable<EmployeeFingerPrintSet> fingerPrintSetList, FeatureSet features)
+        {
+            Parallel.ForEach(fingerPrintSetList, async fingerPrintSet =>
+            {
+                if (!EmployeeFound)
+                {
+                    if (Compare(features, fingerPrintSet))
+                    {
+                        var timeLogResult = await TimeLogManager.LogAsync(fingerPrintSet.Employee);
+                        if (timeLogResult.Status == ProcessResultStatus.Success)
+                        {
+                            Debug.WriteLine("Start: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
+                            var timeLog = timeLogResult.Data;
+                            var result = LogResults.FirstOrDefault(r => r.Key == timeLog.Employee.Id.ToString());
+                            result.LogDate = (timeLog.LogoutDate ?? timeLog.LoginDate) ?? DateTime.Now;
+                            result.LogType = (timeLog.LogoutDate == null) ? LogType.IN : LogType.OUT;
+                            Invoke(() => SelectedLogResult = result);
+                            EmployeeFound = true;
+                            Debug.WriteLine("End: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
+                        }
+                    }
+                }
+            });
+        }
+
         private bool Compare(FeatureSet features, EmployeeFingerPrintSet fingerPrintSet)
         {
             if (features != null && fingerPrintSet != null)
             {
-                return
-                    SafeVerify(features, fingerPrintSet.LeftThumb) ||
-                    SafeVerify(features, fingerPrintSet.LeftIndexFinger) ||
-                    SafeVerify(features, fingerPrintSet.LeftMiddleFinger) ||
-                    SafeVerify(features, fingerPrintSet.LeftRingFinger) ||
-                    SafeVerify(features, fingerPrintSet.LeftLittleFinger) ||
-                    SafeVerify(features, fingerPrintSet.RightThumb) ||
-                    SafeVerify(features, fingerPrintSet.RightIndexFinger)||
-                    SafeVerify(features, fingerPrintSet.RightMiddleFinger) ||
-                    SafeVerify(features, fingerPrintSet.RightRingFinger) ||
-                    SafeVerify(features, fingerPrintSet.RightLittleFinger);
+                var verified = false;
+
+                if (SafeVerify(features, fingerPrintSet.LeftThumb))
+                {
+                    return true;
+                }
+
+                if (SafeVerify(features, fingerPrintSet.LeftIndexFinger))
+                {
+                    return true;
+                }
+                if (SafeVerify(features, fingerPrintSet.LeftMiddleFinger))
+                {
+                    return true;
+                }
+                if (SafeVerify(features, fingerPrintSet.LeftRingFinger))
+                {
+                    return true;
+                }
+                if (SafeVerify(features, fingerPrintSet.LeftLittleFinger))
+                {
+                    return true;
+                }
+                if (SafeVerify(features, fingerPrintSet.RightThumb))
+                {
+                    return true;
+                }
+                if (SafeVerify(features, fingerPrintSet.RightIndexFinger))
+                {
+                    return true;
+                }
+                if (SafeVerify(features, fingerPrintSet.RightMiddleFinger))
+                {
+                    return true;
+                }
+                if (SafeVerify(features, fingerPrintSet.RightRingFinger))
+                {
+                    return true;
+                }
+                if (SafeVerify(features, fingerPrintSet.RightLittleFinger))
+                {
+                    return true;
+                }
+
+                //return
+                //    SafeVerify(features, fingerPrintSet.LeftThumb) ||
+                //    SafeVerify(features, fingerPrintSet.LeftIndexFinger) ||
+                //    SafeVerify(features, fingerPrintSet.LeftMiddleFinger) ||
+                //    SafeVerify(features, fingerPrintSet.LeftRingFinger) ||
+                //    SafeVerify(features, fingerPrintSet.LeftLittleFinger) ||
+                //    SafeVerify(features, fingerPrintSet.RightThumb) ||
+                //    SafeVerify(features, fingerPrintSet.RightIndexFinger)||
+                //    SafeVerify(features, fingerPrintSet.RightMiddleFinger) ||
+                //    SafeVerify(features, fingerPrintSet.RightRingFinger) ||
+                //    SafeVerify(features, fingerPrintSet.RightLittleFinger);
+                return verified;
             }
             else
             {
@@ -438,7 +626,7 @@ namespace LGU.ViewModels.HumanResource
         public void OnComplete(object capture, string readerSerialNumber, Sample sample)
         {
             Invoke(() => ScannerLog = "The finger print sample was captured.");
-            //await ProcessFingerPrintAsync(sample);
+            ProcessFingerPrintAsync(sample);
         }
 
         public void OnFingerGone(object capture, string readerSerialNumber)
