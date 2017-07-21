@@ -18,17 +18,17 @@ namespace LGU.EntityProcesses.Core
 
         public IEnumerableProcessResult<Gender> Execute()
         {
-            return SqlHelper.ExecuteReaderEnumerable(QueryInfo, Converter.EnumerableFromReader);
+            return SqlHelper.ExecuteReaderEnumerable(QueryInfo, Converter);
         }
 
         public Task<IEnumerableProcessResult<Gender>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter.EnumerableFromReaderAsync);
+            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter);
         }
 
         public Task<IEnumerableProcessResult<Gender>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter.EnumerableFromReaderAsync, cancellationToken);
+            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter, cancellationToken);
         }
     }
 }
