@@ -128,13 +128,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EntityConverters\HumanResource\[Implementations]\EmployeeFingerPrintSetConverter.cs" />
     <Compile Include="EntityManagers\HumanResource\[Implementations]\EmployeeFingerPrintSetManager.cs" />
+    <Compile Include="EntityProcesses\HumanResource\EmployeeFingerPrintSetProcess.cs" />
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\DeleteEmployeeFingerPrintSet.cs" />
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\GetEmployeeFingerPrintSetById.cs" />
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\GetEmployeeFingerPrintSetList.cs" />
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\InsertEmployeeFingerPrintSet.cs" />
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\UpdateEmployeeFingerPrintSet.cs" />
-    <Compile Include="EntityProcessHelpers\HumanResource\EmployeeFingerPrintSetProcessHelper.cs" />
     <Compile Include="Extensions\IServiceCollectionExtension.cs" />
     <Compile Include="FingerPrintScannerHelper.cs" />
     <Compile Include="Processor.cs" />
@@ -154,5 +155,6 @@
   <ItemGroup>
     <Content Include="logo.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

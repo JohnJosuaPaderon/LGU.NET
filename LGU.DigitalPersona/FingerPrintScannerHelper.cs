@@ -24,9 +24,14 @@ namespace LGU
             }
         }
 
-        public static Template ConvertFromStream(Stream stream)
+        public static Template ExtractTemplate(Stream stream)
         {
             return stream != null ? new Template(stream) : null;
+        }
+
+        public static Template ExtractTemplate(byte[] data)
+        {
+            return data != null ? new Template(new MemoryStream(data)) : null;
         }
     }
 }
