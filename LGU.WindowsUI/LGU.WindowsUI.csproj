@@ -226,6 +226,7 @@
     <Compile Include="ViewModels\DialogHelper.cs" />
     <Compile Include="ViewModels\DialogMode.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
+    <Compile Include="ViewModels\HumanResource\ApplicationMainViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\DepartmentManagementViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditDepartmentDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditEmployeeDialogViewModel.cs" />
@@ -239,12 +240,22 @@
     <Compile Include="ViewModels\HumanResource\TimeKeepingResult.cs" />
     <Compile Include="ViewModels\HumanResource\TimeKeepingViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\NavigationalViewModelBase.cs" />
     <Compile Include="ViewModels\SystemAdministration\ConnectionStringSourceViewModel.cs" />
     <Compile Include="ViewModels\SystemAdministration\LauncherViewModel.cs" />
     <Compile Include="ViewModels\TimeKeepingResultType.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Core\UserSignUpView.xaml.cs">
       <DependentUpon>UserSignUpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\ApplicantManagementView.xaml.cs">
+      <DependentUpon>ApplicantManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\ApplicationLauncherView.xaml.cs">
+      <DependentUpon>ApplicationLauncherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\ApplicationMainView.xaml.cs">
+      <DependentUpon>ApplicationMainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\DepartmentManagementView.xaml.cs">
       <DependentUpon>DepartmentManagementView.xaml</DependentUpon>
@@ -302,7 +313,6 @@
   <ItemGroup>
     <Resource Include="logo.ico" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="Styles\Base.xaml">
       <SubType>Designer</SubType>
@@ -373,6 +383,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Core\UserSignUpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\ApplicantManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\ApplicationLauncherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\ApplicationMainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
