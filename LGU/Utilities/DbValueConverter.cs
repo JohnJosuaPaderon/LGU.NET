@@ -25,6 +25,11 @@ namespace LGU.Utilities
             return Convertible(value) ? converter(value, formatProvider) : default(TResult);
         }
 
+        public static byte[] ToByteArray(object value)
+        {
+            return ConversionBase(value, ValueConverter.ToByteArray);
+        }
+
         public static Stream ToStream(object value)
         {
             return ConversionBase(value, ValueConverter.ToStream);

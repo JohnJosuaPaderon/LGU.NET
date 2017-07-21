@@ -101,11 +101,23 @@ namespace LGU.Utilities
             return Convertible(value) ? new TResult?(converter(value, formatProvider)) : null;
         }
 
+        public static byte[] ToByteArray(object value)
+        {
+            if (value is byte[] bytes)
+            {
+                return bytes;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public static Stream ToStream(object value)
         {
             if (value != null)
             {
-                return new MemoryStream((byte[])value);
+                return new MemoryStream(ToByteArray(value));
             }
             else
             {
