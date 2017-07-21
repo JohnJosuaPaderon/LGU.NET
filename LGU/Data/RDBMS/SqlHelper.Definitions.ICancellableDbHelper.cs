@@ -78,7 +78,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public async Task<IProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, CancellationToken, Task<IProcessResult<T>>> getFromReaderAsync, CancellationToken cancellationToken)
+        public async Task<IProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter, CancellationToken cancellationToken)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
@@ -95,7 +95,7 @@ namespace LGU.Data.Rdbms
                         {
                             if (reader.HasRows)
                             {
-                                return await getFromReaderAsync(reader, cancellationToken);
+                                return await converter.FromReaderAsync(reader, cancellationToken);
                             }
                             else
                             {
@@ -112,7 +112,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public async Task<IEnumerableProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, CancellationToken, Task<IEnumerableProcessResult<T>>> getFromReaderAsync, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter, CancellationToken cancellationToken)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
             {
@@ -129,7 +129,7 @@ namespace LGU.Data.Rdbms
                         {
                             if (reader.HasRows)
                             {
-                                return await getFromReaderAsync(reader, cancellationToken);
+                                return await converter.EnumerableFromReaderAsync(reader, cancellationToken);
                             }
                             else
                             {

@@ -77,7 +77,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public async Task<IProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, IProcessResult<T>> getFromReader)
+        public async Task<IProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync())
             {
@@ -94,41 +94,7 @@ namespace LGU.Data.Rdbms
                         {
                             if (reader.HasRows)
                             {
-                                return getFromReader(reader);
-                            }
-                            else
-                            {
-                                return new ProcessResult<T>(ProcessResultStatus.Success, "No result.");
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                    return new ProcessResult<T>(ex);
-                }
-            }
-        }
-
-        public async Task<IProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, Task<IProcessResult<T>>> getFromReaderAsync)
-        {
-            using (var connection = await ConnectionEstablisher.EstablishAsync())
-            {
-                if (connection == null)
-                {
-                    return new ProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
-                }
-
-                try
-                {
-                    using (var command = queryInfo.CreateCommand(connection))
-                    {
-                        using (var reader = await command.ExecuteReaderAsync())
-                        {
-                            if (reader.HasRows)
-                            {
-                                return await getFromReaderAsync(reader);
+                                return await converter.FromReaderAsync(reader);
                             }
                             else
                             {
@@ -179,7 +145,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public async Task<IEnumerableProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, Task<IEnumerableProcessResult<T>>> getFromReaderAsync)
+        public async Task<IEnumerableProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter)
         {
             using (var connection = await ConnectionEstablisher.EstablishAsync())
             {
@@ -196,7 +162,7 @@ namespace LGU.Data.Rdbms
                         {
                             if (reader.HasRows)
                             {
-                                return await getFromReaderAsync(reader);
+                                return await converter.EnumerableFromReaderAsync(reader);
                             }
                             else
                             {

@@ -93,7 +93,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public IProcessResult<T> ExecuteReader<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, IProcessResult<T>> getFromReader)
+        public IProcessResult<T> ExecuteReader<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter)
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
@@ -111,7 +111,7 @@ namespace LGU.Data.Rdbms
                             if (reader.HasRows)
                             {
                                 reader.Read();
-                                return getFromReader(reader);
+                                return converter.FromReader(reader);
                             }
                             else
                             {
@@ -128,7 +128,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public IEnumerableProcessResult<T> ExecuteReaderEnumerable<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, IEnumerableProcessResult<T>> getFromReader)
+        public IEnumerableProcessResult<T> ExecuteReaderEnumerable<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter)
         {
             using (var connection = ConnectionEstablisher.Establish())
             {
@@ -145,7 +145,7 @@ namespace LGU.Data.Rdbms
                         {
                             if (reader.HasRows)
                             {
-                                return getFromReader(reader);
+                                return converter.EnumerableFromReader(reader);
                             }
                             else
                             {
