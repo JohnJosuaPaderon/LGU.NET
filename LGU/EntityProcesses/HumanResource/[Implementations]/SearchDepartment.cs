@@ -23,17 +23,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IEnumerableProcessResult<Department> Execute()
         {
-            return SqlHelper.ExecuteReaderEnumerable(QueryInfo, Converter.EnumerableFromReader);
+            return SqlHelper.ExecuteReaderEnumerable(QueryInfo, Converter);
         }
 
         public Task<IEnumerableProcessResult<Department>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter.EnumerableFromReaderAsync);
+            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter);
         }
 
         public Task<IEnumerableProcessResult<Department>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter.EnumerableFromReaderAsync, cancellationToken);
+            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter, cancellationToken);
         }
     }
 }

@@ -23,17 +23,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IProcessResult<Employee> Execute()
         {
-            return SqlHelper.ExecuteReader(QueryInfo, Converter.FromReader);
+            return SqlHelper.ExecuteReader(QueryInfo, Converter);
         }
 
         public Task<IProcessResult<Employee>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync);
+            return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter);
         }
 
         public Task<IProcessResult<Employee>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter.FromReaderAsync, cancellationToken);
+            return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter, cancellationToken);
         }
     }
 }
