@@ -30,10 +30,9 @@ namespace LGU.Data.Rdbms
             {
                 connection.Open();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Debug.WriteLine(ex.Message);
-                connection = null;
+                throw;
             }
 
             return connection;
@@ -47,10 +46,9 @@ namespace LGU.Data.Rdbms
             {
                 await connection.OpenAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Debug.WriteLine(ex.Message);
-                connection = null;
+                throw;
             }
 
             return connection;
@@ -64,10 +62,9 @@ namespace LGU.Data.Rdbms
             {
                 await connection.OpenAsync(cancellationToken);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Debug.WriteLine(ex.Message);
-                connection = null;
+                throw;
             }
 
             return connection;

@@ -12,161 +12,171 @@ namespace LGU.Data.Rdbms
     {
         public async Task<IProcessResult> ExecuteNonQueryAsync(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, CancellationToken cancellationToken)
         {
-            using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
+            try
             {
-                if (connection == null)
+                using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
                 {
-                    return new ProcessResult(ProcessResultStatus.Failed, "Unable to connect to database.");
-                }
+                    SqlTransaction transaction = null;
 
-                SqlTransaction transaction = null;
+                    queryInfo.InvokeIfUsingTransaction(() => transaction = connection.BeginTransaction());
 
-                queryInfo.InvokeIfUsingTransaction(() => transaction = connection.BeginTransaction());
-
-                try
-                {
-                    using (var command = queryInfo.CreateCommand(connection, transaction))
+                    try
                     {
-                        var result = queryInfo.GetProcessResult(command, await command.ExecuteNonQueryAsync(cancellationToken));
-                        queryInfo.InvokeIfUsingTransaction(transaction.Commit);
+                        using (var command = queryInfo.CreateCommand(connection, transaction))
+                        {
+                            var result = queryInfo.GetProcessResult(command, await command.ExecuteNonQueryAsync(cancellationToken));
+                            queryInfo.InvokeIfUsingTransaction(transaction.Commit);
 
-                        return result;
+                            return result;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        queryInfo.InvokeIfUsingTransaction(transaction.Rollback);
+                        Debug.WriteLine(ex);
+                        return new ProcessResult(ex);
+                    }
+                    finally
+                    {
+                        queryInfo.InvokeIfUsingTransaction(transaction.Dispose);
                     }
                 }
-                catch (Exception ex)
-                {
-                    queryInfo.InvokeIfUsingTransaction(transaction.Rollback);
-                    Debug.WriteLine(ex);
-                    return new ProcessResult(ex);
-                }
-                finally
-                {
-                    queryInfo.InvokeIfUsingTransaction(transaction.Dispose);
-                }
+            }
+            catch (Exception ex)
+            {
+                return new ProcessResult(ex);
             }
         }
 
         public async Task<IProcessResult<T>> ExecuteNonQueryAsync<T>(IDbQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, CancellationToken cancellationToken)
         {
-            using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
+            try
             {
-                if (connection == null)
+                using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
                 {
-                    return new ProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
-                }
+                    SqlTransaction transaction = null;
 
-                SqlTransaction transaction = null;
+                    queryInfo.InvokeInTransaction(() => transaction = connection.BeginTransaction());
 
-                queryInfo.InvokeInTransaction(() => transaction = connection.BeginTransaction());
-
-                try
-                {
-                    using (var command = queryInfo.CreateCommand(connection, transaction))
+                    try
                     {
-                        var result = queryInfo.GetProcessResult(queryInfo.Data, command, await command.ExecuteNonQueryAsync(cancellationToken));
-                        queryInfo.InvokeInTransaction(transaction.Commit);
+                        using (var command = queryInfo.CreateCommand(connection, transaction))
+                        {
+                            var result = queryInfo.GetProcessResult(queryInfo.Data, command, await command.ExecuteNonQueryAsync(cancellationToken));
+                            queryInfo.InvokeInTransaction(transaction.Commit);
 
-                        return result;
+                            return result;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        queryInfo.InvokeInTransaction(transaction.Rollback);
+                        Debug.WriteLine(ex);
+                        return new ProcessResult<T>(ex);
                     }
                 }
-                catch (Exception ex)
-                {
-                    queryInfo.InvokeInTransaction(transaction.Rollback);
-                    Debug.WriteLine(ex);
-                    return new ProcessResult<T>(ex);
-                }
+            }
+            catch (Exception ex)
+            {
+                return new ProcessResult<T>(ex);
             }
         }
 
         public async Task<IProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter, CancellationToken cancellationToken)
         {
-            using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
+            try
             {
-                if (connection == null)
+                using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
                 {
-                    return new ProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
-                }
-
-                try
-                {
-                    using (var command = queryInfo.CreateCommand(connection))
+                    try
                     {
-                        using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+                        using (var command = queryInfo.CreateCommand(connection))
                         {
-                            if (reader.HasRows)
+                            using (var reader = await command.ExecuteReaderAsync(cancellationToken))
                             {
-                                return await converter.FromReaderAsync(reader, cancellationToken);
-                            }
-                            else
-                            {
-                                return new ProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                                if (reader.HasRows)
+                                {
+                                    return await converter.FromReaderAsync(reader, cancellationToken);
+                                }
+                                else
+                                {
+                                    return new ProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                                }
                             }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                        return new ProcessResult<T>(ex);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                    return new ProcessResult<T>(ex);
-                }
+            }
+            catch (Exception ex)
+            {
+                return new ProcessResult<T>(ex);
             }
         }
 
         public async Task<IEnumerableProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter, CancellationToken cancellationToken)
         {
-            using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
+            try
             {
-                if (connection == null)
+                using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
                 {
-                    return new EnumerableProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
-                }
-
-                try
-                {
-                    using (var command = queryInfo.CreateCommand(connection))
+                    try
                     {
-                        using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+                        using (var command = queryInfo.CreateCommand(connection))
                         {
-                            if (reader.HasRows)
+                            using (var reader = await command.ExecuteReaderAsync(cancellationToken))
                             {
-                                return await converter.EnumerableFromReaderAsync(reader, cancellationToken);
-                            }
-                            else
-                            {
-                                return new EnumerableProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                                if (reader.HasRows)
+                                {
+                                    return await converter.EnumerableFromReaderAsync(reader, cancellationToken);
+                                }
+                                else
+                                {
+                                    return new EnumerableProcessResult<T>(ProcessResultStatus.Success, "No result.");
+                                }
                             }
                         }
                     }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                        return new EnumerableProcessResult<T>(ex);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                    return new EnumerableProcessResult<T>(ex);
-                }
+            }
+            catch (Exception ex)
+            {
+                return new EnumerableProcessResult<T>(ex);
             }
         }
 
         public async Task<IProcessResult<T>> ExecuteScalarAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<object, T> converter, CancellationToken cancellationToken)
         {
-            using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
+            try
             {
-                if (connection == null)
+                using (var connection = await ConnectionEstablisher.EstablishAsync(cancellationToken))
                 {
-                    return new ProcessResult<T>(ProcessResultStatus.Failed, "Unable to connect to database.");
-                }
-
-                try
-                {
-                    using (var command = queryInfo.CreateCommand(connection))
+                    try
                     {
-                        return new ProcessResult<T>(converter(await command.ExecuteScalarAsync(cancellationToken)));
+                        using (var command = queryInfo.CreateCommand(connection))
+                        {
+                            return new ProcessResult<T>(converter(await command.ExecuteScalarAsync(cancellationToken)));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex);
+                        return new ProcessResult<T>(ex);
                     }
                 }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                    return new ProcessResult<T>(ex);
-                }
+            }
+            catch (Exception ex)
+            {
+                return new ProcessResult<T>(ex);
             }
         }
     }
