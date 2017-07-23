@@ -5,11 +5,11 @@ namespace LGU.EntityProcesses.Core
 {
     public abstract class PersonProcess : CoreProcessBase
     {
-        protected readonly IPersonConverter<SqlDataReader> Converter;
+        protected readonly IPersonConverter<SqlDataReader> r_Converter;
 
         public PersonProcess(IConnectionStringSource connectionStringSource, IPersonConverter<SqlDataReader> converter) : base(connectionStringSource)
         {
-            Converter = converter;
+            r_Converter = converter;
         }
     }
 }
