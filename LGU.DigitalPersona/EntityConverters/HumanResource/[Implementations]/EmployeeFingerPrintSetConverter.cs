@@ -12,11 +12,11 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class EmployeeFingerPrintSetConverter : IEmployeeFingerPrintSetConverter<SqlDataReader>
     {
-        private readonly IEmployeeManager EmployeeManager;
+        private readonly IEmployeeManager r_EmployeeManager;
 
         public EmployeeFingerPrintSetConverter(IEmployeeManager employeeManager)
         {
-            EmployeeManager = employeeManager;
+            r_EmployeeManager = employeeManager;
         }
 
         private EmployeeFingerPrintSet GetData(Employee employee, SqlDataReader reader)
@@ -60,7 +60,7 @@ namespace LGU.EntityConverters.HumanResource
 
         private EmployeeFingerPrintSet GetData(SqlDataReader reader)
         {
-            var employeeResult = EmployeeManager.GetById(reader.GetInt64("Id"));
+            var employeeResult = r_EmployeeManager.GetById(reader.GetInt64("Id"));
 
             if (employeeResult.Status == ProcessResultStatus.Success)
             {
@@ -74,7 +74,7 @@ namespace LGU.EntityConverters.HumanResource
 
         private async Task<EmployeeFingerPrintSet> GetDataAsync(SqlDataReader reader)
         {
-            var employeeResult = await EmployeeManager.GetByIdAsync(reader.GetInt64("Id"));
+            var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("Id"));
 
             if (employeeResult.Status == ProcessResultStatus.Success)
             {
@@ -88,7 +88,7 @@ namespace LGU.EntityConverters.HumanResource
 
         private async Task<EmployeeFingerPrintSet> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
-            var employeeResult = await EmployeeManager.GetByIdAsync(reader.GetInt64("Id"), cancellationToken);
+            var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("Id"), cancellationToken);
 
             if (employeeResult.Status == ProcessResultStatus.Success)
             {
