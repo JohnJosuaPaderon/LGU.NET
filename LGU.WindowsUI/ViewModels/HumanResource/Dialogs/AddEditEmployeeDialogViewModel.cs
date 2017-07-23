@@ -14,19 +14,19 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 {
     public sealed class AddEditEmployeeDialogViewModel : DialogViewModelBase
     {
-        private readonly IEmployeeManager EmployeeManager;
-        private readonly IDepartmentManager DepartmentManager;
-        private readonly AddEmployeeEvent AddEmployeeEvent;
-        private readonly EditEmployeeEvent EditEmployeeEvent;
+        private readonly IEmployeeManager r_EmployeeManager;
+        private readonly IDepartmentManager r_DepartmentManager;
+        private readonly AddEmployeeEvent r_AddEmployeeEvent;
+        private readonly EditEmployeeEvent r_EditEmployeeEvent;
 
         public AddEditEmployeeDialogViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            EmployeeManager = SystemRuntime.Services.GetService<IEmployeeManager>();
-            DepartmentManager = SystemRuntime.Services.GetService<IDepartmentManager>();
+            r_EmployeeManager = SystemRuntime.Services.GetService<IEmployeeManager>();
+            r_DepartmentManager = SystemRuntime.Services.GetService<IDepartmentManager>();
 
             SaveCommand = new DelegateCommand(Save);
-            AddEmployeeEvent = EventAggregator.GetEvent<AddEmployeeEvent>();
-            EditEmployeeEvent = EventAggregator.GetEvent<EditEmployeeEvent>();
+            r_AddEmployeeEvent = r_EventAggregator.GetEvent<AddEmployeeEvent>();
+            r_EditEmployeeEvent = r_EventAggregator.GetEvent<EditEmployeeEvent>();
             Initialize();
         }
 
@@ -50,14 +50,14 @@ namespace LGU.ViewModels.HumanResource.Dialogs
         public async override void Initialize()
         {
             base.Initialize();
-            AddEmployeeEvent.Subscribe(e => SetData(e, "Add new Employee", DialogMode.Add));
-            EditEmployeeEvent.Subscribe(e => SetData(e, "Edit Employee", DialogMode.Edit));
+            r_AddEmployeeEvent.Subscribe(e => SetData(e, "Add new Employee", DialogMode.Add));
+            r_EditEmployeeEvent.Subscribe(e => SetData(e, "Edit Employee", DialogMode.Edit));
             await GetDepartmentListAsync();
         }
 
         private async Task GetDepartmentListAsync()
         {
-            var result = await DepartmentManager.GetListAsync();
+            var result = await r_DepartmentManager.GetListAsync();
 
             if (result.Status == ProcessResultStatus.Success && result.DataList != null)
             {
@@ -91,7 +91,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         private async Task InsertAsync()
         {
-            var result = await EmployeeManager.InsertAsync(Employee.GetSource());
+            var result = await r_EmployeeManager.InsertAsync(Employee.GetSource());
 
             if (result.Status == ProcessResultStatus.Success)
             {
@@ -114,7 +114,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
                         
         private async Task UpdateAsync()
         {
-            var result = await EmployeeManager.UpdateAsync(Employee.GetSource());
+            var result = await r_EmployeeManager.UpdateAsync(Employee.GetSource());
 
             if (result.Status == ProcessResultStatus.Success)
             {

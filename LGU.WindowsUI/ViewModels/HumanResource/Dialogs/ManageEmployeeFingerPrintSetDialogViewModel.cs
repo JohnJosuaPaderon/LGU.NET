@@ -17,16 +17,16 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 {
     public sealed class ManageEmployeeFingerPrintSetDialogViewModel : DialogViewModelBase, DPFP.Capture.EventHandler
     {
-        private readonly IEmployeeFingerPrintSetManager EmployeeFingerPrintSetManager;
-        private readonly ManageEmployeeFingerPrintSetEvent ManageEmployeeFingerPrintSetEvent;
+        private readonly IEmployeeFingerPrintSetManager r_EmployeeFingerPrintSetManager;
+        private readonly ManageEmployeeFingerPrintSetEvent r_ManageEmployeeFingerPrintSetEvent;
         private readonly Capture Capture;
-        private Enrollment Enrollment;
+        private Enrollment r_Enrollment;
 
         public ManageEmployeeFingerPrintSetDialogViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
+            r_EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
 
-            ManageEmployeeFingerPrintSetEvent = EventAggregator.GetEvent<ManageEmployeeFingerPrintSetEvent>();
+            r_ManageEmployeeFingerPrintSetEvent = r_EventAggregator.GetEvent<ManageEmployeeFingerPrintSetEvent>();
             Capture = new Capture();
             ChangeCurrentFingerPrintCommand = new DelegateCommand<FingerPrintModel>(ChangeCurrentFingerPrint);
             SaveCommand = new DelegateCommand(Save);
@@ -76,7 +76,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         private async void Save()
         {
-            var result = await EmployeeFingerPrintSetManager.InsertAsync(FingerPrintSet.GetSource());
+            var result = await r_EmployeeFingerPrintSetManager.InsertAsync(FingerPrintSet.GetSource());
 
             if (result.Status == ProcessResultStatus.Success)
             {
@@ -92,7 +92,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
         public override void Initialize()
         {
             base.Initialize();
-            ManageEmployeeFingerPrintSetEvent.Subscribe((efps) => FingerPrintSet = efps);
+            r_ManageEmployeeFingerPrintSetEvent.Subscribe((efps) => FingerPrintSet = efps);
             Capture.EventHandler = this;
         }
 
@@ -103,10 +103,10 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         private void StartScanner()
         {
-            Enrollment = new Enrollment();
+            r_Enrollment = new Enrollment();
             StopScanner();
 
-            Invoke(() => RemainingScans = Enrollment.FeaturesNeeded);
+            Invoke(() => RemainingScans = r_Enrollment.FeaturesNeeded);
 
             if (Capture != null)
             {
@@ -125,7 +125,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             {
                 try
                 {
-                    Enrollment.Clear();
+                    r_Enrollment.Clear();
                     Capture.StopCapture();
                 }
                 catch (Exception)
@@ -148,9 +148,9 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             {
                 try
                 {
-                    Enrollment.AddFeatures(features);
+                    r_Enrollment.AddFeatures(features);
                     Invoke(() => ScannerLog = "The fingerprint feature set was created.");
-                    Invoke(() => RemainingScans = Enrollment.FeaturesNeeded);
+                    Invoke(() => RemainingScans = r_Enrollment.FeaturesNeeded);
                 }
                 catch(Exception)
                 {
@@ -158,18 +158,18 @@ namespace LGU.ViewModels.HumanResource.Dialogs
                 }
                 finally
                 {
-                    switch (Enrollment.TemplateStatus)
+                    switch (r_Enrollment.TemplateStatus)
                     {
                         case Enrollment.Status.Failed:
-                            Enrollment.Clear();
+                            r_Enrollment.Clear();
                             StopScanner();
-                            Invoke(() => RemainingScans = Enrollment.FeaturesNeeded);
+                            Invoke(() => RemainingScans = r_Enrollment.FeaturesNeeded);
                             Invoke(() => CurrentFingerPrint.Data = null);
                             StartScanner();
                             break;
                         case Enrollment.Status.Ready:
                             Debug.WriteLine("Enrollment Start : Hand Type = {0}; Finger Type = {1}", CurrentFingerPrint.HandType, CurrentFingerPrint.FingerType);
-                            Invoke(() => CurrentFingerPrint.Data = Enrollment.Template);
+                            Invoke(() => CurrentFingerPrint.Data = r_Enrollment.Template);
                             Debug.WriteLine("Enrollment End : Hand Type = {0}; Finger Type = {1}", CurrentFingerPrint.HandType, CurrentFingerPrint.FingerType);
                             Invoke(() => ScannerLog = "Fingerprint successfully set.");
                             StopScanner();

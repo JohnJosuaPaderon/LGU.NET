@@ -13,16 +13,16 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 {
     public class AddEditDepartmentDialogViewModel : DialogViewModelBase
 	{
-        private readonly AddDepartmentEvent AddDepartmentEvent;
-        private readonly EditDepartmentEvent EditDepartmentEvent;
-        private readonly IDepartmentManager DepartmentManager;
+        private readonly AddDepartmentEvent r_AddDepartmentEvent;
+        private readonly EditDepartmentEvent r_EditDepartmentEvent;
+        private readonly IDepartmentManager r_DepartmentManager;
 
         public AddEditDepartmentDialogViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            DepartmentManager = SystemRuntime.Services.GetService<IDepartmentManager>();
+            r_DepartmentManager = SystemRuntime.Services.GetService<IDepartmentManager>();
             SaveCommand = new DelegateCommand(Save);
-            AddDepartmentEvent = EventAggregator.GetEvent<AddDepartmentEvent>();
-            EditDepartmentEvent = EventAggregator.GetEvent<EditDepartmentEvent>();
+            r_AddDepartmentEvent = r_EventAggregator.GetEvent<AddDepartmentEvent>();
+            r_EditDepartmentEvent = r_EventAggregator.GetEvent<EditDepartmentEvent>();
             Initialize();
         }
 
@@ -45,8 +45,8 @@ namespace LGU.ViewModels.HumanResource.Dialogs
         public override void Initialize()
         {
             base.Initialize();
-            AddDepartmentEvent.Subscribe(d => SetData(d, "Add new Department", DialogMode.Add));
-            EditDepartmentEvent.Subscribe(d => SetData(d, "Edit Department", DialogMode.Edit));
+            r_AddDepartmentEvent.Subscribe(d => SetData(d, "Add new Department", DialogMode.Add));
+            r_EditDepartmentEvent.Subscribe(d => SetData(d, "Edit Department", DialogMode.Edit));
         }
 
         private async void Save()
@@ -64,7 +64,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         private async Task InsertAsync()
         {
-            var result = await DepartmentManager.InsertAsync(Department.GetSource());
+            var result = await r_DepartmentManager.InsertAsync(Department.GetSource());
 
             if (result.Status == ProcessResultStatus.Success)
             {
@@ -87,7 +87,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         private async Task UpdateAsync()
         {
-            var result = await DepartmentManager.UpdateAsync(Department.GetSource());
+            var result = await r_DepartmentManager.UpdateAsync(Department.GetSource());
 
             if (result.Status == ProcessResultStatus.Success)
             {
