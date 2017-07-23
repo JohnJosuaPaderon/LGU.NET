@@ -10,10 +10,11 @@ namespace LGU.ViewModels.SystemAdministration
 {
     public sealed class ConnectionStringSourceViewModel : ViewModelBase
     {
-        private readonly IConnectionStringSource ConnectionStringSource;
+        private readonly IConnectionStringSource r_ConnectionStringSource;
+
         public ConnectionStringSourceViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            ConnectionStringSource = SystemRuntime.Services.GetService<IConnectionStringSource>();
+            r_ConnectionStringSource = SystemRuntime.Services.GetService<IConnectionStringSource>();
             LoadCommand = new DelegateCommand(Initialize);
             SaveCommand = new DelegateCommand(Save);
             AddCommand = new DelegateCommand(Add);
@@ -45,8 +46,8 @@ namespace LGU.ViewModels.SystemAdministration
         {
             base.Initialize();
 
-            var connectionStrings = ConnectionStringSource.GetSource();
-            IsEncrypted = ConnectionStringSource.IsEncrypted;
+            var connectionStrings = r_ConnectionStringSource.GetSource();
+            IsEncrypted = r_ConnectionStringSource.IsEncrypted;
 
             foreach (var connectionString in connectionStrings)
             {
@@ -63,7 +64,7 @@ namespace LGU.ViewModels.SystemAdministration
                 list.Add(item.GetSource());
             }
 
-            ConnectionStringSource.Overwrite(IsEncrypted, list);
+            r_ConnectionStringSource.Overwrite(IsEncrypted, list);
         }
 
         private void Add()

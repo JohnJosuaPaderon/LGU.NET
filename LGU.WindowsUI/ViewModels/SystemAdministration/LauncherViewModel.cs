@@ -10,11 +10,11 @@ namespace LGU.ViewModels.SystemAdministration
 {
     public class LauncherViewModel : ViewModelBase
     {
-        private readonly ISystemAdministratorManager SystemAdministratorManager;
+        private readonly ISystemAdministratorManager r_SystemAdministratorManager;
 
         public LauncherViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            SystemAdministratorManager = SystemRuntime.Services.GetService<ISystemAdministratorManager>();
+            r_SystemAdministratorManager = SystemRuntime.Services.GetService<ISystemAdministratorManager>();
             VerifyCommand = new DelegateCommand(Verify);
             Initialize();
         }
@@ -41,16 +41,16 @@ namespace LGU.ViewModels.SystemAdministration
             {
                 if (AdministratorKey == "@@RESET")
                 {
-                    SystemAdministratorManager.GenerateAdministratorKey();
+                    r_SystemAdministratorManager.GenerateAdministratorKey();
                     AdministratorKey = string.Empty;
                 }
                 else
                 {
-                    var result = SystemAdministratorManager.Verify(SecureStringConverter.Convert(AdministratorKey));
+                    var result = r_SystemAdministratorManager.Verify(SecureStringConverter.Convert(AdministratorKey));
 
                     if (result.Status == ProcessResultStatus.Success)
                     {
-                        RegionManager.RequestNavigate(MainWindowViewModel.MainContentRegionName, nameof(MainView));
+                        r_RegionManager.RequestNavigate(MainWindowViewModel.MainContentRegionName, nameof(MainView));
                     }
                     else
                     {
