@@ -5,5 +5,7 @@
         public EssayQuestion(ExamSet set) : base(set, ExamQuestionType.Essay)
         {
         }
+
+        public int? MaximumAnswerLength { get; set; }
     }
 }

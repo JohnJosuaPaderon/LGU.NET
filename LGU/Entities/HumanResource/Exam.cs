@@ -10,7 +10,7 @@ namespace LGU.Entities.HumanResource
         }
 
         public Application Application { get; }
-        public DateTime ExamDate { get; set; }
+        public DateTime Date { get; set; }
         public ExamSet Set { get; set; }
         public int TotalScore { get; set; }
     }
