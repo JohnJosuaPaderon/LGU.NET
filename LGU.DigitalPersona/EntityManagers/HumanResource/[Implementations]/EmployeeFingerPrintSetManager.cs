@@ -8,32 +8,32 @@ namespace LGU.EntityManagers.HumanResource
 {
     public sealed class EmployeeFingerPrintSetManager : IEmployeeFingerPrintSetManager
     {
-        private readonly IDeleteEmployeeFingerPrintSet DeleteProc;
-        private readonly IGetEmployeeFingerPrintSetList GetListProc;
-        private readonly IInsertEmployeeFingerPrintSet InsertProc;
-        private readonly IUpdateEmployeeFingerPrintSet UpdateProc;
-        private readonly IGetEmployeeFingerPrintSetById GetByIdProc;
+        private readonly IDeleteEmployeeFingerPrintSet r_DeleteEmployeeFingerPrintSet;
+        private readonly IGetEmployeeFingerPrintSetList r_GetEmployeeFingerPrintSetList;
+        private readonly IInsertEmployeeFingerPrintSet r_InsertEmployeeFingerPrintSetList;
+        private readonly IUpdateEmployeeFingerPrintSet r_UpdateEmployeeFingerPrintSet;
+        private readonly IGetEmployeeFingerPrintSetById r_GetEmployeeFingerPrintSetById;
 
         public EmployeeFingerPrintSetManager(
-            IDeleteEmployeeFingerPrintSet deleteProc,
-            IGetEmployeeFingerPrintSetList getListProc,
-            IInsertEmployeeFingerPrintSet insertProc,
-            IUpdateEmployeeFingerPrintSet updateProc,
-            IGetEmployeeFingerPrintSetById getByIdProc)
+            IDeleteEmployeeFingerPrintSet deleteEmployeeFingerPrintSet,
+            IGetEmployeeFingerPrintSetList getEmployeeFingerPrintSetList,
+            IInsertEmployeeFingerPrintSet insertEmployeeFingerPrintSet,
+            IUpdateEmployeeFingerPrintSet updateEmployeeFingerPrintSet,
+            IGetEmployeeFingerPrintSetById getEmployeeFingerPrintSetById)
         {
-            DeleteProc = deleteProc;
-            GetListProc = getListProc;
-            InsertProc = insertProc;
-            UpdateProc = updateProc;
-            GetByIdProc = getByIdProc;
+            r_DeleteEmployeeFingerPrintSet = deleteEmployeeFingerPrintSet;
+            r_GetEmployeeFingerPrintSetList = getEmployeeFingerPrintSetList;
+            r_InsertEmployeeFingerPrintSetList = insertEmployeeFingerPrintSet;
+            r_UpdateEmployeeFingerPrintSet = updateEmployeeFingerPrintSet;
+            r_GetEmployeeFingerPrintSetById = getEmployeeFingerPrintSetById;
         }
 
         public IProcessResult<EmployeeFingerPrintSet> Delete(EmployeeFingerPrintSet data)
         {
             if (data != null)
             {
-                DeleteProc.FingerPrintSet = data;
-                return DeleteProc.Execute();
+                r_DeleteEmployeeFingerPrintSet.FingerPrintSet = data;
+                return r_DeleteEmployeeFingerPrintSet.Execute();
             }
             else
             {
@@ -45,8 +45,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                DeleteProc.FingerPrintSet = data;
-                return await DeleteProc.ExecuteAsync();
+                r_DeleteEmployeeFingerPrintSet.FingerPrintSet = data;
+                return await r_DeleteEmployeeFingerPrintSet.ExecuteAsync();
             }
             else
             {
@@ -58,8 +58,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                DeleteProc.FingerPrintSet = data;
-                return await DeleteProc.ExecuteAsync();
+                r_DeleteEmployeeFingerPrintSet.FingerPrintSet = data;
+                return await r_DeleteEmployeeFingerPrintSet.ExecuteAsync();
             }
             else
             {
@@ -71,8 +71,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (employee != null)
             {
-                GetByIdProc.Employee = employee;
-                return GetByIdProc.Execute();
+                r_GetEmployeeFingerPrintSetById.Employee = employee;
+                return r_GetEmployeeFingerPrintSetById.Execute();
             }
             else
             {
@@ -84,8 +84,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (employee != null)
             {
-                GetByIdProc.Employee = employee;
-                return await GetByIdProc.ExecuteAsync();
+                r_GetEmployeeFingerPrintSetById.Employee = employee;
+                return await r_GetEmployeeFingerPrintSetById.ExecuteAsync();
             }
             else
             {
@@ -97,8 +97,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (employee != null)
             {
-                GetByIdProc.Employee = employee;
-                return await GetByIdProc.ExecuteAsync(cancellationToken);
+                r_GetEmployeeFingerPrintSetById.Employee = employee;
+                return await r_GetEmployeeFingerPrintSetById.ExecuteAsync(cancellationToken);
             }
             else
             {
@@ -108,25 +108,25 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableProcessResult<EmployeeFingerPrintSet> GetList()
         {
-            return GetListProc.Execute();
+            return r_GetEmployeeFingerPrintSetList.Execute();
         }
 
         public Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> GetListAsync()
         {
-            return GetListProc.ExecuteAsync();
+            return r_GetEmployeeFingerPrintSetList.ExecuteAsync();
         }
 
         public Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> GetListAsync(CancellationToken cancellationToken)
         {
-            return GetListProc.ExecuteAsync(cancellationToken);
+            return r_GetEmployeeFingerPrintSetList.ExecuteAsync(cancellationToken);
         }
 
         public IProcessResult<EmployeeFingerPrintSet> Insert(EmployeeFingerPrintSet data)
         {
             if (data != null)
             {
-                InsertProc.FingerPrintSet = data;
-                return InsertProc.Execute();
+                r_InsertEmployeeFingerPrintSetList.FingerPrintSet = data;
+                return r_InsertEmployeeFingerPrintSetList.Execute();
             }
             else
             {
@@ -138,8 +138,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                InsertProc.FingerPrintSet = data;
-                return await InsertProc.ExecuteAsync();
+                r_InsertEmployeeFingerPrintSetList.FingerPrintSet = data;
+                return await r_InsertEmployeeFingerPrintSetList.ExecuteAsync();
             }
             else
             {
@@ -151,8 +151,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                InsertProc.FingerPrintSet = data;
-                return await InsertProc.ExecuteAsync(cancellationToken);
+                r_InsertEmployeeFingerPrintSetList.FingerPrintSet = data;
+                return await r_InsertEmployeeFingerPrintSetList.ExecuteAsync(cancellationToken);
             }
             else
             {
@@ -164,8 +164,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateProc.FingerPrintSet = data;
-                return UpdateProc.Execute();
+                r_UpdateEmployeeFingerPrintSet.FingerPrintSet = data;
+                return r_UpdateEmployeeFingerPrintSet.Execute();
             }
             else
             {
@@ -177,8 +177,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateProc.FingerPrintSet = data;
-                return await UpdateProc.ExecuteAsync();
+                r_UpdateEmployeeFingerPrintSet.FingerPrintSet = data;
+                return await r_UpdateEmployeeFingerPrintSet.ExecuteAsync();
             }
             else
             {
@@ -190,8 +190,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateProc.FingerPrintSet = data;
-                return await UpdateProc.ExecuteAsync(cancellationToken);
+                r_UpdateEmployeeFingerPrintSet.FingerPrintSet = data;
+                return await r_UpdateEmployeeFingerPrintSet.ExecuteAsync(cancellationToken);
             }
             else
             {
