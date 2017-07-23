@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.Core
 {
-    public class FingerPrintSet
+    public abstract class FingerPrintSet
     {
         public FingerPrint LeftThumb { get; } = new FingerPrint(FingerType.Thumb, HandType.Left);
         public FingerPrint LeftIndexFinger { get; } = new FingerPrint(FingerType.IndexFinger, HandType.Left);
