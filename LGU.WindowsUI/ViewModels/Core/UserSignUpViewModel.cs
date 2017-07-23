@@ -13,11 +13,11 @@ namespace LGU.ViewModels.Core
 {
     public sealed class UserSignUpViewModel : DialogViewModelBase
     {
-        private readonly IUserManager UserManager;
+        private readonly IUserManager r_UserManager;
 
         public UserSignUpViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            UserManager = SystemRuntime.Services.GetService<IUserManager>();
+            r_UserManager = SystemRuntime.Services.GetService<IUserManager>();
             SaveCommand = new DelegateCommand(Save);
             User = new UserSignUpModel(new User());
         }
@@ -47,7 +47,7 @@ namespace LGU.ViewModels.Core
             }
             else
             {
-                var result = await UserManager.InsertAsync(User.GetSource());
+                var result = await r_UserManager.InsertAsync(User.GetSource());
 
                 if (result.Status == ProcessResultStatus.Success)
                 {
@@ -64,7 +64,7 @@ namespace LGU.ViewModels.Core
 
         private async Task<bool> IsUsernameExistsAsync()
         {
-            var result = await UserManager.IsUsernameExistsAsync(SecureStringConverter.Convert(User.Username));
+            var result = await r_UserManager.IsUsernameExistsAsync(SecureStringConverter.Convert(User.Username));
 
             if (result.Status == ProcessResultStatus.Success)
             {
