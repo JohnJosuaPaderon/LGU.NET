@@ -8,26 +8,26 @@ namespace LGU.EntityManagers
 {
     public sealed class SystemManager : ISystemManager
     {
-        private readonly IGetSystemDate GetSystemDateProc;
+        private readonly IGetSystemDate r_GetSystemDate;
 
         public SystemManager(IGetSystemDate getSystemDate)
         {
-            GetSystemDateProc = getSystemDate;
+            r_GetSystemDate = getSystemDate;
         }
 
         public IProcessResult<DateTime> GetSystemDate()
         {
-            return GetSystemDateProc.Execute();
+            return r_GetSystemDate.Execute();
         }
 
         public Task<IProcessResult<DateTime>> GetSystemDateAsync(CancellationToken cancellationToken)
         {
-            return GetSystemDateProc.ExecuteAsync(cancellationToken);
+            return r_GetSystemDate.ExecuteAsync(cancellationToken);
         }
 
         public Task<IProcessResult<DateTime>> GetSystemDateAsync()
         {
-            return GetSystemDateProc.ExecuteAsync();
+            return r_GetSystemDate.ExecuteAsync();
         }
     }
 }
