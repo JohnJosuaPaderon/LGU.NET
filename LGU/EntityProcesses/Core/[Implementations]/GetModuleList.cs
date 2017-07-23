@@ -8,26 +8,25 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.Core
 {
-    public sealed class GetPersonList : PersonProcess, IGetPersonList
+    public sealed class GetModuleList : ModuleProcess, IGetModuleList
     {
-        public GetPersonList(IConnectionStringSource connectionStringSource, IPersonConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetModuleList(IConnectionStringSource connectionStringSource, IModuleConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
-        private SqlQueryInfo QueryInfo =>
-            SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName());
+        private SqlQueryInfo QueryInfo => SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName());
 
-        public IEnumerableProcessResult<Person> Execute()
+        public IEnumerableProcessResult<Module> Execute()
         {
             return r_SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<Person>> ExecuteAsync()
+        public Task<IEnumerableProcessResult<Module>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<Person>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<Module>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
         }

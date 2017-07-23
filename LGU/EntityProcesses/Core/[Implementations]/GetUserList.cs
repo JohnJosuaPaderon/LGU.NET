@@ -19,17 +19,17 @@ namespace LGU.EntityProcesses.Core
 
         public IEnumerableProcessResult<User> Execute()
         {
-            return SqlHelper.ExecuteReaderEnumerable(QueryInfo, Converter);
+            return r_SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
         }
 
         public Task<IEnumerableProcessResult<User>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter);
+            return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
         }
 
         public Task<IEnumerableProcessResult<User>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, Converter, cancellationToken);
+            return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
         }
     }
 }

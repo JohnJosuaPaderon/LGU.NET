@@ -9,29 +9,29 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.Core
 {
-    public sealed class GetUserStatusById : UserStatusProcess, IGetUserStatusById
+    public sealed class GetDocumentPathTypeById : DocumentPathTypeProcess, IGetDocumentPathTypeById
     {
-        public GetUserStatusById(IConnectionStringSource connectionStringSource, IUserStatusConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetDocumentPathTypeById(IConnectionStringSource connectionStringSource, IDocumentPathTypeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
-        public short UserStatusId { get; set; }
+        public short DocumentPathTypeId { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
-            .AddInputParameter("@_Id", UserStatusId);
+            .AddInputParameter("@_Id", DocumentPathTypeId);
 
-        public IProcessResult<UserStatus> Execute()
+        public IProcessResult<DocumentPathType> Execute()
         {
             return r_SqlHelper.ExecuteReader(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<UserStatus>> ExecuteAsync()
+        public Task<IProcessResult<DocumentPathType>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<UserStatus>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<DocumentPathType>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
         }

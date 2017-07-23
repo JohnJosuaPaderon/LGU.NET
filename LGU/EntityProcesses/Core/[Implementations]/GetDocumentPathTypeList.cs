@@ -8,25 +8,25 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.Core
 {
-    public sealed class GetGenderList : GenderProcess, IGetGenderList
+    public sealed class GetDocumentPathTypeList : DocumentPathTypeProcess, IGetDocumentPathTypeList
     {
-        public GetGenderList(IConnectionStringSource connectionStringSource, IGenderConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetDocumentPathTypeList(IConnectionStringSource connectionStringSource, IDocumentPathTypeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
         private SqlQueryInfo QueryInfo => SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName());
 
-        public IEnumerableProcessResult<Gender> Execute()
+        public IEnumerableProcessResult<DocumentPathType> Execute()
         {
             return r_SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<Gender>> ExecuteAsync()
+        public Task<IEnumerableProcessResult<DocumentPathType>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<Gender>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<DocumentPathType>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
         }
