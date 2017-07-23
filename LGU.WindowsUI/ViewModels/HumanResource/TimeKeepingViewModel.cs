@@ -24,10 +24,10 @@ namespace LGU.ViewModels.HumanResource
 {
     public class TimeKeepingViewModel : ViewModelBase, DPFP.Capture.EventHandler
     {
-        private readonly IEmployeeFingerPrintSetManager EmployeeFingerPrintSetManager;
-        private readonly ITimeLogManager TimeLogManager;
-        private readonly Capture Capture;
-        private readonly Verification Verification;
+        private readonly IEmployeeFingerPrintSetManager r_EmployeeFingerPrintSetManager;
+        private readonly ITimeLogManager r_TimeLogManager;
+        private readonly Capture r_Capture;
+        private readonly Verification r_Verification;
         //private readonly FingerprintCore FingerPrint;
         //private FingerprintRawImage RawImage { get; set; }
         //private FingerprintTemplate Template { get; set; }
@@ -40,10 +40,10 @@ namespace LGU.ViewModels.HumanResource
             //FingerPrint.onImage += FingerPrint_onImage;
             //FingerPrint.onStatus += FingerPrint_onStatus;
 
-            EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
-            TimeLogManager = SystemRuntime.Services.GetService<ITimeLogManager>();
-            Capture = new Capture();
-            Verification = new Verification();
+            r_EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
+            r_TimeLogManager = SystemRuntime.Services.GetService<ITimeLogManager>();
+            r_Capture = new Capture();
+            r_Verification = new Verification();
             Timer = new Timer(1000);
             ResultDisplayTimer = new Timer(3000);
             Timer.Elapsed += Timer_Elapsed;
@@ -302,7 +302,7 @@ namespace LGU.ViewModels.HumanResource
 
         private async Task GetFingerPrintSetListAsync()
         {
-            var result = await EmployeeFingerPrintSetManager.GetListAsync();
+            var result = await r_EmployeeFingerPrintSetManager.GetListAsync();
 
             if (result.Status == ProcessResultStatus.Success)
             {
@@ -344,8 +344,8 @@ namespace LGU.ViewModels.HumanResource
 
         public async override void Initialize()
         {
-            EventAggregator.GetEvent<TitleEvent>().Publish("Time-Keeping");
-            Capture.EventHandler = this;
+            r_EventAggregator.GetEvent<TitleEvent>().Publish("Time-Keeping");
+            r_Capture.EventHandler = this;
             SelectedLogResult = NotYetReadyResult;
             await GetFingerPrintSetListAsync();
 
@@ -403,9 +403,9 @@ namespace LGU.ViewModels.HumanResource
         {
             StopScanner();
             
-            if (Capture != null)
+            if (r_Capture != null)
             {
-                Capture.StartCapture();
+                r_Capture.StartCapture();
                 Invoke(() => ScannerLog = "Using the fingerprint reader, scan your fingerprint.");
             }
             else
@@ -416,12 +416,12 @@ namespace LGU.ViewModels.HumanResource
 
         private void StopScanner()
         {
-            if (Capture != null)
+            if (r_Capture != null)
             {
                 try
                 {
 
-                    Capture.StopCapture();
+                    r_Capture.StopCapture();
                 }
                 catch (Exception)
                 {
@@ -501,7 +501,7 @@ namespace LGU.ViewModels.HumanResource
 
                 if (Compare(features, fingerPrintSet))
                 {
-                    var timeLogResult = await TimeLogManager.LogAsync(fingerPrintSet.Employee);
+                    var timeLogResult = await r_TimeLogManager.LogAsync(fingerPrintSet.Employee);
                     if (timeLogResult.Status == ProcessResultStatus.Success)
                     {
                         //Debug.WriteLine("Start: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
@@ -526,7 +526,7 @@ namespace LGU.ViewModels.HumanResource
                 {
                     if (Compare(features, fingerPrintSet))
                     {
-                        var timeLogResult = await TimeLogManager.LogAsync(fingerPrintSet.Employee);
+                        var timeLogResult = await r_TimeLogManager.LogAsync(fingerPrintSet.Employee);
                         if (timeLogResult.Status == ProcessResultStatus.Success)
                         {
                             Debug.WriteLine("Start: {0}", DateTime.Now.ToString("hh:mm:ss fff"));
@@ -616,7 +616,7 @@ namespace LGU.ViewModels.HumanResource
             
             if (features != null && fingerPrint.Data != null)
             {
-                Verification.Verify(features, fingerPrint.Data, ref result);
+                r_Verification.Verify(features, fingerPrint.Data, ref result);
             }
 
             return result.Verified;

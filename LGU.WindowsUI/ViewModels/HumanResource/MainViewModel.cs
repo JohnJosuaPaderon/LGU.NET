@@ -31,7 +31,7 @@ namespace LGU.ViewModels.HumanResource
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            RegionManager.RequestNavigate(MainViewContentRegion, (string)navigationContext.Parameters["view"]);
+            r_RegionManager.RequestNavigate(MainViewContentRegion, (string)navigationContext.Parameters["view"]);
         }
     }
 }

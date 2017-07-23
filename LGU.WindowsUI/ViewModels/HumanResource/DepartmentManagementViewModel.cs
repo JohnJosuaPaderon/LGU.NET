@@ -15,14 +15,14 @@ namespace LGU.ViewModels.HumanResource
     public sealed class DepartmentManagementViewModel : ViewModelBase
     {
 
-        private readonly IDepartmentManager DepartmentManager;
+        private readonly IDepartmentManager r_DepartmentManager;
 
         public DepartmentManagementViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
             RequestSearchCommand = new DelegateCommand(RequestSearch);
             AddCommand = new DelegateCommand(Add);
             EditCommand = new DelegateCommand(Edit);
-            DepartmentManager = SystemRuntime.Services.GetService<IDepartmentManager>();
+            r_DepartmentManager = SystemRuntime.Services.GetService<IDepartmentManager>();
         }
 
         public ObservableCollection<DepartmentModel> Departments { get; } = new ObservableCollection<DepartmentModel>();
@@ -51,12 +51,12 @@ namespace LGU.ViewModels.HumanResource
         public override void Initialize()
         {
             base.Initialize();
-            DepartmentEvent = EventAggregator.GetEvent<DepartmentEvent>();
+            DepartmentEvent = r_EventAggregator.GetEvent<DepartmentEvent>();
         }
 
         private async void RequestSearch()
         {
-            var result = await (string.IsNullOrWhiteSpace(SearchKey) ? DepartmentManager.GetListAsync() : DepartmentManager.SearchAsync(SearchKey));
+            var result = await (string.IsNullOrWhiteSpace(SearchKey) ? r_DepartmentManager.GetListAsync() : r_DepartmentManager.SearchAsync(SearchKey));
 
             if (result.Status == ProcessResultStatus.Success && result.DataList != null)
             {
@@ -75,12 +75,12 @@ namespace LGU.ViewModels.HumanResource
 
         private void Add()
         {
-            EventAggregator.GetEvent<AddDepartmentEvent>().Publish(new DepartmentModel(new Department()));
+            r_EventAggregator.GetEvent<AddDepartmentEvent>().Publish(new DepartmentModel(new Department()));
         }
 
         private void Edit()
         {
-            EventAggregator.GetEvent<EditDepartmentEvent>().Publish(SelectedDepartment);
+            r_EventAggregator.GetEvent<EditDepartmentEvent>().Publish(SelectedDepartment);
         }
     }
 }

@@ -14,22 +14,22 @@ namespace LGU.ViewModels.HumanResource
 {
     public class EmployeeFingerPrintEnrollmentViewModel : ViewModelBase
     {
-        private readonly IEmployeeManager EmployeeManager;
-        private readonly IEmployeeFingerPrintSetManager EmployeeFingerPrintSetManager;
-        private readonly EmployeeEvent EmployeeEvent;
-        private readonly AddEmployeeEvent AddEmployeeEvent;
-        private readonly EditEmployeeEvent EditEmployeeEvent;
-        private readonly ManageEmployeeFingerPrintSetEvent ManageEmployeeFingerPrintSetEvent;
+        private readonly IEmployeeManager r_EmployeeManager;
+        private readonly IEmployeeFingerPrintSetManager r_EmployeeFingerPrintSetManager;
+        private readonly EmployeeEvent r_EmployeeEvent;
+        private readonly AddEmployeeEvent r_AddEmployeeEvent;
+        private readonly EditEmployeeEvent r_EditEmployeeEvent;
+        private readonly ManageEmployeeFingerPrintSetEvent r_ManageEmployeeFingerPrintSetEvent;
 
         public EmployeeFingerPrintEnrollmentViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            EmployeeManager = SystemRuntime.Services.GetService<IEmployeeManager>();
-            EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
+            r_EmployeeManager = SystemRuntime.Services.GetService<IEmployeeManager>();
+            r_EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
 
-            EmployeeEvent = EventAggregator.GetEvent<EmployeeEvent>();
-            AddEmployeeEvent = EventAggregator.GetEvent<AddEmployeeEvent>();
-            EditEmployeeEvent = EventAggregator.GetEvent<EditEmployeeEvent>();
-            ManageEmployeeFingerPrintSetEvent = EventAggregator.GetEvent<ManageEmployeeFingerPrintSetEvent>();
+            r_EmployeeEvent = r_EventAggregator.GetEvent<EmployeeEvent>();
+            r_AddEmployeeEvent = r_EventAggregator.GetEvent<AddEmployeeEvent>();
+            r_EditEmployeeEvent = r_EventAggregator.GetEvent<EditEmployeeEvent>();
+            r_ManageEmployeeFingerPrintSetEvent = r_EventAggregator.GetEvent<ManageEmployeeFingerPrintSetEvent>();
             SearchCommand = new DelegateCommand(Search);
             AddCommand = new DelegateCommand(Add);
             EditCommand = new DelegateCommand(Edit);
@@ -48,7 +48,7 @@ namespace LGU.ViewModels.HumanResource
             get { return _SelectedEmployee; }
             set { SetProperty(ref _SelectedEmployee, value, () =>
             {
-                EmployeeEvent.Publish(value);
+                r_EmployeeEvent.Publish(value);
             }); }
         }
 
@@ -63,7 +63,7 @@ namespace LGU.ViewModels.HumanResource
         {
             Employees.Clear();
 
-            var result = await (string.IsNullOrWhiteSpace(SearchKey) ? EmployeeManager.GetListAsync() : EmployeeManager.SearchAsync(SearchKey));
+            var result = await (string.IsNullOrWhiteSpace(SearchKey) ? r_EmployeeManager.GetListAsync() : r_EmployeeManager.SearchAsync(SearchKey));
 
             if (result.Status == ProcessResultStatus.Success)
             {
@@ -79,26 +79,26 @@ namespace LGU.ViewModels.HumanResource
 
         private void Add()
         {
-            AddEmployeeEvent.Publish(new EmployeeModel(new Employee()));
+            r_AddEmployeeEvent.Publish(new EmployeeModel(new Employee()));
         }
 
         private void Edit()
         {
-            EditEmployeeEvent.Publish(SelectedEmployee);
+            r_EditEmployeeEvent.Publish(SelectedEmployee);
         }
 
         private async void ManageFingerPrint()
         {
             var source = SelectedEmployee.GetSource();
-            var result = await EmployeeFingerPrintSetManager.GetByIdAsync(source);
+            var result = await r_EmployeeFingerPrintSetManager.GetByIdAsync(source);
 
             if (result.Status == ProcessResultStatus.Success && result.Data != null)
             {
-                ManageEmployeeFingerPrintSetEvent.Publish(new EmployeeFingerPrintSetModel(result.Data));
+                r_ManageEmployeeFingerPrintSetEvent.Publish(new EmployeeFingerPrintSetModel(result.Data));
             }
             else
             {
-                ManageEmployeeFingerPrintSetEvent.Publish(new EmployeeFingerPrintSetModel(new EmployeeFingerPrintSet(source)));
+                r_ManageEmployeeFingerPrintSetEvent.Publish(new EmployeeFingerPrintSetModel(new EmployeeFingerPrintSet(source)));
             }
         }
 

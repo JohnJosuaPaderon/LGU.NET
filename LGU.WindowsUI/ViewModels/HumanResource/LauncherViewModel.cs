@@ -21,7 +21,7 @@ namespace LGU.ViewModels.HumanResource
                 { "view", view }
             };
 
-            RegionManager.RequestNavigate(MainWindowViewModel.MainContentRegionName, nameof(MainView), parameters);
+            r_RegionManager.RequestNavigate(MainWindowViewModel.MainContentRegionName, nameof(MainView), parameters);
         }
     }
 }
