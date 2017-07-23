@@ -39,17 +39,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IProcessResult<Department> Execute()
         {
-            return SqlHelper.ExecuteNonQuery(QueryInfo);
+            return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
         public Task<IProcessResult<Department>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
+            return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
         public Task<IProcessResult<Department>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
+            return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }
     }
 }

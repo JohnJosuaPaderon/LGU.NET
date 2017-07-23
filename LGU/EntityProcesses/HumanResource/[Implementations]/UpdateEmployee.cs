@@ -27,6 +27,9 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_GenderId", Employee.Gender?.Id)
             .AddInputParameter("@_Deceased", Employee.Deceased)
             .AddInputParameter("@_DepartmentId", Employee.Department?.Id)
+            .AddInputParameter("@_TypeId", Employee.Type?.Id)
+            .AddInputParameter("@_EmploymentStatusId", Employee.EmploymentStatus?.Id)
+            .AddInputParameter("@_PositionId", Employee.Position?.Id)
             .AddLogByParameter();
 
         private IProcessResult<Employee> GetProcessResult(Employee data, SqlCommand command, int affectedRows)
@@ -43,17 +46,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IProcessResult<Employee> Execute()
         {
-            return SqlHelper.ExecuteNonQuery(QueryInfo);
+            return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
         public Task<IProcessResult<Employee>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
+            return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
         public Task<IProcessResult<Employee>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
+            return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }
     }
 }

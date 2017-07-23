@@ -11,11 +11,11 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetDepartmentById : HumanResourceProcessBase, IGetDepartmentById
     {
-        private readonly IDepartmentConverter<SqlDataReader> Converter;
+        private readonly IDepartmentConverter<SqlDataReader> r_Converter;
 
         public GetDepartmentById(IConnectionStringSource connectionStringSource, IDepartmentConverter<SqlDataReader> converter) : base(connectionStringSource)
         {
-            Converter = converter;
+            r_Converter = converter;
         }
 
         public int DepartmentId { get; set; }
@@ -26,17 +26,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IProcessResult<Department> Execute()
         {
-            return SqlHelper.ExecuteReader(QueryInfo, Converter);
+            return r_SqlHelper.ExecuteReader(QueryInfo, r_Converter);
         }
 
         public Task<IProcessResult<Department>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter);
+            return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
         }
 
         public Task<IProcessResult<Department>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteReaderAsync(QueryInfo, Converter, cancellationToken);
+            return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
         }
     }
 }

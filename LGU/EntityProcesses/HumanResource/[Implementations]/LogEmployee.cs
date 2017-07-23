@@ -13,11 +13,11 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class LogEmployee : TimeLogProcess, ILogEmployee
     {
-        private readonly ITimeLogTypeManager TimeLogTypeManager;
+        private readonly ITimeLogTypeManager r_TimeLogTypeManager;
 
         public LogEmployee(IConnectionStringSource connectionStringSource, ITimeLogConverter<SqlDataReader> converter, ITimeLogTypeManager timeLogTypeManager) : base(connectionStringSource, converter)
         {
-            TimeLogTypeManager = timeLogTypeManager;
+            r_TimeLogTypeManager = timeLogTypeManager;
         }
 
         public Employee Employee { get; set; }
@@ -35,7 +35,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
             if (affectedRows > 0)
             {
-                var typeResult = TimeLogTypeManager.GetById(command.Parameters.GetInt16("@_TypeId"));
+                var typeResult = r_TimeLogTypeManager.GetById(command.Parameters.GetInt16("@_TypeId"));
 
                 data.Id = command.Parameters.GetInt64("@_Id");
                 data.LoginDate = command.Parameters.GetNullableDateTime("@_LoginDate");
@@ -52,17 +52,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IProcessResult<TimeLog> Execute()
         {
-            return SqlHelper.ExecuteNonQuery(QueryInfo);
+            return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
         public Task<IProcessResult<TimeLog>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteNonQueryAsync(QueryInfo);
+            return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
         public Task<IProcessResult<TimeLog>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
+            return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }
     }
 }
