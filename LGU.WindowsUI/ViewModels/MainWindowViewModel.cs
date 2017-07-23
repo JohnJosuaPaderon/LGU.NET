@@ -13,11 +13,12 @@ namespace LGU.ViewModels
         public static string MainDialogName { get; } = "MainDialog";
         public static string InitialMainContentRegionSource { get; set; }
 
-        private readonly ISystemManager SystemManager;
+
+        private readonly ISystemManager r_SystemManager;
 
         public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            SystemManager = SystemRuntime.Services.GetService<ISystemManager>();
+            r_SystemManager = SystemRuntime.Services.GetService<ISystemManager>();
         }
 
         private string _Title = "Welcome to LGU.NET";
@@ -36,12 +37,12 @@ namespace LGU.ViewModels
 
         public override void Initialize()
         {
-            EventAggregator.GetEvent<TitleEvent>().Subscribe(t => Title = t);
-            EventAggregator.GetEvent<WindowStateEvent>().Subscribe(ws => WindowState = ws);
+            r_EventAggregator.GetEvent<TitleEvent>().Subscribe(t => Title = t);
+            r_EventAggregator.GetEvent<WindowStateEvent>().Subscribe(ws => WindowState = ws);
 
             if (!string.IsNullOrWhiteSpace(InitialMainContentRegionSource))
             {
-                RegionManager.RequestNavigate(MainContentRegionName, InitialMainContentRegionSource);
+                r_RegionManager.RequestNavigate(MainContentRegionName, InitialMainContentRegionSource);
             }
         }
     }

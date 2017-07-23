@@ -8,13 +8,13 @@ namespace LGU.ViewModels
 {
     public abstract class ViewModelBase : BindableBase
     {
-        protected readonly IRegionManager RegionManager;
-        protected readonly IEventAggregator EventAggregator;
+        protected readonly IRegionManager r_RegionManager;
+        protected readonly IEventAggregator r_EventAggregator;
 
         public ViewModelBase(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
-            RegionManager = regionManager;
-            EventAggregator = eventAggregator;
+            r_RegionManager = regionManager;
+            r_EventAggregator = eventAggregator;
         }
 
         public virtual void Initialize()
