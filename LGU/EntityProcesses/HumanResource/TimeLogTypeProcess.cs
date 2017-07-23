@@ -5,11 +5,11 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public abstract class TimeLogTypeProcess : HumanResourceProcessBase
     {
-        protected readonly ITimeLogTypeConverter<SqlDataReader> Converter;
+        protected readonly ITimeLogTypeConverter<SqlDataReader> r_Converter;
 
         public TimeLogTypeProcess(IConnectionStringSource connectionStringSource, ITimeLogTypeConverter<SqlDataReader> converter) : base(connectionStringSource)
         {
-            Converter = converter;
+            r_Converter = converter;
         }
     }
 }

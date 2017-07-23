@@ -5,11 +5,11 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public abstract class MultipleChoiceQuestionProcess : HumanResourceProcessBase
     {
-        protected readonly IMultipleChoiceQuestionConverter<SqlDataReader> Converter;
+        protected readonly IMultipleChoiceQuestionConverter<SqlDataReader> r_Converter;
 
         public MultipleChoiceQuestionProcess(IConnectionStringSource connectionStringSource, IMultipleChoiceQuestionConverter<SqlDataReader> converter) : base(connectionStringSource)
         {
-            Converter = converter;
+            r_Converter = converter;
         }
     }
 }

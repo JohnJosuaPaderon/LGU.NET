@@ -5,11 +5,11 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public abstract class ApplicationDocumentProcess : HumanResourceProcessBase
     {
-        protected readonly IApplicationDocumentConverter<SqlDataReader> Converter;
+        protected readonly IApplicationDocumentConverter<SqlDataReader> r_Converter;
 
         public ApplicationDocumentProcess(IConnectionStringSource connectionStringSource, IApplicationDocumentConverter<SqlDataReader> converter) : base(connectionStringSource)
         {
-            Converter = converter;
+            r_Converter = converter;
         }
     }
 }

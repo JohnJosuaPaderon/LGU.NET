@@ -5,11 +5,11 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public abstract class ExamSetProcess : HumanResourceProcessBase
     {
-        protected readonly IExamSetConverter<SqlDataReader> Converter;
+        protected readonly IExamSetConverter<SqlDataReader> r_Converter;
 
         public ExamSetProcess(IConnectionStringSource connectionStringSource, IExamSetConverter<SqlDataReader> converter) : base(connectionStringSource)
         {
-            Converter = converter;
+            r_Converter = converter;
         }
     }
 }
