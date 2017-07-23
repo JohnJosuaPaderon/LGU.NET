@@ -9,7 +9,7 @@ namespace LGU.EntityProcesses
 {
     public sealed class GetSystemDate : IGetSystemDate
     {
-        private readonly SqlHelper SqlHelper;
+        private readonly SqlHelper r_SqlHelper;
 
         private SqlQueryInfo QueryInfo =>
             new SqlQueryInfo()
@@ -19,22 +19,22 @@ namespace LGU.EntityProcesses
 
         public GetSystemDate(IConnectionStringSource connectionStringSource)
         {
-            SqlHelper = new SqlHelper(new SqlConnectionEstablisher(connectionStringSource["Core"]));
+            r_SqlHelper = new SqlHelper(new SqlConnectionEstablisher(connectionStringSource["Core"]));
         }
 
         public IProcessResult<DateTime> Execute()
         {
-            return SqlHelper.ExecuteScalar(QueryInfo, DbValueConverter.ToDateTime);
+            return r_SqlHelper.ExecuteScalar(QueryInfo, DbValueConverter.ToDateTime);
         }
 
         public Task<IProcessResult<DateTime>> ExecuteAsync()
         {
-            return SqlHelper.ExecuteScalarAsync(QueryInfo, DbValueConverter.ToDateTime);
+            return r_SqlHelper.ExecuteScalarAsync(QueryInfo, DbValueConverter.ToDateTime);
         }
 
         public Task<IProcessResult<DateTime>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return SqlHelper.ExecuteScalarAsync(QueryInfo, DbValueConverter.ToDateTime, cancellationToken);
+            return r_SqlHelper.ExecuteScalarAsync(QueryInfo, DbValueConverter.ToDateTime, cancellationToken);
         }
     }
 }

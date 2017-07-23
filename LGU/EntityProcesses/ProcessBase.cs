@@ -4,18 +4,18 @@ namespace LGU.EntityProcesses
 {
     public abstract class ProcessBase
     {
-        protected readonly SqlHelper SqlHelper;
-        protected readonly string SchemaName;
+        protected readonly SqlHelper r_SqlHelper;
+        protected readonly string r_SchemaName;
 
         public ProcessBase(IConnectionStringSource connectionStringSource, string schemaName)
         {
-            SqlHelper = new SqlHelper(new SqlConnectionEstablisher(connectionStringSource[schemaName]));
-            SchemaName = string.IsNullOrWhiteSpace(schemaName) ? "Core" : schemaName;
+            r_SqlHelper = new SqlHelper(new SqlConnectionEstablisher(connectionStringSource[schemaName]));
+            r_SchemaName = string.IsNullOrWhiteSpace(schemaName) ? "Core" : schemaName;
         }
 
         protected string GetQualifiedDbObjectName(string dbObjectName)
         {
-            return $"{SchemaName}.{dbObjectName}";
+            return $"{r_SchemaName}.{dbObjectName}";
         }
 
         protected string GetQualifiedDbObjectName()
