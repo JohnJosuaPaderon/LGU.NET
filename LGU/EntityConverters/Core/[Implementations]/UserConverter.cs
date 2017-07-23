@@ -12,32 +12,31 @@ namespace LGU.EntityConverters.Core
 {
     public sealed class UserConverter : IUserConverter<SqlDataReader>
     {
-        private readonly IPersonManager PersonManager;
-        private readonly IUserStatusManager UserStatusManager;
-        private readonly IUserTypeManager UserTypeManager;
+        private readonly IPersonManager r_PersonManager;
+        private readonly IUserStatusManager r_UserStatusManager;
+        private readonly IUserTypeManager r_UserTypeManager;
 
-        public UserConverter(IPersonManager personManager, IUserStatusManager userStatusManager, IUserTypeManager userTypeManager)
+        public UserConverter(
+            IPersonManager personManager,
+            IUserStatusManager userStatusManager,
+            IUserTypeManager userTypeManager)
         {
-            PersonManager = personManager;
-            UserStatusManager = userStatusManager;
-            UserTypeManager = userTypeManager;
+            r_PersonManager = personManager;
+            r_UserStatusManager = userStatusManager;
+            r_UserTypeManager = userTypeManager;
         }
 
-        private User GetData(SqlDataReader reader)
+        private User GetData(Person owner, UserStatus status, UserType type, SqlDataReader reader)
         {
-            var ownerResult = PersonManager.GetById(reader.GetInt64("OwnerId"));
-            var statusResult = UserStatusManager.GetById(reader.GetInt16("StatusId"));
-            var typeResult = UserTypeManager.GetById(reader.GetInt16("TypeId"));
-
-            if (ownerResult.Status == ProcessResultStatus.Success)
+            if (owner != null)
             {
-                return new User(ownerResult.Data)
+                return new User(owner)
                 {
                     Id = reader.GetInt64("Id"),
                     SecureUsername = null,
                     SecurePassword = null,
-                    Status = statusResult.Data,
-                    Type = typeResult.Data,
+                    Status = status,
+                    Type = type,
                     DisplayName = reader.GetString("DisplayName")
                 };
             }
@@ -48,75 +47,38 @@ namespace LGU.EntityConverters.Core
                     Id = reader.GetInt64("Id"),
                     SecureUsername = null,
                     SecurePassword = null,
-                    Status = statusResult.Data,
-                    Type = typeResult.Data,
+                    Status = status,
+                    Type = type,
                     DisplayName = reader.GetString("DisplayName")
                 };
             }
+        }
+
+        private User GetData(SqlDataReader reader)
+        {
+            var ownerResult = r_PersonManager.GetById(reader.GetInt64("OwnerId"));
+            var statusResult = r_UserStatusManager.GetById(reader.GetInt16("StatusId"));
+            var typeResult = r_UserTypeManager.GetById(reader.GetInt16("TypeId"));
+
+            return GetData(ownerResult.Data, statusResult.Data, typeResult.Data, reader);
         }
 
         private async Task<User> GetDataAsync(SqlDataReader reader)
         {
-            var ownerResult = await PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"));
-            var statusResult = await UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"));
-            var typeResult = await UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
+            var ownerResult = await r_PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"));
+            var statusResult = await r_UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"));
+            var typeResult = await r_UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
 
-            if (ownerResult.Status == ProcessResultStatus.Success)
-            {
-                return new User(ownerResult.Data)
-                {
-                    Id = reader.GetInt64("Id"),
-                    SecureUsername = null,
-                    SecurePassword = null,
-                    Status = statusResult.Data,
-                    Type = typeResult.Data,
-                    DisplayName = reader.GetString("DisplayName")
-                };
-            }
-            else
-            {
-                return new User()
-                {
-                    Id = reader.GetInt64("Id"),
-                    SecureUsername = null,
-                    SecurePassword = null,
-                    Status = statusResult.Data,
-                    Type = typeResult.Data,
-                    DisplayName = reader.GetString("DisplayName")
-                };
-            }
+            return GetData(ownerResult.Data, statusResult.Data, typeResult.Data, reader);
         }
 
         private async Task<User> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
-            var ownerResult = await PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"), cancellationToken);
-            var statusResult = await UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"), cancellationToken);
-            var typeResult = await UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
+            var ownerResult = await r_PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"), cancellationToken);
+            var statusResult = await r_UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"), cancellationToken);
+            var typeResult = await r_UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
 
-            if (ownerResult.Status == ProcessResultStatus.Success)
-            {
-                return new User(ownerResult.Data)
-                {
-                    Id = reader.GetInt64("Id"),
-                    SecureUsername = null,
-                    SecurePassword = null,
-                    Status = statusResult.Data,
-                    Type = typeResult.Data,
-                    DisplayName = reader.GetString("DisplayName")
-                };
-            }
-            else
-            {
-                return new User()
-                {
-                    Id = reader.GetInt64("Id"),
-                    SecureUsername = null,
-                    SecurePassword = null,
-                    Status = statusResult.Data,
-                    Type = typeResult.Data,
-                    DisplayName = reader.GetString("DisplayName")
-                };
-            }
+            return GetData(ownerResult.Data, statusResult.Data, typeResult.Data, reader);
         }
 
         public IEnumerableProcessResult<User> EnumerableFromReader(SqlDataReader reader)

@@ -12,62 +12,48 @@ namespace LGU.EntityConverters.Core
 {
     public sealed class PersonConverter : IPersonConverter<SqlDataReader>
     {
-        private readonly IGenderManager GenderManager;
+
+        private readonly IGenderManager r_GenderManager;
 
         public PersonConverter(IGenderManager genderManager)
         {
-            GenderManager = genderManager;
+            r_GenderManager = genderManager;
+        }
+
+        private Person GetData(Gender gender, SqlDataReader reader)
+        {
+            return new Person()
+            {
+                Id = reader.GetInt64("Id"),
+                FirstName = reader.GetString("FirstName"),
+                MiddleName = reader.GetString("MiddleName"),
+                LastName = reader.GetString("LastName"),
+                NameExtension = reader.GetString("NameExtension"),
+                Gender = gender,
+                BirthDate = reader.GetNullableDateTime("BirthDate"),
+                Deceased = reader.GetBoolean("Deceased")
+            };
         }
 
         private Person GetData(SqlDataReader reader)
         {
-            var genderResult = GenderManager.GetById(reader.GetInt16("GenderId"));
+            var genderResult = r_GenderManager.GetById(reader.GetInt16("GenderId"));
 
-            return new Person()
-            {
-                Id = reader.GetInt64("Id"),
-                FirstName = reader.GetString("FirstName"),
-                MiddleName = reader.GetString("MiddleName"),
-                LastName = reader.GetString("LastName"),
-                NameExtension = reader.GetString("NameExtension"),
-                Gender = genderResult.Data,
-                BirthDate = reader.GetNullableDateTime("BirthDate"),
-                Deceased = reader.GetBoolean("Deceased")
-            };
+            return GetData(genderResult.Data, reader);
         }
 
         private async Task<Person> GetDataAsync(SqlDataReader reader)
         {
-            var genderResult = await GenderManager.GetByIdAsync(reader.GetInt16("GenderId"));
+            var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"));
 
-            return new Person()
-            {
-                Id = reader.GetInt64("Id"),
-                FirstName = reader.GetString("FirstName"),
-                MiddleName = reader.GetString("MiddleName"),
-                LastName = reader.GetString("LastName"),
-                NameExtension = reader.GetString("NameExtension"),
-                Gender = genderResult.Data,
-                BirthDate = reader.GetNullableDateTime("BirthDate"),
-                Deceased = reader.GetBoolean("Deceased")
-            };
+            return GetData(genderResult.Data, reader);
         }
 
         private async Task<Person> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
-            var genderResult = await GenderManager.GetByIdAsync(reader.GetInt16("GenderId"), cancellationToken);
+            var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"), cancellationToken);
 
-            return new Person()
-            {
-                Id = reader.GetInt64("Id"),
-                FirstName = reader.GetString("FirstName"),
-                MiddleName = reader.GetString("MiddleName"),
-                LastName = reader.GetString("LastName"),
-                NameExtension = reader.GetString("NameExtension"),
-                Gender = genderResult.Data,
-                BirthDate = reader.GetNullableDateTime("BirthDate"),
-                Deceased = reader.GetBoolean("Deceased")
-            };
+            return GetData(genderResult.Data, reader);
         }
 
         public IProcessResult<Person> FromReader(SqlDataReader reader)
