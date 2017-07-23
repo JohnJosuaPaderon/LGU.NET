@@ -11,7 +11,9 @@ namespace LGU
             MessageInvoker = messageInvoker;
         }
 
+
         private readonly Action<string> MessageInvoker;
+
         public abstract void ProcessSample(Sample sample);
 
         public void OnComplete(object capture, string readerSerialNumber, Sample sample)
