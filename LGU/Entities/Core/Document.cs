@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LGU.Entities.Core
+﻿namespace LGU.Entities.Core
 {
     public class Document : Entity<long>
     {
