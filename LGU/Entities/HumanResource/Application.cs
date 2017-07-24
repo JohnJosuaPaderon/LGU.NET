@@ -9,7 +9,7 @@ namespace LGU.Entities.HumanResource
             Applicant = applicant ?? throw new ArgumentNullException(nameof(applicant));
         }
 
-        public Applicant Applicant { get; set; }
+        public Applicant Applicant { get; }
         public ApplicationStatus Status { get; set; }
         public DateTime Date { get; set; }
         public Position ApplyingPosition { get; set; }

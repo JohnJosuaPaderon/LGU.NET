@@ -6,6 +6,6 @@
         {
         }
 
-        public int? MaximumAnswerLength { get; set; }
+        public int? MaxAnswerLength { get; set; }
     }
 }

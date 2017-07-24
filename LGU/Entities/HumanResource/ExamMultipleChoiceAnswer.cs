@@ -13,6 +13,7 @@ namespace LGU.Entities.HumanResource
         public Exam Exam { get; }
         public MultipleChoiceQuestion Question { get; }
         public MultipleChoiceCandidateAnswer Answer { get; set; }
+        public bool? IsCorrect { get; set; }
 
         public static bool operator ==(ExamMultipleChoiceAnswer left, ExamMultipleChoiceAnswer right)
         {
