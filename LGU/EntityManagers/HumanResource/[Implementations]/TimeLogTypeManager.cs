@@ -1,5 +1,4 @@
-﻿using LGU.Entities;
-using LGU.Entities.HumanResource;
+﻿using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
 using LGU.Processes;
 using System.Threading;
@@ -7,37 +6,35 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class TimeLogTypeManager : ManagerBase, ITimeLogTypeManager
+    public sealed class TimeLogTypeManager : ManagerBase<TimeLogType, short>, ITimeLogTypeManager
     {
-        private readonly IDeleteTimeLogType DeleteProc;
-        private readonly IGetTimeLogTypeById GetByIdProc;
-        private readonly IGetTimeLogTypeList GetListProc;
-        private readonly IInsertTimeLogType InsertProc;
-        private readonly IUpdateTimeLogType UpdateProc;
-
-        private static EntityCollection<TimeLogType, short> StaticSource { get; } = new EntityCollection<TimeLogType, short>();
-
+        private readonly IDeleteTimeLogType r_DeleteTimeLogType;
+        private readonly IGetTimeLogTypeById r_GetTimeLogTypeById;
+        private readonly IGetTimeLogTypeList r_GetTimeLogTypeList;
+        private readonly IInsertTimeLogType r_InsertTimeLogType;
+        private readonly IUpdateTimeLogType r_UpdateTimeLogType;
+        
         public TimeLogTypeManager(
-            IDeleteTimeLogType deleteProc,
-            IGetTimeLogTypeById getByIdProc,
-            IGetTimeLogTypeList getListProc,
-            IInsertTimeLogType insertProc,
-            IUpdateTimeLogType updateProc)
+            IDeleteTimeLogType deleteTimeLogType,
+            IGetTimeLogTypeById getTimeLogTypeById,
+            IGetTimeLogTypeList getTimeLogTypeList,
+            IInsertTimeLogType insertTimeLogType,
+            IUpdateTimeLogType updateTimeLogType)
         {
-            DeleteProc = deleteProc;
-            GetByIdProc = getByIdProc;
-            GetListProc = getListProc;
-            InsertProc = insertProc;
-            UpdateProc = updateProc;
+            r_DeleteTimeLogType = deleteTimeLogType;
+            r_GetTimeLogTypeById = getTimeLogTypeById;
+            r_GetTimeLogTypeList = getTimeLogTypeList;
+            r_InsertTimeLogType = insertTimeLogType;
+            r_UpdateTimeLogType = updateTimeLogType;
         }
 
         public IProcessResult<TimeLogType> Delete(TimeLogType data)
         {
             if (data != null)
             {
-                DeleteProc.TimeLogType = data;
-                var result = DeleteProc.Execute();
-                InvokeIfSuccess(result.Status, () => StaticSource.Remove(result.Data));
+                r_DeleteTimeLogType.TimeLogType = data;
+                var result = r_DeleteTimeLogType.Execute();
+                RemoveIfSuccess(result);
 
                 return result;
             }
@@ -51,9 +48,9 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                DeleteProc.TimeLogType = data;
-                var result = await DeleteProc.ExecuteAsync();
-                InvokeIfSuccess(result.Status, () => StaticSource.Remove(result.Data));
+                r_DeleteTimeLogType.TimeLogType = data;
+                var result = await r_DeleteTimeLogType.ExecuteAsync();
+                RemoveIfSuccess(result);
 
                 return result;
             }
@@ -67,9 +64,9 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                DeleteProc.TimeLogType = data;
-                var result = await DeleteProc.ExecuteAsync(cancellationToken);
-                InvokeIfSuccess(result.Status, () => StaticSource.Remove(result.Data));
+                r_DeleteTimeLogType.TimeLogType = data;
+                var result = await r_DeleteTimeLogType.ExecuteAsync(cancellationToken);
+                RemoveIfSuccess(result);
 
                 return result;
             }
@@ -89,9 +86,9 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    GetByIdProc.TimeLogTypeId = id;
-                    var result = GetByIdProc.Execute();
-                    InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
+                    r_GetTimeLogTypeById.TimeLogTypeId = id;
+                    var result = r_GetTimeLogTypeById.Execute();
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
@@ -112,9 +109,9 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    GetByIdProc.TimeLogTypeId = id;
-                    var result = await GetByIdProc.ExecuteAsync();
-                    InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
+                    r_GetTimeLogTypeById.TimeLogTypeId = id;
+                    var result = await r_GetTimeLogTypeById.ExecuteAsync();
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
@@ -135,9 +132,9 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    GetByIdProc.TimeLogTypeId = id;
-                    var result = await GetByIdProc.ExecuteAsync(cancellationToken);
-                    InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
+                    r_GetTimeLogTypeById.TimeLogTypeId = id;
+                    var result = await r_GetTimeLogTypeById.ExecuteAsync(cancellationToken);
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
@@ -150,24 +147,24 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableProcessResult<TimeLogType> GetList()
         {
-            var result = GetListProc.Execute();
-            InvokeIfSuccessAndListNotEmpty(result, tlt => StaticSource.AddUpdate(tlt));
+            var result = r_GetTimeLogTypeList.Execute();
+            AddUpdateIfSuccess(result);
 
             return result;
         }
 
         public async Task<IEnumerableProcessResult<TimeLogType>> GetListAsync()
         {
-            var result = await GetListProc.ExecuteAsync();
-            InvokeIfSuccessAndListNotEmpty(result, tlt => StaticSource.AddUpdate(tlt));
+            var result = await r_GetTimeLogTypeList.ExecuteAsync();
+            AddUpdateIfSuccess(result);
 
             return result;
         }
 
         public async Task<IEnumerableProcessResult<TimeLogType>> GetListAsync(CancellationToken cancellationToken)
         {
-            var result = await GetListProc.ExecuteAsync(cancellationToken);
-            InvokeIfSuccessAndListNotEmpty(result, tlt => StaticSource.AddUpdate(tlt));
+            var result = await r_GetTimeLogTypeList.ExecuteAsync(cancellationToken);
+            AddUpdateIfSuccess(result);
 
             return result;
         }
@@ -176,9 +173,9 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                InsertProc.TimeLogType = data;
-                var result = InsertProc.Execute();
-                InvokeIfSuccess(result.Status, () => StaticSource.Add(result.Data));
+                r_InsertTimeLogType.TimeLogType = data;
+                var result = r_InsertTimeLogType.Execute();
+                AddIfSuccess(result);
 
                 return result;
             }
@@ -192,9 +189,9 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                InsertProc.TimeLogType = data;
-                var result = await InsertProc.ExecuteAsync();
-                InvokeIfSuccess(result.Status, () => StaticSource.Add(result.Data));
+                r_InsertTimeLogType.TimeLogType = data;
+                var result = await r_InsertTimeLogType.ExecuteAsync();
+                AddIfSuccess(result);
 
                 return result;
             }
@@ -208,9 +205,9 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                InsertProc.TimeLogType = data;
-                var result = await InsertProc.ExecuteAsync(cancellationToken);
-                InvokeIfSuccess(result.Status, () => StaticSource.Add(result.Data));
+                r_InsertTimeLogType.TimeLogType = data;
+                var result = await r_InsertTimeLogType.ExecuteAsync(cancellationToken);
+                AddIfSuccess(result);
 
                 return result;
             }
@@ -224,9 +221,9 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateProc.TimeLogType = data;
-                var result = UpdateProc.Execute();
-                InvokeIfSuccess(result.Status, () => StaticSource.Update(result.Data));
+                r_UpdateTimeLogType.TimeLogType = data;
+                var result = r_UpdateTimeLogType.Execute();
+                UpdateIfSuccess(result);
 
                 return result;
             }
@@ -240,9 +237,9 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateProc.TimeLogType = data;
-                var result = await UpdateProc.ExecuteAsync();
-                InvokeIfSuccess(result.Status, () => StaticSource.Update(result.Data));
+                r_UpdateTimeLogType.TimeLogType = data;
+                var result = await r_UpdateTimeLogType.ExecuteAsync();
+                UpdateIfSuccess(result);
 
                 return result;
             }
@@ -256,9 +253,9 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateProc.TimeLogType = data;
-                var result = await UpdateProc.ExecuteAsync(cancellationToken);
-                InvokeIfSuccess(result.Status, () => StaticSource.Update(result.Data));
+                r_UpdateTimeLogType.TimeLogType = data;
+                var result = await r_UpdateTimeLogType.ExecuteAsync(cancellationToken);
+                UpdateIfSuccess(result);
 
                 return result;
             }

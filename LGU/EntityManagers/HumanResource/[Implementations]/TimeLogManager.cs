@@ -6,37 +6,37 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class TimeLogManager : ManagerBase, ITimeLogManager
+    public sealed class TimeLogManager : ManagerBase<TimeLog, long>, ITimeLogManager
     {
-        private readonly IDeleteTimeLog DeleteProc;
-        private readonly IGetTimeLogById GetByIdProc;
-        private readonly IGetTimeLogList GetListProc;
-        private readonly IInsertTimeLog InsertProc;
-        private readonly ILogEmployee LogEmployeeProc;
-        private readonly IUpdateTimeLog UpdateProc;
+        private readonly IDeleteTimeLog r_DeleteTimeLog;
+        private readonly IGetTimeLogById r_GetTimeLogById;
+        private readonly IGetTimeLogList r_GetTimeLogList;
+        private readonly IInsertTimeLog r_InsertTimeLog;
+        private readonly ILogEmployee r_LogEmployee;
+        private readonly IUpdateTimeLog r_UpdateTimeLog;
 
         public TimeLogManager(
-            IDeleteTimeLog deleteProc,
-            IGetTimeLogById getByIdProc,
-            IGetTimeLogList getListProc,
-            IInsertTimeLog insertProc,
-            ILogEmployee logEmployeeProc,
-            IUpdateTimeLog updateProc)
+            IDeleteTimeLog deleteTimeLog,
+            IGetTimeLogById getTimeLogById,
+            IGetTimeLogList getTimeLogList,
+            IInsertTimeLog insertTimeLog,
+            ILogEmployee logEmployee,
+            IUpdateTimeLog updateTimeLog)
         {
-            DeleteProc = deleteProc;
-            GetByIdProc = getByIdProc;
-            GetListProc = getListProc;
-            InsertProc = insertProc;
-            LogEmployeeProc = logEmployeeProc;
-            UpdateProc = updateProc;
+            r_DeleteTimeLog = deleteTimeLog;
+            r_GetTimeLogById = getTimeLogById;
+            r_GetTimeLogList = getTimeLogList;
+            r_InsertTimeLog = insertTimeLog;
+            r_LogEmployee = logEmployee;
+            r_UpdateTimeLog = updateTimeLog;
         }
 
         public IProcessResult<TimeLog> Delete(TimeLog data)
         {
             if (data != null)
             {
-                DeleteProc.TimeLog = data;
-                return DeleteProc.Execute();
+                r_DeleteTimeLog.TimeLog = data;
+                return r_DeleteTimeLog.Execute();
             }
             else
             {
@@ -48,8 +48,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                DeleteProc.TimeLog = data;
-                return await DeleteProc.ExecuteAsync();
+                r_DeleteTimeLog.TimeLog = data;
+                return await r_DeleteTimeLog.ExecuteAsync();
             }
             else
             {
@@ -61,8 +61,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                DeleteProc.TimeLog = data;
-                return await DeleteProc.ExecuteAsync(cancellationToken);
+                r_DeleteTimeLog.TimeLog = data;
+                return await r_DeleteTimeLog.ExecuteAsync(cancellationToken);
             }
             else
             {
@@ -74,8 +74,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (id > 0)
             {
-                GetByIdProc.TimeLogId = id;
-                return GetByIdProc.Execute();
+                r_GetTimeLogById.TimeLogId = id;
+                return r_GetTimeLogById.Execute();
             }
             else
             {
@@ -87,8 +87,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (id > 0)
             {
-                GetByIdProc.TimeLogId = id;
-                return await GetByIdProc.ExecuteAsync();
+                r_GetTimeLogById.TimeLogId = id;
+                return await r_GetTimeLogById.ExecuteAsync();
             }
             else
             {
@@ -100,8 +100,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (id > 0)
             {
-                GetByIdProc.TimeLogId = id;
-                return await GetByIdProc.ExecuteAsync(cancellationToken);
+                r_GetTimeLogById.TimeLogId = id;
+                return await r_GetTimeLogById.ExecuteAsync(cancellationToken);
             }
             else
             {
@@ -111,25 +111,25 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableProcessResult<TimeLog> GetList()
         {
-            return GetListProc.Execute();
+            return r_GetTimeLogList.Execute();
         }
 
         public Task<IEnumerableProcessResult<TimeLog>> GetListAsync()
         {
-            return GetListProc.ExecuteAsync();
+            return r_GetTimeLogList.ExecuteAsync();
         }
 
         public Task<IEnumerableProcessResult<TimeLog>> GetListAsync(CancellationToken cancellationToken)
         {
-            return GetListProc.ExecuteAsync(cancellationToken);
+            return r_GetTimeLogList.ExecuteAsync(cancellationToken);
         }
 
         public IProcessResult<TimeLog> Insert(TimeLog data)
         {
             if (data != null)
             {
-                InsertProc.TimeLog = data;
-                return InsertProc.Execute();
+                r_InsertTimeLog.TimeLog = data;
+                return r_InsertTimeLog.Execute();
             }
             else
             {
@@ -141,8 +141,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                InsertProc.TimeLog = data;
-                return await InsertProc.ExecuteAsync();
+                r_InsertTimeLog.TimeLog = data;
+                return await r_InsertTimeLog.ExecuteAsync();
             }
             else
             {
@@ -154,8 +154,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                InsertProc.TimeLog = data;
-                return await InsertProc.ExecuteAsync(cancellationToken);
+                r_InsertTimeLog.TimeLog = data;
+                return await r_InsertTimeLog.ExecuteAsync(cancellationToken);
             }
             else
             {
@@ -167,8 +167,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (employee != null)
             {
-                LogEmployeeProc.Employee = employee;
-                return LogEmployeeProc.Execute();
+                r_LogEmployee.Employee = employee;
+                return r_LogEmployee.Execute();
             }
             else
             {
@@ -180,8 +180,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (employee != null)
             {
-                LogEmployeeProc.Employee = employee;
-                return await LogEmployeeProc.ExecuteAsync();
+                r_LogEmployee.Employee = employee;
+                return await r_LogEmployee.ExecuteAsync();
             }
             else
             {
@@ -193,8 +193,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (employee != null)
             {
-                LogEmployeeProc.Employee = employee;
-                return await LogEmployeeProc.ExecuteAsync(cancellationToken);
+                r_LogEmployee.Employee = employee;
+                return await r_LogEmployee.ExecuteAsync(cancellationToken);
             }
             else
             {
@@ -206,8 +206,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateProc.TimeLog = data;
-                return UpdateProc.Execute();
+                r_UpdateTimeLog.TimeLog = data;
+                return r_UpdateTimeLog.Execute();
             }
             else
             {
@@ -219,8 +219,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateProc.TimeLog = data;
-                return await UpdateProc.ExecuteAsync();
+                r_UpdateTimeLog.TimeLog = data;
+                return await r_UpdateTimeLog.ExecuteAsync();
             }
             else
             {
@@ -232,8 +232,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                UpdateProc.TimeLog = data;
-                return await UpdateProc.ExecuteAsync();
+                r_UpdateTimeLog.TimeLog = data;
+                return await r_UpdateTimeLog.ExecuteAsync();
             }
             else
             {
