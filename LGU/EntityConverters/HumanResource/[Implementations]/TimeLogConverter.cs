@@ -12,81 +12,57 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class TimeLogConverter : ITimeLogConverter<SqlDataReader>
     {
-        private readonly IEmployeeManager EmployeeManager;
-        private readonly ITimeLogTypeManager TimeLogTypeManager;
+        private readonly IEmployeeManager r_EmployeeManager;
+        private readonly ITimeLogTypeManager r_TimeLogTypeManager;
 
         public TimeLogConverter(
             IEmployeeManager employeeManager,
             ITimeLogTypeManager timeLogTypeManager)
         {
-            EmployeeManager = employeeManager;
-            TimeLogTypeManager = timeLogTypeManager;
+            r_EmployeeManager = employeeManager;
+            r_TimeLogTypeManager = timeLogTypeManager;
+        }
+
+        private TimeLog GetData(Employee employee, TimeLogType type, SqlDataReader reader)
+        {
+            if (employee != null)
+            {
+                return new TimeLog(employee)
+                {
+                    Id = reader.GetInt64("Id"),
+                    LoginDate = reader.GetNullableDateTime("LoginDate"),
+                    LogoutDate = reader.GetNullableDateTime("LogoutDate"),
+                    Type = type
+                };
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private TimeLog GetData(SqlDataReader reader)
         {
-            var employeeResult = EmployeeManager.GetById(reader.GetInt64("EmployeeId"));
+            var employeeResult = r_EmployeeManager.GetById(reader.GetInt64("EmployeeId"));
+            var typeResult = r_TimeLogTypeManager.GetById(reader.GetInt16("TypeId"));
 
-            if (employeeResult.Status == ProcessResultStatus.Success)
-            {
-                var typeResult = TimeLogTypeManager.GetById(reader.GetInt16("TypeId"));
-
-                return new TimeLog(employeeResult.Data)
-                {
-                    Id = reader.GetInt64("Id"),
-                    LoginDate = reader.GetNullableDateTime("LoginDate"),
-                    LogoutDate = reader.GetNullableDateTime("LogoutDate"),
-                    Type = typeResult.Data
-                };
-            }
-            else
-            {
-                return null;
-            }
+            return GetData(employeeResult.Data, typeResult.Data, reader);
         }
 
         private async Task<TimeLog> GetDataAsync(SqlDataReader reader)
         {
-            var employeeResult = await EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"));
+            var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"));
+            var typeResult = await r_TimeLogTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
 
-            if (employeeResult.Status == ProcessResultStatus.Success)
-            {
-                var typeResult = await TimeLogTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
-
-                return new TimeLog(employeeResult.Data)
-                {
-                    Id = reader.GetInt64("Id"),
-                    LoginDate = reader.GetNullableDateTime("LoginDate"),
-                    LogoutDate = reader.GetNullableDateTime("LogoutDate"),
-                    Type = typeResult.Data
-                };
-            }
-            else
-            {
-                return null;
-            }
+            return GetData(employeeResult.Data, typeResult.Data, reader);
         }
 
         private async Task<TimeLog> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
-            var employeeResult = await EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"), cancellationToken);
+            var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"), cancellationToken);
+            var typeResult = await r_TimeLogTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
 
-            if (employeeResult.Status == ProcessResultStatus.Success)
-            {
-                var typeResult = await TimeLogTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
-
-                return new TimeLog(employeeResult.Data)
-                {
-                    Id = reader.GetInt64("Id"),
-                    LoginDate = reader.GetNullableDateTime("LoginDate"),
-                    LogoutDate = reader.GetNullableDateTime("LogoutDate"),
-                    Type = typeResult.Data
-                };
-            }
-            else
-            {
-                return null;
-            }
+            return GetData(employeeResult.Data, typeResult.Data, reader);
         }
 
         public IEnumerableProcessResult<TimeLog> EnumerableFromReader(SqlDataReader reader)
