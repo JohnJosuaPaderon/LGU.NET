@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    interface IGetEmployeeTypeById : IProcess<EmployeeType>
+    public interface IGetEmployeeTypeById : IProcess<EmployeeType>
     {
         short EmployeeTypeId { get; set; }
     }

@@ -5,5 +5,6 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public interface IUpdateEssayQuestion : IProcess<EssayQuestion>
     {
+        EssayQuestion EssayQuestion { get; set; }
     }
 }
