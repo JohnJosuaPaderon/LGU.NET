@@ -1,38 +1,38 @@
 ﻿using LGU.Entities.Core;
 using LGU.EntityProcesses.Core;
 using LGU.Processes;
-using System;
 
 namespace LGU.EntityManagers.Core
 {
     public class PersonNameManager : IPersonNameManager
     {
-        private IConstructPersonMiddleInitials ConstructPersonMiddleInitials { get; }
-        private IConstructPersonFullName ConstructPersonFullName { get; }
-        private IConstructPersonInformalFullName ConstructPersonInformalFullName { get; }
+        private readonly IConstructPersonMiddleInitials r_ConstructPersonMiddleInitials;
+        private readonly IConstructPersonFullName r_ConstructPersonFullName;
+        private readonly IConstructPersonInformalFullName r_ConstructPersonInformalFullName;
 
         public PersonNameManager(IConstructPersonFullName constructPersonFullName, IConstructPersonInformalFullName constructPersonInformalFullName, IConstructPersonMiddleInitials constructPersonMiddleInitials)
         {
-            ConstructPersonFullName = constructPersonFullName;
-            ConstructPersonInformalFullName = constructPersonInformalFullName;
-            ConstructPersonMiddleInitials = constructPersonMiddleInitials;
+            r_ConstructPersonFullName = constructPersonFullName;
+            r_ConstructPersonInformalFullName = constructPersonInformalFullName;
+            r_ConstructPersonMiddleInitials = constructPersonMiddleInitials;
         }
 
         public IProcessResult<string> ConstructFullName(Person person)
         {
-            ConstructPersonFullName.Person = person;
-            return ConstructPersonFullName.Execute();
+            r_ConstructPersonFullName.Person = person;
+            return r_ConstructPersonFullName.Execute();
         }
 
         public IProcessResult<string> ConstructInformalFullName(Person person)
         {
-            throw new NotImplementedException();
+            r_ConstructPersonInformalFullName.Person = person;
+            return r_ConstructPersonInformalFullName.Execute();
         }
 
         public IProcessResult<string> ConstructMiddleInitials(Person person)
         {
-            ConstructPersonMiddleInitials.Person = person;
-            return ConstructPersonMiddleInitials.Execute();
+            r_ConstructPersonMiddleInitials.Person = person;
+            return r_ConstructPersonMiddleInitials.Execute();
         }
     }
 }

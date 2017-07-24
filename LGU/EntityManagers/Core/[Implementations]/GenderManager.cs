@@ -1,5 +1,4 @@
-﻿using LGU.Entities;
-using LGU.Entities.Core;
+﻿using LGU.Entities.Core;
 using LGU.EntityProcesses.Core;
 using LGU.Processes;
 using System.Threading;
@@ -7,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class GenderManager : IGenderManager
+    public sealed class GenderManager : ManagerBase<Gender, short>, IGenderManager
     {
-        private readonly IGetGenderById GetByIdProc;
-        private readonly IGetGenderList GetListProc;
 
-        private static EntityCollection<Gender, short> StaticSource { get; set; } = new EntityCollection<Gender, short>();
-
+        private readonly IGetGenderById r_GetGenderById;
+        private readonly IGetGenderList r_GetGenderList;
+        
         public GenderManager(
-            IGetGenderById getByIdProc,
-            IGetGenderList getListProc)
+            IGetGenderById getGenderById,
+            IGetGenderList getGenderList)
         {
-            GetByIdProc = getByIdProc;
-            GetListProc = getListProc;
+            r_GetGenderById = getGenderById;
+            r_GetGenderList = getGenderList;
         }
 
         public IProcessResult<Gender> GetById(short id)
@@ -32,20 +30,16 @@ namespace LGU.EntityManagers.Core
                 }
                 else
                 {
-                    GetByIdProc.GenderId = id;
-                    var result = GetByIdProc.Execute();
-
-                    if (result.Status == ProcessResultStatus.Success)
-                    {
-                        StaticSource.AddUpdate(result.Data);
-                    }
+                    r_GetGenderById.GenderId = id;
+                    var result = r_GetGenderById.Execute();
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
             }
             else
             {
-                return new ProcessResult<Gender>(ProcessResultStatus.Failed);
+                return new ProcessResult<Gender>(ProcessResultStatus.Failed, "Invalid gender identifier.");
             }
         }
 
@@ -59,20 +53,16 @@ namespace LGU.EntityManagers.Core
                 }
                 else
                 {
-                    GetByIdProc.GenderId = id;
-                    var result = await GetByIdProc.ExecuteAsync();
-
-                    if (result.Status == ProcessResultStatus.Success)
-                    {
-                        StaticSource.AddUpdate(result.Data);
-                    }
+                    r_GetGenderById.GenderId = id;
+                    var result = await r_GetGenderById.ExecuteAsync();
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
             }
             else
             {
-                return new ProcessResult<Gender>(ProcessResultStatus.Failed);
+                return new ProcessResult<Gender>(ProcessResultStatus.Failed, "Invalid gender identifier.");
             }
         }
 
@@ -86,36 +76,41 @@ namespace LGU.EntityManagers.Core
                 }
                 else
                 {
-                    GetByIdProc.GenderId = id;
-                    var result = await GetByIdProc.ExecuteAsync(cancellationToken);
-
-                    if (result.Status == ProcessResultStatus.Success)
-                    {
-                        StaticSource.AddUpdate(result.Data);
-                    }
+                    r_GetGenderById.GenderId = id;
+                    var result = await r_GetGenderById.ExecuteAsync(cancellationToken);
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
             }
             else
             {
-                return new ProcessResult<Gender>(ProcessResultStatus.Failed);
+                return new ProcessResult<Gender>(ProcessResultStatus.Failed, "Invalid gender identifier.");
             }
         }
 
         public IEnumerableProcessResult<Gender> GetList()
         {
-            return GetListProc.Execute();
+            var result = r_GetGenderList.Execute();
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
 
-        public Task<IEnumerableProcessResult<Gender>> GetListAsync()
+        public async Task<IEnumerableProcessResult<Gender>> GetListAsync()
         {
-            return GetListProc.ExecuteAsync();
+            var result = await r_GetGenderList.ExecuteAsync();
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
 
-        public Task<IEnumerableProcessResult<Gender>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<Gender>> GetListAsync(CancellationToken cancellationToken)
         {
-            return GetListProc.ExecuteAsync(cancellationToken);
+            var result = await r_GetGenderList.ExecuteAsync(cancellationToken);
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
     }
 }

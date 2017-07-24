@@ -1,34 +1,22 @@
-﻿using LGU.Entities;
-using LGU.Entities.Core;
+﻿using LGU.Entities.Core;
 using LGU.EntityProcesses.Core;
 using LGU.Processes;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class UserStatusManager : IUserStatusManager
+    public sealed class UserStatusManager : ManagerBase<UserStatus, short>, IUserStatusManager
     {
-        private readonly IGetUserStatusById GetByIdProc;
-        private readonly IGetUserStatusList GetListProc;
-
-        private static EntityCollection<UserStatus, short> StaticSource { get; } = new EntityCollection<UserStatus, short>();
+        private readonly IGetUserStatusById r_GetUserStatusById;
+        private readonly IGetUserStatusList r_GetUserStatusList;
 
         public UserStatusManager(
-            IGetUserStatusById getByIdProc,
-            IGetUserStatusList getListProc)
+            IGetUserStatusById getUserStatusById,
+            IGetUserStatusList getUserStatusList)
         {
-            GetByIdProc = getByIdProc;
-            GetListProc = getListProc;
-        }
-
-        private static void InvokeIfSuccess(ProcessResultStatus status, Action expression)
-        {
-            if (status == ProcessResultStatus.Success)
-            {
-                expression();
-            }
+            r_GetUserStatusById = getUserStatusById;
+            r_GetUserStatusList = getUserStatusList;
         }
 
         public IProcessResult<UserStatus> GetById(short id)
@@ -41,9 +29,9 @@ namespace LGU.EntityManagers.Core
                 }
                 else
                 {
-                    GetByIdProc.UserStatusId = id;
-                    var result = GetByIdProc.Execute();
-                    InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
+                    r_GetUserStatusById.UserStatusId = id;
+                    var result = r_GetUserStatusById.Execute();
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
@@ -64,9 +52,9 @@ namespace LGU.EntityManagers.Core
                 }
                 else
                 {
-                    GetByIdProc.UserStatusId = id;
-                    var result = await GetByIdProc.ExecuteAsync();
-                    InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
+                    r_GetUserStatusById.UserStatusId = id;
+                    var result = await r_GetUserStatusById.ExecuteAsync();
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
@@ -87,9 +75,9 @@ namespace LGU.EntityManagers.Core
                 }
                 else
                 {
-                    GetByIdProc.UserStatusId = id;
-                    var result = await GetByIdProc.ExecuteAsync(cancellationToken);
-                    InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
+                    r_GetUserStatusById.UserStatusId = id;
+                    var result = await r_GetUserStatusById.ExecuteAsync(cancellationToken);
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
@@ -102,17 +90,26 @@ namespace LGU.EntityManagers.Core
 
         public IEnumerableProcessResult<UserStatus> GetList()
         {
-            return GetListProc.Execute();
+            var result = r_GetUserStatusList.Execute();
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
 
-        public Task<IEnumerableProcessResult<UserStatus>> GetListAsync()
+        public async Task<IEnumerableProcessResult<UserStatus>> GetListAsync()
         {
-            return GetListProc.ExecuteAsync();
+            var result = await r_GetUserStatusList.ExecuteAsync();
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
 
-        public Task<IEnumerableProcessResult<UserStatus>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<UserStatus>> GetListAsync(CancellationToken cancellationToken)
         {
-            return GetListProc.ExecuteAsync(cancellationToken);
+            var result = await r_GetUserStatusList.ExecuteAsync(cancellationToken);
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
     }
 }

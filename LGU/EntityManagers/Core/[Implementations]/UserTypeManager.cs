@@ -1,32 +1,20 @@
-﻿using LGU.Entities;
-using LGU.Entities.Core;
+﻿using LGU.Entities.Core;
 using LGU.EntityProcesses.Core;
 using LGU.Processes;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class UserTypeManager : IUserTypeManager
+    public sealed class UserTypeManager : ManagerBase<UserType, short>, IUserTypeManager
     {
-        private readonly IGetUserTypeById GetByIdProc;
-        private readonly IGetUserTypeList GetListProc;
-
-        private static EntityCollection<UserType, short> StaticSource { get; } = new EntityCollection<UserType, short>();
-
-        public UserTypeManager(IGetUserTypeById getByIdProc, IGetUserTypeList getListProc)
+        private readonly IGetUserTypeById r_GetUserTypeById;
+        private readonly IGetUserTypeList r_GetUserTypeList;
+        
+        public UserTypeManager(IGetUserTypeById getUserTypeById, IGetUserTypeList getUserTypeList)
         {
-            GetByIdProc = getByIdProc;
-            GetListProc = getListProc;
-        }
-
-        private static void InvokeIfSuccess(ProcessResultStatus status, Action expression)
-        {
-            if (status == ProcessResultStatus.Success)
-            {
-                expression();
-            }
+            r_GetUserTypeById = getUserTypeById;
+            r_GetUserTypeList = getUserTypeList;
         }
 
         public IProcessResult<UserType> GetById(short id)
@@ -39,9 +27,9 @@ namespace LGU.EntityManagers.Core
                 }
                 else
                 {
-                    GetByIdProc.UserTypeId = id;
-                    var result = GetByIdProc.Execute();
-                    InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
+                    r_GetUserTypeById.UserTypeId = id;
+                    var result = r_GetUserTypeById.Execute();
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
@@ -62,9 +50,9 @@ namespace LGU.EntityManagers.Core
                 }
                 else
                 {
-                    GetByIdProc.UserTypeId = id;
-                    var result = await GetByIdProc.ExecuteAsync();
-                    InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
+                    r_GetUserTypeById.UserTypeId = id;
+                    var result = await r_GetUserTypeById.ExecuteAsync();
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
@@ -85,9 +73,9 @@ namespace LGU.EntityManagers.Core
                 }
                 else
                 {
-                    GetByIdProc.UserTypeId = id;
-                    var result = await GetByIdProc.ExecuteAsync(cancellationToken);
-                    InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
+                    r_GetUserTypeById.UserTypeId = id;
+                    var result = await r_GetUserTypeById.ExecuteAsync(cancellationToken);
+                    AddUpdateIfSuccess(result);
 
                     return result;
                 }
@@ -100,17 +88,26 @@ namespace LGU.EntityManagers.Core
 
         public IEnumerableProcessResult<UserType> GetList()
         {
-            throw new NotImplementedException();
+            var result = r_GetUserTypeList.Execute();
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
 
-        public Task<IEnumerableProcessResult<UserType>> GetListAsync()
+        public async Task<IEnumerableProcessResult<UserType>> GetListAsync()
         {
-            throw new NotImplementedException();
+            var result = await r_GetUserTypeList.ExecuteAsync();
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
 
-        public Task<IEnumerableProcessResult<UserType>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<UserType>> GetListAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var result = await r_GetUserTypeList.ExecuteAsync();
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
     }
 }

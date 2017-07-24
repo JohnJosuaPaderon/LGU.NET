@@ -1,191 +1,188 @@
-﻿using LGU.Entities;
-using LGU.Entities.Core;
+﻿using LGU.Entities.Core;
 using LGU.EntityProcesses.Core;
 using LGU.Processes;
-using System;
+using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Security;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class UserManager : IUserManager
+    public sealed class UserManager : ManagerBase<User, long>, IUserManager
     {
-        private static EntityCollection<User, long> StaticSource { get; } = new EntityCollection<User, long>();
-
-        private readonly IDeleteUser DeleteProc;
-        private readonly IGetUserById GetByIdProc;
-        private readonly IGetUserList GetListProc;
-        private readonly IInsertUser InsertProc;
-        private readonly IUpdateUser UpdateProc;
-        private readonly ILoginUser LoginProc;
-        private readonly IIsUsernameExists IsUsernameExistsProc;
+        private readonly IDeleteUser r_DeleteUser;
+        private readonly IGetUserById r_GetUserById;
+        private readonly IGetUserList r_GetUserList;
+        private readonly IInsertUser r_InsertUser;
+        private readonly IUpdateUser r_UpdateUser;
+        private readonly ILoginUser r_LoginUser;
+        private readonly IIsUsernameExists r_IsUsernameExists;
 
         public UserManager(
-            IDeleteUser deleteProc, 
-            IGetUserById getByIdProc,
-            IGetUserList getListProc,
-            IInsertUser insertProc,
-            IUpdateUser updateProc,
-            ILoginUser loginProc,
-            IIsUsernameExists isUsernameExistsProc)
+            IDeleteUser deleteUser, 
+            IGetUserById getUserById,
+            IGetUserList getUserList,
+            IInsertUser insertUser,
+            IUpdateUser updateUser,
+            ILoginUser loginUser,
+            IIsUsernameExists sUsernameExists)
         {
-            DeleteProc = deleteProc;
-            GetByIdProc = getByIdProc;
-            GetListProc = getListProc;
-            InsertProc = insertProc;
-            UpdateProc = updateProc;
-            LoginProc = loginProc;
-            IsUsernameExistsProc = isUsernameExistsProc;
-        }
-        
-        private static void InvokeIfSuccess(IProcessResult<User> result, Action action)
-        {
-            if (result != null && result.Status == ProcessResultStatus.Success)
-            {
-                action();
-            }
+            r_DeleteUser = deleteUser;
+            r_GetUserById = getUserById;
+            r_GetUserList = getUserList;
+            r_InsertUser = insertUser;
+            r_UpdateUser = updateUser;
+            r_LoginUser = loginUser;
+            r_IsUsernameExists = sUsernameExists;
         }
 
         public IProcessResult<User> Delete(User user)
         {
-            DeleteProc.User = user;
-            var result = DeleteProc.Execute();
-            InvokeIfSuccess(result, () => StaticSource.Remove(result.Data));
+            r_DeleteUser.User = user;
+            var result = r_DeleteUser.Execute();
+            RemoveIfSuccess(result);
 
             return result;
         }
 
         public async Task<IProcessResult<User>> DeleteAsync(User user, CancellationToken cancellationToken)
         {
-            DeleteProc.User = user;
-            var result = await DeleteProc.ExecuteAsync(cancellationToken);
-            InvokeIfSuccess(result, () => StaticSource.Remove(result.Data));
+            r_DeleteUser.User = user;
+            var result = await r_DeleteUser.ExecuteAsync(cancellationToken);
+            RemoveIfSuccess(result);
 
             return result;
         }
 
         public async Task<IProcessResult<User>> DeleteAsync(User user)
         {
-            DeleteProc.User = user;
-            var result = await DeleteProc.ExecuteAsync();
-            InvokeIfSuccess(result, () => StaticSource.Remove(result.Data));
+            r_DeleteUser.User = user;
+            var result = await r_DeleteUser.ExecuteAsync();
+            RemoveIfSuccess(result);
 
             return result;
         }
 
         public IProcessResult<User> GetById(long userId)
         {
-            GetByIdProc.UserId = userId;
-            var result = GetByIdProc.Execute();
-            InvokeIfSuccess(result, () => StaticSource.AddUpdate(result.Data));
+            r_GetUserById.UserId = userId;
+            var result = r_GetUserById.Execute();
+            AddUpdateIfSuccess(result);
 
             return result;
         }
 
         public async Task<IProcessResult<User>> GetByIdAsync(long userId, CancellationToken cancellationToken)
         {
-            GetByIdProc.UserId = userId;
-            var result = await GetByIdProc.ExecuteAsync(cancellationToken);
-            InvokeIfSuccess(result, () => StaticSource.AddUpdate(result.Data));
+            r_GetUserById.UserId = userId;
+            var result = await r_GetUserById.ExecuteAsync(cancellationToken);
+            AddUpdateIfSuccess(result);
 
             return result;
         }
 
         public async Task<IProcessResult<User>> GetByIdAsync(long userId)
         {
-            GetByIdProc.UserId = userId;
-            var result = await GetByIdProc.ExecuteAsync();
-            InvokeIfSuccess(result, () => StaticSource.AddUpdate(result.Data));
+            r_GetUserById.UserId = userId;
+            var result = await r_GetUserById.ExecuteAsync();
+            AddUpdateIfSuccess(result);
 
             return result;
         }
 
         public IEnumerableProcessResult<User> GetList()
         {
-            return GetListProc.Execute();
+            var result = r_GetUserList.Execute();
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
 
-        public Task<IEnumerableProcessResult<User>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<User>> GetListAsync(CancellationToken cancellationToken)
         {
-            return GetListProc.ExecuteAsync(cancellationToken);
+            var result = await r_GetUserList.ExecuteAsync(cancellationToken);
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
 
-        public Task<IEnumerableProcessResult<User>> GetListAsync()
+        public async Task<IEnumerableProcessResult<User>> GetListAsync()
         {
-            return GetListProc.ExecuteAsync();
+            var result = await r_GetUserList.ExecuteAsync();
+            AddUpdateIfSuccess(result);
+
+            return result;
         }
 
         public IProcessResult<User> Insert(User user)
         {
-            InsertProc.User = user;
-            var result = InsertProc.Execute();
-            InvokeIfSuccess(result, () => StaticSource.Add(user));
+            r_InsertUser.User = user;
+            var result = r_InsertUser.Execute();
+            AddIfSuccess(result);
 
             return result;
         }
 
         public async Task<IProcessResult<User>> InsertAsync(User user, CancellationToken cancellationToken)
         {
-            InsertProc.User = user;
-            var result = await InsertProc.ExecuteAsync(cancellationToken);
-            InvokeIfSuccess(result, () => StaticSource.Add(user));
+            r_InsertUser.User = user;
+            var result = await r_InsertUser.ExecuteAsync(cancellationToken);
+            AddIfSuccess(result);
 
             return result;
         }
 
         public async Task<IProcessResult<User>> InsertAsync(User user)
         {
-            InsertProc.User = user;
-            var result = await InsertProc.ExecuteAsync();
-            InvokeIfSuccess(result, () => StaticSource.Add(user));
+            r_InsertUser.User = user;
+            var result = await r_InsertUser.ExecuteAsync();
+            AddIfSuccess(result);
 
             return result;
         }
 
         public IProcessResult<User> Update(User user)
         {
-            UpdateProc.User = user;
-            var result = UpdateProc.Execute();
-            InvokeIfSuccess(result, () => StaticSource.Update(user));
+            r_UpdateUser.User = user;
+            var result = r_UpdateUser.Execute();
+            UpdateIfSuccess(result);
 
             return result;
         }
 
         public async Task<IProcessResult<User>> UpdateAsync(User user, CancellationToken cancellationToken)
         {
-            UpdateProc.User = user;
-            var result = await UpdateProc.ExecuteAsync(cancellationToken);
-            InvokeIfSuccess(result, () => StaticSource.Update(user));
+            r_UpdateUser.User = user;
+            var result = await r_UpdateUser.ExecuteAsync(cancellationToken);
+            UpdateIfSuccess(result);
 
             return result;
         }
 
         public async Task<IProcessResult<User>> UpdateAsync(User user)
         {
-            UpdateProc.User = user;
-            var result = await UpdateProc.ExecuteAsync();
-            InvokeIfSuccess(result, () => StaticSource.Update(user));
+            r_UpdateUser.User = user;
+            var result = await r_UpdateUser.ExecuteAsync();
+            UpdateIfSuccess(result);
 
             return result;
         }
 
         public IProcessResult<User> Login(UserCredentials userCredentials)
         {
-            LoginProc.UserCredentials = userCredentials;
-            return LoginProc.Execute();
+            r_LoginUser.UserCredentials = userCredentials;
+            return r_LoginUser.Execute();
         }
 
         public Task<IProcessResult<User>> LoginAsync(UserCredentials userCredentials)
         {
-            LoginProc.UserCredentials = userCredentials;
-            return LoginProc.ExecuteAsync();
+            r_LoginUser.UserCredentials = userCredentials;
+            return r_LoginUser.ExecuteAsync();
         }
 
         public Task<IProcessResult<User>> LoginAsync(UserCredentials userCredentials, CancellationToken cancellationToken)
         {
-            LoginProc.UserCredentials = userCredentials;
-            return LoginProc.ExecuteAsync(cancellationToken);
+            r_LoginUser.UserCredentials = userCredentials;
+            return r_LoginUser.ExecuteAsync(cancellationToken);
         }
 
         public IProcessResult<bool> IsUsernameExists(SecureString secureUsername)
@@ -196,8 +193,8 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                IsUsernameExistsProc.SecureUsername = secureUsername;
-                return IsUsernameExistsProc.Execute();
+                r_IsUsernameExists.SecureUsername = secureUsername;
+                return r_IsUsernameExists.Execute();
             }
         }
 
@@ -209,8 +206,8 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                IsUsernameExistsProc.SecureUsername = secureUsername;
-                return await IsUsernameExistsProc.ExecuteAsync();
+                r_IsUsernameExists.SecureUsername = secureUsername;
+                return await r_IsUsernameExists.ExecuteAsync();
             }
         }
 
@@ -222,8 +219,8 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                IsUsernameExistsProc.SecureUsername = secureUsername;
-                return await IsUsernameExistsProc.ExecuteAsync(cancellationToken);
+                r_IsUsernameExists.SecureUsername = secureUsername;
+                return await r_IsUsernameExists.ExecuteAsync(cancellationToken);
             }
         }
     }
