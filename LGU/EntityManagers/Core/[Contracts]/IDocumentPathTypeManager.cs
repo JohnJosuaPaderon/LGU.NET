@@ -3,7 +3,7 @@ using LGU.Entities.Core;
 
 namespace LGU.EntityManagers.Core
 {
-    public interface IDocumentPathTypeManager : IEntityManager<DocumentPathType, short>
+    public interface IDocumentPathTypeManager : IStaticEntityManager<DocumentPathType, short>
     {
     }
 }
