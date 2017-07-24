@@ -23,7 +23,7 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_SetId", EssayQuestion.Set?.Id)
             .AddInputParameter("@_Description", EssayQuestion.Description)
             .AddInputParameter("@_Points", EssayQuestion.Points)
-            .AddInputParameter("@_MaximumAnswerLength", EssayQuestion.MaximumAnswerLength)
+            .AddInputParameter("@_MaxAnswerLength", EssayQuestion.MaxAnswerLength)
             .AddLogByParameter();
 
         private IProcessResult<EssayQuestion> GetProcessResult(EssayQuestion data, SqlCommand command, int affectedRows)

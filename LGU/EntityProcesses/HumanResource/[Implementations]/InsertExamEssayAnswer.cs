@@ -22,6 +22,7 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_ExamId", ExamEssayAnswer.Exam?.Id)
             .AddInputParameter("@_QuestionId", ExamEssayAnswer.Question?.Id)
             .AddInputParameter("@_Description", ExamEssayAnswer.Description)
+            .AddInputParameter("@_IsCorrect", ExamEssayAnswer.IsCorrect)
             .AddLogByParameter();
 
         private IProcessResult<ExamEssayAnswer> GetProcessResult(ExamEssayAnswer data, SqlCommand command, int affectedRows)
