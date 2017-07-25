@@ -13,5 +13,6 @@ namespace LGU.Entities.HumanResource
         public DateTime? LoginDate { get; set; }
         public DateTime? LogoutDate { get; set; }
         public TimeLogType Type { get; set; }
+        public bool? State { get; set; }
     }
 }
