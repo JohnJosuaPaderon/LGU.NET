@@ -32,7 +32,8 @@ namespace LGU.EntityConverters.HumanResource
                     Id = reader.GetInt64("Id"),
                     LoginDate = reader.GetNullableDateTime("LoginDate"),
                     LogoutDate = reader.GetNullableDateTime("LogoutDate"),
-                    Type = type
+                    Type = type,
+                    State = reader.GetNullableBoolean("State")
                 };
             }
             else
