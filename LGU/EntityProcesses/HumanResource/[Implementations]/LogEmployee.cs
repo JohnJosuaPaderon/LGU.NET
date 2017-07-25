@@ -29,6 +29,7 @@ namespace LGU.EntityProcesses.HumanResource
             .AddOutputParameter("@_LoginDate", DbType.DateTime)
             .AddOutputParameter("@_LogoutDate", DbType.DateTime)
             .AddOutputParameter("@_TypeId", DbType.Int16)
+            .AddOutputParameter("@_State", DbType.Byte)
             .AddLogByParameter();
 
         private IProcessResult<TimeLog> GetProcessResult(TimeLog data, SqlCommand command, int affectedRows)
@@ -40,6 +41,7 @@ namespace LGU.EntityProcesses.HumanResource
                 data.Id = command.Parameters.GetInt64("@_Id");
                 data.LoginDate = command.Parameters.GetNullableDateTime("@_LoginDate");
                 data.LogoutDate = command.Parameters.GetNullableDateTime("@_LogoutDate");
+                data.State = command.Parameters.GetNullableBoolean("@_State");
                 data.Type = typeResult.Data;
 
                 return new ProcessResult<TimeLog>(data);
