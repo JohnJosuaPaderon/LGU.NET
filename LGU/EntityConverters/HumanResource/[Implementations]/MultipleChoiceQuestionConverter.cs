@@ -23,7 +23,7 @@ namespace LGU.EntityConverters.HumanResource
         {
             if (set != null)
             {
-                return new MultipleChoiceQuestion(set, reader.GetBoolean("IsMultipleAnswer"))
+                return new MultipleChoiceQuestion(set, reader.GetNullableInt32("MaxAnswerCount"))
                 {
                     Id = reader.GetInt64("Id"),
                     Description = reader.GetString("Description"),
