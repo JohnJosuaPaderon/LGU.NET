@@ -2,11 +2,11 @@
 {
     public class MultipleChoiceQuestion : ExamQuestion
     {
-        public MultipleChoiceQuestion(ExamSet set, bool isMultipleAnswer) : base(set, ExamQuestionType.MultipleChoice)
+        public MultipleChoiceQuestion(ExamSet set, int? maxAnswerCount) : base(set, ExamQuestionType.MultipleChoice)
         {
-            IsMultipleAnswer = isMultipleAnswer;
+            MaxAnswerCount = maxAnswerCount;
         }
 
-        public bool IsMultipleAnswer { get; }
+        public int? MaxAnswerCount { get; }
     }
 }
