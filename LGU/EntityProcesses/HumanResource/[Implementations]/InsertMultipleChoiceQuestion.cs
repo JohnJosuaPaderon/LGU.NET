@@ -24,7 +24,7 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_ExamSetId", MultipleChoiceQuestion.Set?.Id)
             .AddInputParameter("@_Description", MultipleChoiceQuestion.Description)
             .AddInputParameter("@_Points", MultipleChoiceQuestion.Points)
-            .AddInputParameter("@_IsMultipleAnswer", MultipleChoiceQuestion.IsMultipleAnswer)
+            .AddInputParameter("@_MaxAnswerCount", MultipleChoiceQuestion.MaxAnswerCount)
             .AddLogByParameter();
 
         private IProcessResult<MultipleChoiceQuestion> GetProcessResult(MultipleChoiceQuestion data, SqlCommand command, int affectedRows)
