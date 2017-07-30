@@ -5,7 +5,7 @@ using Prism.Unity;
 
 namespace LGU.HumanResource
 {
-    public class Bootstrapper : BootstrapperBase
+    class Bootstrapper : BootstrapperBase
     {
         protected override void ConfigureContainer()
         {
@@ -17,12 +17,13 @@ namespace LGU.HumanResource
             Container.RegisterTypeForNavigation<MainView>();
             Container.RegisterTypeForNavigation<UserSignUpView>();
             Container.RegisterTypeForNavigation<EmployeeFingerPrintEnrollmentView>();
+            Container.RegisterTypeForNavigation<TimeLogExportView>();
         }
 
         protected override void InitializeServices()
         {
             base.InitializeServices();
-            
+
             ServiceCollection.UseDigitalPersona();
         }
     }
