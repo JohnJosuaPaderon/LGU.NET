@@ -45,6 +45,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPGuiNET\1.6.1.0__d4f4a0bd9c559145\DPFPGuiNet.dll</HintPath>
     </Reference>
+    <Reference Include="DPFPO2MNET, Version=2.2.1.0, Culture=neutral, PublicKeyToken=6494fe269d4110bd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPO2MNET\2.2.1.0__6494fe269d4110bd\DPFPO2MNET.dll</HintPath>
+    </Reference>
     <Reference Include="DPFPShrNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=d902fe275a8d6cf2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPShrNET\1.6.1.0__d902fe275a8d6cf2\DPFPShrNET.dll</HintPath>
@@ -137,9 +141,11 @@
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\InsertEmployeeFingerPrintSet.cs" />
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\UpdateEmployeeFingerPrintSet.cs" />
     <Compile Include="Extensions\IServiceCollectionExtension.cs" />
+    <Compile Include="Extensions\UserExtension.cs" />
     <Compile Include="FingerPrintScannerHelper.cs" />
     <Compile Include="Processor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\FingerPositionConverter.cs" />
     <Compile Include="Verifier.cs" />
   </ItemGroup>
   <ItemGroup>
