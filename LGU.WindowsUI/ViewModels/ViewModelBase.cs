@@ -24,7 +24,6 @@ namespace LGU.ViewModels
 
         protected void ShowInfoMessage(string message, string header)
         {
-
             MessageBox.Show(message, header, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
@@ -35,7 +34,6 @@ namespace LGU.ViewModels
 
         protected void ShowWarningMessage(string message, string header)
         {
-
             MessageBox.Show(message, header, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
