@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LGU.HumanResource.Applications")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("Copyright © 2017 John Josua R. Paderon")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
