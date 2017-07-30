@@ -26,7 +26,7 @@ namespace LGU
             base.ConfigureContainer();
             SystemRuntime.SystemDirectory = ConfigurationManager.AppSettings["SystemDirectory"];
             InitializeServices();
-
+            
             SystemRuntime.Instantiate(ServiceCollection);
         }
 

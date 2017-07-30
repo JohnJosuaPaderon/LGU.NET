@@ -46,6 +46,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPGuiNET\1.6.1.0__d4f4a0bd9c559145\DPFPGuiNet.dll</HintPath>
     </Reference>
+    <Reference Include="DPFPO2MNET, Version=2.2.1.0, Culture=neutral, PublicKeyToken=6494fe269d4110bd, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPO2MNET\2.2.1.0__6494fe269d4110bd\DPFPO2MNET.dll</HintPath>
+    </Reference>
     <Reference Include="DPFPShrNET, Version=1.6.1.0, Culture=neutral, PublicKeyToken=d902fe275a8d6cf2, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPShrNET\1.6.1.0__d902fe275a8d6cf2\DPFPShrNET.dll</HintPath>
@@ -54,8 +58,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPVerNET\1.6.1.0__4de0a9c4dcc83984\DPFPVerNET.dll</HintPath>
     </Reference>
-    <Reference Include="Dragablz, Version=0.0.3.190, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dragablz.0.0.3.190\lib\net45\Dragablz.dll</HintPath>
+    <Reference Include="Dragablz, Version=0.0.3.191, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dragablz.0.0.3.191\lib\net45\Dragablz.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
@@ -183,7 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapperBase.cs" />
-    <Compile Include="ConnectionStringSource.cs" />
     <Compile Include="Converters\DialogModeAddToVisibilityConverter.cs" />
     <Compile Include="Converters\FingerPrintToDisplayConverter.cs" />
     <Compile Include="Converters\NullableToBooleanConverter.cs" />
@@ -221,7 +224,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SystemAdministratorManager.cs" />
     <Compile Include="ViewModels\Core\UserSignUpViewModel.cs" />
     <Compile Include="ViewModels\DialogHelper.cs" />
     <Compile Include="ViewModels\DialogMode.cs" />
@@ -239,6 +241,7 @@
     <Compile Include="ViewModels\HumanResource\PreviewEmployeeViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\TimeKeepingResult.cs" />
     <Compile Include="ViewModels\HumanResource\TimeKeepingViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\TimeLogExportViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NavigationalViewModelBase.cs" />
     <Compile Include="ViewModels\SystemAdministration\ConnectionStringSourceViewModel.cs" />
@@ -269,6 +272,9 @@
     <Compile Include="Views\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogView.xaml.cs">
       <DependentUpon>ManageEmployeeFingerPrintSetDialogView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HumanResource\Dialogs\TimeLogExportPrintOptionsDialogView.xaml.cs">
+      <DependentUpon>TimeLogExportPrintOptionsDialogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HumanResource\EmployeeFingerPrintEnrollmentView.xaml.cs">
       <DependentUpon>EmployeeFingerPrintEnrollmentView.xaml</DependentUpon>
     </Compile>
@@ -286,6 +292,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\TimeKeepingView.xaml.cs">
       <DependentUpon>TimeKeepingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\TimeLogExportView.xaml.cs">
+      <DependentUpon>TimeLogExportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -339,6 +348,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\DataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\DatePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -414,6 +427,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\HumanResource\Dialogs\TimeLogExportPrintOptionsDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HumanResource\EmployeeFingerPrintEnrollmentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -438,6 +455,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\HumanResource\TimeLogExportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -459,6 +480,10 @@
     <ProjectReference Include="..\LGU.DigitalPersona\LGU.DigitalPersona.csproj">
       <Project>{789b5915-5dee-43c3-8acc-1313d7ede28a}</Project>
       <Name>LGU.DigitalPersona</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LGU.Windows\LGU.Windows.csproj">
+      <Project>{ccc18e06-b391-4b3d-a2f4-895a2a9d42a9}</Project>
+      <Name>LGU.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\LGU\LGU.csproj">
       <Project>{88191DC2-BD70-4984-B77B-54EE04966DB7}</Project>
