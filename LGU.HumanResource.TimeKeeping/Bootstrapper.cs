@@ -2,14 +2,14 @@
 using LGU.Views.HumanResource;
 using Prism.Unity;
 
-namespace LGU.HumanResource
+namespace LGU.HumanResource.TimeKeeping
 {
-    public class Bootstrapper : BootstrapperBase
+    class Bootstrapper : BootstrapperBase
     {
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
-            
+
             Container.RegisterTypeForNavigation<TimeKeepingView>();
         }
 
