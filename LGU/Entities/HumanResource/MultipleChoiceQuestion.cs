@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.HumanResource
 {
-    public class MultipleChoiceQuestion : ExamQuestion
+    public sealed class MultipleChoiceQuestion : ExamQuestion
     {
         public MultipleChoiceQuestion(ExamSet set, int? maxAnswerCount) : base(set, ExamQuestionType.MultipleChoice)
         {

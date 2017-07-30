@@ -8,5 +8,6 @@ namespace LGU.Entities.HumanResource
         public EmployeeType Type { get; set; }
         public EmploymentStatus EmploymentStatus { get; set; }
         public Position Position { get; set; }
+        public PayrollGroup PayrollGroup { get; set; }
     }
 }

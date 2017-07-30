@@ -3,6 +3,7 @@
     public enum ExamQuestionType
     {
         MultipleChoice,
-        Essay
+        Essay,
+        MultipleImageChoice
     }
 }
