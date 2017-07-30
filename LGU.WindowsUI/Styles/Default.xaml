@@ -10,6 +10,7 @@
         <ResourceDictionary Source="ColorZone.xaml"/>
         <ResourceDictionary Source="ComboBox.xaml"/>
         <ResourceDictionary Source="DataGrid.xaml"/>
+        <ResourceDictionary Source="DatePicker.xaml"/>
         <ResourceDictionary Source="ItemsControl.xaml"/>
         <ResourceDictionary Source="ListBox.xaml"/>
         <ResourceDictionary Source="PasswordBox.xaml"/>
@@ -26,6 +27,7 @@
     <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource _CheckBox}"/>
     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource _ComboBox}"/>
     <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource _DataGrid}"/>
+    <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource _DatePicker}"/>
     <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource _PasswordBox}"/>
     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource _BaseTextBlock}"/>
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource _TextBox}"/>
