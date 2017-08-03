@@ -1,6 +1,7 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
 using LGU.Processes;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,19 +14,22 @@ namespace LGU.EntityManagers.HumanResource
         private readonly IInsertEmployeeFingerPrintSet r_InsertEmployeeFingerPrintSetList;
         private readonly IUpdateEmployeeFingerPrintSet r_UpdateEmployeeFingerPrintSet;
         private readonly IGetEmployeeFingerPrintSetById r_GetEmployeeFingerPrintSetById;
+        private readonly IGetUpdatedEmployeeFingerPrintSetList r_GetUpdatedEmployeeFingerPrintSetList;
 
         public EmployeeFingerPrintSetManager(
             IDeleteEmployeeFingerPrintSet deleteEmployeeFingerPrintSet,
             IGetEmployeeFingerPrintSetList getEmployeeFingerPrintSetList,
             IInsertEmployeeFingerPrintSet insertEmployeeFingerPrintSet,
             IUpdateEmployeeFingerPrintSet updateEmployeeFingerPrintSet,
-            IGetEmployeeFingerPrintSetById getEmployeeFingerPrintSetById)
+            IGetEmployeeFingerPrintSetById getEmployeeFingerPrintSetById,
+            IGetUpdatedEmployeeFingerPrintSetList getUpdatedEmployeeFingerPrintSetList)
         {
             r_DeleteEmployeeFingerPrintSet = deleteEmployeeFingerPrintSet;
             r_GetEmployeeFingerPrintSetList = getEmployeeFingerPrintSetList;
             r_InsertEmployeeFingerPrintSetList = insertEmployeeFingerPrintSet;
             r_UpdateEmployeeFingerPrintSet = updateEmployeeFingerPrintSet;
             r_GetEmployeeFingerPrintSetById = getEmployeeFingerPrintSetById;
+            r_GetUpdatedEmployeeFingerPrintSetList = getUpdatedEmployeeFingerPrintSetList;
         }
 
         public IProcessResult<EmployeeFingerPrintSet> Delete(EmployeeFingerPrintSet data)
@@ -119,6 +123,24 @@ namespace LGU.EntityManagers.HumanResource
         public Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> GetListAsync(CancellationToken cancellationToken)
         {
             return r_GetEmployeeFingerPrintSetList.ExecuteAsync(cancellationToken);
+        }
+
+        public IEnumerableProcessResult<EmployeeFingerPrintSet> GetUpdatedList(DateTime logDate)
+        {
+            r_GetUpdatedEmployeeFingerPrintSetList.LogDate = logDate;
+            return r_GetUpdatedEmployeeFingerPrintSetList.Execute();
+        }
+
+        public Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> GetUpdatedListAsync(DateTime logDate)
+        {
+            r_GetUpdatedEmployeeFingerPrintSetList.LogDate = logDate;
+            return r_GetUpdatedEmployeeFingerPrintSetList.ExecuteAsync();
+        }
+
+        public Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> GetUpdatedListAsync(DateTime logDate, CancellationToken cancellationToken)
+        {
+            r_GetUpdatedEmployeeFingerPrintSetList.LogDate = logDate;
+            return r_GetUpdatedEmployeeFingerPrintSetList.ExecuteAsync(cancellationToken);
         }
 
         public IProcessResult<EmployeeFingerPrintSet> Insert(EmployeeFingerPrintSet data)
