@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:local="clr-namespace:LGU.Views.HumanResource"
              xmlns:viewModels="clr-namespace:LGU.ViewModels.HumanResource"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
@@ -12,7 +11,7 @@
                 <ResourceDictionary Source="../../Styles/Default.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate x:Key="_MessageTemplate" DataType="{x:Type viewModels:TimeKeepingResult}">
-                <TextBlock Text="{Binding Message}" Style="{DynamicResource ExtraLargeHeaderTextBlock}"/>
+                <TextBlock Text="{Binding Message}" Style="{DynamicResource ExtraLargeHeaderTextBlock}" TextAlignment="Center"/>
             </DataTemplate>
 
             <DataTemplate x:Key="_LogEmployeeTemplate" DataType="{x:Type viewModels:TimeKeepingResult}">
@@ -22,7 +21,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel>
-                        <TextBlock Text="{Binding Employee.FullName}" FontFamily="{DynamicResource DefaultFontFamily}" FontSize="48" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Employee.FullName}" FontFamily="{DynamicResource DefaultFontFamily}" FontSize="45" FontWeight="Bold"/>
                         <Separator/>
                         <TextBlock Text="{Binding Employee.Department.Description}" FontFamily="{DynamicResource DefaultFontFamily}" FontSize="28" TextWrapping="Wrap" TextAlignment="Left"/>
                     </StackPanel>
