@@ -1,5 +1,6 @@
 ﻿using LGU.EntityManagers;
 using LGU.Events;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Events;
 using Prism.Regions;
@@ -12,7 +13,6 @@ namespace LGU.ViewModels
         public static string MainContentRegionName { get; } = "MainContentRegion";
         public static string MainDialogName { get; } = "MainDialog";
         public static string InitialMainContentRegionSource { get; set; }
-
 
         private readonly ISystemManager r_SystemManager;
 
@@ -28,6 +28,13 @@ namespace LGU.ViewModels
             set { SetProperty(ref _Title, value); }
         }
 
+        private SnackbarMessageQueue _MessageQueue = new SnackbarMessageQueue();
+        public SnackbarMessageQueue MessageQueue
+        {
+            get { return _MessageQueue; }
+            set { SetProperty(ref _MessageQueue, value); }
+        }
+
         private WindowState _WindowState = WindowState.Maximized;
         public WindowState WindowState
         {
@@ -39,11 +46,13 @@ namespace LGU.ViewModels
         {
             r_EventAggregator.GetEvent<TitleEvent>().Subscribe(t => Title = t);
             r_EventAggregator.GetEvent<WindowStateEvent>().Subscribe(ws => WindowState = ws);
+            r_EventAggregator.GetEvent<NewMessageEvent>().Subscribe(nm => MessageQueue.Enqueue(nm));
 
             if (!string.IsNullOrWhiteSpace(InitialMainContentRegionSource))
             {
                 r_RegionManager.RequestNavigate(MainContentRegionName, InitialMainContentRegionSource);
             }
+            r_EventAggregator.GetEvent<NewMessageEvent>().Publish("Hello");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Prism.Events;
+﻿using LGU.Events;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Diagnostics;
@@ -10,11 +11,13 @@ namespace LGU.ViewModels
     {
         protected readonly IRegionManager r_RegionManager;
         protected readonly IEventAggregator r_EventAggregator;
+        protected readonly NewMessageEvent r_NewMessageEvent;
 
         public ViewModelBase(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             r_RegionManager = regionManager;
             r_EventAggregator = eventAggregator;
+            r_NewMessageEvent = r_EventAggregator.GetEvent<NewMessageEvent>();
         }
 
         public virtual void Initialize()
