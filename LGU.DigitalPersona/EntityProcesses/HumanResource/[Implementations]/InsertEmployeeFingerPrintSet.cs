@@ -35,7 +35,7 @@ namespace LGU.EntityProcesses.HumanResource
 
         private IProcessResult<EmployeeFingerPrintSet> GetProcessResult(EmployeeFingerPrintSet data, SqlCommand command, int affectedRows)
         {
-            if (affectedRows == 1)
+            if (affectedRows > 0)
             {
                 return new ProcessResult<EmployeeFingerPrintSet>(data, ProcessResultStatus.Success);
             }
