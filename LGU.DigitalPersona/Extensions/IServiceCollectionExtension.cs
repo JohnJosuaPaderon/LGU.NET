@@ -12,11 +12,12 @@ namespace LGU.Extensions
         {
             #region EmployeeFingerPrintSetManager
             serviceCollection.AddSingleton<IEmployeeFingerPrintSetConverter<SqlDataReader>, EmployeeFingerPrintSetConverter>();
-            serviceCollection.AddTransient<IDeleteEmployeeFingerPrintSet, DeleteEmployeeFingerPrintSet>();
-            serviceCollection.AddTransient<IGetEmployeeFingerPrintSetList, GetEmployeeFingerPrintSetList>();
-            serviceCollection.AddTransient<IInsertEmployeeFingerPrintSet, InsertEmployeeFingerPrintSet>();
-            serviceCollection.AddTransient<IUpdateEmployeeFingerPrintSet, UpdateEmployeeFingerPrintSet>();
-            serviceCollection.AddTransient<IGetEmployeeFingerPrintSetById, GetEmployeeFingerPrintSetById>();
+            serviceCollection.AddSingleton<IDeleteEmployeeFingerPrintSet, DeleteEmployeeFingerPrintSet>();
+            serviceCollection.AddSingleton<IGetEmployeeFingerPrintSetList, GetEmployeeFingerPrintSetList>();
+            serviceCollection.AddSingleton<IInsertEmployeeFingerPrintSet, InsertEmployeeFingerPrintSet>();
+            serviceCollection.AddSingleton<IUpdateEmployeeFingerPrintSet, UpdateEmployeeFingerPrintSet>();
+            serviceCollection.AddSingleton<IGetEmployeeFingerPrintSetById, GetEmployeeFingerPrintSetById>();
+            serviceCollection.AddSingleton<IGetUpdatedEmployeeFingerPrintSetList, GetUpdatedEmployeeFingerPrintSetList>();
             serviceCollection.AddSingleton<IEmployeeFingerPrintSetManager, EmployeeFingerPrintSetManager>();
             #endregion
 
