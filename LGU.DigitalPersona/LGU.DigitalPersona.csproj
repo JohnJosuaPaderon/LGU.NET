@@ -138,6 +138,7 @@
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\DeleteEmployeeFingerPrintSet.cs" />
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\GetEmployeeFingerPrintSetById.cs" />
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\GetEmployeeFingerPrintSetList.cs" />
+    <Compile Include="EntityProcesses\HumanResource\[Implementations]\GetUpdatedEmployeeFingerPrintSetList.cs" />
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\InsertEmployeeFingerPrintSet.cs" />
     <Compile Include="EntityProcesses\HumanResource\[Implementations]\UpdateEmployeeFingerPrintSet.cs" />
     <Compile Include="Extensions\IServiceCollectionExtension.cs" />
