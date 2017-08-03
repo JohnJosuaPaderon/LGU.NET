@@ -2,6 +2,8 @@
 using DPFP.Capture;
 using DPFP.ID;
 using DPFP.Processing;
+using LGU.Entities.HumanResource;
+using LGU.EntityManagers;
 using LGU.EntityManagers.HumanResource;
 using LGU.Events;
 using LGU.Extensions;
@@ -23,12 +25,16 @@ namespace LGU.ViewModels.HumanResource
     {
         private readonly IEmployeeFingerPrintSetManager r_EmployeeFingerPrintSetManager;
         private readonly ITimeLogManager r_TimeLogManager;
+        private readonly ISystemManager r_SystemManager;
         private readonly Capture r_Capture;
+        private readonly IConnectionStringSource r_ConnectionStringSource;
 
         public TimeKeepingViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
             r_EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
             r_TimeLogManager = SystemRuntime.Services.GetService<ITimeLogManager>();
+            r_SystemManager = SystemRuntime.Services.GetService<ISystemManager>();
+            r_ConnectionStringSource = SystemRuntime.Services.GetService<IConnectionStringSource>();
             r_Capture = new Capture();
             Users = new UserCollection(1000000);
             Identification = new Identification(ref Users)
@@ -36,12 +42,27 @@ namespace LGU.ViewModels.HumanResource
                 EventHandler = this
             };
             Timer = new Timer(1000);
-            ResultDisplayTimer = new Timer(3000);
+            TimerRefresher = new Timer(60000);
+            ResultDisplayTimer = new Timer(5000);
+            DataUpdateTimer = new Timer(10000);
             Timer.Elapsed += Timer_Elapsed;
+            TimerRefresher.Elapsed += TimerRefresher_Elapsed;
             ResultDisplayTimer.Elapsed += ResultDisplayTimer_Elapsed;
+            DataUpdateTimer.Elapsed += DataUpdateTimer_Elapsed;
             LogResults.Add(NotYetReadyResult);
             LogResults.Add(EmployeeNotFoundResult);
             LogResults.Add(ScanYourFingerNowResult);
+            LogResults.Add(DatabaseUnavailableResult);
+        }
+
+        private void DataUpdateTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Invoke(async () => await GetUpdatedFingerPrintSetListAsync());
+        }
+
+        private void TimerRefresher_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Invoke(async () => await GetSystemDateAsync());
         }
 
         private string _ScannerLog;
@@ -51,8 +72,11 @@ namespace LGU.ViewModels.HumanResource
             set { SetProperty(ref _ScannerLog, value); }
         }
         
+        private DateTime LastDataUpdate { get; set; }
         private Timer Timer { get; }
         private Timer ResultDisplayTimer { get; }
+        private Timer TimerRefresher { get; }
+        private Timer DataUpdateTimer { get; }
         private FeatureExtraction FeatureExtraction = new FeatureExtraction();
         private Identification Identification;
         private UserCollection Users;
@@ -94,7 +118,7 @@ namespace LGU.ViewModels.HumanResource
         {
             Key = nameof(DatabaseUnavailableResult),
             Employee = null,
-            Message = "Unable to connection to database",
+            Message = "Unable to establish database connection\nPlease report this error immediately.",
             Type = TimeKeepingResultType.MessageOnly
         };
 
@@ -180,7 +204,7 @@ namespace LGU.ViewModels.HumanResource
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Invoke(() => { CurrentTimeStamp = DateTime.Now; });
+            Invoke(() => { CurrentTimeStamp = CurrentTimeStamp?.AddSeconds(1) ?? DateTime.Now; });
         }
 
         private void ResultDisplayTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -195,43 +219,87 @@ namespace LGU.ViewModels.HumanResource
         private async Task GetFingerPrintSetListAsync()
         {
             var result = await r_EmployeeFingerPrintSetManager.GetListAsync();
-
+            LastDataUpdate = DateTime.Now;
             if (result.Status == ProcessResultStatus.Success)
             {
                 var list = new List<TimeKeepingResult>();
 
                 if (result.DataList != null)
                 {
-                    Parallel.ForEach(result.DataList, efps =>
+                    foreach (var item in result.DataList)
                     {
-                        var user = new User(efps.Employee.Id.ToString());
-                        user.AddFingerPrint(efps.LeftThumb);
-                        user.AddFingerPrint(efps.LeftIndexFinger);
-                        user.AddFingerPrint(efps.LeftMiddleFinger);
-                        user.AddFingerPrint(efps.LeftRingFinger);
-                        user.AddFingerPrint(efps.LeftLittleFinger);
-                        user.AddFingerPrint(efps.RightThumb);
-                        user.AddFingerPrint(efps.RightIndexFinger);
-                        user.AddFingerPrint(efps.RightMiddleFinger);
-                        user.AddFingerPrint(efps.RightRingFinger);
-                        user.AddFingerPrint(efps.RightLittleFinger);
-                        Users.AddUser(ref user);
-
-                        list.Add(new TimeKeepingResult()
-                        {
-                            Key = efps?.Employee.Id.ToString(),
-                            Employee = new EmployeeModel(efps?.Employee),
-                            Message = "logged",
-                            Type = TimeKeepingResultType.Logged
-                        });
-                    });
+                        AddUpdateFingerPrintUser(item);
+                    }
                 }
 
                 LogResults.AddRange(list);
             }
             else
             {
-                ShowErrorMessage(result.Message);
+                SelectedLogResult = DatabaseUnavailableResult;
+            }
+        }
+
+        private void AddUpdateFingerPrintUser(EmployeeFingerPrintSet fingerPrintSet)
+        {
+            var employeeId = fingerPrintSet.Employee.Id.ToString();
+            var userId = new UserID(employeeId);
+
+            if (!Users.UserExists(userId))
+            {
+                var user = new User(userId);
+                user.AddFingerPrint(fingerPrintSet.LeftThumb);
+                user.AddFingerPrint(fingerPrintSet.LeftIndexFinger);
+                user.AddFingerPrint(fingerPrintSet.LeftMiddleFinger);
+                user.AddFingerPrint(fingerPrintSet.LeftRingFinger);
+                user.AddFingerPrint(fingerPrintSet.LeftLittleFinger);
+                user.AddFingerPrint(fingerPrintSet.RightThumb);
+                user.AddFingerPrint(fingerPrintSet.RightIndexFinger);
+                user.AddFingerPrint(fingerPrintSet.RightMiddleFinger);
+                user.AddFingerPrint(fingerPrintSet.RightRingFinger);
+                user.AddFingerPrint(fingerPrintSet.RightLittleFinger);
+                Users.AddUser(ref user);
+
+                LogResults.Add(new TimeKeepingResult()
+                {
+                    Key = employeeId,
+                    Employee = new EmployeeModel(fingerPrintSet?.Employee),
+                    Message = "logged",
+                    Type = TimeKeepingResultType.Logged
+                });
+            }
+            else
+            {
+                var user = Users[userId];
+                user.ClearTemplates();
+                user.AddFingerPrint(fingerPrintSet.LeftThumb);
+                user.AddFingerPrint(fingerPrintSet.LeftIndexFinger);
+                user.AddFingerPrint(fingerPrintSet.LeftMiddleFinger);
+                user.AddFingerPrint(fingerPrintSet.LeftRingFinger);
+                user.AddFingerPrint(fingerPrintSet.LeftLittleFinger);
+                user.AddFingerPrint(fingerPrintSet.RightThumb);
+                user.AddFingerPrint(fingerPrintSet.RightIndexFinger);
+                user.AddFingerPrint(fingerPrintSet.RightMiddleFinger);
+                user.AddFingerPrint(fingerPrintSet.RightRingFinger);
+                user.AddFingerPrint(fingerPrintSet.RightLittleFinger);
+            }
+        }
+
+        private async Task GetUpdatedFingerPrintSetListAsync()
+        {
+            var result = await r_EmployeeFingerPrintSetManager.GetUpdatedListAsync(LastDataUpdate);
+
+            if (result.Status == ProcessResultStatus.Success)
+            {
+                LastDataUpdate = CurrentTimeStamp ?? DateTime.Now;
+
+                if (result.DataList != null && result.DataList.Any())
+                {
+                    foreach (var item in result.DataList)
+                    {
+                        AddUpdateFingerPrintUser(item);
+                    }
+                }
             }
         }
 
@@ -240,13 +308,41 @@ namespace LGU.ViewModels.HumanResource
             r_EventAggregator.GetEvent<TitleEvent>().Publish("Time-Keeping");
             r_Capture.EventHandler = this;
             SelectedLogResult = NotYetReadyResult;
-            await GetFingerPrintSetListAsync();
 
+            await GetSystemDateAsync();
             Timer.Start();
-            SelectedLogResult = ScanYourFingerNowResult;
-            
-            StartScanner();
+            TimerRefresher.Start();
+
+            if (SelectedLogResult != DatabaseUnavailableResult)
+            {
+                await GetFingerPrintSetListAsync();
+                SelectedLogResult = ScanYourFingerNowResult;
+                DataUpdateTimer.Start();
+
+                StartScanner();
+            }
         }
+
+        private async Task GetSystemDateAsync()
+        {
+            var result = await r_SystemManager.GetSystemDateAsync();
+
+            if (result.Status == ProcessResultStatus.Success)
+            {
+                CurrentTimeStamp = result.Data;
+
+                if (SelectedLogResult == DatabaseUnavailableResult)
+                {
+                    SelectedLogResult = ScanYourFingerNowResult;
+                }
+            }
+            else
+            {
+                CurrentTimeStamp = DateTime.Now;
+                SelectedLogResult = DatabaseUnavailableResult;
+            }
+        }
+
         private void StartScanner()
         {
             StopScanner();

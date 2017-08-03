@@ -1,7 +1,6 @@
 ﻿using LGU.Views.Core;
 using LGU.Views.HumanResource;
 using MaterialDesignThemes.Wpf;
-using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using System;
