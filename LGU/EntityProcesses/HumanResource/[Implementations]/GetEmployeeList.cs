@@ -14,8 +14,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        private SqlQueryInfo QueryInfo =>
-            SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName());
+        private SqlQueryInfo QueryInfo => SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName());
 
         public IEnumerableProcessResult<Employee> Execute()
         {

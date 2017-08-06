@@ -9,29 +9,29 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class GetDepartmentById : DepartmentProcess, IGetDepartmentById
+    public sealed class GetDepartmentHeadById : DepartmentHeadProcess, IGetDepartmentHeadById
     {
-        public GetDepartmentById(IConnectionStringSource connectionStringSource, IDepartmentConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetDepartmentHeadById(IConnectionStringSource connectionStringSource, IDepartmentHeadConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
-        public int DepartmentId { get; set; }
+        public long DepartmentHeadId { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
-                .AddInputParameter("@_Id", DepartmentId);
+                .AddInputParameter("@_Id", DepartmentHeadId);
 
-        public IProcessResult<Department> Execute()
+        public IProcessResult<DepartmentHead> Execute()
         {
             return r_SqlHelper.ExecuteReader(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<Department>> ExecuteAsync()
+        public Task<IProcessResult<DepartmentHead>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<Department>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<DepartmentHead>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
         }

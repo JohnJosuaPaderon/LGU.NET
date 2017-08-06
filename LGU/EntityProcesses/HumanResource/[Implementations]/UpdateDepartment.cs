@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
+using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
 using System.Data.SqlClient;
 using System.Threading;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class UpdateDepartment : HumanResourceProcessBase, IUpdateDepartment
+    public sealed class UpdateDepartment : DepartmentProcess, IUpdateDepartment
     {
-        public UpdateDepartment(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public UpdateDepartment(IConnectionStringSource connectionStringSource, IDepartmentConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -21,6 +22,7 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_Id", Department.Id)
             .AddInputParameter("@_Description", Department.Description)
             .AddInputParameter("@_Abbreviation", Department.Abbreviation)
+            .AddInputParameter("@_HeadId", Department.Head?.Id)
             .AddLogByParameter();
 
         private IProcessResult<Department> GetProcessResult(Department data, SqlCommand command, int affectedRows)

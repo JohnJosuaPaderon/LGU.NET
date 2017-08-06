@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
+using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
 using System.Data.SqlClient;
 using System.Threading;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class DeleteEmployee : HumanResourceProcessBase, IDeleteEmployee
+    public sealed class DeleteEmployee : EmployeeProcess, IDeleteEmployee
     {
-        public DeleteEmployee(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public DeleteEmployee(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -30,7 +31,7 @@ namespace LGU.EntityProcesses.HumanResource
             }
             else
             {
-                return new ProcessResult<Employee>(ProcessResultStatus.Failed);
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Failed to delete employee.");
             }
         }
 

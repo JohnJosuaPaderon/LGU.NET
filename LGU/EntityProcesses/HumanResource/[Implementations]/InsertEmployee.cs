@@ -42,7 +42,7 @@ namespace LGU.EntityProcesses.HumanResource
             }
             else
             {
-                return new ProcessResult<Employee>(ProcessResultStatus.Failed);
+                return new ProcessResult<Employee>(ProcessResultStatus.Failed, "Failed to insert employee.");
             }
         }
 

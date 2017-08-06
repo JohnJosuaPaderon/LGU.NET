@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
+using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class InsertDepartment : HumanResourceProcessBase, IInsertDepartment
+    public sealed class InsertDepartment : DepartmentProcess, IInsertDepartment
     {
-        public InsertDepartment(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public InsertDepartment(IConnectionStringSource connectionStringSource, IDepartmentConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -22,6 +23,7 @@ namespace LGU.EntityProcesses.HumanResource
             .AddOutputParameter("@_Id", DbType.Int32)
             .AddInputParameter("@_Description", Department.Description)
             .AddInputParameter("@_Abbreviation", Department.Abbreviation)
+            .AddInputParameter("@_HeadId", Department.Head?.Id)
             .AddLogByParameter();
 
         private IProcessResult<Department> GetProcessResult(Department data, SqlCommand command, int affectedRows)
@@ -33,7 +35,7 @@ namespace LGU.EntityProcesses.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed);
+                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Failed to insert department.");
             }
         }
 

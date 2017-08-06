@@ -9,29 +9,29 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class GetDepartmentById : DepartmentProcess, IGetDepartmentById
+    public sealed class GetEmployeeWorkTimeScheduleById : EmployeeWorkTimeScheduleProcess, IGetEmployeeWorkTimeScheduleById
     {
-        public GetDepartmentById(IConnectionStringSource connectionStringSource, IDepartmentConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetEmployeeWorkTimeScheduleById(IConnectionStringSource connectionStringSource, IEmployeeWorkTimeScheduleConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
-        public int DepartmentId { get; set; }
+        public long WorkTimeScheduleId { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
-                .AddInputParameter("@_Id", DepartmentId);
+            .AddInputParameter("@_Id", WorkTimeScheduleId);
 
-        public IProcessResult<Department> Execute()
+        public IProcessResult<EmployeeWorkTimeSchedule> Execute()
         {
             return r_SqlHelper.ExecuteReader(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<Department>> ExecuteAsync()
+        public Task<IProcessResult<EmployeeWorkTimeSchedule>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<Department>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<EmployeeWorkTimeSchedule>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
         }
