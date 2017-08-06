@@ -140,6 +140,16 @@ namespace LGU.Extensions
             serviceCollection.AddSingleton<IDepartmentManager, DepartmentManager>();
             #endregion
 
+            #region DepartmentHead
+            serviceCollection.AddSingleton<IDepartmentHeadConverter<SqlDataReader>, DepartmentHeadConverter>();
+            serviceCollection.AddSingleton<IDeleteDepartmentHead, DeleteDepartmentHead>();
+            serviceCollection.AddSingleton<IGetDepartmentHeadById, GetDepartmentHeadById>();
+            serviceCollection.AddSingleton<IGetDepartmentHeadList, GetDepartmentHeadList>();
+            serviceCollection.AddSingleton<IInsertDepartmentHead, InsertDepartmentHead>();
+            serviceCollection.AddSingleton<IUpdateDepartmentHead, UpdateDepartmentHead>();
+            serviceCollection.AddSingleton<IDepartmentHeadManager, DepartmentHeadManager>();
+            #endregion
+
             #region ExamSet
             serviceCollection.AddSingleton<IExamSetConverter<SqlDataReader>, ExamSetConverter>();
             serviceCollection.AddSingleton<IDeleteExamSet, DeleteExamSet>();
@@ -243,13 +253,20 @@ namespace LGU.Extensions
             serviceCollection.AddSingleton<IEmployeeManager, EmployeeManager>();
             #endregion
 
+            #region EmployeeWorkTimeSchedule
+            serviceCollection.AddSingleton<IEmployeeWorkTimeScheduleConverter<SqlDataReader>, EmployeeWorkTimeScheduleConverter>();
+            serviceCollection.AddSingleton<IDeleteEmployeeWorkTimeSchedule, DeleteEmployeeWorkTimeSchedule>();
+            serviceCollection.AddSingleton<IGetEmployeeWorkTimeScheduleById, GetEmployeeWorkTimeScheduleById>();
+            serviceCollection.AddSingleton<IGetEmployeeWorkTimeScheduleList, GetEmployeeWorkTimeScheduleList>();
+            serviceCollection.AddSingleton<IInsertEmployeeWorkTimeSchedule, InsertEmployeeWorkTimeSchedule>();
+            serviceCollection.AddSingleton<IUpdateEmployeeWorkTimeSchedule, UpdateEmployeeWorkTimeSchedule>();
+            serviceCollection.AddSingleton<IEmployeeWorkTimeScheduleManager, EmployeeWorkTimeScheduleManager>();
+            #endregion
+
             #region TimeLogType
             serviceCollection.AddSingleton<ITimeLogTypeConverter<SqlDataReader>, TimeLogTypeConverter>();
-            serviceCollection.AddSingleton<IDeleteTimeLogType, DeleteTimeLogType>();
             serviceCollection.AddSingleton<IGetTimeLogTypeById, GetTimeLogTypeById>();
             serviceCollection.AddSingleton<IGetTimeLogTypeList, GetTimeLogTypeList>();
-            serviceCollection.AddSingleton<IInsertTimeLogType, InsertTimeLogType>();
-            serviceCollection.AddSingleton<IUpdateTimeLogType, UpdateTimeLogType>();
             serviceCollection.AddSingleton<ITimeLogTypeManager, TimeLogTypeManager>();
             #endregion
 
