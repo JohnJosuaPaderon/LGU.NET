@@ -16,9 +16,7 @@ namespace LGU.EntityConverters.HumanResource
             return new TimeLogType()
             {
                 Id = reader.GetInt16("Id"),
-                Description = reader.GetString("Description"),
-                WorkTimeLength = reader.GetTimeSpan("WorkTimeLength"),
-                BreakTimeLength = reader.GetNullableTimeSpan("BreakTimeLength")
+                Description = reader.GetString("Description")
             };
         }
 

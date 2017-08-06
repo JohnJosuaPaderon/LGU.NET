@@ -1,5 +1,6 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Entities.HumanResource;
+using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,28 @@ namespace LGU.EntityConverters.HumanResource
 {
     public class DepartmentConverter : IDepartmentConverter<SqlDataReader>
     {
-        private static Department GetData(SqlDataReader reader)
+        private readonly IDepartmentHeadManager r_DepartmentHeadManager;
+
+        public DepartmentConverter(IDepartmentHeadManager departmentHeadManager)
+        {
+            r_DepartmentHeadManager = departmentHeadManager;
+        }
+
+        private Department GetData(DepartmentHead head, SqlDataReader reader)
         {
             return new Department()
             {
                 Id = reader.GetInt32("Id"),
                 Description = reader.GetString("Description"),
-                Abbreviation = reader.GetString("Abbreviation")
+                Abbreviation = reader.GetString("Abbreviation"),
+                Head = head
             };
+        }
+
+        private Department GetData(SqlDataReader reader)
+        {
+            var headResult = r_DepartmentHeadManager.GetById(reader.GetInt64("HeadId"));
+            return GetData(headResult.Data, reader);
         }
 
         public IEnumerableProcessResult<Department> EnumerableFromReader(SqlDataReader reader)

@@ -34,7 +34,7 @@ namespace LGU.EntityConverters.HumanResource
             r_PositionManager = positionManager;
         }
 
-        private Employee GetData(Gender gender, Department department/*, EmployeeType type, EmploymentStatus employmentStatus, Position position*/, SqlDataReader reader)
+        private Employee GetData(Gender gender, Department department, EmployeeType type, EmploymentStatus employmentStatus, Position position, SqlDataReader reader)
         {
             return new Employee()
             {
@@ -46,10 +46,10 @@ namespace LGU.EntityConverters.HumanResource
                 BirthDate = reader.GetNullableDateTime("BirthDate"),
                 Deceased = reader.GetBoolean("Deceased"),
                 Department = department,
-                //EmploymentStatus = employmentStatus,
+                EmploymentStatus = employmentStatus,
                 Gender = gender,
-                //Position = position,
-                //Type = type
+                Position = position,
+                Type = type
             };
         }
 
@@ -57,33 +57,33 @@ namespace LGU.EntityConverters.HumanResource
         {
             var genderResult = r_GenderManager.GetById(reader.GetInt16("GenderId"));
             var departmentResult = r_DepartmentManager.GetById(reader.GetInt32("DepartmentId"));
-            //var typeResult = r_EmployeeTypeManager.GetById(reader.GetInt16("TypeId"));
-            //var employmentStatusResult = r_EmploymentStatusManager.GetById(reader.GetInt16("EmploymentStatusId"));
-            //var positionResult = r_PositionManager.GetById(reader.GetInt16("PositionId"));
+            var typeResult = r_EmployeeTypeManager.GetById(reader.GetInt16("TypeId"));
+            var employmentStatusResult = r_EmploymentStatusManager.GetById(reader.GetInt16("EmploymentStatusId"));
+            var positionResult = r_PositionManager.GetById(reader.GetInt16("PositionId"));
 
-            return GetData(genderResult.Data, departmentResult.Data/*, typeResult.Data, employmentStatusResult.Data, positionResult.Data*/, reader);
+            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, reader);
         }
 
         private async Task<Employee> GetDataAsync(SqlDataReader reader)
         {
             var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"));
             var departmentResult = await r_DepartmentManager.GetByIdAsync(reader.GetInt32("DepartmentId"));
-            //var typeResult = await r_EmployeeTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
-            //var employmentStatusResult = await r_EmploymentStatusManager.GetByIdAsync(reader.GetInt16("EmploymentStatusId"));
-            //var positionResult = await r_PositionManager.GetByIdAsync(reader.GetInt16("PositionId"));
+            var typeResult = await r_EmployeeTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
+            var employmentStatusResult = await r_EmploymentStatusManager.GetByIdAsync(reader.GetInt16("EmploymentStatusId"));
+            var positionResult = await r_PositionManager.GetByIdAsync(reader.GetInt16("PositionId"));
 
-            return GetData(genderResult.Data, departmentResult.Data/*, typeResult.Data, employmentStatusResult.Data, positionResult.Data*/, reader);
+            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, reader);
         }
 
         private async Task<Employee> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"), cancellationToken);
             var departmentResult = await r_DepartmentManager.GetByIdAsync(reader.GetInt32("DepartmentId"), cancellationToken);
-            //var typeResult = await r_EmployeeTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
-            //var employmentStatusResult = await r_EmploymentStatusManager.GetByIdAsync(reader.GetInt16("EmploymentStatusId"), cancellationToken);
-            //var positionResult = await r_PositionManager.GetByIdAsync(reader.GetInt16("PositionId"), cancellationToken);
+            var typeResult = await r_EmployeeTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
+            var employmentStatusResult = await r_EmploymentStatusManager.GetByIdAsync(reader.GetInt16("EmploymentStatusId"), cancellationToken);
+            var positionResult = await r_PositionManager.GetByIdAsync(reader.GetInt16("PositionId"), cancellationToken);
 
-            return GetData(genderResult.Data, departmentResult.Data/*, typeResult.Data, employmentStatusResult.Data, positionResult.Data*/, reader);
+            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, reader);
         }
 
         public IEnumerableProcessResult<Employee> EnumerableFromReader(SqlDataReader reader)
