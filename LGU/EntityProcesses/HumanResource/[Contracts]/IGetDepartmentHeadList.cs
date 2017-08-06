@@ -3,8 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IUpdateTimeLogType : IProcess<TimeLogType>
+    public interface IGetDepartmentHeadList : IEnumerableProcess<DepartmentHead>
     {
-        TimeLogType TimeLogType { get; set; }
     }
 }

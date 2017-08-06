@@ -3,8 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IDeleteTimeLogType : IProcess<TimeLogType>
+    public interface IGetEmployeeWorkTimeScheduleList : IEnumerableProcess<EmployeeWorkTimeSchedule>
     {
-        TimeLogType TimeLogType { get; set; }
     }
 }
