@@ -12,7 +12,6 @@ namespace LGU.EntityConverters.Core
 {
     public sealed class PersonConverter : IPersonConverter<SqlDataReader>
     {
-
         private readonly IGenderManager r_GenderManager;
 
         public PersonConverter(IGenderManager genderManager)
