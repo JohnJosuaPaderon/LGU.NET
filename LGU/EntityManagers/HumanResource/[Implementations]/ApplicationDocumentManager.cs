@@ -8,35 +8,32 @@ namespace LGU.EntityManagers.HumanResource
 {
     public sealed class ApplicationDocumentManager : ManagerBase<ApplicationDocument, long>, IApplicationDocumentManager
     {
-        private readonly IDeleteApplicationDocument r_DeleteApplicationDocument;
-        private readonly IGetApplicationDocumentById r_GetApplicationDocumentById;
-        private readonly IGetApplicationDocumentList r_GetApplicationDocumentList;
-        private readonly IInsertApplicationDocument r_InsertApplicationDocument;
-        private readonly IUpdateApplicationDocument r_UpdateApplicationDocument;
+        private readonly IDeleteApplicationDocument r_Delete;
+        private readonly IGetApplicationDocumentById r_GetById;
+        private readonly IGetApplicationDocumentList r_GetList;
+        private readonly IInsertApplicationDocument r_Insert;
+        private readonly IUpdateApplicationDocument r_Update;
 
         public ApplicationDocumentManager(
-            IDeleteApplicationDocument deleteApplicationDocument,
-            IGetApplicationDocumentById getApplicationDocumentById,
-            IGetApplicationDocumentList getApplicationDocumentList,
-            IInsertApplicationDocument insertApplicationDocument,
-            IUpdateApplicationDocument updateApplicationDocument)
+            IDeleteApplicationDocument delete,
+            IGetApplicationDocumentById getById,
+            IGetApplicationDocumentList getList,
+            IInsertApplicationDocument insert,
+            IUpdateApplicationDocument update)
         {
-            r_DeleteApplicationDocument = deleteApplicationDocument;
-            r_GetApplicationDocumentById = getApplicationDocumentById;
-            r_GetApplicationDocumentList = getApplicationDocumentList;
-            r_InsertApplicationDocument = insertApplicationDocument;
-            r_UpdateApplicationDocument = updateApplicationDocument;
+            r_Delete = delete;
+            r_GetById = getById;
+            r_GetList = getList;
+            r_Insert = insert;
+            r_Update = update;
         }
 
         public IProcessResult<ApplicationDocument> Delete(ApplicationDocument data)
         {
             if (data != null)
             {
-                r_DeleteApplicationDocument.ApplicationDocument = data;
-                var result = r_DeleteApplicationDocument.Execute();
-                RemoveIfSuccess(result);
-
-                return result;
+                r_Delete.ApplicationDocument = data;
+                return RemoveIfSuccess(r_Delete.Execute());
             }
             else
             {
@@ -48,11 +45,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_DeleteApplicationDocument.ApplicationDocument = data;
-                var result = await r_DeleteApplicationDocument.ExecuteAsync();
-                RemoveIfSuccess(result);
-
-                return result;
+                r_Delete.ApplicationDocument = data;
+                return RemoveIfSuccess(await r_Delete.ExecuteAsync());
             }
             else
             {
@@ -64,11 +58,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_DeleteApplicationDocument.ApplicationDocument = data;
-                var result = await r_DeleteApplicationDocument.ExecuteAsync(cancellationToken);
-                RemoveIfSuccess(result);
-
-                return result;
+                r_Delete.ApplicationDocument = data;
+                return RemoveIfSuccess(await r_Delete.ExecuteAsync(cancellationToken));
             }
             else
             {
@@ -86,11 +77,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicationDocumentById.ApplicationDocumentId = id;
-                    var result = r_GetApplicationDocumentById.Execute();
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicationDocumentId = id;
+                    return AddUpdateIfSuccess(r_GetById.Execute());
                 }
             }
             else
@@ -109,11 +97,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicationDocumentById.ApplicationDocumentId = id;
-                    var result = await r_GetApplicationDocumentById.ExecuteAsync();
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicationDocumentId = id;
+                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync());
                 }
             }
             else
@@ -132,11 +117,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicationDocumentById.ApplicationDocumentId = id;
-                    var result = await r_GetApplicationDocumentById.ExecuteAsync(cancellationToken);
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicationDocumentId = id;
+                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync(cancellationToken));
                 }
             }
             else
@@ -147,37 +129,25 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableProcessResult<ApplicationDocument> GetList()
         {
-            var result = r_GetApplicationDocumentList.Execute();
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
         public async Task<IEnumerableProcessResult<ApplicationDocument>> GetListAsync()
         {
-            var result = await r_GetApplicationDocumentList.ExecuteAsync();
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
         public async Task<IEnumerableProcessResult<ApplicationDocument>> GetListAsync(CancellationToken cancellationToken)
         {
-            var result = await r_GetApplicationDocumentList.ExecuteAsync(cancellationToken);
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }
 
         public IProcessResult<ApplicationDocument> Insert(ApplicationDocument data)
         {
             if (data != null)
             {
-                r_InsertApplicationDocument.ApplicationDocument = data;
-                var result = r_InsertApplicationDocument.Execute();
-                AddIfSuccess(result);
-
-                return result;
+                r_Insert.ApplicationDocument = data;
+                return AddIfSuccess(r_Insert.Execute());
             }
             else
             {
@@ -189,11 +159,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_InsertApplicationDocument.ApplicationDocument = data;
-                var result = await r_InsertApplicationDocument.ExecuteAsync();
-                AddIfSuccess(result);
-
-                return result;
+                r_Insert.ApplicationDocument = data;
+                return AddIfSuccess(await r_Insert.ExecuteAsync());
             }
             else
             {
@@ -205,11 +172,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_InsertApplicationDocument.ApplicationDocument = data;
-                var result = await r_InsertApplicationDocument.ExecuteAsync(cancellationToken);
-                AddIfSuccess(result);
-
-                return result;
+                r_Insert.ApplicationDocument = data;
+                return AddIfSuccess(await r_Insert.ExecuteAsync(cancellationToken));
             }
             else
             {
@@ -221,11 +185,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateApplicationDocument.ApplicationDocument = data;
-                var result = r_UpdateApplicationDocument.Execute();
-                UpdateIfSuccess(result);
-
-                return result;
+                r_Update.ApplicationDocument = data;
+                return UpdateIfSuccess(r_Update.Execute());
             }
             else
             {
@@ -237,11 +198,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateApplicationDocument.ApplicationDocument = data;
-                var result = await r_UpdateApplicationDocument.ExecuteAsync();
-                UpdateIfSuccess(result);
-
-                return result;
+                r_Update.ApplicationDocument = data;
+                return UpdateIfSuccess(await r_Update.ExecuteAsync());
             }
             else
             {
@@ -253,11 +211,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateApplicationDocument.ApplicationDocument = data;
-                var result = await r_UpdateApplicationDocument.ExecuteAsync(cancellationToken);
-                UpdateIfSuccess(result);
-
-                return result;
+                r_Update.ApplicationDocument = data;
+                return UpdateIfSuccess(await r_Update.ExecuteAsync(cancellationToken));
             }
             else
             {

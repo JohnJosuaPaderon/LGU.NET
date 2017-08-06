@@ -8,15 +8,15 @@ namespace LGU.EntityManagers.HumanResource
 {
     public sealed class ApplicantStatusManager : ManagerBase<ApplicantStatus, short>, IApplicantStatusManager
     {
-        private readonly IGetApplicantStatusById r_GetApplicantStatusById;
-        private readonly IGetApplicantStatusList r_GetApplicantStatusList;
+        private readonly IGetApplicantStatusById r_GetById;
+        private readonly IGetApplicantStatusList r_GetList;
 
         public ApplicantStatusManager(
-            IGetApplicantStatusById getApplicantStatusById,
-            IGetApplicantStatusList getApplicantStatusList)
+            IGetApplicantStatusById getById,
+            IGetApplicantStatusList getList)
         {
-            r_GetApplicantStatusById = getApplicantStatusById;
-            r_GetApplicantStatusList = getApplicantStatusList;
+            r_GetById = getById;
+            r_GetList = getList;
         }
 
         public IProcessResult<ApplicantStatus> GetById(short id)
@@ -29,11 +29,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicantStatusById.ApplicantStatusId = id;
-                    var result = r_GetApplicantStatusById.Execute();
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicantStatusId = id;
+                    return AddUpdateIfSuccess(r_GetById.Execute());
                 }
             }
             else
@@ -52,11 +49,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicantStatusById.ApplicantStatusId = id;
-                    var result = await r_GetApplicantStatusById.ExecuteAsync();
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicantStatusId = id;
+                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync());
                 }
             }
             else
@@ -75,11 +69,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicantStatusById.ApplicantStatusId = id;
-                    var result = await r_GetApplicantStatusById.ExecuteAsync(cancellationToken);
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicantStatusId = id;
+                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync(cancellationToken));
                 }
             }
             else
@@ -90,26 +81,17 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableProcessResult<ApplicantStatus> GetList()
         {
-            var result = r_GetApplicantStatusList.Execute();
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
         public async Task<IEnumerableProcessResult<ApplicantStatus>> GetListAsync()
         {
-            var result = await r_GetApplicantStatusList.ExecuteAsync();
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
         public async Task<IEnumerableProcessResult<ApplicantStatus>> GetListAsync(CancellationToken cancellationToken)
         {
-            var result = await r_GetApplicantStatusList.ExecuteAsync(cancellationToken);
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }
     }
 }

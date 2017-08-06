@@ -8,15 +8,15 @@ namespace LGU.EntityManagers.HumanResource
 {
     public sealed class ApplicationStatusManager : ManagerBase<ApplicationStatus, short>, IApplicationStatusManager
     {
-        private readonly IGetApplicationStatusById r_GetApplicationStatusById;
-        private readonly IGetApplicationStatusList r_GetApplicationStatusList;
+        private readonly IGetApplicationStatusById r_GetById;
+        private readonly IGetApplicationStatusList r_GetList;
 
         public ApplicationStatusManager(
-            IGetApplicationStatusById getApplicationStatusById,
-            IGetApplicationStatusList getApplicationStatusList)
+            IGetApplicationStatusById getById,
+            IGetApplicationStatusList getList)
         {
-            r_GetApplicationStatusById = getApplicationStatusById;
-            r_GetApplicationStatusList = getApplicationStatusList;
+            r_GetById = getById;
+            r_GetList = getList;
         }
 
         public IProcessResult<ApplicationStatus> GetById(short id)
@@ -29,11 +29,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicationStatusById.ApplicationStatusId = id;
-                    var result = r_GetApplicationStatusById.Execute();
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicationStatusId = id;
+                    return AddUpdateIfSuccess(r_GetById.Execute());
                 }
             }
             else
@@ -52,11 +49,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicationStatusById.ApplicationStatusId = id;
-                    var result = await r_GetApplicationStatusById.ExecuteAsync();
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicationStatusId = id;
+                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync());
                 }
             }
             else
@@ -75,11 +69,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicationStatusById.ApplicationStatusId = id;
-                    var result = await r_GetApplicationStatusById.ExecuteAsync(cancellationToken);
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicationStatusId = id;
+                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync(cancellationToken));
                 }
             }
             else
@@ -90,26 +81,17 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableProcessResult<ApplicationStatus> GetList()
         {
-            var result = r_GetApplicationStatusList.Execute();
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
         public async Task<IEnumerableProcessResult<ApplicationStatus>> GetListAsync()
         {
-            var result = await r_GetApplicationStatusList.ExecuteAsync();
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
         public async Task<IEnumerableProcessResult<ApplicationStatus>> GetListAsync(CancellationToken cancellationToken)
         {
-            var result = await r_GetApplicationStatusList.ExecuteAsync(cancellationToken);
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }
     }
 }

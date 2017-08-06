@@ -8,38 +8,35 @@ namespace LGU.EntityManagers.HumanResource
 {
     public sealed class EmployeeManager : ManagerBase<Employee, long>, IEmployeeManager
     {
-        private readonly IDeleteEmployee r_DeleteEmployee;
-        private readonly IGetEmployeeById r_GetEmployeeById;
-        private readonly IGetEmployeeList r_GetEmployeeList;
-        private readonly IInsertEmployee r_InsertEmployee;
-        private readonly IUpdateEmployee r_UpdateEmployee;
-        private readonly ISearchEmployee r_SearchEmployee;
+        private readonly IDeleteEmployee r_Delete;
+        private readonly IGetEmployeeById r_GetById;
+        private readonly IGetEmployeeList r_GetList;
+        private readonly IInsertEmployee r_Insert;
+        private readonly IUpdateEmployee r_Update;
+        private readonly ISearchEmployee r_Search;
 
         public EmployeeManager(
-            IDeleteEmployee deleteEmployee,
-            IGetEmployeeById getEmployeeById,
-            IGetEmployeeList getEmployeeList,
-            IInsertEmployee insertEmployee,
-            IUpdateEmployee updateEmployee,
-            ISearchEmployee searchEmployee)
+            IDeleteEmployee delete,
+            IGetEmployeeById getById,
+            IGetEmployeeList getList,
+            IInsertEmployee insert,
+            IUpdateEmployee update,
+            ISearchEmployee search)
         {
-            r_DeleteEmployee = deleteEmployee;
-            r_GetEmployeeById = getEmployeeById;
-            r_GetEmployeeList = getEmployeeList;
-            r_InsertEmployee = insertEmployee;
-            r_UpdateEmployee = updateEmployee;
-            r_SearchEmployee = searchEmployee;
+            r_Delete = delete;
+            r_GetById = getById;
+            r_GetList = getList;
+            r_Insert = insert;
+            r_Update = update;
+            r_Search = search;
         }
 
         public IProcessResult<Employee> Delete(Employee data)
         {
             if (data != null)
             {
-                r_DeleteEmployee.Employee = data;
-                var result = r_DeleteEmployee.Execute();
-                RemoveIfSuccess(result);
-
-                return result;
+                r_Delete.Employee = data;
+                return RemoveIfSuccess(r_Delete.Execute());
             }
             else
             {
@@ -51,11 +48,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_DeleteEmployee.Employee = data;
-                var result = await r_DeleteEmployee.ExecuteAsync();
-                RemoveIfSuccess(result);
-
-                return result;
+                r_Delete.Employee = data;
+                return RemoveIfSuccess(await r_Delete.ExecuteAsync());
             }
             else
             {
@@ -67,11 +61,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_DeleteEmployee.Employee = data;
-                var result = await r_DeleteEmployee.ExecuteAsync(cancellationToken);
-                RemoveIfSuccess(result);
-
-                return result;
+                r_Delete.Employee = data;
+                return RemoveIfSuccess(await r_Delete.ExecuteAsync(cancellationToken));
             }
             else
             {
@@ -87,12 +78,11 @@ namespace LGU.EntityManagers.HumanResource
                 {
                     return new ProcessResult<Employee>(StaticSource[id]);
                 }
-
-                r_GetEmployeeById.EmployeeId = id;
-                var result = r_GetEmployeeById.Execute();
-                AddUpdateIfSuccess(result);
-
-                return result;
+                else
+                {
+                    r_GetById.EmployeeId = id;
+                    return AddUpdateIfSuccess(r_GetById.Execute());
+                }
             }
             else
             {
@@ -110,11 +100,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetEmployeeById.EmployeeId = id;
-                    var result = await r_GetEmployeeById.ExecuteAsync();
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.EmployeeId = id;
+                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync());
                 }
             }
             else
@@ -133,11 +120,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetEmployeeById.EmployeeId = id;
-                    var result = await r_GetEmployeeById.ExecuteAsync(cancellationToken);
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.EmployeeId = id;
+                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync());
                 }
             }
             else
@@ -148,37 +132,25 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableProcessResult<Employee> GetList()
         {
-            var result = r_GetEmployeeList.Execute();
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
         public async Task<IEnumerableProcessResult<Employee>> GetListAsync()
         {
-            var result = await r_GetEmployeeList.ExecuteAsync();
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
         public async Task<IEnumerableProcessResult<Employee>> GetListAsync(CancellationToken cancellationToken)
         {
-            var result = await r_GetEmployeeList.ExecuteAsync(cancellationToken);
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }
 
         public IProcessResult<Employee> Insert(Employee data)
         {
             if (data != null)
             {
-                r_InsertEmployee.Employee = data;
-                var result = r_InsertEmployee.Execute();
-                AddIfSuccess(result);
-
-                return result;
+                r_Insert.Employee = data;
+                return AddIfSuccess(r_Insert.Execute());
             }
             else
             {
@@ -190,11 +162,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_InsertEmployee.Employee = data;
-                var result = await r_InsertEmployee.ExecuteAsync();
-                AddIfSuccess(result);
-
-                return result;
+                r_Insert.Employee = data;
+                return AddIfSuccess(await r_Insert.ExecuteAsync());
             }
             else
             {
@@ -206,11 +175,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_InsertEmployee.Employee = data;
-                var result = await r_InsertEmployee.ExecuteAsync(cancellationToken);
-                AddIfSuccess(result);
-
-                return result;
+                r_Insert.Employee = data;
+                return AddIfSuccess(await r_Insert.ExecuteAsync());
             }
             else
             {
@@ -222,11 +188,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateEmployee.Employee = data;
-                var result = r_UpdateEmployee.Execute();
-                UpdateIfSuccess(result);
-
-                return result;
+                r_Update.Employee = data;
+                return UpdateIfSuccess(r_Update.Execute());
             }
             else
             {
@@ -238,11 +201,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateEmployee.Employee = data;
-                var result = await r_UpdateEmployee.ExecuteAsync();
-                UpdateIfSuccess(result);
-
-                return result;
+                r_Update.Employee = data;
+                return UpdateIfSuccess(await r_Update.ExecuteAsync());
             }
             else
             {
@@ -254,11 +214,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateEmployee.Employee = data;
-                var result = await r_UpdateEmployee.ExecuteAsync(cancellationToken);
-                UpdateIfSuccess(result);
-
-                return result;
+                r_Update.Employee = data;
+                return UpdateIfSuccess(await r_Update.ExecuteAsync(cancellationToken));
             }
             else
             {
@@ -270,11 +227,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
-                r_SearchEmployee.SearchKey = searchKey;
-                var result = r_SearchEmployee.Execute();
-                AddUpdateIfSuccess(result);
-
-                return result;
+                r_Search.SearchKey = searchKey;
+                return AddUpdateIfSuccess(r_Search.Execute());
             }
             else
             {
@@ -286,11 +240,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
-                r_SearchEmployee.SearchKey = searchKey;
-                var result = await r_SearchEmployee.ExecuteAsync();
-                AddUpdateIfSuccess(result);
-
-                return result;
+                r_Search.SearchKey = searchKey;
+                return AddUpdateIfSuccess(await r_Search.ExecuteAsync());
             }
             else
             {
@@ -302,11 +253,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
-                r_SearchEmployee.SearchKey = searchKey;
-                var result = await r_SearchEmployee.ExecuteAsync(cancellationToken);
-                AddUpdateIfSuccess(result);
-
-                return result;
+                r_Search.SearchKey = searchKey;
+                return AddUpdateIfSuccess(await r_Search.ExecuteAsync(cancellationToken));
             }
             else
             {

@@ -8,35 +8,32 @@ namespace LGU.EntityManagers.HumanResource
 {
     public sealed class ApplicationManager : ManagerBase<Application, long>, IApplicationManager
     {
-        private readonly IDeleteApplication r_DeleteApplication;
-        private readonly IGetApplicationById r_GetApplicationById;
-        private readonly IGetApplicationList r_GetApplicationList;
-        private readonly IInsertApplication r_InsertApplication;
-        private readonly IUpdateApplication r_UpdateApplication;
+        private readonly IDeleteApplication r_Delete;
+        private readonly IGetApplicationById r_GetById;
+        private readonly IGetApplicationList r_GetList;
+        private readonly IInsertApplication r_Insert;
+        private readonly IUpdateApplication r_Update;
 
         public ApplicationManager(
-            IDeleteApplication deleteApplication,
-            IGetApplicationById getApplicationById,
-            IGetApplicationList getApplicationList,
-            IInsertApplication insertApplication,
-            IUpdateApplication updateApplication)
+            IDeleteApplication delete,
+            IGetApplicationById getById,
+            IGetApplicationList getList,
+            IInsertApplication insert,
+            IUpdateApplication update)
         {
-            r_DeleteApplication = deleteApplication;
-            r_GetApplicationById = getApplicationById;
-            r_GetApplicationList = getApplicationList;
-            r_InsertApplication = insertApplication;
-            r_UpdateApplication = updateApplication;
+            r_Delete = delete;
+            r_GetById = getById;
+            r_GetList = getList;
+            r_Insert = insert;
+            r_Update = update;
         }
 
         public IProcessResult<Application> Delete(Application data)
         {
             if (data != null)
             {
-                r_DeleteApplication.Application = data;
-                var result = r_DeleteApplication.Execute();
-                RemoveIfSuccess(result);
-
-                return result;
+                r_Delete.Application = data;
+                return RemoveIfSuccess(r_Delete.Execute());
             }
             else
             {
@@ -48,11 +45,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_DeleteApplication.Application = data;
-                var result = await r_DeleteApplication.ExecuteAsync();
-                RemoveIfSuccess(result);
-
-                return result;
+                r_Delete.Application = data;
+                return RemoveIfSuccess(await r_Delete.ExecuteAsync());
             }
             else
             {
@@ -64,11 +58,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_DeleteApplication.Application = data;
-                var result = await r_DeleteApplication.ExecuteAsync(cancellationToken);
-                RemoveIfSuccess(result);
-
-                return result;
+                r_Delete.Application = data;
+                return RemoveIfSuccess(await r_Delete.ExecuteAsync(cancellationToken));
             }
             else
             {
@@ -86,11 +77,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicationById.ApplicationId = id;
-                    var result = r_GetApplicationById.Execute();
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicationId = id;
+                    return AddUpdateIfSuccess(r_GetById.Execute());
                 }
             }
             else
@@ -109,11 +97,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicationById.ApplicationId = id;
-                    var result = await r_GetApplicationById.ExecuteAsync();
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicationId = id;
+                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync());
                 }
             }
             else
@@ -132,11 +117,8 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetApplicationById.ApplicationId = id;
-                    var result = await r_GetApplicationById.ExecuteAsync(cancellationToken);
-                    AddUpdateIfSuccess(result);
-
-                    return result;
+                    r_GetById.ApplicationId = id;
+                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync(cancellationToken));
                 }
             }
             else
@@ -147,37 +129,25 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableProcessResult<Application> GetList()
         {
-            var result = r_GetApplicationList.Execute();
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
         public async Task<IEnumerableProcessResult<Application>> GetListAsync()
         {
-            var result = await r_GetApplicationList.ExecuteAsync();
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
         public async Task<IEnumerableProcessResult<Application>> GetListAsync(CancellationToken cancellationToken)
         {
-            var result = await r_GetApplicationList.ExecuteAsync(cancellationToken);
-            AddUpdateIfSuccess(result);
-
-            return result;
+            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }
 
         public IProcessResult<Application> Insert(Application data)
         {
             if (data != null)
             {
-                r_InsertApplication.Application = data;
-                var result = r_InsertApplication.Execute();
-                AddIfSuccess(result);
-
-                return result;
+                r_Insert.Application = data;
+                return AddIfSuccess(r_Insert.Execute());
             }
             else
             {
@@ -189,11 +159,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_InsertApplication.Application = data;
-                var result = await r_InsertApplication.ExecuteAsync();
-                AddIfSuccess(result);
-
-                return result;
+                r_Insert.Application = data;
+                return AddIfSuccess(await r_Insert.ExecuteAsync());
             }
             else
             {
@@ -205,11 +172,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_InsertApplication.Application = data;
-                var result = await r_InsertApplication.ExecuteAsync(cancellationToken);
-                AddIfSuccess(result);
-
-                return result;
+                r_Insert.Application = data;
+                return AddIfSuccess(await r_Insert.ExecuteAsync(cancellationToken));
             }
             else
             {
@@ -221,11 +185,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateApplication.Application = data;
-                var result = r_UpdateApplication.Execute();
-                UpdateIfSuccess(result);
-
-                return result;
+                r_Update.Application = data;
+                return UpdateIfSuccess(r_Update.Execute());
             }
             else
             {
@@ -237,11 +198,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateApplication.Application = data;
-                var result = await r_UpdateApplication.ExecuteAsync();
-                UpdateIfSuccess(result);
-
-                return result;
+                r_Update.Application = data;
+                return UpdateIfSuccess(await r_Update.ExecuteAsync());
             }
             else
             {
@@ -253,11 +211,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateApplication.Application = data;
-                var result = await r_UpdateApplication.ExecuteAsync(cancellationToken);
-                UpdateIfSuccess(result);
-
-                return result;
+                r_Update.Application = data;
+                return UpdateIfSuccess(await r_Update.ExecuteAsync(cancellationToken));
             }
             else
             {
