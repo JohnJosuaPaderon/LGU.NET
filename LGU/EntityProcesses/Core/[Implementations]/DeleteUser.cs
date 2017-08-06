@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.Rdbms;
 using LGU.Entities.Core;
+using LGU.EntityConverters.Core;
 using LGU.Processes;
 using System.Data.SqlClient;
 using System.Threading;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.Core
 {
-    public sealed class DeleteUser : CoreProcessBase, IDeleteUser
+    public sealed class DeleteUser : UserProcess, IDeleteUser
     {
-        public DeleteUser(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public DeleteUser(IConnectionStringSource connectionStringSource, IUserConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
 
