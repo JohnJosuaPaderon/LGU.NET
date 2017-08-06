@@ -10,44 +10,52 @@ namespace LGU.EntityManagers
     {
         protected static EntityCollection<T, TIdentifier> StaticSource { get; } = new EntityCollection<T, TIdentifier>();
 
-        protected void AddIfSuccess(IProcessResult<T> result)
+        protected IProcessResult<T> AddIfSuccess(IProcessResult<T> result)
         {
             InvokeIfSuccess(result.Status, () => StaticSource.Add(result.Data));
+            return result;
         }
 
-        protected void AddIfSuccess(IEnumerableProcessResult<T> result)
+        protected IEnumerableProcessResult<T> AddIfSuccess(IEnumerableProcessResult<T> result)
         {
             InvokeIfSuccessAndListNotEmpty(result, data => StaticSource.Add(data));
+            return result;
         }
 
-        protected void UpdateIfSuccess(IProcessResult<T> result)
+        protected IProcessResult<T> UpdateIfSuccess(IProcessResult<T> result)
         {
             InvokeIfSuccess(result.Status, () => StaticSource.Update(result.Data));
+            return result;
         }
 
-        protected void UpdateIfSuccess(IEnumerableProcessResult<T> result)
+        protected IEnumerableProcessResult<T> UpdateIfSuccess(IEnumerableProcessResult<T> result)
         {
             InvokeIfSuccessAndListNotEmpty(result, data => StaticSource.Update(data));
+            return result;
         }
 
-        protected void AddUpdateIfSuccess(IProcessResult<T> result)
+        protected IProcessResult<T> AddUpdateIfSuccess(IProcessResult<T> result)
         {
             InvokeIfSuccess(result.Status, () => StaticSource.AddUpdate(result.Data));
+            return result;
         }
 
-        protected void AddUpdateIfSuccess(IEnumerableProcessResult<T> result)
+        protected IEnumerableProcessResult<T> AddUpdateIfSuccess(IEnumerableProcessResult<T> result)
         {
             InvokeIfSuccessAndListNotEmpty(result, data => StaticSource.AddUpdate(data));
+            return result;
         }
 
-        protected void RemoveIfSuccess(IProcessResult<T> result)
+        protected IProcessResult<T> RemoveIfSuccess(IProcessResult<T> result)
         {
             InvokeIfSuccess(result.Status, () => StaticSource.Remove(result.Data));
+            return result;
         }
 
-        protected void RemoveIfSuccess(IEnumerableProcessResult<T> result)
+        protected IEnumerableProcessResult<T> RemoveIfSuccess(IEnumerableProcessResult<T> result)
         {
             InvokeIfSuccessAndListNotEmpty(result, data => StaticSource.Remove(data));
+            return result;
         }
 
         protected void InvokeIfSuccess(ProcessResultStatus status, Action expression)
