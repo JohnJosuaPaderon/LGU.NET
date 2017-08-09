@@ -1,4 +1,6 @@
-﻿namespace LGU.Entities.HumanResource
+﻿using System;
+
+namespace LGU.Entities.HumanResource
 {
     public class Department : Entity<int>
     {
