@@ -1,6 +1,7 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
 using LGU.Processes;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,12 +9,13 @@ namespace LGU.EntityManagers.HumanResource
 {
     public sealed class TimeLogManager : ManagerBase<TimeLog, long>, ITimeLogManager
     {
-        private readonly IDeleteTimeLog r_DeleteTimeLog;
-        private readonly IGetTimeLogById r_GetTimeLogById;
-        private readonly IGetTimeLogList r_GetTimeLogList;
-        private readonly IInsertTimeLog r_InsertTimeLog;
+        private readonly IDeleteTimeLog r_Delete;
+        private readonly IGetTimeLogById r_GetById;
+        private readonly IGetTimeLogList r_GetList;
+        private readonly IInsertTimeLog r_Insert;
         private readonly ILogEmployee r_LogEmployee;
-        private readonly IUpdateTimeLog r_UpdateTimeLog;
+        private readonly IUpdateTimeLog r_Update;
+        private readonly IGetActualTimeLogListByEmployeeCutOff r_GetActualListByEmployeeCutOff;
 
         public TimeLogManager(
             IDeleteTimeLog deleteTimeLog,
@@ -21,22 +23,24 @@ namespace LGU.EntityManagers.HumanResource
             IGetTimeLogList getTimeLogList,
             IInsertTimeLog insertTimeLog,
             ILogEmployee logEmployee,
-            IUpdateTimeLog updateTimeLog)
+            IUpdateTimeLog updateTimeLog,
+            IGetActualTimeLogListByEmployeeCutOff getActualListByEmployeeCutOff)
         {
-            r_DeleteTimeLog = deleteTimeLog;
-            r_GetTimeLogById = getTimeLogById;
-            r_GetTimeLogList = getTimeLogList;
-            r_InsertTimeLog = insertTimeLog;
+            r_Delete = deleteTimeLog;
+            r_GetById = getTimeLogById;
+            r_GetList = getTimeLogList;
+            r_Insert = insertTimeLog;
             r_LogEmployee = logEmployee;
-            r_UpdateTimeLog = updateTimeLog;
+            r_Update = updateTimeLog;
+            r_GetActualListByEmployeeCutOff = getActualListByEmployeeCutOff;
         }
 
         public IProcessResult<TimeLog> Delete(TimeLog data)
         {
             if (data != null)
             {
-                r_DeleteTimeLog.TimeLog = data;
-                return r_DeleteTimeLog.Execute();
+                r_Delete.TimeLog = data;
+                return r_Delete.Execute();
             }
             else
             {
@@ -48,8 +52,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_DeleteTimeLog.TimeLog = data;
-                return await r_DeleteTimeLog.ExecuteAsync();
+                r_Delete.TimeLog = data;
+                return await r_Delete.ExecuteAsync();
             }
             else
             {
@@ -61,8 +65,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_DeleteTimeLog.TimeLog = data;
-                return await r_DeleteTimeLog.ExecuteAsync(cancellationToken);
+                r_Delete.TimeLog = data;
+                return await r_Delete.ExecuteAsync(cancellationToken);
             }
             else
             {
@@ -70,12 +74,54 @@ namespace LGU.EntityManagers.HumanResource
             }
         }
 
+        public IEnumerableProcessResult<TimeLog> GetActualListByEmployeeCutOff(Employee employee, ValueRange<DateTime> cutOff)
+        {
+            if (employee != null)
+            {
+                r_GetActualListByEmployeeCutOff.Employee = employee;
+                r_GetActualListByEmployeeCutOff.CutOff = cutOff;
+                return r_GetActualListByEmployeeCutOff.Execute();
+            }
+            else
+            {
+                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<TimeLog>> GetActualListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff)
+        {
+            if (employee != null)
+            {
+                r_GetActualListByEmployeeCutOff.Employee = employee;
+                r_GetActualListByEmployeeCutOff.CutOff = cutOff;
+                return await r_GetActualListByEmployeeCutOff.ExecuteAsync();
+            }
+            else
+            {
+                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<TimeLog>> GetActualListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        {
+            if (employee != null)
+            {
+                r_GetActualListByEmployeeCutOff.Employee = employee;
+                r_GetActualListByEmployeeCutOff.CutOff = cutOff;
+                return await r_GetActualListByEmployeeCutOff.ExecuteAsync(cancellationToken);
+            }
+            else
+            {
+                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+            }
+        }
+
         public IProcessResult<TimeLog> GetById(long id)
         {
             if (id > 0)
             {
-                r_GetTimeLogById.TimeLogId = id;
-                return r_GetTimeLogById.Execute();
+                r_GetById.TimeLogId = id;
+                return r_GetById.Execute();
             }
             else
             {
@@ -87,8 +133,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (id > 0)
             {
-                r_GetTimeLogById.TimeLogId = id;
-                return await r_GetTimeLogById.ExecuteAsync();
+                r_GetById.TimeLogId = id;
+                return await r_GetById.ExecuteAsync();
             }
             else
             {
@@ -100,8 +146,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (id > 0)
             {
-                r_GetTimeLogById.TimeLogId = id;
-                return await r_GetTimeLogById.ExecuteAsync(cancellationToken);
+                r_GetById.TimeLogId = id;
+                return await r_GetById.ExecuteAsync(cancellationToken);
             }
             else
             {
@@ -111,25 +157,25 @@ namespace LGU.EntityManagers.HumanResource
 
         public IEnumerableProcessResult<TimeLog> GetList()
         {
-            return r_GetTimeLogList.Execute();
+            return r_GetList.Execute();
         }
 
         public Task<IEnumerableProcessResult<TimeLog>> GetListAsync()
         {
-            return r_GetTimeLogList.ExecuteAsync();
+            return r_GetList.ExecuteAsync();
         }
 
         public Task<IEnumerableProcessResult<TimeLog>> GetListAsync(CancellationToken cancellationToken)
         {
-            return r_GetTimeLogList.ExecuteAsync(cancellationToken);
+            return r_GetList.ExecuteAsync(cancellationToken);
         }
 
         public IProcessResult<TimeLog> Insert(TimeLog data)
         {
             if (data != null)
             {
-                r_InsertTimeLog.TimeLog = data;
-                return r_InsertTimeLog.Execute();
+                r_Insert.TimeLog = data;
+                return r_Insert.Execute();
             }
             else
             {
@@ -141,8 +187,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_InsertTimeLog.TimeLog = data;
-                return await r_InsertTimeLog.ExecuteAsync();
+                r_Insert.TimeLog = data;
+                return await r_Insert.ExecuteAsync();
             }
             else
             {
@@ -154,8 +200,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_InsertTimeLog.TimeLog = data;
-                return await r_InsertTimeLog.ExecuteAsync(cancellationToken);
+                r_Insert.TimeLog = data;
+                return await r_Insert.ExecuteAsync(cancellationToken);
             }
             else
             {
@@ -206,8 +252,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateTimeLog.TimeLog = data;
-                return r_UpdateTimeLog.Execute();
+                r_Update.TimeLog = data;
+                return r_Update.Execute();
             }
             else
             {
@@ -219,8 +265,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateTimeLog.TimeLog = data;
-                return await r_UpdateTimeLog.ExecuteAsync();
+                r_Update.TimeLog = data;
+                return await r_Update.ExecuteAsync();
             }
             else
             {
@@ -232,8 +278,8 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_UpdateTimeLog.TimeLog = data;
-                return await r_UpdateTimeLog.ExecuteAsync();
+                r_Update.TimeLog = data;
+                return await r_Update.ExecuteAsync();
             }
             else
             {

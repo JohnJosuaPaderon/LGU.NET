@@ -1,6 +1,7 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
 using LGU.Processes;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +15,8 @@ namespace LGU.EntityManagers.HumanResource
         private readonly IInsertEmployee r_Insert;
         private readonly IUpdateEmployee r_Update;
         private readonly ISearchEmployee r_Search;
+        private readonly IGetEmployeeListWithTimeLog r_GetListWithTimeLog;
+        private readonly ISearchEmployeeWithTimeLog r_SearchWithTimeLog;
 
         public EmployeeManager(
             IDeleteEmployee delete,
@@ -21,7 +24,9 @@ namespace LGU.EntityManagers.HumanResource
             IGetEmployeeList getList,
             IInsertEmployee insert,
             IUpdateEmployee update,
-            ISearchEmployee search)
+            ISearchEmployee search,
+            IGetEmployeeListWithTimeLog getListWithTimeLog,
+            ISearchEmployeeWithTimeLog searchWithTimeLog)
         {
             r_Delete = delete;
             r_GetById = getById;
@@ -29,6 +34,8 @@ namespace LGU.EntityManagers.HumanResource
             r_Insert = insert;
             r_Update = update;
             r_Search = search;
+            r_GetListWithTimeLog = getListWithTimeLog;
+            r_SearchWithTimeLog = searchWithTimeLog;
         }
 
         public IProcessResult<Employee> Delete(Employee data)
@@ -255,6 +262,66 @@ namespace LGU.EntityManagers.HumanResource
             {
                 r_Search.SearchKey = searchKey;
                 return AddUpdateIfSuccess(await r_Search.ExecuteAsync(cancellationToken));
+            }
+            else
+            {
+                return new EnumerableProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
+            }
+        }
+
+        public IEnumerableProcessResult<Employee> GetListWithTimeLog(ValueRange<DateTime> cutOff)
+        {
+            r_GetListWithTimeLog.CutOff = cutOff;
+            return AddUpdateIfSuccess(r_GetListWithTimeLog.Execute());
+        }
+
+        public async Task<IEnumerableProcessResult<Employee>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff)
+        {
+            r_GetListWithTimeLog.CutOff = cutOff;
+            return AddUpdateIfSuccess(await r_GetListWithTimeLog.ExecuteAsync());
+        }
+
+        public async Task<IEnumerableProcessResult<Employee>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        {
+            r_GetListWithTimeLog.CutOff = cutOff;
+            return AddUpdateIfSuccess(await r_GetListWithTimeLog.ExecuteAsync(cancellationToken));
+        }
+
+        public IEnumerableProcessResult<Employee> SearchWithTimeLog(string searchKey, ValueRange<DateTime> cutOff)
+        {
+            if (!string.IsNullOrWhiteSpace(searchKey))
+            {
+                r_SearchWithTimeLog.SearchKey = searchKey;
+                r_SearchWithTimeLog.CutOff = cutOff;
+                return AddUpdateIfSuccess(r_SearchWithTimeLog.Execute());
+            }
+            else
+            {
+                return new EnumerableProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<Employee>> SearchWithTimeLogAsync(string searchKey, ValueRange<DateTime> cutOff)
+        {
+            if (!string.IsNullOrWhiteSpace(searchKey))
+            {
+                r_SearchWithTimeLog.SearchKey = searchKey;
+                r_SearchWithTimeLog.CutOff = cutOff;
+                return AddUpdateIfSuccess(await r_SearchWithTimeLog.ExecuteAsync());
+            }
+            else
+            {
+                return new EnumerableProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<Employee>> SearchWithTimeLogAsync(string searchKey, ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        {
+            if (!string.IsNullOrWhiteSpace(searchKey))
+            {
+                r_SearchWithTimeLog.SearchKey = searchKey;
+                r_SearchWithTimeLog.CutOff = cutOff;
+                return AddUpdateIfSuccess(await r_SearchWithTimeLog.ExecuteAsync(cancellationToken));
             }
             else
             {
