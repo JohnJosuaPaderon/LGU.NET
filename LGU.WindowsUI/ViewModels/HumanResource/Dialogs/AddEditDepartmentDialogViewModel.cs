@@ -3,7 +3,6 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Events.HumanResource;
 using LGU.Models.HumanResource;
 using LGU.Processes;
-using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -19,7 +18,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         public AddEditDepartmentDialogViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_DepartmentManager = SystemRuntime.Services.GetService<IDepartmentManager>();
+            r_DepartmentManager = SystemRuntime.GetService<IDepartmentManager>();
             SaveCommand = new DelegateCommand(Save);
             r_AddDepartmentEvent = r_EventAggregator.GetEvent<AddDepartmentEvent>();
             r_EditDepartmentEvent = r_EventAggregator.GetEvent<EditDepartmentEvent>();

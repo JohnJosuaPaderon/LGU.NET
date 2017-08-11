@@ -5,7 +5,6 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Events.HumanResource;
 using LGU.Models.HumanResource;
 using LGU.Processes;
-using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -24,7 +23,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         public ManageEmployeeFingerPrintSetDialogViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
+            r_EmployeeFingerPrintSetManager = SystemRuntime.GetService<IEmployeeFingerPrintSetManager>();
 
             r_ManageEmployeeFingerPrintSetEvent = r_EventAggregator.GetEvent<ManageEmployeeFingerPrintSetEvent>();
             Capture = new Capture();
