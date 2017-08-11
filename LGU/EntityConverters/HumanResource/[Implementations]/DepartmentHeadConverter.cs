@@ -25,7 +25,7 @@ namespace LGU.EntityConverters.HumanResource
             return new DepartmentHead()
             {
                 Id = reader.GetInt64("Id"),
-                FirstName = reader.GetString("FrstName"),
+                FirstName = reader.GetString("FirstName"),
                 MiddleName = reader.GetString("MiddleName"),
                 LastName = reader.GetString("LastName"),
                 NameExtension = reader.GetString("NameExtension"),
