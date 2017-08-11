@@ -250,6 +250,8 @@ namespace LGU.Extensions
             serviceCollection.AddSingleton<IInsertEmployee, InsertEmployee>();
             serviceCollection.AddSingleton<IUpdateEmployee, UpdateEmployee>();
             serviceCollection.AddSingleton<ISearchEmployee, SearchEmployee>();
+            serviceCollection.AddSingleton<IGetEmployeeListWithTimeLog, GetEmployeeListWithTimeLog>();
+            serviceCollection.AddSingleton<ISearchEmployeeWithTimeLog, SearchEmployeeWithTimeLog>();
             serviceCollection.AddSingleton<IEmployeeManager, EmployeeManager>();
             #endregion
 
@@ -261,6 +263,23 @@ namespace LGU.Extensions
             serviceCollection.AddSingleton<IInsertEmployeeWorkTimeSchedule, InsertEmployeeWorkTimeSchedule>();
             serviceCollection.AddSingleton<IUpdateEmployeeWorkTimeSchedule, UpdateEmployeeWorkTimeSchedule>();
             serviceCollection.AddSingleton<IEmployeeWorkTimeScheduleManager, EmployeeWorkTimeScheduleManager>();
+            #endregion
+
+            #region Locator
+            serviceCollection.AddSingleton<ILocatorConverter<SqlDataReader>, LocatorConverter>();
+            serviceCollection.AddSingleton<IDeleteLocator, DeleteLocator>();
+            serviceCollection.AddSingleton<IGetLocatorById, GetLocatorById>();
+            serviceCollection.AddSingleton<IGetLocatorList, GetLocatorList>();
+            serviceCollection.AddSingleton<IInsertLocator, InsertLocator>();
+            serviceCollection.AddSingleton<IUpdateLocator, UpdateLocator>();
+            serviceCollection.AddSingleton<ILocatorManager, LocatorManager>();
+            #endregion
+
+            #region LocatorLeaveType
+            serviceCollection.AddSingleton<ILocatorLeaveTypeConverter<SqlDataReader>, LocatorLeaveTypeConverter>();
+            serviceCollection.AddSingleton<IGetLocatorLeaveTypeById, GetLocatorLeaveTypeById>();
+            serviceCollection.AddSingleton<IGetLocatorLeaveTypeList, GetLocatorLeaveTypeList>();
+            serviceCollection.AddSingleton<ILocatorLeaveTypeManager, LocatorLeaveTypeManager>();
             #endregion
 
             #region TimeLogType
@@ -278,6 +297,7 @@ namespace LGU.Extensions
             serviceCollection.AddSingleton<IInsertTimeLog, InsertTimeLog>();
             serviceCollection.AddSingleton<ILogEmployee, LogEmployee>();
             serviceCollection.AddSingleton<IUpdateTimeLog, UpdateTimeLog>();
+            serviceCollection.AddSingleton<IGetActualTimeLogListByEmployeeCutOff, GetActualTimeLogListByEmployeeCutOff>();
             serviceCollection.AddSingleton<ITimeLogManager, TimeLogManager>();
             #endregion
 
