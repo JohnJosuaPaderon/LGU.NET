@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,8 +72,8 @@
     <Reference Include="MaterialDesignThemes.MahApps, Version=0.0.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.MahApps.0.0.10\lib\net45\MaterialDesignThemes.MahApps.dll</HintPath>
     </Reference>
-    <Reference Include="MaterialDesignThemes.Wpf, Version=2.3.0.823, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MaterialDesignThemes.2.3.0.823\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.3.1.931, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.3.1-ci931\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Extensions.DependencyInjection, Version=1.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.1.1.1\lib\netstandard1.1\Microsoft.Extensions.DependencyInjection.dll</HintPath>
@@ -187,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapperBase.cs" />
+    <Compile Include="Converters\DateTimeRangeDisplayConverter.cs" />
     <Compile Include="Converters\DialogModeAddToVisibilityConverter.cs" />
     <Compile Include="Converters\FingerPrintToDisplayConverter.cs" />
     <Compile Include="Converters\NullableToBooleanConverter.cs" />
@@ -194,23 +197,35 @@
     <Compile Include="Converters\NullableToPackIconStateConverter.cs" />
     <Compile Include="Events\HumanResource\AddDepartmentEvent.cs" />
     <Compile Include="Events\HumanResource\AddEmployeeEvent.cs" />
+    <Compile Include="Events\HumanResource\AddLocatorEvent.cs" />
+    <Compile Include="Events\ChangeHeaderEvent.cs" />
+    <Compile Include="Events\HumanResource\KioskEmployeeChangedEvent.cs" />
     <Compile Include="Events\HumanResource\DepartmentEvent.cs" />
     <Compile Include="Events\HumanResource\EditDepartmentEvent.cs" />
     <Compile Include="Events\HumanResource\EditEmployeeEvent.cs" />
+    <Compile Include="Events\HumanResource\EditLocatorEvent.cs" />
     <Compile Include="Events\HumanResource\EmployeeEvent.cs" />
     <Compile Include="Events\HumanResource\ManageEmployeeFingerPrintSetEvent.cs" />
     <Compile Include="Events\NewMessageEvent.cs" />
+    <Compile Include="Events\ShowCloseButtonEvent.cs" />
+    <Compile Include="Events\ShowMaxRestoreButtonEvent.cs" />
+    <Compile Include="Events\ShowMinButtonEvent.cs" />
+    <Compile Include="Events\ShowTitleBarEvent.cs" />
     <Compile Include="Events\TitleEvent.cs" />
     <Compile Include="Events\WindowStateEvent.cs" />
-    <Compile Include="Extensions\IServiceCollectionExtension.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="Models\Core\UserSignUpModel.cs" />
     <Compile Include="Models\HumanResource\DepartmentModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeFingerPrintSetModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeModel.cs" />
     <Compile Include="Models\HumanResource\FingerPrintModel.cs" />
+    <Compile Include="Models\HumanResource\LocatorLeaveTypeModel.cs" />
+    <Compile Include="Models\HumanResource\LocatorModel.cs" />
+    <Compile Include="Models\HumanResource\SelectableEmployeeModel.cs" />
+    <Compile Include="Models\HumanResource\TimeLogModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\SystemAdministration\ConnectionStringModel.cs" />
+    <Compile Include="Models\ValueRangeModel.cs" />
     <Compile Include="PasswordBoxAssists.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -225,25 +240,30 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SnackbarMessageQueueProvider.cs" />
     <Compile Include="ViewModels\Core\UserSignUpViewModel.cs" />
     <Compile Include="ViewModels\DialogHelper.cs" />
     <Compile Include="ViewModels\DialogMode.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
+    <Compile Include="ViewModels\HumanResource\ActualTimeLogExportViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\ApplicationMainViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\DepartmentManagementViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditDepartmentDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditEmployeeDialogViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\AddEditLocatorDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\EmployeeFingerPrintEnrollmentViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\KioskLocatorViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\LauncherViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\LocatorViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\LogType.cs" />
+    <Compile Include="ViewModels\HumanResource\MainKioskViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\MainViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PreviewDepartmentViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PreviewEmployeeViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\TimeKeepingResult.cs" />
     <Compile Include="ViewModels\HumanResource\TimeKeepingViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\TimeLogExportViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\KioskServiceSelectionViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NavigationalViewModelBase.cs" />
     <Compile Include="ViewModels\SystemAdministration\ConnectionStringSourceViewModel.cs" />
@@ -252,6 +272,9 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Core\UserSignUpView.xaml.cs">
       <DependentUpon>UserSignUpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\ActualTimeLogExportView.xaml.cs">
+      <DependentUpon>ActualTimeLogExportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\ApplicantManagementView.xaml.cs">
       <DependentUpon>ApplicantManagementView.xaml</DependentUpon>
@@ -271,6 +294,9 @@
     <Compile Include="Views\HumanResource\Dialogs\AddEditEmployeeDialogView.xaml.cs">
       <DependentUpon>AddEditEmployeeDialogView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HumanResource\Dialogs\AddEditLocatorDialogView.xaml.cs">
+      <DependentUpon>AddEditLocatorDialogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogView.xaml.cs">
       <DependentUpon>ManageEmployeeFingerPrintSetDialogView.xaml</DependentUpon>
     </Compile>
@@ -280,8 +306,20 @@
     <Compile Include="Views\HumanResource\EmployeeFingerPrintEnrollmentView.xaml.cs">
       <DependentUpon>EmployeeFingerPrintEnrollmentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HumanResource\KioskLocatorView.xaml.cs">
+      <DependentUpon>KioskLocatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\KioskServiceSelectionView.xaml.cs">
+      <DependentUpon>KioskServiceSelectionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HumanResource\LauncherView.xaml.cs">
       <DependentUpon>LauncherView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\LocatorView.xaml.cs">
+      <DependentUpon>LocatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\MainKioskView.xaml.cs">
+      <DependentUpon>MainKioskView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -389,6 +427,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\TransitionerSlide.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\TransitioningContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -398,6 +440,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Core\UserSignUpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\ActualTimeLogExportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -425,6 +471,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\HumanResource\Dialogs\AddEditLocatorDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -437,7 +487,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\HumanResource\KioskLocatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\KioskServiceSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HumanResource\LauncherView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\LocatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\MainKioskView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -492,5 +558,15 @@
       <Name>LGU</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\navotas_flag.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets" Condition="Exists('..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets'))" />
+  </Target>
 </Project>

@@ -25,6 +25,9 @@ namespace LGU
         {
             base.ConfigureContainer();
             SystemRuntime.SystemDirectory = ConfigurationManager.AppSettings["SystemDirectory"];
+            SystemRuntime.ReportDirectory = ConfigurationManager.AppSettings.GetString("ReportDirectory");
+            SystemRuntime.ReportTemplateDirectory = ConfigurationManager.AppSettings.GetString("ReportTemplateDirectory");
+            SystemRuntime.DebugMode = ConfigurationManager.AppSettings.GetBoolean("DebugMode");
             InitializeServices();
             
             SystemRuntime.Instantiate(ServiceCollection);
@@ -34,6 +37,7 @@ namespace LGU
         {
             ServiceCollection.SetConnectionStringSource();
             ServiceCollection.UseSqlServer();
+            ServiceCollection.EnableReporting();
         }
     }
 }
