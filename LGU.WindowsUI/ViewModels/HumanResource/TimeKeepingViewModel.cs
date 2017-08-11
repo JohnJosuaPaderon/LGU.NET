@@ -9,7 +9,6 @@ using LGU.Events;
 using LGU.Extensions;
 using LGU.Models.HumanResource;
 using LGU.Processes;
-using Microsoft.Extensions.DependencyInjection;
 using Prism.Events;
 using Prism.Regions;
 using System;
@@ -31,10 +30,10 @@ namespace LGU.ViewModels.HumanResource
 
         public TimeKeepingViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
-            r_TimeLogManager = SystemRuntime.Services.GetService<ITimeLogManager>();
-            r_SystemManager = SystemRuntime.Services.GetService<ISystemManager>();
-            r_ConnectionStringSource = SystemRuntime.Services.GetService<IConnectionStringSource>();
+            r_EmployeeFingerPrintSetManager = SystemRuntime.GetService<IEmployeeFingerPrintSetManager>();
+            r_TimeLogManager = SystemRuntime.GetService<ITimeLogManager>();
+            r_SystemManager = SystemRuntime.GetService<ISystemManager>();
+            r_ConnectionStringSource = SystemRuntime.GetService<IConnectionStringSource>();
             r_Capture = new Capture();
             Users = new UserCollection(1000000);
             Identification = new Identification(ref Users)

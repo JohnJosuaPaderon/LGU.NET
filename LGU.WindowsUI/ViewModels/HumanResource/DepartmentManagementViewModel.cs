@@ -3,7 +3,6 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Events.HumanResource;
 using LGU.Models.HumanResource;
 using LGU.Processes;
-using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -12,9 +11,8 @@ using System.Windows;
 
 namespace LGU.ViewModels.HumanResource
 {
-    public sealed class DepartmentManagementViewModel : ViewModelBase
+    public sealed class DepartmentManagementViewModel : ViewModelBase, INavigationAware
     {
-
         private readonly IDepartmentManager r_DepartmentManager;
 
         public DepartmentManagementViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
@@ -22,7 +20,7 @@ namespace LGU.ViewModels.HumanResource
             RequestSearchCommand = new DelegateCommand(RequestSearch);
             AddCommand = new DelegateCommand(Add);
             EditCommand = new DelegateCommand(Edit);
-            r_DepartmentManager = SystemRuntime.Services.GetService<IDepartmentManager>();
+            r_DepartmentManager = SystemRuntime.GetService<IDepartmentManager>();
         }
 
         public ObservableCollection<DepartmentModel> Departments { get; } = new ObservableCollection<DepartmentModel>();
@@ -81,6 +79,20 @@ namespace LGU.ViewModels.HumanResource
         private void Edit()
         {
             r_EventAggregator.GetEvent<EditDepartmentEvent>().Publish(SelectedDepartment);
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            r_ChangeHeaderEvent.Publish("Departments");
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
         }
     }
 }

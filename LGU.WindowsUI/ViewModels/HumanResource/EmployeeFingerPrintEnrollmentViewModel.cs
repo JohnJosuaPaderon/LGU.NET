@@ -2,17 +2,16 @@
 using LGU.EntityManagers.HumanResource;
 using LGU.Events.HumanResource;
 using LGU.Models.HumanResource;
+using LGU.Processes;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using System.Collections.ObjectModel;
-using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
-using LGU.Processes;
 
 namespace LGU.ViewModels.HumanResource
 {
-    public class EmployeeFingerPrintEnrollmentViewModel : ViewModelBase
+    public class EmployeeFingerPrintEnrollmentViewModel : ViewModelBase, INavigationAware
     {
         private readonly IEmployeeManager r_EmployeeManager;
         private readonly IEmployeeFingerPrintSetManager r_EmployeeFingerPrintSetManager;
@@ -23,8 +22,8 @@ namespace LGU.ViewModels.HumanResource
 
         public EmployeeFingerPrintEnrollmentViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_EmployeeManager = SystemRuntime.Services.GetService<IEmployeeManager>();
-            r_EmployeeFingerPrintSetManager = SystemRuntime.Services.GetService<IEmployeeFingerPrintSetManager>();
+            r_EmployeeManager = SystemRuntime.GetService<IEmployeeManager>();
+            r_EmployeeFingerPrintSetManager = SystemRuntime.GetService<IEmployeeFingerPrintSetManager>();
 
             r_EmployeeEvent = r_EventAggregator.GetEvent<EmployeeEvent>();
             r_AddEmployeeEvent = r_EventAggregator.GetEvent<AddEmployeeEvent>();
@@ -69,11 +68,21 @@ namespace LGU.ViewModels.HumanResource
             {
                 if (result.DataList != null && result.DataList.Any())
                 {
+                    r_NewMessageEvent.Publish($"Found {result.DataList.Count().ToString("#,##0")} employee(s).");
+
                     foreach (var item in result.DataList)
                     {
                         Employees.Add(new EmployeeModel(item));
                     }
                 }
+                else
+                {
+                    r_NewMessageEvent.Publish("No employee matched.");
+                }
+            }
+            else
+            {
+                r_NewMessageEvent.Publish($"There's an error on searching employees: {result.Message}");
             }
         }
 
@@ -104,7 +113,20 @@ namespace LGU.ViewModels.HumanResource
 
         public override void Initialize()
         {
-            
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            r_ChangeHeaderEvent.Publish("Employees");
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
         }
     }
 }
