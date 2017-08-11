@@ -6,8 +6,10 @@
     <Authors>John Josua R. Paderon</Authors>
     <Description>Core library.</Description>
     <Copyright>Copyright (c) 2017 John Josua R. Paderon</Copyright>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Company>LGU.NET Development</Company>
+    <PackageProjectUrl>https://github.com/JohnJosuaPaderon/LGU.NET</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/JohnJosuaPaderon/LGU.NET/blob/master/logo.png?raw=true</PackageIconUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
