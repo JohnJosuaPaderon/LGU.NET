@@ -18,6 +18,8 @@ namespace LGU.HumanResource
             Container.RegisterTypeForNavigation<UserSignUpView>();
             Container.RegisterTypeForNavigation<EmployeeFingerPrintEnrollmentView>();
             Container.RegisterTypeForNavigation<TimeLogExportView>();
+            Container.RegisterTypeForNavigation<LocatorView>();
+            Container.RegisterTypeForNavigation<ActualTimeLogExportView>();
         }
 
         protected override void InitializeServices()
