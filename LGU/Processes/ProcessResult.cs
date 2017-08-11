@@ -8,7 +8,7 @@ namespace LGU.Processes
         {
         }
 
-        public ProcessResult(Exception exception) : this(ProcessResultStatus.Failed, "An exception has been thrown.", exception)
+        public ProcessResult(Exception exception) : this(ProcessResultStatus.Failed, SystemRuntime.DebugMode ? exception.Message : "An exception has been thrown.", exception)
         {
         }
 
@@ -38,7 +38,7 @@ namespace LGU.Processes
         {
         }
 
-        public ProcessResult(Exception exception) : this(default(T), ProcessResultStatus.Failed, "An exception has been thrown.", exception)
+        public ProcessResult(Exception exception) : this(default(T), ProcessResultStatus.Failed, SystemRuntime.DebugMode ? exception.Message : "An exception has been thrown.", exception)
         {
         }
 
