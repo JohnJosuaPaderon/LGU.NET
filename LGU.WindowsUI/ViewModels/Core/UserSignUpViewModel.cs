@@ -3,7 +3,6 @@ using LGU.EntityManagers.Core;
 using LGU.Models.Core;
 using LGU.Processes;
 using LGU.Utilities;
-using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -17,7 +16,7 @@ namespace LGU.ViewModels.Core
 
         public UserSignUpViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_UserManager = SystemRuntime.Services.GetService<IUserManager>();
+            r_UserManager = SystemRuntime.GetService<IUserManager>();
             SaveCommand = new DelegateCommand(Save);
             User = new UserSignUpModel(new User());
         }
