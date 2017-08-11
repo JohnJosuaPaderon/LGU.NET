@@ -1,7 +1,6 @@
 ﻿using LGU.Processes;
 using LGU.Utilities;
 using LGU.Views.SystemAdministration;
-using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -14,7 +13,7 @@ namespace LGU.ViewModels.SystemAdministration
 
         public LauncherViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_SystemAdministratorManager = SystemRuntime.Services.GetService<ISystemAdministratorManager>();
+            r_SystemAdministratorManager = SystemRuntime.GetService<ISystemAdministratorManager>();
             VerifyCommand = new DelegateCommand(Verify);
             Initialize();
         }

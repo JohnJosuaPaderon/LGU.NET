@@ -1,5 +1,4 @@
 ﻿using LGU.Models.SystemAdministration;
-using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -14,7 +13,7 @@ namespace LGU.ViewModels.SystemAdministration
 
         public ConnectionStringSourceViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_ConnectionStringSource = SystemRuntime.Services.GetService<IConnectionStringSource>();
+            r_ConnectionStringSource = SystemRuntime.GetService<IConnectionStringSource>();
             LoadCommand = new DelegateCommand(Initialize);
             SaveCommand = new DelegateCommand(Save);
             AddCommand = new DelegateCommand(Add);
