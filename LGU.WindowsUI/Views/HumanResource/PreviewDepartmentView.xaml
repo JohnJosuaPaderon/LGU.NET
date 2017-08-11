@@ -7,7 +7,7 @@
     <UserControl.Resources>
         <ResourceDictionary Source="../../Styles/Default.xaml"/>
     </UserControl.Resources>
-    <materialDesign:Card>
+    <materialDesign:Card VerticalAlignment="Stretch">
         <StackPanel>
             <materialDesign:ColorZone Style="{DynamicResource SmallHeaderColorZone}">
                 <TextBlock Text="Department's Details" Style="{DynamicResource SmallHeaderTextBlock}"/>

@@ -30,7 +30,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Text="{Binding SearchKey}" Style="{DynamicResource SearchTextBox}"/>
+                        <TextBox Grid.Column="0" Text="{Binding SearchKey}" Style="{DynamicResource SearchTextBox}"/>
                         <Button Grid.Column="1" Style="{DynamicResource SearchButton}" Command="{Binding SearchCommand}"/>
                     </Grid>
                 </materialDesign:Card>
@@ -38,11 +38,10 @@
                     <Grid>
                         <DataGrid ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
-                                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
-                                <DataGridTextColumn Header="Middle Name" Binding="{Binding MiddleName}"/>
-                                <DataGridTextColumn Header="Name Extension" Binding="{Binding NameExtension}"/>
-                                <DataGridTextColumn Header="Department" Binding="{Binding Department}" Width="*"/>
+                                <DataGridTextColumn Header="Employees" Binding="{Binding FullName}"/>
+                                <DataGridTextColumn Header="Position" Binding="{Binding Position.Description}"/>
+                                <DataGridTextColumn Header="Department" Binding="{Binding Department.Description}"/>
+                                <DataGridTextColumn Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <materialDesign:PopupBox Style="{DynamicResource DataManagerPopupBox}">

@@ -34,18 +34,6 @@
                 </Button>
             </materialDesign:TransitioningContent>
             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-                <Button Command="{Binding NavigateCommand}" CommandParameter="TimeLogExportView">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <materialDesign:PackIcon Kind="ClockEnd" Height="135" Width="135" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Row="1" Text="DTR Export"/>
-                    </Grid>
-                </Button>
-            </materialDesign:TransitioningContent>
-            <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
                 <Button Command="{Binding NavigateCommand}" CommandParameter="EmployeeFingerPrintEnrollmentView">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -58,26 +46,38 @@
                 </Button>
             </materialDesign:TransitioningContent>
             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-                <Button Command="{Binding NavigateCommand}" CommandParameter="EmployeeManagementView">
+                <Button Command="{Binding NavigateCommand}" CommandParameter="TimeLogExportView">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <materialDesign:PackIcon Kind="AccountMultiplePlus" Height="135" Width="135" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Row="1" Text="Applicants"/>
+                        <materialDesign:PackIcon Kind="ClockEnd" Height="135" Width="135" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Text="DTR Export"/>
                     </Grid>
                 </Button>
             </materialDesign:TransitioningContent>
             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-                <Button Command="{Binding NavigateCommand}" CommandParameter="EmployeeManagementView">
+                <Button Command="{Binding NavigateCommand}" CommandParameter="ActualTimeLogExportView">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <materialDesign:PackIcon Kind="BookOpenVariant" Height="135" Width="135" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Row="1" Text="Examinations"/>
+                        <materialDesign:PackIcon Kind="ClockEnd" Height="135" Width="135" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Text="Actual Time-Logs"/>
+                    </Grid>
+                </Button>
+            </materialDesign:TransitioningContent>
+            <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
+                <Button Command="{Binding NavigateCommand}" CommandParameter="LocatorView">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:PackIcon Kind="AccountLocation" Height="135" Width="135" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Text="Locator"/>
                     </Grid>
                 </Button>
             </materialDesign:TransitioningContent>

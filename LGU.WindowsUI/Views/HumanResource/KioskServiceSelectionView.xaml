@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="LGU.Views.HumanResource.KioskServiceSelectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../../Styles/Default.xaml"/>
+    </UserControl.Resources>
+    <ItemsControl Style="{DynamicResource NavigationItemsControl}">
+        <ItemsControl.Resources>
+            <Style TargetType="{x:Type materialDesign:TransitioningContent}" BasedOn="{StaticResource NavigationTransitioningContent}"/>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource KioskNavigationButton}"/>
+            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource NavigationTextBlock}"/>
+        </ItemsControl.Resources>
+        <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
+            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskLocatorView">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:PackIcon Kind="AccountLocation" Height="300" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Text="Locator"/>
+                </Grid>
+            </Button>
+        </materialDesign:TransitioningContent>
+        <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
+            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskActualTimeLogView">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:PackIcon Kind="ClockEnd" Height="300" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Text="Actual Time-Logs"/>
+                </Grid>
+            </Button>
+        </materialDesign:TransitioningContent>
+        <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
+            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskActualTimeLogView">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:PackIcon Kind="Microsoft" Height="300" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Text="Service Records"/>
+                </Grid>
+            </Button>
+        </materialDesign:TransitioningContent>
+        <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
+            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskActualTimeLogView">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:PackIcon Kind="Microsoft" Height="300" Width="300" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Text="Service Records"/>
+                </Grid>
+            </Button>
+        </materialDesign:TransitioningContent>
+    </ItemsControl>
+</UserControl>

@@ -1,19 +1,14 @@
-﻿<UserControl x:Class="LGU.Views.HumanResource.DepartmentManagementView"
+﻿<UserControl x:Class="LGU.Views.HumanResource.LocatorView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"         
-             xmlns:local="clr-namespace:LGU.Views.HumanResource"
+             xmlns:prism="http://prismlibrary.com/"            
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:dialogs="clr-namespace:LGU.Views.HumanResource.Dialogs"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:converters="clr-namespace:LGU.Converters"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../Styles/Default.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary Source="../../Styles/Default.xaml"/>
     </UserControl.Resources>
     <Grid Margin="{DynamicResource ContainerMargin}">
         <Grid.ColumnDefinitions>
@@ -35,43 +30,45 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Text="{Binding SearchKey}" Style="{DynamicResource SearchTextBox}"/>
-                        <Button Grid.Column="1" Style="{DynamicResource SearchButton}" Command="{Binding RequestSearchCommand}"/>
+                        <Button Grid.Column="1" Style="{DynamicResource SearchButton}" Command="{Binding SearchCommand}"/>
                     </Grid>
                 </materialDesign:Card>
-                <materialDesign:Card Grid.Row="2" Style="{DynamicResource ContainerCard}" Margin="0">
+                <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
                     <Grid>
-                        <DataGrid ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}">
+                        <DataGrid ItemsSource="{Binding Locators}" SelectedItem="{Binding SelectedLocator}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Departments" Binding="{Binding Description}"/>
-                                <DataGridTextColumn Header="Abbreviation" Binding="{Binding Abbreviation}"/>
+                                <DataGridTextColumn Header="Requestor" Binding="{Binding Requestor.FullName}"/>
+                                <DataGridTextColumn Header="Purpose" Binding="{Binding Purpose}"/>
+                                <DataGridTextColumn Header="Date" Binding="{Binding OfficeOutTime,StringFormat='hh:mm tt'}"/>
+                                <DataGridTextColumn Header="Leave Type" Binding="{Binding LeaveType.Description}"/>
                                 <DataGridTextColumn Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <materialDesign:PopupBox Style="{DynamicResource DataManagerPopupBox}">
                             <StackPanel>
-                                <Button ToolTip="Add new Department" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                <Button ToolTip="Create new Locator" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <i:InvokeCommandAction Command="{Binding AddCommand}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <Button.CommandParameter>
-                                        <dialogs:AddEditDepartmentDialogView/>
+                                        <dialogs:AddEditLocatorDialogView/>
                                     </Button.CommandParameter>
                                     <materialDesign:PackIcon Kind="Plus"/>
                                 </Button>
-                                <Button ToolTip="Edit selected Department" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" IsEnabled="{Binding SelectedDepartment,Converter={x:Static converters:NullableToBooleanConverter.Instance}}">
+                                <Button ToolTip="Edit selected Locator" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" IsEnabled="{Binding SelectedLocator,Converter={x:Static converters:NullableToBooleanConverter.Instance}}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Click">
                                             <i:InvokeCommandAction Command="{Binding EditCommand}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                     <Button.CommandParameter>
-                                        <dialogs:AddEditDepartmentDialogView/>
+                                        <dialogs:AddEditLocatorDialogView/>
                                     </Button.CommandParameter>
                                     <materialDesign:PackIcon Kind="Pencil"/>
                                 </Button>
-                                <Button ToolTip="Delete selected Department" IsEnabled="{Binding SelectedDepartment,Converter={x:Static converters:NullableToBooleanConverter.Instance}}">
+                                <Button ToolTip="Delete selected Locator" IsEnabled="{Binding SelectedLocator,Converter={x:Static converters:NullableToBooleanConverter.Instance}}">
                                     <materialDesign:PackIcon Kind="Delete"/>
                                 </Button>
                             </StackPanel>
@@ -81,7 +78,30 @@
             </Grid>
         </materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent Grid.Column="2" Style="{DynamicResource SlideInFromRightTransitioningContent}">
-            <local:PreviewDepartmentView/>
+            <materialDesign:Card VerticalAlignment="Stretch">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:ColorZone Style="{DynamicResource SmallHeaderColorZone}">
+                        <TextBlock Text="Locator Details" Style="{DynamicResource SmallHeaderTextBlock}"/>
+                    </materialDesign:ColorZone>
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel DataContext="{Binding SelectedLocator}">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource PreviewFieldTextBox}"/>
+                            </StackPanel.Resources>
+                            <TextBox Text="{Binding Requestor.FullName}" materialDesign:HintAssist.Hint="Requestor"/>
+                            <TextBox Text="{Binding Date,StringFormat='MMMM dd, yyyy'}" materialDesign:HintAssist.Hint="Date"/>
+                            <TextBox Text="{Binding OfficeOutTime,StringFormat='hh:mm tt'}" materialDesign:HintAssist.Hint="Time-Out"/>
+                            <TextBox Text="{Binding ExpectedReturnTime,StringFormat='hh:mm tt'}" materialDesign:HintAssist.Hint="Expected Time of Return"/>
+                            <TextBox Text="{Binding LeaveType.Description}" materialDesign:HintAssist.Hint="Leave Type"/>
+                            <TextBox Text="{Binding Purpose}" materialDesign:HintAssist.Hint="Purpose"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </materialDesign:Card>
         </materialDesign:TransitioningContent>
     </Grid>
 </UserControl>

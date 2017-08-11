@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="LGU.Views.HumanResource.MainKioskView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"     
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewModels="clr-namespace:LGU.ViewModels.HumanResource"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary Source="/LGU.WindowsUI;component/Styles/Default.xaml"/>
+    </UserControl.Resources>
+    <materialDesign:Transitioner SelectedIndex="{Binding SelectedPage,FallbackValue=2}">
+        <materialDesign:Transitioner.Resources>
+            <Style TargetType="{x:Type materialDesign:TransitionerSlide}" BasedOn="{StaticResource StackTransitionerSlide}"/>
+        </materialDesign:Transitioner.Resources>
+        <materialDesign:TransitionerSlide>
+            <TextBlock Text="Please wait while the kiosk is preparing..." Style="{DynamicResource ExtraLargeHeaderTextBlock}"/>
+        </materialDesign:TransitionerSlide>
+        <materialDesign:TransitionerSlide>
+            <TextBlock Text="Scan your finger to begin transaction" Style="{DynamicResource ExtraLargeHeaderTextBlock}"/>
+        </materialDesign:TransitionerSlide>
+        <materialDesign:TransitionerSlide>
+            <materialDesign:TransitionerSlide.ForwardWipe>
+                <materialDesign:FadeWipe/>
+            </materialDesign:TransitionerSlide.ForwardWipe>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <materialDesign:TransitioningContent Style="{DynamicResource ExtraLargeHeaderTransitioningContent}">
+                    <materialDesign:ColorZone Style="{DynamicResource ExtraLargeHeaderColorZone}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="{Binding Employee.InformalFullName,FallbackValue=Juan Dela Cruz}" FontSize="90" Style="{DynamicResource ExtraLargeHeaderTextBlock}" HorizontalAlignment="Stretch"/>
+                                <TextBlock Grid.Row="2" Text="{Binding Employee.Department.Description}" Style="{DynamicResource LargeHeaderTextBlock}" HorizontalAlignment="Stretch"/>
+                            </Grid>
+                            <Viewbox Grid.Column="1" Height="150" Margin="15">
+                                <Image Source="../../Images/navotas_flag.jpg"/>
+                            </Viewbox>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </materialDesign:TransitioningContent>
+                <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static viewModels:MainKioskViewModel.KioskContentRegion}" MinHeight="100"/>
+                <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
+                    <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="1" Style="{DynamicResource FooterActionButton}" Command="{Binding NavigateCommand}" CommandParameter="KioskServiceSelectionView">
+                                <materialDesign:PackIcon Kind="HomeVariant" Height="50" Width="50"/>
+                            </Button>
+                            <Button Grid.Column="2" Style="{DynamicResource FooterActionButton}" Command="{Binding EndSessionCommand}">
+                                <materialDesign:PackIcon Kind="Close" Height="50" Width="50"/>
+                            </Button>
+                        </Grid>
+                    </materialDesign:ColorZone>
+                </materialDesign:TransitioningContent>
+            </Grid>
+        </materialDesign:TransitionerSlide>
+    </materialDesign:Transitioner>
+</UserControl>

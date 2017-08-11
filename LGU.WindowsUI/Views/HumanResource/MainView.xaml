@@ -49,7 +49,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <ToggleButton Grid.Column="0" IsChecked="{Binding IsMenuOpen}" Style="{DynamicResource MaterialDesignHamburgerToggleButton}"/>
-                        <TextBlock Grid.Column="1" Text="Human Resource &amp; Development Office" Style="{DynamicResource LargeHeaderTextBlock}"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Header}" Style="{DynamicResource LargeHeaderTextBlock}"/>
                     </Grid>
                 </materialDesign:ColorZone>
             </materialDesign:TransitioningContent>

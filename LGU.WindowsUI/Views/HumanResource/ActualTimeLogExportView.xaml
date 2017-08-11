@@ -1,0 +1,168 @@
+﻿<UserControl x:Class="LGU.Views.HumanResource.ActualTimeLogExportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"    
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../../Styles/Default.xaml"/>
+    </UserControl.Resources>
+    <materialDesign:DialogHost>
+        <Grid Margin="{DynamicResource ContainerMargin}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:TransitioningContent Grid.Column="0" Style="{DynamicResource SlideInFromLeftTransitioningContent}">
+                    <materialDesign:Card>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding EmployeeSearchKey}" Style="{DynamicResource SearchTextBox}"/>
+                            <Button Grid.Column="1" Style="{DynamicResource SearchButton}" Command="{Binding GetEmployeesCommand}"/>
+                        </Grid>
+                    </materialDesign:Card>
+                </materialDesign:TransitioningContent>
+                <materialDesign:TransitioningContent Grid.Column="2" Style="{DynamicResource SlideInFromRightTransitioningContent}">
+                    <materialDesign:Card Grid.Row="0">
+                        <Grid Height="40">
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody2TextBlock}">
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Cut-Off: "/>
+                            <TextBlock Grid.Column="1"  Text="{Binding CutOff.Begin,StringFormat='MMMM dd, yyyy'}"/>
+                            <TextBlock Grid.Column="2" Text="-"/>
+                            <TextBlock Grid.Column="3" Text="{Binding CutOff.End,StringFormat='MMMM dd, yyyy'}"/>
+                            <Button Grid.Column="5" Style="{DynamicResource SearchButton}" Content="Change" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                <Button.CommandParameter>
+                                    <Grid MinHeight="{DynamicResource MinDialogHeight}" MinWidth="{DynamicResource MinDialogWidth}">
+                                        <Grid.Resources>
+                                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody2TextBlock}">
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                                <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
+                                            </Style>
+                                        </Grid.Resources>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
+                                            <materialDesign:ColorZone Grid.Row="0" Style="{DynamicResource RegularHeaderColorZone}">
+                                                <TextBlock Text="Cut-Off" Style="{DynamicResource RegularHeaderTextBlock}"/>
+                                            </materialDesign:ColorZone>
+                                        </materialDesign:TransitioningContent>
+                                        <Grid Grid.Row="1" Margin="{DynamicResource ContainerMargin}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Text="From"/>
+                                                <Calendar SelectedDate="{Binding CutOff.Begin}"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="2">
+                                                <TextBlock Text="To"/>
+                                                <Calendar SelectedDate="{Binding CutOff.End}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
+                                            <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
+                                                <Grid>
+                                                    <Grid.Resources>
+                                                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FooterActionButton}"/>
+                                                    </Grid.Resources>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Button Grid.Column="2" Content="Done" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="Click">
+                                                                <i:InvokeCommandAction Command="{Binding GetEmployeesCommand}"/>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </Button>
+                                                </Grid>
+                                            </materialDesign:ColorZone>
+                                        </materialDesign:TransitioningContent>
+                                    </Grid>
+                                </Button.CommandParameter>
+                            </Button>
+                        </Grid>
+                    </materialDesign:Card>
+                </materialDesign:TransitioningContent>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:TransitioningContent Grid.Column="0" Style="{DynamicResource SlideInFromLeftTransitioningContent}">
+                    <materialDesign:Card Grid.Column="0" VerticalAlignment="Stretch">
+                        <DataGrid ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding GetTimeLogsCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Employees" Binding="{Binding FullName}"/>
+                                <DataGridTextColumn Header="Department" Binding="{Binding Department.Description}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </materialDesign:Card>
+                </materialDesign:TransitioningContent>
+                <materialDesign:TransitioningContent Grid.Column="2" Style="{DynamicResource SlideInFromRightTransitioningContent}">
+                    <materialDesign:Card VerticalAlignment="Stretch">
+                        <DataGrid ItemsSource="{Binding TimeLogs}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Time-In" Binding="{Binding LoginDate,StringFormat='MMM dd, yyyy hh:mm tt'}"/>
+                                <DataGridTextColumn Header="Time-Out" Binding="{Binding LogoutDate,StringFormat='MMM dd, yyyy hh:mm tt'}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </materialDesign:Card>
+                </materialDesign:TransitioningContent>
+            </Grid>
+            <Grid Grid.Row="4">
+                <materialDesign:TransitioningContent Style="{DynamicResource SlideInFromBottomTransitioningContent}">
+                    <materialDesign:Card VerticalAlignment="Stretch">
+                        <Grid Margin="{DynamicResource DefaultMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox Grid.Column="0" Content="Print after export"/>
+                            <Button Grid.Column="1" Content="Export"/>
+                        </Grid>
+                    </materialDesign:Card>
+                </materialDesign:TransitioningContent>
+            </Grid>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>
