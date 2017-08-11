@@ -7,13 +7,7 @@ namespace LGU.Reports
 {
     public abstract class ExcelExportBase : IDisposable
     {
-        public ExcelExportBase(IExportEventHandler eventHandler)
-        {
-            EventHandler = eventHandler ?? throw new ArgumentNullException(nameof(eventHandler));
-        }
-
-        protected IExportEventHandler EventHandler { get; }
-
+        public IExportEventHandler EventHandler { get; set; }
         protected Excel.Application Application { get; private set; }
         protected Excel.Workbooks Workbooks { get; private set; }
         protected Excel.Workbook Workbook { get; private set; }
@@ -41,12 +35,12 @@ namespace LGU.Reports
                 }
                 else
                 {
-                    EventHandler.OnError($"Template not found: '{templatePath}'");
+                    EventHandler?.OnError($"Template not found: '{templatePath}'");
                 }
             }
             else
             {
-                EventHandler.OnError("Excel is not running.");
+                EventHandler?.OnError("Microsoft Office Excel is not running.");
             }
         }
 
@@ -54,18 +48,18 @@ namespace LGU.Reports
         {
             if (worksheetIndex <= 0)
             {
-                EventHandler.OnError("Worksheet index cannot be zero or any negative integer.");
+                EventHandler?.OnError("Worksheet index cannot be zero or any negative integer.");
             }
             else
             {
                 if (Sheets == null)
                 {
-                    EventHandler.OnError("Workbook has no sheet.");
+                    EventHandler?.OnError("Workbook has no sheet.");
                 }
                 else if (Sheets.Count < worksheetIndex)
                 {
 
-                    EventHandler.OnError("Worksheet index is out of range.");
+                    EventHandler?.OnError("Worksheet index is out of range.");
                 }
                 else
                 {
@@ -102,11 +96,8 @@ namespace LGU.Reports
             CurrentRange.Value = value;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
-            Workbook.Close();
-            Application.Quit();
-
             if (Worksheet != null)
             {
                 Marshal.ReleaseComObject(Worksheet);
@@ -121,6 +112,7 @@ namespace LGU.Reports
 
             if (Workbook != null)
             {
+                Workbook.Close();
                 Marshal.ReleaseComObject(Workbook);
                 Workbook = null;
             }
@@ -139,6 +131,7 @@ namespace LGU.Reports
 
             if (Application != null)
             {
+                Application.Quit();
                 Marshal.ReleaseComObject(Application);
                 Application = null;
             }

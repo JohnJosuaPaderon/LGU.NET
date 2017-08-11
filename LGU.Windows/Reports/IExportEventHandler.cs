@@ -6,6 +6,7 @@ namespace LGU.Reports
     {
         void OnException(Exception exception);
         void OnError(string message);
-        void OnExported();
+        void OnExported(string[] filePaths);
+        void OnExported(string filePath);
     }
 }

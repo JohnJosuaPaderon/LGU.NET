@@ -7,5 +7,7 @@ namespace LGU.Reports
     {
         void Export();
         Task ExportAsync();
+        IExportEventHandler EventHandler { get; set; }
+        bool PrintAfterSave { get; set; }
     }
 }
