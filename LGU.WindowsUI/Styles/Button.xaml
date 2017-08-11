@@ -13,6 +13,29 @@
         <Setter Property="MinWidth" Value="75"/>
         <Setter Property="Margin" Value="2 0"/>
     </Style>
+
+    <Style x:Key="ConfirmButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFloatingActionMiniButton}">
+        <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Content">
+            <Setter.Value>
+                <materialDesign:PackIcon Kind="Check" Height="25" Width="25"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="DataManagerButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFloatingActionButton}">
+        <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+    </Style>
+
+    <Style x:Key="FieldButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+        <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
+        <Setter Property="Height" Value="NaN"/>
+        <Setter Property="Width" Value="NaN"/>
+    </Style>
     
     <Style x:Key="TileButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
         <Setter Property="Height" Value="NaN"/>
@@ -25,6 +48,17 @@
     <Style x:Key="NavigationButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
         <Setter Property="Height" Value="200"/>
         <Setter Property="Width" Value="200"/>
+        <Setter Property="Padding" Value="4"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+    </Style>
+    
+    <Style x:Key="KioskNavigationButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+        <Setter Property="Height" Value="325"/>
+        <Setter Property="Width" Value="325"/>
         <Setter Property="Padding" Value="4"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -46,6 +80,16 @@
         <Setter Property="Content">
             <Setter.Value>
                 <materialDesign:PackIcon Kind="Magnify" Height="20" Width="20"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SearchSettingButton" TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFlatButton}">
+        <Setter Property="Height" Value="NaN"/>
+        <Setter Property="Padding" Value="8 4"/>
+        <Setter Property="Content">
+            <Setter.Value>
+                <materialDesign:PackIcon Kind="Wrench" Height="20" Width="20"/>
             </Setter.Value>
         </Setter>
     </Style>

@@ -17,6 +17,7 @@
         <ResourceDictionary Source="PopupBox.xaml"/>
         <ResourceDictionary Source="TextBlock.xaml"/>
         <ResourceDictionary Source="TextBox.xaml"/>
+        <ResourceDictionary Source="TransitionerSlide.xaml"/>
         <ResourceDictionary Source="TransitioningContent.xaml"/>
 
         <ResourceDictionary Source="Base.xaml"/>

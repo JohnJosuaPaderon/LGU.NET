@@ -44,6 +44,9 @@
     <!-- OTHERS -->
     <Thickness x:Key="ContainerMargin">12</Thickness>
     <GridLength x:Key="ContainerGridSpace">12</GridLength>
+    <GridLength x:Key="KioskGridSpace">16</GridLength>
     <Thickness x:Key="SearchPadding">4</Thickness>
+    <system:Double x:Key="MinDialogHeight">500</system:Double>
+    <system:Double x:Key="MinDialogWidth">500</system:Double>
 
 </ResourceDictionary>

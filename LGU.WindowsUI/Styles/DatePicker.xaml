@@ -10,5 +10,7 @@
         <Setter Property="materialDesign:HintAssist.IsFloating" Value="True"/>
         <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
         <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="VerticalContentAlignment" Value="Bottom"/>
     </Style>
 </ResourceDictionary>
