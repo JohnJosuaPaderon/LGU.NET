@@ -111,7 +111,6 @@ namespace LGU.Data.Rdbms
                             {
                                 if (reader.HasRows)
                                 {
-                                    reader.Read();
                                     return converter.FromReader(reader);
                                 }
                                 else
