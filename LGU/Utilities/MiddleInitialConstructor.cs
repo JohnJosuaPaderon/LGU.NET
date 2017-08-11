@@ -18,6 +18,11 @@ namespace LGU.Utilities
                 {
                     AppendChar(builder, item);
                 }
+
+                if (builder.Length > 0)
+                {
+                    builder.Append('.');
+                }
                 
                 return builder.ToString();
             }
@@ -36,8 +41,11 @@ namespace LGU.Utilities
         {
             if (!string.IsNullOrWhiteSpace(item))
             {
-                var c = char.IsLetter(item[0]);
-                builder.Append(c);
+                var c = item[0];
+                if (char.IsLetter(c))
+                {
+                    builder.Append(c);
+                }
             }
         }
     }
