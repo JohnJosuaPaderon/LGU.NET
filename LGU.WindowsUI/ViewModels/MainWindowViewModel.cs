@@ -1,7 +1,6 @@
 ﻿using LGU.EntityManagers;
 using LGU.Events;
 using MaterialDesignThemes.Wpf;
-using Microsoft.Extensions.DependencyInjection;
 using Prism.Events;
 using Prism.Regions;
 using System.Windows;
@@ -18,7 +17,12 @@ namespace LGU.ViewModels
 
         public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_SystemManager = SystemRuntime.Services.GetService<ISystemManager>();
+            r_SystemManager = SystemRuntime.GetService<ISystemManager>();
+            r_TitleEvent.Subscribe(t => Title = t);
+            r_ShowCloseButtonEvent.Subscribe(arg => ShowCloseButton = arg);
+            r_ShowMinButtonEvent.Subscribe(arg => ShowMinButton = arg);
+            r_ShowMaxRestorButtonEvent.Subscribe(arg => ShowMaxRestoreButton = arg);
+            r_ShowTitleBarEvent.Subscribe(arg => ShowTitleBar = arg);
         }
 
         private string _Title = "Welcome to LGU.NET";
@@ -42,9 +46,36 @@ namespace LGU.ViewModels
             set { SetProperty(ref _WindowState, value); }
         }
 
+        private bool _ShowCloseButton = true;
+        public bool ShowCloseButton
+        {
+            get { return _ShowCloseButton; }
+            set { SetProperty(ref _ShowCloseButton, value); }
+        }
+
+        private bool _ShowMinButton = true;
+        public bool ShowMinButton
+        {
+            get { return _ShowMinButton; }
+            set { SetProperty(ref _ShowMinButton, value); }
+        }
+
+        private bool _ShowMaxRestoreButton = true;
+        public bool ShowMaxRestoreButton
+        {
+            get { return _ShowMaxRestoreButton; }
+            set { SetProperty(ref _ShowMaxRestoreButton, value); }
+        }
+
+        private bool _ShowTitleBar = true;
+        public bool ShowTitleBar
+        {
+            get { return _ShowTitleBar; }
+            set { SetProperty(ref _ShowTitleBar, value); }
+        }
+
         public override void Initialize()
         {
-            r_EventAggregator.GetEvent<TitleEvent>().Subscribe(t => Title = t);
             r_EventAggregator.GetEvent<WindowStateEvent>().Subscribe(ws => WindowState = ws);
             r_EventAggregator.GetEvent<NewMessageEvent>().Subscribe(nm => MessageQueue.Enqueue(nm));
 
@@ -52,7 +83,6 @@ namespace LGU.ViewModels
             {
                 r_RegionManager.RequestNavigate(MainContentRegionName, InitialMainContentRegionSource);
             }
-            r_EventAggregator.GetEvent<NewMessageEvent>().Publish("Hello");
         }
     }
 }
