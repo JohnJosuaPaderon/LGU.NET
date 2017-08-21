@@ -137,6 +137,7 @@ namespace LGU.Extensions
             serviceCollection.AddSingleton<ISearchDepartment, SearchDepartment>();
             serviceCollection.AddSingleton<IInsertDepartment, InsertDepartment>();
             serviceCollection.AddSingleton<IUpdateDepartment, UpdateDepartment>();
+            serviceCollection.AddSingleton<IGetDepartmentListWithTimeLog, GetDepartmentListWithTimeLog>();
             serviceCollection.AddSingleton<IDepartmentManager, DepartmentManager>();
             #endregion
 
@@ -252,6 +253,7 @@ namespace LGU.Extensions
             serviceCollection.AddSingleton<ISearchEmployee, SearchEmployee>();
             serviceCollection.AddSingleton<IGetEmployeeListWithTimeLog, GetEmployeeListWithTimeLog>();
             serviceCollection.AddSingleton<ISearchEmployeeWithTimeLog, SearchEmployeeWithTimeLog>();
+            serviceCollection.AddSingleton<IGetEmployeeListWithTimeLogByDepartment, GetEmployeeListWithTimeLogByDepartment>();
             serviceCollection.AddSingleton<IEmployeeManager, EmployeeManager>();
             #endregion
 
@@ -298,6 +300,9 @@ namespace LGU.Extensions
             serviceCollection.AddSingleton<ILogEmployee, LogEmployee>();
             serviceCollection.AddSingleton<IUpdateTimeLog, UpdateTimeLog>();
             serviceCollection.AddSingleton<IGetActualTimeLogListByEmployeeCutOff, GetActualTimeLogListByEmployeeCutOff>();
+            serviceCollection.AddSingleton<IGetTimeLogListByCutOff, GetTimeLogListByCutOff>();
+            serviceCollection.AddSingleton<IGetTimeLogListByDepartmentCutOff, GetTimeLogListByDepartmentCutOff>();
+            serviceCollection.AddSingleton<IGetTimeLogListByEmployeeCutOff, GetTimeLogListByEmployeeCutOff>();
             serviceCollection.AddSingleton<ITimeLogManager, TimeLogManager>();
             #endregion
 
