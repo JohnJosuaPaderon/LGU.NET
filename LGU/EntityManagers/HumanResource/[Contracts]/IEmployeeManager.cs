@@ -18,5 +18,8 @@ namespace LGU.EntityManagers.HumanResource
         IEnumerableProcessResult<Employee> SearchWithTimeLog(string searchKey, ValueRange<DateTime> cutOff);
         Task<IEnumerableProcessResult<Employee>> SearchWithTimeLogAsync(string searchKey, ValueRange<DateTime> cutOff);
         Task<IEnumerableProcessResult<Employee>> SearchWithTimeLogAsync(string searchKey, ValueRange<DateTime> cutOff, CancellationToken cancellationToken);
+        IEnumerableProcessResult<Employee> GetListWithTimeLogByDepartment(ValueRange<DateTime> cutOff, Department department);
+        Task<IEnumerableProcessResult<Employee>> GetListWithTimeLogByDepartmentAsync(ValueRange<DateTime> cutOff, Department department);
+        Task<IEnumerableProcessResult<Employee>> GetListWithTimeLogByDepartmentAsync(ValueRange<DateTime> cutOff, Department department, CancellationToken cancellationToken);
     }
 }
