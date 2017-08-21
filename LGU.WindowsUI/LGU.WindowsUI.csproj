@@ -195,6 +195,8 @@
     <Compile Include="Converters\NullableToBooleanConverter.cs" />
     <Compile Include="Converters\FingerPrintToPackIconStateConverter.cs" />
     <Compile Include="Converters\NullableToPackIconStateConverter.cs" />
+    <Compile Include="Converters\TimeFileSegregationToDisplayConverter.cs" />
+    <Compile Include="Converters\TimeLogExportOptionToDisplayConverter.cs" />
     <Compile Include="Events\HumanResource\AddDepartmentEvent.cs" />
     <Compile Include="Events\HumanResource\AddEmployeeEvent.cs" />
     <Compile Include="Events\HumanResource\AddLocatorEvent.cs" />
@@ -299,9 +301,6 @@
     </Compile>
     <Compile Include="Views\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogView.xaml.cs">
       <DependentUpon>ManageEmployeeFingerPrintSetDialogView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\HumanResource\Dialogs\TimeLogExportPrintOptionsDialogView.xaml.cs">
-      <DependentUpon>TimeLogExportPrintOptionsDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\EmployeeFingerPrintEnrollmentView.xaml.cs">
       <DependentUpon>EmployeeFingerPrintEnrollmentView.xaml</DependentUpon>
@@ -479,10 +478,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HumanResource\Dialogs\TimeLogExportPrintOptionsDialogView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\HumanResource\EmployeeFingerPrintEnrollmentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -560,6 +555,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\navotas_flag.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\kiosk_background.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets" Condition="Exists('..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets')" />
