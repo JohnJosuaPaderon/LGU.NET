@@ -9,19 +9,19 @@ namespace LGU.Reports.HumanResource
 {
     public sealed class ExportLocator : WordExportBase, IExportLocator
     {
-        public ExportLocator(IHumanResourcePathProvider pathProvider)
+        public ExportLocator(IHumanResourceReportInfoProvider infoProvider)
         {
-            r_PathProvider = pathProvider;
+            r_InfoProvider = infoProvider;
         }
 
-        private readonly IHumanResourcePathProvider r_PathProvider;
+        private readonly IHumanResourceReportInfoProvider r_InfoProvider;
 
         public Locator Locator { get; set; }
 
         public void Export()
         {
             Initialize();
-            OpenTemplate(r_PathProvider.LocatorTemplate);
+            OpenTemplate(r_InfoProvider.LocatorTemplate);
 
             foreach (Word.Field field in Document.Fields)
             {
@@ -59,8 +59,8 @@ namespace LGU.Reports.HumanResource
             }
 
             string fileName = $"{Locator.Requestor?.Id}-{DateTime.Now.ToString("yyyyMMdd-hhmmss")}.docx";
-            DirectoryResolver.Resolve(r_PathProvider.LocatorSaveDirectory);
-            SaveAs(Path.Combine(r_PathProvider.LocatorSaveDirectory, fileName));
+            DirectoryResolver.Resolve(r_InfoProvider.LocatorSaveDirectory);
+            SaveAs(Path.Combine(r_InfoProvider.LocatorSaveDirectory, fileName));
         }
 
         public Task ExportAsync()
