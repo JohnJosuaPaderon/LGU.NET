@@ -117,16 +117,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\ExcelCell.cs" />
     <Compile Include="Reports\ExcelExportBase.cs" />
-    <Compile Include="Reports\HumanResource\HumanResourcePathProvider.cs" />
+    <Compile Include="Reports\HumanResource\HumanResourceReportInfoProvider.cs" />
     <Compile Include="Reports\HumanResource\HumanResourceReport.cs" />
-    <Compile Include="Reports\HumanResource\IHumanResourcePathProvider.cs" />
+    <Compile Include="Reports\HumanResource\IHumanResourceReportInfoProvider.cs" />
     <Compile Include="Reports\HumanResource\IHumanResourceReport.cs" />
+    <Compile Include="Reports\HumanResource\TimeLogExportOption.cs" />
+    <Compile Include="Reports\HumanResource\TimeLogFileSegregation.cs" />
     <Compile Include="Reports\HumanResource\[Contracts]\IExportActualTimeLog.cs" />
     <Compile Include="Reports\HumanResource\[Contracts]\IExportLocator.cs" />
+    <Compile Include="Reports\HumanResource\[Contracts]\IExportTimeLog.cs" />
     <Compile Include="Reports\HumanResource\[Implementations]\ExportActualTimeLog.cs" />
     <Compile Include="Reports\HumanResource\[Implementations]\ExportLocator.cs" />
+    <Compile Include="Reports\HumanResource\[Implementations]\ExportTimeLog.cs" />
     <Compile Include="Reports\IExportEventHandler.cs" />
     <Compile Include="Reports\IExport.cs" />
+    <Compile Include="Reports\ReportInfoProviderBase.cs" />
     <Compile Include="Reports\WordExportBase.cs" />
     <Compile Include="SystemAdministratorManager.cs" />
     <Compile Include="Utilities\DirectoryResolver.cs" />
@@ -182,8 +187,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EntityProcesses\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
