@@ -14,7 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary Source="/LGU.WindowsUI;component/Styles/Default.xaml"/>
     </UserControl.Resources>
-    <materialDesign:Transitioner SelectedIndex="{Binding SelectedPage,FallbackValue=2}">
+    <materialDesign:Transitioner SelectedIndex="{Binding SelectedPage,FallbackValue=1}">
         <materialDesign:Transitioner.Resources>
             <Style TargetType="{x:Type materialDesign:TransitionerSlide}" BasedOn="{StaticResource StackTransitionerSlide}"/>
         </materialDesign:Transitioner.Resources>
@@ -22,7 +22,7 @@
             <TextBlock Text="Please wait while the kiosk is preparing..." Style="{DynamicResource ExtraLargeHeaderTextBlock}"/>
         </materialDesign:TransitionerSlide>
         <materialDesign:TransitionerSlide>
-            <TextBlock Text="Scan your finger to begin transaction" Style="{DynamicResource ExtraLargeHeaderTextBlock}"/>
+            <Image Source="../../Images/kiosk_background.jpg"/>
         </materialDesign:TransitionerSlide>
         <materialDesign:TransitionerSlide>
             <materialDesign:TransitionerSlide.ForwardWipe>

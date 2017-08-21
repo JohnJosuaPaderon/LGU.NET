@@ -3,81 +3,161 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:converters="clr-namespace:LGU.Converters"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <ResourceDictionary Source="../../Styles/Default.xaml"/>
     </UserControl.Resources>
     <materialDesign:DialogHost>
-        <Grid>
+        <Grid Margin="{DynamicResource ContainerMargin}">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{DynamicResource ContainerGridSpace}"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                <RowDefinition Height="{DynamicResource ContainerGridSpace}"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <materialDesign:TransitioningContent Grid.Column="0" Style="{DynamicResource SlideInFromLeftTransitioningContent}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <materialDesign:Card Grid.Row="0">
-                            <Grid Height="40">
+            <materialDesign:Card Grid.Row="0">
+                <Grid Height="40">
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody2TextBlock}">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <TextBlock Text="Cut-Off: "/>
+                        <TextBlock Text="{Binding CutOff.Begin,StringFormat='MMM dd, yyyy'}"/>
+                        <TextBlock Text="-"/>
+                        <TextBlock Text="{Binding CutOff.End, StringFormat='MMM dd, yyyy'}"/>
+                    </StackPanel>
+                    <Button Grid.Column="1" Style="{DynamicResource SearchButton}" Content="Change" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                        <Button.CommandParameter>
+                            <Grid MinHeight="{DynamicResource MinDialogHeight}" MinWidth="{DynamicResource MinDialogWidth}">
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody2TextBlock}">
                                         <Setter Property="VerticalAlignment" Value="Center"/>
                                         <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
                                     </Style>
                                 </Grid.Resources>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                    <TextBlock Text="Cut-Off: "/>
-                                    <TextBlock Text="{Binding CutOff.Begin,StringFormat='MMM dd, yyyy'}"/>
-                                    <TextBlock Text="-"/>
-                                    <TextBlock Text="{Binding CutOff.End, StringFormat='MMM dd, yyyy'}"/>
-                                </StackPanel>
-                                <Button Grid.Column="1" Style="{DynamicResource SearchButton}" Content="Change"/>
-                            </Grid>
-                        </materialDesign:Card>
-                        <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
-                            <Grid>
-                                <DataGrid ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Departments"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                                <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="{DynamicResource DefaultMargin}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Button Grid.Row="0" Style="{DynamicResource DataManagerButton}" Padding="0">
-                                        <Grid Margin="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
+                                    <materialDesign:ColorZone Grid.Row="0" Style="{DynamicResource RegularHeaderColorZone}">
+                                        <TextBlock Text="Cut-Off" Style="{DynamicResource RegularHeaderTextBlock}"/>
+                                    </materialDesign:ColorZone>
+                                </materialDesign:TransitioningContent>
+                                <Grid Grid.Row="1" Margin="{DynamicResource ContainerMargin}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="From"/>
+                                        <Calendar SelectedDate="{Binding CutOff.Begin}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectedDatesChanged">
+                                                    <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </Calendar>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Text="To"/>
+                                        <Calendar SelectedDate="{Binding CutOff.End}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectedDatesChanged">
+                                                    <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </Calendar>
+                                    </StackPanel>
+                                </Grid>
+                                <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
+                                    <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
+                                        <Grid>
+                                            <Grid.Resources>
+                                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FooterActionButton}"/>
+                                            </Grid.Resources>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="All >>" Margin="0"/>
+                                            <Button Grid.Column="2" Content="Done" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <i:InvokeCommandAction Command="{Binding GetDepartmentCommand}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
                                         </Grid>
-                                    </Button>
-                                </Grid>
+                                    </materialDesign:ColorZone>
+                                </materialDesign:TransitioningContent>
                             </Grid>
-                        </materialDesign:Card>
-                    </Grid>
+                        </Button.CommandParameter>
+                    </Button>
+                </Grid>
+            </materialDesign:Card>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="{DynamicResource ContainerGridSpace}"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:TransitioningContent Grid.Column="0" Style="{DynamicResource SlideInFromLeftTransitioningContent}">
+                    <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
+                        <Grid>
+                            <DataGrid ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding GetEmployeeCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Departments" Binding="{Binding Description}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </materialDesign:Card>
+                </materialDesign:TransitioningContent>
+                <materialDesign:TransitioningContent Grid.Column="2" Style="{DynamicResource SlideInFromRightTransitioningContent}">
+                    <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
+                        <Grid>
+                            <DataGrid ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Employees" Binding="{Binding FullName}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </materialDesign:Card>
                 </materialDesign:TransitioningContent>
             </Grid>
+            <materialDesign:TransitioningContent Grid.Row="4" Style="{DynamicResource SlideInFromBottomTransitioningContent}">
+                <materialDesign:Card>
+                    <Grid Margin="{DynamicResource DefaultMargin}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="1" materialDesign:HintAssist.Hint="Export Option" MinWidth="200" ItemsSource="{Binding ExportOptions}"/>
+                        <ComboBox Grid.Column="3" materialDesign:HintAssist.Hint="File Segregation" MinWidth="200" ItemsSource="{Binding FileSegregations}"/>
+                        <Button Grid.Column="5" Content="Print" Style="{DynamicResource FooterActionButton}" MinWidth="100" Command="{Binding PrintCommand}"/>
+                    </Grid>
+                </materialDesign:Card>
+            </materialDesign:TransitioningContent>
         </Grid>
     </materialDesign:DialogHost>
 </UserControl>

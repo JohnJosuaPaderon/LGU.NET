@@ -83,11 +83,23 @@
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Grid.Column="0">
                                                 <TextBlock Text="From"/>
-                                                <Calendar SelectedDate="{Binding CutOff.Begin}"/>
+                                                <Calendar SelectedDate="{Binding CutOff.Begin}">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="SelectedDatesChanged">
+                                                            <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Calendar>
                                             </StackPanel>
                                             <StackPanel Grid.Column="2">
                                                 <TextBlock Text="To"/>
-                                                <Calendar SelectedDate="{Binding CutOff.End}"/>
+                                                <Calendar SelectedDate="{Binding CutOff.End}">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="SelectedDatesChanged">
+                                                            <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Calendar>
                                             </StackPanel>
                                         </Grid>
                                         <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
