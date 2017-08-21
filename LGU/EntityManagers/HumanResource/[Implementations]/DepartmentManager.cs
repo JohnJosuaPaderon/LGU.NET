@@ -1,6 +1,7 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
 using LGU.Processes;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace LGU.EntityManagers.HumanResource
         private readonly IInsertDepartment r_Insert;
         private readonly IUpdateDepartment r_Update;
         private readonly ISearchDepartment r_Search;
+        private readonly IGetDepartmentListWithTimeLog r_GetListWithTimeLog;
 
         public DepartmentManager(
             IDeleteDepartment delete,
@@ -21,7 +23,8 @@ namespace LGU.EntityManagers.HumanResource
             IGetDepartmentList getList,
             IInsertDepartment insert,
             IUpdateDepartment update,
-            ISearchDepartment search)
+            ISearchDepartment search,
+            IGetDepartmentListWithTimeLog getListWithTimeLog)
         {
             r_Delete = delete;
             r_GetById = getById;
@@ -29,6 +32,7 @@ namespace LGU.EntityManagers.HumanResource
             r_Insert = insert;
             r_Update = update;
             r_Search = search;
+            r_GetListWithTimeLog = getListWithTimeLog;
         }
 
         public IProcessResult<Department> Delete(Department data)
@@ -260,6 +264,24 @@ namespace LGU.EntityManagers.HumanResource
             {
                 return new EnumerableProcessResult<Department>(ProcessResultStatus.Failed, "Invalid search key.");
             }
+        }
+
+        public IEnumerableProcessResult<Department> GetListWithTimeLog(ValueRange<DateTime> cutOff)
+        {
+            r_GetListWithTimeLog.CutOff = cutOff;
+            return AddUpdateIfSuccess(r_GetListWithTimeLog.Execute());
+        }
+
+        public async Task<IEnumerableProcessResult<Department>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff)
+        {
+            r_GetListWithTimeLog.CutOff = cutOff;
+            return AddUpdateIfSuccess(await r_GetListWithTimeLog.ExecuteAsync());
+        }
+
+        public async Task<IEnumerableProcessResult<Department>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        {
+            r_GetListWithTimeLog.CutOff = cutOff;
+            return AddUpdateIfSuccess(await r_GetListWithTimeLog.ExecuteAsync(cancellationToken));
         }
     }
 }

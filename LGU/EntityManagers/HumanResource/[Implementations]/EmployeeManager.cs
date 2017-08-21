@@ -17,6 +17,7 @@ namespace LGU.EntityManagers.HumanResource
         private readonly ISearchEmployee r_Search;
         private readonly IGetEmployeeListWithTimeLog r_GetListWithTimeLog;
         private readonly ISearchEmployeeWithTimeLog r_SearchWithTimeLog;
+        private readonly IGetEmployeeListWithTimeLogByDepartment r_GetListWithTimeLogByDepartment;
 
         public EmployeeManager(
             IDeleteEmployee delete,
@@ -26,7 +27,8 @@ namespace LGU.EntityManagers.HumanResource
             IUpdateEmployee update,
             ISearchEmployee search,
             IGetEmployeeListWithTimeLog getListWithTimeLog,
-            ISearchEmployeeWithTimeLog searchWithTimeLog)
+            ISearchEmployeeWithTimeLog searchWithTimeLog,
+            IGetEmployeeListWithTimeLogByDepartment getListWithTimeLogByDepartment)
         {
             r_Delete = delete;
             r_GetById = getById;
@@ -36,6 +38,7 @@ namespace LGU.EntityManagers.HumanResource
             r_Search = search;
             r_GetListWithTimeLog = getListWithTimeLog;
             r_SearchWithTimeLog = searchWithTimeLog;
+            r_GetListWithTimeLogByDepartment = getListWithTimeLogByDepartment;
         }
 
         public IProcessResult<Employee> Delete(Employee data)
@@ -326,6 +329,48 @@ namespace LGU.EntityManagers.HumanResource
             else
             {
                 return new EnumerableProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid search key.");
+            }
+        }
+
+        public IEnumerableProcessResult<Employee> GetListWithTimeLogByDepartment(ValueRange<DateTime> cutOff, Department department)
+        {
+            if (department != null)
+            {
+                r_GetListWithTimeLogByDepartment.CutOff = cutOff;
+                r_GetListWithTimeLogByDepartment.Department = department;
+                return AddUpdateIfSuccess(r_GetListWithTimeLogByDepartment.Execute());
+            }
+            else
+            {
+                return new EnumerableProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid department.");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<Employee>> GetListWithTimeLogByDepartmentAsync(ValueRange<DateTime> cutOff, Department department)
+        {
+            if (department != null)
+            {
+                r_GetListWithTimeLogByDepartment.CutOff = cutOff;
+                r_GetListWithTimeLogByDepartment.Department = department;
+                return AddUpdateIfSuccess(await r_GetListWithTimeLogByDepartment.ExecuteAsync());
+            }
+            else
+            {
+                return new EnumerableProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid department.");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<Employee>> GetListWithTimeLogByDepartmentAsync(ValueRange<DateTime> cutOff, Department department, CancellationToken cancellationToken)
+        {
+            if (department != null)
+            {
+                r_GetListWithTimeLogByDepartment.CutOff = cutOff;
+                r_GetListWithTimeLogByDepartment.Department = department;
+                return AddUpdateIfSuccess(await r_GetListWithTimeLogByDepartment.ExecuteAsync(cancellationToken));
+            }
+            else
+            {
+                return new EnumerableProcessResult<Employee>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
     }

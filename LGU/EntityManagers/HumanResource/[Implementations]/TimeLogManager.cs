@@ -16,6 +16,9 @@ namespace LGU.EntityManagers.HumanResource
         private readonly ILogEmployee r_LogEmployee;
         private readonly IUpdateTimeLog r_Update;
         private readonly IGetActualTimeLogListByEmployeeCutOff r_GetActualListByEmployeeCutOff;
+        private readonly IGetTimeLogListByCutOff r_GetListByCutOff;
+        private readonly IGetTimeLogListByDepartmentCutOff r_GetListByDepartmentCutOff;
+        private readonly IGetTimeLogListByEmployeeCutOff r_GetListByEmployeeCutOff;
 
         public TimeLogManager(
             IDeleteTimeLog deleteTimeLog,
@@ -24,7 +27,10 @@ namespace LGU.EntityManagers.HumanResource
             IInsertTimeLog insertTimeLog,
             ILogEmployee logEmployee,
             IUpdateTimeLog updateTimeLog,
-            IGetActualTimeLogListByEmployeeCutOff getActualListByEmployeeCutOff)
+            IGetActualTimeLogListByEmployeeCutOff getActualListByEmployeeCutOff,
+            IGetTimeLogListByCutOff getListByCutOff,
+            IGetTimeLogListByDepartmentCutOff getListByDepartmentCutOff,
+            IGetTimeLogListByEmployeeCutOff getListByEmployeeCutOff)
         {
             r_Delete = deleteTimeLog;
             r_GetById = getTimeLogById;
@@ -33,6 +39,9 @@ namespace LGU.EntityManagers.HumanResource
             r_LogEmployee = logEmployee;
             r_Update = updateTimeLog;
             r_GetActualListByEmployeeCutOff = getActualListByEmployeeCutOff;
+            r_GetListByCutOff = getListByCutOff;
+            r_GetListByDepartmentCutOff = getListByDepartmentCutOff;
+            r_GetListByEmployeeCutOff = getListByEmployeeCutOff;
         }
 
         public IProcessResult<TimeLog> Delete(TimeLog data)
@@ -168,6 +177,108 @@ namespace LGU.EntityManagers.HumanResource
         public Task<IEnumerableProcessResult<TimeLog>> GetListAsync(CancellationToken cancellationToken)
         {
             return r_GetList.ExecuteAsync(cancellationToken);
+        }
+
+        public IEnumerableProcessResult<TimeLog> GetListByCutOff(ValueRange<DateTime> cutOff)
+        {
+            r_GetListByCutOff.CutOff = cutOff;
+            return r_GetListByCutOff.Execute();
+        }
+
+        public async Task<IEnumerableProcessResult<TimeLog>> GetListByCutOffAsync(ValueRange<DateTime> cutOff)
+        {
+            r_GetListByCutOff.CutOff = cutOff;
+            return await r_GetListByCutOff.ExecuteAsync();
+        }
+
+        public async Task<IEnumerableProcessResult<TimeLog>> GetListByCutOffAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        {
+            r_GetListByCutOff.CutOff = cutOff;
+            return await r_GetListByCutOff.ExecuteAsync(cancellationToken);
+        }
+
+        public IEnumerableProcessResult<TimeLog> GetListByDepartmentCutOff(Department department, ValueRange<DateTime> cutOff)
+        {
+            if (department != null)
+            {
+                r_GetListByDepartmentCutOff.Department = department;
+                r_GetListByDepartmentCutOff.CutOff = cutOff;
+                return r_GetListByDepartmentCutOff.Execute();
+            }
+            else
+            {
+                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid department.");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<TimeLog>> GetListByDepartmentCutOffAsync(Department department, ValueRange<DateTime> cutOff)
+        {
+            if (department != null)
+            {
+                r_GetListByDepartmentCutOff.Department = department;
+                r_GetListByDepartmentCutOff.CutOff = cutOff;
+                return await r_GetListByDepartmentCutOff.ExecuteAsync();
+            }
+            else
+            {
+                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid department.");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<TimeLog>> GetListByDepartmentCutOffAsync(Department department, ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        {
+            if (department != null)
+            {
+                r_GetListByDepartmentCutOff.Department = department;
+                r_GetListByDepartmentCutOff.CutOff = cutOff;
+                return await r_GetListByDepartmentCutOff.ExecuteAsync(cancellationToken);
+            }
+            else
+            {
+                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid department.");
+            }
+        }
+
+        public IEnumerableProcessResult<TimeLog> GetListByEmployeeCutOff(Employee employee, ValueRange<DateTime> cutOff)
+        {
+            if (employee != null)
+            {
+                r_GetListByEmployeeCutOff.Employee = employee;
+                r_GetListByEmployeeCutOff.CutOff = cutOff;
+                return r_GetListByEmployeeCutOff.Execute();
+            }
+            else
+            {
+                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<TimeLog>> GetListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff)
+        {
+            if (employee != null)
+            {
+                r_GetListByEmployeeCutOff.Employee = employee;
+                r_GetListByEmployeeCutOff.CutOff = cutOff;
+                return await r_GetListByEmployeeCutOff.ExecuteAsync();
+            }
+            else
+            {
+                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<TimeLog>> GetListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        {
+            if (employee != null)
+            {
+                r_GetListByEmployeeCutOff.Employee = employee;
+                r_GetListByEmployeeCutOff.CutOff = cutOff;
+                return await r_GetListByEmployeeCutOff.ExecuteAsync(cancellationToken);
+            }
+            else
+            {
+                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+            }
         }
 
         public IProcessResult<TimeLog> Insert(TimeLog data)
