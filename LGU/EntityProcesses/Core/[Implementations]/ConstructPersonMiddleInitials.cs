@@ -85,8 +85,11 @@ namespace LGU.EntityProcesses.Core
         {
             if (!string.IsNullOrWhiteSpace(item))
             {
-                var c = char.IsLetter(item[0]);
-                builder.Append(c);
+                var c = item[0];
+                if (char.IsLetter(c))
+                {
+                    builder.Append(c);
+                }
             }
         }
     }
