@@ -32,7 +32,8 @@ namespace LGU.EntityConverters.HumanResource
                 ExpectedReturnTime = reader.GetNullableDateTime("ExpectedReturnTime"),
                 LeaveType = leaveType,
                 Purpose = reader.GetString("Purpose"),
-                Date = reader.GetDateTime("Date")
+                Date = reader.GetDateTime("Date"),
+                DepartmentHead = reader.GetString("DepartmentHead")
             };
         }
 
