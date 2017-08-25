@@ -305,6 +305,9 @@
     <Compile Include="Views\HumanResource\EmployeeFingerPrintEnrollmentView.xaml.cs">
       <DependentUpon>EmployeeFingerPrintEnrollmentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HumanResource\KioskActualTimeLogView.xaml.cs">
+      <DependentUpon>KioskActualTimeLogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HumanResource\KioskLocatorView.xaml.cs">
       <DependentUpon>KioskLocatorView.xaml</DependentUpon>
     </Compile>
@@ -479,6 +482,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\EmployeeFingerPrintEnrollmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\KioskActualTimeLogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
