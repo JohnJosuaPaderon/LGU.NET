@@ -27,6 +27,7 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_LeaveTypeId", Locator.LeaveType?.Id)
             .AddInputParameter("@_Purpose", Locator.Purpose)
             .AddInputParameter("@_Date", Locator.Date)
+            .AddInputParameter("@_DepartmentHead", Locator.DepartmentHead)
             .AddLogByParameter();
 
         private IProcessResult<Locator> GetProcessResult(Locator data, SqlCommand command, int affectedRows)
