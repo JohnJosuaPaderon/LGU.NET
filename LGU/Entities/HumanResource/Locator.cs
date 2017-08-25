@@ -15,5 +15,6 @@ namespace LGU.Entities.HumanResource
         public DateTime? ExpectedReturnTime { get; set; }
         public LocatorLeaveType LeaveType { get; set; }
         public string Purpose { get; set; }
+        public string DepartmentHead { get; set; }
     }
 }
