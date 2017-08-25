@@ -6,6 +6,11 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:converters="clr-namespace:LGU.Converters"
              prism:ViewModelLocator.AutoWireViewModel="True">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <UserControl.Resources>
         <ResourceDictionary Source="../../Styles/Default.xaml"/>
     </UserControl.Resources>
@@ -152,9 +157,34 @@
                             <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox Grid.Column="1" materialDesign:HintAssist.Hint="Export Option" MinWidth="200" ItemsSource="{Binding ExportOptions}"/>
-                        <ComboBox Grid.Column="3" materialDesign:HintAssist.Hint="File Segregation" MinWidth="200" ItemsSource="{Binding FileSegregations}"/>
-                        <Button Grid.Column="5" Content="Print" Style="{DynamicResource FooterActionButton}" MinWidth="100" Command="{Binding PrintCommand}"/>
+                        <ComboBox Grid.Column="1" materialDesign:HintAssist.Hint="Export Option" MinWidth="200" ItemsSource="{Binding ExportOptions}" SelectedItem="{Binding SelectedExportOption}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={x:Static converters:TimeLogExportOptionToDisplayConverter.Instance}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Grid.Column="3" materialDesign:HintAssist.Hint="File Segregation" MinWidth="200" ItemsSource="{Binding FileSegregations}" SelectedItem="{Binding SelectedFileSegregation}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={x:Static converters:TimeFileSegregationToDisplayConverter.Instance}}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Grid.Column="5" Content="Print" Style="{DynamicResource FooterActionButton}" MinWidth="100" Command="{Binding PrintCommand}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                        <i:InvokeCommandAction.CommandParameter>
+                                            <StackPanel Margin="12">
+                                                <ProgressBar Style="{DynamicResource MaterialDesignCircularProgressBar}" IsIndeterminate="True" Height="50" Width="50"/>
+                                                <TextBlock Text="Printing" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </i:InvokeCommandAction.CommandParameter>
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
                     </Grid>
                 </materialDesign:Card>
             </materialDesign:TransitioningContent>

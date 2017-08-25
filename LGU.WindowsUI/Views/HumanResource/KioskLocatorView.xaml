@@ -4,7 +4,9 @@
              xmlns:prism="http://prismlibrary.com/"   
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             MaxWidth="{DynamicResource MaxDialogWidth}" MaxHeight="{DynamicResource MaxDialogHeight}"
+             MinWidth="{DynamicResource MinDialogWidth}" MinHeight="{DynamicResource MinDialogHeight}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding InitializeCommand}"/>
@@ -13,248 +15,254 @@
     <UserControl.Resources>
         <ResourceDictionary Source="../../Styles/Default.xaml"/>
     </UserControl.Resources>
-    <materialDesign:DialogHost>
-        <materialDesign:Card HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Grid MinHeight="500" MinWidth="500">
+    <materialDesign:Card HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid MinHeight="500" MinWidth="500">
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource KioskTextBox}"/>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource LargeHeaderTransitioningContent}">
+                <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
+                    <TextBlock Text="Locator" Style="{DynamicResource LargeHeaderTextBlock}"/>
+                </materialDesign:ColorZone>
+            </materialDesign:TransitioningContent>
+            <Grid Grid.Row="1" Margin="{DynamicResource ContainerMargin}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="{DynamicResource KioskGridSpace}"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="{DynamicResource KioskGridSpace}"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="{DynamicResource KioskGridSpace}"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="{DynamicResource KioskGridSpace}"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource LargeHeaderTransitioningContent}">
-                    <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
-                        <TextBlock Text="Locator" Style="{DynamicResource LargeHeaderTextBlock}"/>
-                    </materialDesign:ColorZone>
-                </materialDesign:TransitioningContent>
-                <Grid Grid.Row="1" Margin="{DynamicResource ContainerMargin}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource KioskGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource KioskGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource KioskGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="{Binding Locator.OfficeOutTime,StringFormat='MMMM dd, yyyy hh:mm tt'}" materialDesign:HintAssist.Hint="Time-Out" IsReadOnly="True"/>
-                        <Button Grid.Column="1" Content="..." Style="{DynamicResource FieldButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding ChangeOfficeOutTimePageCommand}" CommandParameter="0"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <Button.CommandParameter>
-                                <Grid MinWidth="{DynamicResource MinDialogWidth}" MinHeight="{DynamicResource MinDialogHeight}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
-                                        <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
-                                            <TextBlock Text="Select Time-Out" Style="{DynamicResource RegularHeaderTextBlock}"/>
-                                        </materialDesign:ColorZone>
-                                    </materialDesign:TransitioningContent>
-                                    <materialDesign:Transitioner Grid.Row="1" SelectedIndex="{Binding SelectedOfficeOutTimePage}">
-                                        <materialDesign:Transitioner.Resources>
-                                            <Style TargetType="{x:Type materialDesign:TransitionerSlide}" BasedOn="{StaticResource StackTransitionerSlide}"/>
-                                        </materialDesign:Transitioner.Resources>
-                                        <materialDesign:TransitionerSlide>
-                                            <Grid HorizontalAlignment="Center" Margin="{DynamicResource ContainerMargin}">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
-                                                    <Calendar SelectedDate="{Binding Locator.OfficeOutTime}">
-                                                        <i:Interaction.Triggers>
-                                                            <i:EventTrigger EventName="SelectedDatesChanged">
-                                                                <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
-                                                            </i:EventTrigger>
-                                                        </i:Interaction.Triggers>
-                                                    </Calendar>
-                                                </materialDesign:Card>
-                                                <Grid Grid.Row="1">
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding Locator.OfficeOutTime,StringFormat='MMMM dd, yyyy hh:mm tt'}" materialDesign:HintAssist.Hint="Time-Out" IsReadOnly="True"/>
+                    <Button Grid.Column="1" Content="..." Style="{DynamicResource FieldButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ChangeOfficeOutTimePageCommand}" CommandParameter="0"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Button.CommandParameter>
+                            <Grid MinWidth="{DynamicResource MinDialogWidth}" MinHeight="{DynamicResource MinDialogHeight}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
+                                    <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
+                                        <TextBlock Text="Select Time-Out" Style="{DynamicResource RegularHeaderTextBlock}"/>
+                                    </materialDesign:ColorZone>
+                                </materialDesign:TransitioningContent>
+                                <materialDesign:Transitioner Grid.Row="1" SelectedIndex="{Binding SelectedOfficeOutTimePage}">
+                                    <materialDesign:Transitioner.Resources>
+                                        <Style TargetType="{x:Type materialDesign:TransitionerSlide}" BasedOn="{StaticResource StackTransitionerSlide}"/>
+                                    </materialDesign:Transitioner.Resources>
+                                    <materialDesign:TransitionerSlide>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="{DynamicResource DefaultMargin}">
+                                                <Calendar SelectedDate="{Binding Locator.OfficeOutTime}">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="SelectedDatesChanged">
+                                                            <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Calendar>
+                                            </materialDesign:Card>
+                                            <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}" Grid.Row="1">
+                                                <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Button Grid.Column="1" Style="{DynamicResource ConfirmButton}" Command="{Binding ChangeOfficeOutTimePageCommand}" CommandParameter="1">
-                                                        <materialDesign:PackIcon Kind="Check" Width="25" Height="25"/>
-                                                    </Button>
+                                                    <Button Grid.Column="1" Command="{Binding ChangeOfficeOutTimePageCommand}" CommandParameter="1" Content="Select Time"/>
                                                 </Grid>
-                                            </Grid>
-                                        </materialDesign:TransitionerSlide>
-                                        <materialDesign:TransitionerSlide>
-                                            <Grid HorizontalAlignment="Center" Margin="{DynamicResource ContainerMargin}">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
-                                                    <materialDesign:Clock Time="{Binding Locator.OfficeOutTime}"/>
-                                                </materialDesign:Card>
-                                                <Grid Grid.Row="1">
+                                            </materialDesign:ColorZone>
+                                        </Grid>
+                                    </materialDesign:TransitionerSlide>
+                                    <materialDesign:TransitionerSlide>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="{DynamicResource DefaultMargin}">
+                                                <materialDesign:Clock Time="{Binding Locator.OfficeOutTime}"/>
+                                            </materialDesign:Card>
+                                            <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}" Grid.Row="1">
+                                                <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="Auto"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Button Grid.Column="0" Style="{DynamicResource ConfirmButton}" Command="{Binding ChangeOfficeOutTimePageCommand}" CommandParameter="0">
-                                                        <materialDesign:PackIcon Kind="ArrowLeft" Height="25" Width="25"/>
-                                                    </Button>
-                                                    <Button Grid.Column="2" Style="{DynamicResource ConfirmButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                                    <Button Grid.Column="0" Command="{Binding ChangeOfficeOutTimePageCommand}" CommandParameter="0" Content="Select Date"/>
+                                                    <Button Grid.Column="2" Style="{DynamicResource ConfirmButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="0">
                                                         <materialDesign:PackIcon Kind="Check" Height="25" Width="25"/>
                                                     </Button>
                                                 </Grid>
-                                            </Grid>
-                                        </materialDesign:TransitionerSlide>
-                                    </materialDesign:Transitioner>
-                                </Grid>
-                            </Button.CommandParameter>
-                        </Button>
-                    </Grid>
-                    <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="{Binding Locator.ExpectedReturnTime,StringFormat='MMMM dd, yyyy hh:mm tt'}" materialDesign:HintAssist.Hint="Expected Time of Return" IsReadOnly="True"/>
-                        <Button Grid.Column="1" Content="..." Style="{DynamicResource FieldButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding ExpectedReturnTimePageCommand}" CommandParameter="0"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <Button.CommandParameter>
-                                <Grid MinWidth="{DynamicResource MinDialogWidth}" MinHeight="{DynamicResource MinDialogHeight}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
-                                        <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
-                                            <TextBlock Text="Select Expected Time of Return" Style="{DynamicResource RegularHeaderTextBlock}"/>
-                                        </materialDesign:ColorZone>
-                                    </materialDesign:TransitioningContent>
-                                    <materialDesign:Transitioner Grid.Row="1" SelectedIndex="{Binding SelectedExpectedReturnTimePage}">
-                                        <materialDesign:Transitioner.Resources>
-                                            <Style TargetType="{x:Type materialDesign:TransitionerSlide}" BasedOn="{StaticResource StackTransitionerSlide}"/>
-                                        </materialDesign:Transitioner.Resources>
-                                        <materialDesign:TransitionerSlide>
-                                            <Grid HorizontalAlignment="Center" Margin="{DynamicResource ContainerMargin}">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
-                                                    <Calendar SelectedDate="{Binding Locator.ExpectedReturnTime}">
-                                                        <i:Interaction.Triggers>
-                                                            <i:EventTrigger EventName="SelectedDatesChanged">
-                                                                <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
-                                                            </i:EventTrigger>
-                                                        </i:Interaction.Triggers>
-                                                    </Calendar>
-                                                </materialDesign:Card>
-                                                <Grid Grid.Row="1">
+                                            </materialDesign:ColorZone>
+                                        </Grid>
+                                    </materialDesign:TransitionerSlide>
+                                </materialDesign:Transitioner>
+                            </Grid>
+                        </Button.CommandParameter>
+                    </Button>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding Locator.ExpectedReturnTime,StringFormat='MMMM dd, yyyy hh:mm tt'}" materialDesign:HintAssist.Hint="Expected Time of Return" IsReadOnly="True"/>
+                    <Button Grid.Column="1" Content="..." Style="{DynamicResource FieldButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ExpectedReturnTimePageCommand}" CommandParameter="0"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Button.CommandParameter>
+                            <Grid MinWidth="{DynamicResource MinDialogWidth}" MinHeight="{DynamicResource MinDialogHeight}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
+                                    <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
+                                        <TextBlock Text="Select Expected Time of Return" Style="{DynamicResource RegularHeaderTextBlock}"/>
+                                    </materialDesign:ColorZone>
+                                </materialDesign:TransitioningContent>
+                                <materialDesign:Transitioner Grid.Row="1" SelectedIndex="{Binding SelectedExpectedReturnTimePage}">
+                                    <materialDesign:Transitioner.Resources>
+                                        <Style TargetType="{x:Type materialDesign:TransitionerSlide}" BasedOn="{StaticResource StackTransitionerSlide}"/>
+                                    </materialDesign:Transitioner.Resources>
+                                    <materialDesign:TransitionerSlide>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="{DynamicResource DefaultMargin}">
+                                                <Calendar SelectedDate="{Binding Locator.ExpectedReturnTime}">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="SelectedDatesChanged">
+                                                            <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                </Calendar>
+                                            </materialDesign:Card>
+                                            <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}" Grid.Row="1">
+                                                <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Button Grid.Column="1" Style="{DynamicResource ConfirmButton}" Command="{Binding ChangeExpectedReturnTimePageCommand}" CommandParameter="1">
-                                                        <materialDesign:PackIcon Kind="Check" Width="25" Height="25"/>
-                                                    </Button>
+                                                    <Button Grid.Column="1" Command="{Binding ChangeExpectedReturnTimePageCommand}" CommandParameter="1" Content="Select Time"/>
                                                 </Grid>
-                                            </Grid>
-                                        </materialDesign:TransitionerSlide>
-                                        <materialDesign:TransitionerSlide>
-                                            <Grid HorizontalAlignment="Center" Margin="{DynamicResource ContainerMargin}">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
-                                                <materialDesign:Card Grid.Row="0" VerticalAlignment="Center">
-                                                    <materialDesign:Clock Time="{Binding Locator.ExpectedReturnTime}"/>
-                                                </materialDesign:Card>
-                                                <Grid Grid.Row="1">
+                                            </materialDesign:ColorZone>
+                                        </Grid>
+                                    </materialDesign:TransitionerSlide>
+                                    <materialDesign:TransitionerSlide>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <materialDesign:Card Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="{DynamicResource DefaultMargin}">
+                                                <materialDesign:Clock Time="{Binding Locator.ExpectedReturnTime}"/>
+                                            </materialDesign:Card>
+                                            <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}" Grid.Row="1">
+                                                <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="Auto"/>
                                                         <ColumnDefinition Width="*"/>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Button Grid.Column="0" Style="{DynamicResource ConfirmButton}" Command="{Binding ChangeExpectedReturnTimePageCommand}" CommandParameter="0">
-                                                        <materialDesign:PackIcon Kind="ArrowLeft" Height="25" Width="25"/>
-                                                    </Button>
-                                                    <Button Grid.Column="2" Style="{DynamicResource ConfirmButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                                    <Button Grid.Column="0" Command="{Binding ChangeExpectedReturnTimePageCommand}" CommandParameter="0" Content="Select Date"/>
+                                                    <Button Grid.Column="2" Style="{DynamicResource ConfirmButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="0">
                                                         <materialDesign:PackIcon Kind="Check" Height="25" Width="25"/>
                                                     </Button>
                                                 </Grid>
-                                            </Grid>
-                                        </materialDesign:TransitionerSlide>
-                                    </materialDesign:Transitioner>
-                                </Grid>
-                            </Button.CommandParameter>
-                        </Button>
-                    </Grid>
-                    <Grid Grid.Row="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="{Binding Locator.LeaveType.Description}" materialDesign:HintAssist.Hint="Leave Type" IsReadOnly="True"/>
-                        <Button Grid.Column="1" Content="..." Style="{DynamicResource FieldButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
-                            <Button.CommandParameter>
-                                <Grid MinHeight="{DynamicResource MinDialogHeight}" Width="{DynamicResource MinDialogWidth}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
-                                        <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
-                                            <TextBlock Text="Select Expected Time of Return" Style="{DynamicResource RegularHeaderTextBlock}"/>
-                                        </materialDesign:ColorZone>
-                                    </materialDesign:TransitioningContent>
-                                    <materialDesign:Card Grid.Row="1" Style="{DynamicResource ContainerCard}">
-                                        <DataGrid ItemsSource="{Binding LeaveTypes}" SelectedItem="{Binding Locator.LeaveType}">
-                                            <DataGrid.Columns>
-                                                <DataGridTextColumn Header="Leave Types" Binding="{Binding Description}"/>
-                                            </DataGrid.Columns>
-                                        </DataGrid>
-                                    </materialDesign:Card>
-                                    <Grid Grid.Row="2">
+                                            </materialDesign:ColorZone>
+                                        </Grid>
+                                    </materialDesign:TransitionerSlide>
+                                </materialDesign:Transitioner>
+                            </Grid>
+                        </Button.CommandParameter>
+                    </Button>
+                </Grid>
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding Locator.LeaveType.Description}" materialDesign:HintAssist.Hint="Leave Type" IsReadOnly="True"/>
+                    <Button Grid.Column="1" Content="..." Style="{DynamicResource FieldButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                        <Button.CommandParameter>
+                            <Grid MinHeight="{DynamicResource MinDialogHeight}" Width="{DynamicResource MinDialogWidth}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
+                                    <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
+                                        <TextBlock Text="Select Expected Time of Return" Style="{DynamicResource RegularHeaderTextBlock}"/>
+                                    </materialDesign:ColorZone>
+                                </materialDesign:TransitioningContent>
+                                <materialDesign:Card Grid.Row="1" Style="{DynamicResource ContainerCard}">
+                                    <DataGrid ItemsSource="{Binding LeaveTypes}" SelectedItem="{Binding Locator.LeaveType}">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Leave Types" Binding="{Binding Description}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </materialDesign:Card>
+                                <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}" Grid.Row="2">
+                                    <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <Button Grid.Column="1" Style="{DynamicResource ConfirmButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                        <Button Grid.Column="1" Style="{DynamicResource ConfirmButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="0">
                                             <materialDesign:PackIcon Kind="Check" Height="25" Width="25"/>
                                         </Button>
                                     </Grid>
-                                </Grid>
-                            </Button.CommandParameter>
+                                </materialDesign:ColorZone>
+                            </Grid>
+                        </Button.CommandParameter>
+                    </Button>
+                </Grid>
+                <TextBox Grid.Row="6" Text="{Binding Locator.Purpose}" materialDesign:HintAssist.Hint="Purpose" CharacterCasing="Normal"/>
+                <TextBox Grid.Row="8" Text="{Binding Locator.DepartmentHead}" materialDesign:HintAssist.Hint="Department Head" CharacterCasing="Normal"/>
+            </Grid>
+            <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
+                <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" Style="{DynamicResource FooterActionButton}" Command="{Binding PrintCommand}">
+                            <materialDesign:PackIcon Kind="Printer" Height="50" Width="50"/>
                         </Button>
                     </Grid>
-                    <TextBox Grid.Row="6" Text="{Binding Locator.Purpose}" materialDesign:HintAssist.Hint="Purpose"/>
-                </Grid>
-                <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
-                    <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Button Grid.Column="1" Style="{DynamicResource FooterActionButton}" Command="{Binding PrintCommand}">
-                                <materialDesign:PackIcon Kind="Printer" Height="50" Width="50"/>
-                            </Button>
-                        </Grid>
-                    </materialDesign:ColorZone>
-                </materialDesign:TransitioningContent>
-            </Grid>
-        </materialDesign:Card>
-    </materialDesign:DialogHost>
+                </materialDesign:ColorZone>
+            </materialDesign:TransitioningContent>
+        </Grid>
+    </materialDesign:Card>
 </UserControl>

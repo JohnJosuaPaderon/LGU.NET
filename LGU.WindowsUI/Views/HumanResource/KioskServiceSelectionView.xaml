@@ -26,7 +26,7 @@
             </Button>
         </materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskActualTimeLogView">
+            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskActualTimeLogView" Visibility="Collapsed">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -38,7 +38,7 @@
             </Button>
         </materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskActualTimeLogView">
+            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskActualTimeLogView" Visibility="Collapsed">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -50,7 +50,7 @@
             </Button>
         </materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskActualTimeLogView">
+            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskActualTimeLogView" Visibility="Collapsed">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>

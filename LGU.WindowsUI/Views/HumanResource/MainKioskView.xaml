@@ -14,16 +14,19 @@
     <UserControl.Resources>
         <ResourceDictionary Source="/LGU.WindowsUI;component/Styles/Default.xaml"/>
     </UserControl.Resources>
-    <materialDesign:Transitioner SelectedIndex="{Binding SelectedPage,FallbackValue=1}">
+    <materialDesign:Transitioner SelectedIndex="{Binding SelectedPage,FallbackValue=2}">
         <materialDesign:Transitioner.Resources>
             <Style TargetType="{x:Type materialDesign:TransitionerSlide}" BasedOn="{StaticResource StackTransitionerSlide}"/>
         </materialDesign:Transitioner.Resources>
+        <!-- Index: 0 -->
         <materialDesign:TransitionerSlide>
             <TextBlock Text="Please wait while the kiosk is preparing..." Style="{DynamicResource ExtraLargeHeaderTextBlock}"/>
         </materialDesign:TransitionerSlide>
+        <!-- Index: 1 -->
         <materialDesign:TransitionerSlide>
             <Image Source="../../Images/kiosk_background.jpg"/>
         </materialDesign:TransitionerSlide>
+        <!-- Index: 2 -->
         <materialDesign:TransitionerSlide>
             <materialDesign:TransitionerSlide.ForwardWipe>
                 <materialDesign:FadeWipe/>
@@ -44,14 +47,15 @@
                             <Grid Grid.Column="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{Binding Employee.InformalFullName,FallbackValue=Juan Dela Cruz}" FontSize="90" Style="{DynamicResource ExtraLargeHeaderTextBlock}" HorizontalAlignment="Stretch"/>
-                                <TextBlock Grid.Row="2" Text="{Binding Employee.Department.Description}" Style="{DynamicResource LargeHeaderTextBlock}" HorizontalAlignment="Stretch"/>
+                                <TextBlock Grid.Row="0" Text="{Binding Employee.InformalFullName,FallbackValue=Juan Dela Cruz}" FontSize="90" Style="{DynamicResource ExtraLargeHeaderTextBlock}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0 10 0 0"/>
+                                <TextBlock Grid.Row="1" Text="{Binding Employee.Department.Description,FallbackValue=Department}" FontWeight="Normal" Style="{DynamicResource LargeHeaderTextBlock}" HorizontalAlignment="Stretch" Margin="0 -10 0 0"/>
                             </Grid>
                             <Viewbox Grid.Column="1" Height="150" Margin="15">
-                                <Image Source="../../Images/navotas_flag.jpg"/>
+                                <Border BorderBrush="White" BorderThickness="1">
+                                    <Image Source="../../Images/navotas_flag.jpg"/>
+                                </Border>
                             </Viewbox>
                         </Grid>
                     </materialDesign:ColorZone>
@@ -75,6 +79,10 @@
                     </materialDesign:ColorZone>
                 </materialDesign:TransitioningContent>
             </Grid>
+        </materialDesign:TransitionerSlide>
+        <!-- Index: 3 -->
+        <materialDesign:TransitionerSlide>
+            <TextBlock Text="Kiosk is only operational between 6 AM to 6 PM" Style="{DynamicResource ExtraLargeHeaderTextBlock}"/>
         </materialDesign:TransitionerSlide>
     </materialDesign:Transitioner>
 </UserControl>
