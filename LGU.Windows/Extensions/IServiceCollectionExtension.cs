@@ -20,7 +20,9 @@ namespace LGU.Extensions
         public static IServiceCollection EnableReporting(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IExportLocator, ExportLocator>();
-            serviceCollection.AddSingleton<IHumanResourceReportInfoProvider, HumanResourceReportInfoProvider>();
+            serviceCollection.AddTransient<IExportTimeLog, ExportTimeLog>();
+            serviceCollection.AddSingleton<ILocatorReportInfoProvider, LocatorReportInfoProvider>();
+            serviceCollection.AddSingleton<ITimeLogReportInfoProvider, TimeLogReportInfoProvider>();
             serviceCollection.AddSingleton<IHumanResourceReport, HumanResourceReport>();
 
             return serviceCollection;
