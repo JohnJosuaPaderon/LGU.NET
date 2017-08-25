@@ -29,14 +29,14 @@ namespace LGU.ViewModels.HumanResource
         public MainKioskViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
             r_FeatureExtraction = new FeatureExtraction();
-            r_Users = new UserCollection(10000);
+            r_Users = new UserCollection(10_000);
             r_Identification = new Identification(ref r_Users);
             r_Capture = new Capture();
             r_EmployeeFingerPrintSetManager = SystemRuntime.GetService<IEmployeeFingerPrintSetManager>();
             r_SystemManager = SystemRuntime.GetService<ISystemManager>();
             r_EmployeeDictionary = new Dictionary<string, EmployeeModel>();
             r_DataUpdateTimer = new Timer(60_000);
-            r_CurrentDateTimer = new Timer(1000);
+            r_CurrentDateTimer = new Timer(1_000);
             r_KioskEmployeeChangedEvent = r_EventAggregator.GetEvent<KioskEmployeeChangedEvent>();
 
             r_Capture.EventHandler = this;
@@ -111,10 +111,16 @@ namespace LGU.ViewModels.HumanResource
             var result = await r_EmployeeFingerPrintSetManager.GetListAsync();
             LastDataUpdate = CurrentDate;
 
+            // Uncomment this for testing without FingerPrint Scanner.
+            //EmployeeModel testEmployee = null;
+
             if (result.Status == ProcessResultStatus.Success)
             {
                 if (result.DataList != null && result.DataList.Any())
                 {
+                    // Uncomment this for testing without FingerPrint Scanner.
+                    //testEmployee = new EmployeeModel(result.DataList.First().Employee);
+
                     foreach (var item in result.DataList)
                     {
                         AddUpdateFingerPrintUser(item);
@@ -122,6 +128,12 @@ namespace LGU.ViewModels.HumanResource
 
                     SelectedPage = 1;
                 }
+
+                r_DataUpdateTimer.Start();
+                r_CurrentDateTimer.Start();
+
+                // Uncomment this for testing without FingerPrint Scanner.
+                //Employee = testEmployee;
             }
             else
             {
@@ -184,6 +196,18 @@ namespace LGU.ViewModels.HumanResource
         private void CurrentDateTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             CurrentDate = CurrentDate.AddSeconds(1);
+
+            if (SelectedPage != 2)
+            {
+                if (CurrentDate.Hour < 6 || (CurrentDate.Hour > 17 && CurrentDate.Minute < 59))
+                {
+                    SelectedPage = 3;
+                }
+                else
+                {
+                    SelectedPage = 1;
+                }
+            }
         }
 
         private void AddUpdateFingerPrintUser(EmployeeFingerPrintSet fingerPrintSet)

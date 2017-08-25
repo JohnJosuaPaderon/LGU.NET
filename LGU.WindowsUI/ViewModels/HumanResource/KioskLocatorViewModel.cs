@@ -5,6 +5,7 @@ using LGU.Models.HumanResource;
 using LGU.Processes;
 using LGU.Reports;
 using LGU.Reports.HumanResource;
+using LGU.Views.HumanResource;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -29,9 +30,12 @@ namespace LGU.ViewModels.HumanResource
             InitializeCommand = new DelegateCommand(Initialize);
             PrintCommand = new DelegateCommand(Print);
             LeaveTypes = new ObservableCollection<LocatorLeaveType>();
-            Locator = new LocatorModel(new Locator(MainKioskViewModel.SelectedKioskEmployee.GetSource()));
-            Locator.Date = DateTime.Now;
-
+            Locator = new LocatorModel(new Locator(MainKioskViewModel.SelectedKioskEmployee.GetSource()))
+            {
+                Date = DateTime.Now,
+                OfficeOutTime = DateTime.Now,
+                ExpectedReturnTime = DateTime.Now
+            };
             r_KioskEmployeeChangedEvent.Subscribe(OnKioskEmployeeChanged);
         }
 
@@ -71,8 +75,12 @@ namespace LGU.ViewModels.HumanResource
         {
             if (employee != null)
             {
-                Locator = new LocatorModel(new Locator(employee.GetSource()));
-                Locator.Date = DateTime.Now;
+                Locator = new LocatorModel(new Locator(employee.GetSource()))
+                {
+                    Date = DateTime.Now,
+                    OfficeOutTime = DateTime.Now,
+                    ExpectedReturnTime = DateTime.Now
+                };
             }
             else
             {
@@ -87,6 +95,7 @@ namespace LGU.ViewModels.HumanResource
             if (result.Status == ProcessResultStatus.Success)
             {
                 await r_HumanResourceReport.ExportLocatorAsync(result.Data, this);
+                r_RegionManager.RequestNavigate(MainKioskViewModel.KioskContentRegion, nameof(KioskServiceSelectionView));
             }
             else
             {
@@ -117,6 +126,7 @@ namespace LGU.ViewModels.HumanResource
             {
                 if (result.DataList != null && result.DataList.Any())
                 {
+                    LeaveTypes.Clear();
                     foreach (var item in result.DataList)
                     {
                         LeaveTypes.Add(item);

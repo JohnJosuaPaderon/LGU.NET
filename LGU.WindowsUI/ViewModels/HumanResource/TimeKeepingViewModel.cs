@@ -372,11 +372,6 @@ namespace LGU.ViewModels.HumanResource
             }
         }
 
-        private void Invoke(Action expression)
-        {
-            System.Windows.Application.Current?.Dispatcher.Invoke(expression);
-        }
-
         public void IdentifyFeatureSet(ref FeatureSet FeatureSet)
         {
             try

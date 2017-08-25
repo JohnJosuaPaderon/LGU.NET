@@ -2,27 +2,30 @@
 using LGU.EntityManagers.HumanResource;
 using LGU.Models;
 using LGU.Processes;
+using LGU.Reports;
 using LGU.Reports.HumanResource;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace LGU.ViewModels.HumanResource
 {
-    public sealed class TimeLogExportViewModel : ViewModelBase
+    public sealed class TimeLogExportViewModel : ViewModelBase, IExportEventHandler
     {
         public TimeLogExportViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
             r_DepartmentManager = SystemRuntime.GetService<IDepartmentManager>();
             r_EmployeeManager = SystemRuntime.GetService<IEmployeeManager>();
+            r_TimeLogManager = SystemRuntime.GetService<ITimeLogManager>();
+            r_HumanResourceReport = SystemRuntime.GetService<IHumanResourceReport>();
 
             GetDepartmentCommand = new DelegateCommand(GetDepartment);
             GetEmployeeCommand = new DelegateCommand(GetEmployee);
             PrintCommand = new DelegateCommand(Print);
+            InitializeCommand = new DelegateCommand(Initialize);
 
             Departments = new ObservableCollection<Department>();
             Employees = new ObservableCollection<Employee>();
@@ -39,10 +42,13 @@ namespace LGU.ViewModels.HumanResource
 
         private readonly IDepartmentManager r_DepartmentManager;
         private readonly IEmployeeManager r_EmployeeManager;
+        private readonly ITimeLogManager r_TimeLogManager;
+        private readonly IHumanResourceReport r_HumanResourceReport;
 
         public DelegateCommand GetDepartmentCommand { get; }
         public DelegateCommand GetEmployeeCommand { get; }
         public DelegateCommand PrintCommand { get; }
+        public DelegateCommand InitializeCommand { get; }
 
         public ObservableCollection<Department> Departments { get; }
         public ObservableCollection<Employee> Employees { get; }
@@ -84,6 +90,11 @@ namespace LGU.ViewModels.HumanResource
             set { SetProperty(ref _SelectedFileSegregation, value); }
         }
 
+        public override void Initialize()
+        {
+            r_ChangeHeaderEvent.Publish("DTR Printing");
+        }
+
         private async void GetDepartment()
         {
             Departments.Clear();
@@ -120,7 +131,7 @@ namespace LGU.ViewModels.HumanResource
                     if (result.DataList != null && result.DataList.Any())
                     {
                         Employees.AddRange(result.DataList);
-                        EnqueueListCountMessage(result.DataList.Count(), "employee");
+                        //EnqueueListCountMessage(result.DataList.Count(), "employee");
                     }
                     else
                     {
@@ -136,17 +147,73 @@ namespace LGU.ViewModels.HumanResource
 
         private async void Print()
         {
-            IEnumerable<TimeLog> timeLogs = null;
+            IEnumerableProcessResult<TimeLog> result = null;
 
             switch (SelectedExportOption)
             {
                 case TimeLogExportOption.All:
+                    result = await r_TimeLogManager.GetListByCutOffAsync(CutOff.GetSource());
                     break;
                 case TimeLogExportOption.SelectedDepartment:
+                    if (SelectedDepartment != null)
+                    {
+                        result = await r_TimeLogManager.GetListByDepartmentCutOffAsync(SelectedDepartment, CutOff.GetSource());
+                    }
+                    else
+                    {
+                        EnqueueMessage("Invalid department.");
+                        DialogHelper.CloseDialog();
+                        return;
+                    }
                     break;
                 case TimeLogExportOption.SelectedEmployee:
+                    if (SelectedEmployee != null)
+                    {
+                        result = await r_TimeLogManager.GetListByEmployeeCutOffAsync(SelectedEmployee, CutOff.GetSource());
+                    }
+                    else
+                    {
+                        EnqueueMessage("Invalid employee.");
+                        DialogHelper.CloseDialog();
+                        return;
+                    }
                     break;
             }
+
+            if (result.DataList != null && result.DataList.Any())
+            {
+                await r_HumanResourceReport.ExportTimeLogAsync(result.DataList, CutOff.GetSource(), SelectedExportOption, SelectedFileSegregation, this);
+            }
+            else
+            {
+                EnqueueMessage("Nothing to be exported.");
+            }
         }
+
+        #region Export EventHandlers
+        public void OnException(Exception exception)
+        {
+            EnqueueMessage(exception.Message);
+            Invoke(() => DialogHelper.CloseDialog());
+        }
+
+        public void OnError(string message)
+        {
+            EnqueueMessage(message);
+            Invoke(() => DialogHelper.CloseDialog());
+        }
+
+        public void OnExported(string[] filePaths)
+        {
+            Invoke(() => DialogHelper.CloseDialog());
+            EnqueueMessage("Successfully exported.");
+        }
+
+        public void OnExported(string filePath)
+        {
+            EnqueueMessage("Successfully exported.");
+            Invoke(() => DialogHelper.CloseDialog());
+        } 
+        #endregion
     }
 }
