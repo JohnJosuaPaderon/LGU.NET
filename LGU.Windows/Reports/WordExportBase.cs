@@ -17,21 +17,28 @@ namespace LGU.Reports
 
         protected void OpenTemplate(string templatePath)
         {
-            if (Application != null)
+            try
             {
-                if (File.Exists(templatePath))
+                if (Application != null)
                 {
-                    Documents = Application.Documents;
-                    Document = Documents.Add(templatePath);
+                    if (File.Exists(templatePath))
+                    {
+                        Documents = Application.Documents;
+                        Document = Documents.Add(templatePath);
+                    }
+                    else
+                    {
+                        EventHandler?.OnError($"Template not found: '{templatePath}'");
+                    }
                 }
                 else
                 {
-                    EventHandler?.OnError($"Template not found: '{templatePath}'");
+                    EventHandler?.OnError("Microsoft Office Word is not running.");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                EventHandler?.OnError("Microsoft Office Word is not running.");
+                EventHandler?.OnException(ex);
             }
         }
 
@@ -40,12 +47,13 @@ namespace LGU.Reports
         protected Word.Document Document { get; private set; }
         public IExportEventHandler EventHandler { get; set; }
         public bool PrintAfterSave { get; set; }
+        protected bool SaveDocumentChangesOnClosing { get; set; }
 
         public virtual void Dispose()
         {
             if (Document != null)
             {
-                Document.Close();
+                Document.Close(SaveChanges: SaveDocumentChangesOnClosing);
                 Marshal.ReleaseComObject(Document);
                 Document = null;
             }
@@ -74,18 +82,30 @@ namespace LGU.Reports
         {
             if (!File.Exists(filePath))
             {
-                Document.SaveAs2(filePath);
-                EventHandler?.OnExported(filePath);
+                try
+                {
+                    Document.SaveAs2(filePath);
+                    EventHandler?.OnExported(filePath);
+                }
+                catch (Exception ex)
+                {
+                    EventHandler?.OnException(ex);
+                }
 
                 if (PrintAfterSave)
                 {
-                    Document.PrintOut();
+                    Print();
                 }
             }
             else
             {
                 EventHandler?.OnError($"Failed to save document, file already exists.");
             }
+        }
+
+        protected void Print()
+        {
+            Document.PrintOut();
         }
     }
 }

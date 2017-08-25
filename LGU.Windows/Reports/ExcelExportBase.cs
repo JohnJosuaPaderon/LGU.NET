@@ -12,26 +12,35 @@ namespace LGU.Reports
         protected Excel.Workbooks Workbooks { get; private set; }
         protected Excel.Workbook Workbook { get; private set; }
         protected Excel.Sheets Sheets { get; private set; }
-        protected Excel.Worksheet Worksheet { get; private set; }
-        private Excel.Range CurrentRange { get; set; }
+        protected Excel.Worksheet ActiveWorksheet { get; private set; }
+        protected Excel.Worksheet TemplateWorksheet { get; private set; }
+        protected Excel.Range CurrentRange { get; set; }
 
         protected void Initialize()
         {
-            Application = new Excel.Application()
+            try
             {
-                DisplayAlerts = false
-            };
+                Application = new Excel.Application()
+                {
+                    DisplayAlerts = false
+                };
+                Workbooks = Application.Workbooks;
+            }
+            catch (Exception ex)
+            {
+                EventHandler.OnException(ex);
+            }
         }
 
-        protected void OpenTemplate(string templatePath)
+        protected void OpenTemplate(string templatePath, int templateSheetIndex = 1)
         {
             if (Application != null)
             {
                 if (File.Exists(templatePath))
                 {
-                    Workbooks = Application.Workbooks;
                     Workbook = Workbooks.Open(templatePath);
                     Sheets = Workbook.Sheets;
+                    TemplateWorksheet = Sheets[templateSheetIndex];
                 }
                 else
                 {
@@ -63,25 +72,60 @@ namespace LGU.Reports
                 }
                 else
                 {
-                    Worksheet = Sheets[worksheetIndex];
+                    ActiveWorksheet = Sheets[worksheetIndex];
 
                     if (!string.IsNullOrWhiteSpace(name))
                     {
-                        Worksheet.Name = name;
+                        ActiveWorksheet.Name = name;
                     }
                 }
             }
         }
 
-        protected void DuplicateTemplateWorksheet(Excel.Worksheet templateWorksheet, string name)
+        protected Excel.Worksheet DuplicateWorksheet(Excel.Worksheet templateWorksheet, string name, bool setAsActive = true)
         {
-            Worksheet = templateWorksheet.Copy(After: Sheets[Sheets.Count]);
-            Worksheet.Name = name;
+            var sheet = templateWorksheet.Copy(After: Sheets[Sheets.Count]);
+            sheet.Name = name;
+
+            if (setAsActive)
+            {
+                ActiveWorksheet = sheet;
+            }
+
+            return sheet;
+        }
+
+        protected Excel.Worksheet DuplicateTemplate(string name, bool setAsActive = true)
+        {
+            if (TemplateWorksheet != null)
+            {
+                TemplateWorksheet.Copy(After: Sheets[Sheets.Count]);
+                var sheet = Sheets[Sheets.Count];
+                sheet.Name = name;
+
+                if (setAsActive)
+                {
+                    ActiveWorksheet = sheet;
+                }
+
+                return sheet;
+            }
+            else
+            {
+                EventHandler?.OnError("Template worksheet is null.");
+                return null;
+            }
+        }
+
+        protected bool IsNullOrEmpty(Excel.Range range)
+        {
+            return range.Value?.ToString() == string.Empty || range.Value2?.ToString() == string.Empty;
         }
 
         protected void SetCellValue(int row, int column, object value)
         {
-            SetCellValue(row, column, value, string.Empty);
+            CurrentRange = ActiveWorksheet.Cells[row, column];
+            CurrentRange.Value = value;
         }
 
         protected void SetCellValue(ExcelCell cell, object value)
@@ -91,17 +135,23 @@ namespace LGU.Reports
 
         protected void SetCellValue(int row, int column, object value, string numberFormat)
         {
-            CurrentRange = Worksheet.Cells[row, column];
+            CurrentRange = ActiveWorksheet.Cells[row, column];
             CurrentRange.NumberFormat = numberFormat;
             CurrentRange.Value = value;
         }
 
         public virtual void Dispose()
         {
-            if (Worksheet != null)
+            if (ActiveWorksheet != null)
             {
-                Marshal.ReleaseComObject(Worksheet);
-                Worksheet = null;
+                Marshal.ReleaseComObject(ActiveWorksheet);
+                ActiveWorksheet = null;
+            }
+
+            if (TemplateWorksheet != null)
+            {
+                Marshal.ReleaseComObject(TemplateWorksheet);
+                TemplateWorksheet = null;
             }
 
             if (Sheets != null)
