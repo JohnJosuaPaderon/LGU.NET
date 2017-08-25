@@ -6,6 +6,7 @@ using LGU.EntityManagers.HumanResource;
 using LGU.EntityProcesses;
 using LGU.EntityProcesses.Core;
 using LGU.EntityProcesses.HumanResource;
+using LGU.Utilities.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data.SqlClient;
 
@@ -13,300 +14,307 @@ namespace LGU.Extensions
 {
     public static class IServiceCollectionExtension
     {
-        public static IServiceCollection UseSqlServer(this IServiceCollection serviceCollection)
+        public static IServiceCollection UseSqlServer(this IServiceCollection instance)
         {
             #region System
-            serviceCollection.AddSingleton<IGetSystemDate, GetSystemDate>();
-            serviceCollection.AddSingleton<ISystemManager, SystemManager>();
+            instance.AddSingleton<IGetSystemDate, GetSystemDate>();
+            instance.AddSingleton<ISystemManager, SystemManager>();
             #endregion
 
             // Core
 
             #region DocumentPathType
-            serviceCollection.AddSingleton<IDocumentPathTypeConverter<SqlDataReader>, DocumentPathTypeConverter>();
-            serviceCollection.AddSingleton<IGetDocumentPathTypeById, GetDocumentPathTypeById>();
-            serviceCollection.AddSingleton<IGetDocumentPathTypeList, GetDocumentPathTypeList>();
-            serviceCollection.AddSingleton<IDocumentPathTypeManager, DocumentPathTypeManager>();
+            instance.AddSingleton<IDocumentPathTypeConverter<SqlDataReader>, DocumentPathTypeConverter>();
+            instance.AddSingleton<IGetDocumentPathTypeById, GetDocumentPathTypeById>();
+            instance.AddSingleton<IGetDocumentPathTypeList, GetDocumentPathTypeList>();
+            instance.AddSingleton<IDocumentPathTypeManager, DocumentPathTypeManager>();
             #endregion
 
             #region Document
-            serviceCollection.AddSingleton<IDocumentConverter<SqlDataReader>, DocumentConverter>();
-            serviceCollection.AddSingleton<IDeleteDocument, DeleteDocument>();
-            serviceCollection.AddSingleton<IGetDocumentById, GetDocumentById>();
-            serviceCollection.AddSingleton<IGetDocumentList, GetDocumentList>();
-            serviceCollection.AddSingleton<IInsertDocument, InsertDocument>();
-            serviceCollection.AddSingleton<IUpdateDocument, UpdateDocument>();
-            serviceCollection.AddSingleton<IDocumentManager, DocumentManager>();
+            instance.AddSingleton<IDocumentConverter<SqlDataReader>, DocumentConverter>();
+            instance.AddSingleton<IDeleteDocument, DeleteDocument>();
+            instance.AddSingleton<IGetDocumentById, GetDocumentById>();
+            instance.AddSingleton<IGetDocumentList, GetDocumentList>();
+            instance.AddSingleton<IInsertDocument, InsertDocument>();
+            instance.AddSingleton<IUpdateDocument, UpdateDocument>();
+            instance.AddSingleton<IDocumentManager, DocumentManager>();
             #endregion
 
             #region Gender
-            serviceCollection.AddSingleton<IGenderConverter<SqlDataReader>, GenderConverter>();
-            serviceCollection.AddSingleton<IGetGenderById, GetGenderById>();
-            serviceCollection.AddSingleton<IGetGenderList, GetGenderList>();
-            serviceCollection.AddSingleton<IGenderManager, GenderManager>();
+            instance.AddSingleton<IGenderConverter<SqlDataReader>, GenderConverter>();
+            instance.AddSingleton<IGetGenderById, GetGenderById>();
+            instance.AddSingleton<IGetGenderList, GetGenderList>();
+            instance.AddSingleton<IGenderManager, GenderManager>();
             #endregion
 
             #region Person
-            serviceCollection.AddSingleton<IPersonConverter<SqlDataReader>, PersonConverter>();
-            serviceCollection.AddSingleton<IDeletePerson, DeletePerson>();
-            serviceCollection.AddSingleton<IGetPersonById, GetPersonById>();
-            serviceCollection.AddSingleton<IGetPersonList, GetPersonList>();
-            serviceCollection.AddSingleton<IInsertPerson, InsertPerson>();
-            serviceCollection.AddSingleton<IUpdatePerson, UpdatePerson>();
-            serviceCollection.AddSingleton<ISearchPerson, SearchPerson>();
-            serviceCollection.AddSingleton<IPersonManager, PersonManager>();
+            instance.AddSingleton<IPersonConverter<SqlDataReader>, PersonConverter>();
+            instance.AddSingleton<IDeletePerson, DeletePerson>();
+            instance.AddSingleton<IGetPersonById, GetPersonById>();
+            instance.AddSingleton<IGetPersonList, GetPersonList>();
+            instance.AddSingleton<IInsertPerson, InsertPerson>();
+            instance.AddSingleton<IUpdatePerson, UpdatePerson>();
+            instance.AddSingleton<ISearchPerson, SearchPerson>();
+            instance.AddSingleton<IPersonManager, PersonManager>();
             #endregion
 
             #region Module
-            serviceCollection.AddSingleton<IModuleConverter<SqlDataReader>, ModuleConverter>();
-            serviceCollection.AddSingleton<IGetModuleById, GetModuleById>();
-            serviceCollection.AddSingleton<IGetModuleList, GetModuleList>();
-            serviceCollection.AddSingleton<IModuleManager, ModuleManager>();
+            instance.AddSingleton<IModuleConverter<SqlDataReader>, ModuleConverter>();
+            instance.AddSingleton<IGetModuleById, GetModuleById>();
+            instance.AddSingleton<IGetModuleList, GetModuleList>();
+            instance.AddSingleton<IModuleManager, ModuleManager>();
             #endregion
 
             #region UserStatus
-            serviceCollection.AddSingleton<IUserStatusConverter<SqlDataReader>, UserStatusConverter>();
-            serviceCollection.AddSingleton<IGetUserStatusById, GetUserStatusById>();
-            serviceCollection.AddSingleton<IGetUserStatusList, GetUserStatusList>();
-            serviceCollection.AddSingleton<IUserStatusManager, UserStatusManager>();
+            instance.AddSingleton<IUserStatusConverter<SqlDataReader>, UserStatusConverter>();
+            instance.AddSingleton<IGetUserStatusById, GetUserStatusById>();
+            instance.AddSingleton<IGetUserStatusList, GetUserStatusList>();
+            instance.AddSingleton<IUserStatusManager, UserStatusManager>();
             #endregion
 
             #region UserType
-            serviceCollection.AddSingleton<IUserTypeConverter<SqlDataReader>, UserTypeConverter>();
-            serviceCollection.AddSingleton<IGetUserTypeById, GetUserTypeById>();
-            serviceCollection.AddSingleton<IGetUserTypeList, GetUserTypeList>();
-            serviceCollection.AddSingleton<IUserTypeManager, UserTypeManager>();
+            instance.AddSingleton<IUserTypeConverter<SqlDataReader>, UserTypeConverter>();
+            instance.AddSingleton<IGetUserTypeById, GetUserTypeById>();
+            instance.AddSingleton<IGetUserTypeList, GetUserTypeList>();
+            instance.AddSingleton<IUserTypeManager, UserTypeManager>();
             #endregion
 
             #region User
-            serviceCollection.AddSingleton<IUserConverter<SqlDataReader>, UserConverter>();
-            serviceCollection.AddSingleton<IDeleteUser, DeleteUser>();
-            serviceCollection.AddSingleton<IGetUserById, GetUserById>();
-            serviceCollection.AddSingleton<IGetUserList, GetUserList>();
-            serviceCollection.AddSingleton<IInsertUser, InsertUser>();
-            serviceCollection.AddSingleton<IUpdateUser, UpdateUser>();
-            serviceCollection.AddSingleton<ILoginUser, LoginUser>();
-            serviceCollection.AddSingleton<IIsUsernameExists, IsUsernameExists>();
-            serviceCollection.AddSingleton<IUserManager, UserManager>();
+            instance.AddSingleton<IUserConverter<SqlDataReader>, UserConverter>();
+            instance.AddSingleton<IDeleteUser, DeleteUser>();
+            instance.AddSingleton<IGetUserById, GetUserById>();
+            instance.AddSingleton<IGetUserList, GetUserList>();
+            instance.AddSingleton<IInsertUser, InsertUser>();
+            instance.AddSingleton<IUpdateUser, UpdateUser>();
+            instance.AddSingleton<ILoginUser, LoginUser>();
+            instance.AddSingleton<IIsUsernameExists, IsUsernameExists>();
+            instance.AddSingleton<IUserManager, UserManager>();
             #endregion
 
             // HumanResource
 
             #region ApplicantStatus
-            serviceCollection.AddSingleton<IApplicantStatusConverter<SqlDataReader>, ApplicantStatusConverter>();
-            serviceCollection.AddSingleton<IGetApplicantStatusById, GetApplicantStatusById>();
-            serviceCollection.AddSingleton<IGetApplicantStatusList, GetApplicantStatusList>();
-            serviceCollection.AddSingleton<IApplicantStatusManager, ApplicantStatusManager>();
+            instance.AddSingleton<IApplicantStatusConverter<SqlDataReader>, ApplicantStatusConverter>();
+            instance.AddSingleton<IGetApplicantStatusById, GetApplicantStatusById>();
+            instance.AddSingleton<IGetApplicantStatusList, GetApplicantStatusList>();
+            instance.AddSingleton<IApplicantStatusManager, ApplicantStatusManager>();
             #endregion
 
             #region Applicant
-            serviceCollection.AddSingleton<IApplicantConverter<SqlDataReader>, ApplicantConverter>();
-            serviceCollection.AddSingleton<IDeleteApplicant, DeleteApplicant>();
-            serviceCollection.AddSingleton<IGetApplicantById, GetApplicantById>();
-            serviceCollection.AddSingleton<IGetApplicantList, GetApplicantList>();
-            serviceCollection.AddSingleton<IInsertApplicant, InsertApplicant>();
-            serviceCollection.AddSingleton<IUpdateApplicant, UpdateApplicant>();
-            serviceCollection.AddSingleton<IApplicantManager, ApplicantManager>();
+            instance.AddSingleton<IApplicantConverter<SqlDataReader>, ApplicantConverter>();
+            instance.AddSingleton<IDeleteApplicant, DeleteApplicant>();
+            instance.AddSingleton<IGetApplicantById, GetApplicantById>();
+            instance.AddSingleton<IGetApplicantList, GetApplicantList>();
+            instance.AddSingleton<IInsertApplicant, InsertApplicant>();
+            instance.AddSingleton<IUpdateApplicant, UpdateApplicant>();
+            instance.AddSingleton<IApplicantManager, ApplicantManager>();
             #endregion
 
             #region Application
-            serviceCollection.AddSingleton<IApplicationConverter<SqlDataReader>, ApplicationConverter>();
-            serviceCollection.AddSingleton<IDeleteApplication, DeleteApplication>();
-            serviceCollection.AddSingleton<IGetApplicationById, GetApplicationById>();
-            serviceCollection.AddSingleton<IGetApplicationList, GetApplicationList>();
-            serviceCollection.AddSingleton<IInsertApplication, InsertApplication>();
-            serviceCollection.AddSingleton<IUpdateApplication, UpdateApplication>();
-            serviceCollection.AddSingleton<IApplicationManager, ApplicationManager>();
+            instance.AddSingleton<IApplicationConverter<SqlDataReader>, ApplicationConverter>();
+            instance.AddSingleton<IDeleteApplication, DeleteApplication>();
+            instance.AddSingleton<IGetApplicationById, GetApplicationById>();
+            instance.AddSingleton<IGetApplicationList, GetApplicationList>();
+            instance.AddSingleton<IInsertApplication, InsertApplication>();
+            instance.AddSingleton<IUpdateApplication, UpdateApplication>();
+            instance.AddSingleton<IApplicationManager, ApplicationManager>();
             #endregion
 
             #region ApplicationDocument
-            serviceCollection.AddSingleton<IApplicationDocumentConverter<SqlDataReader>, ApplicationDocumentConverter>();
-            serviceCollection.AddSingleton<IDeleteApplicationDocument, DeleteApplicationDocument>();
-            serviceCollection.AddSingleton<IGetApplicationDocumentById, GetApplicationDocumentById>();
-            serviceCollection.AddSingleton<IGetApplicationDocumentList, GetApplicationDocumentList>();
-            serviceCollection.AddSingleton<IInsertApplicationDocument, InsertApplicationDocument>();
-            serviceCollection.AddSingleton<IUpdateApplicationDocument, UpdateApplicationDocument>();
-            serviceCollection.AddSingleton<IApplicationDocumentManager, ApplicationDocumentManager>();
+            instance.AddSingleton<IApplicationDocumentConverter<SqlDataReader>, ApplicationDocumentConverter>();
+            instance.AddSingleton<IDeleteApplicationDocument, DeleteApplicationDocument>();
+            instance.AddSingleton<IGetApplicationDocumentById, GetApplicationDocumentById>();
+            instance.AddSingleton<IGetApplicationDocumentList, GetApplicationDocumentList>();
+            instance.AddSingleton<IInsertApplicationDocument, InsertApplicationDocument>();
+            instance.AddSingleton<IUpdateApplicationDocument, UpdateApplicationDocument>();
+            instance.AddSingleton<IApplicationDocumentManager, ApplicationDocumentManager>();
             #endregion
 
             #region Department
-            serviceCollection.AddSingleton<IDepartmentConverter<SqlDataReader>, DepartmentConverter>();
-            serviceCollection.AddSingleton<IDeleteDepartment, DeleteDepartment>();
-            serviceCollection.AddSingleton<IGetDepartmentById, GetDepartmentById>();
-            serviceCollection.AddSingleton<IGetDepartmentList, GetDepartmentList>();
-            serviceCollection.AddSingleton<ISearchDepartment, SearchDepartment>();
-            serviceCollection.AddSingleton<IInsertDepartment, InsertDepartment>();
-            serviceCollection.AddSingleton<IUpdateDepartment, UpdateDepartment>();
-            serviceCollection.AddSingleton<IGetDepartmentListWithTimeLog, GetDepartmentListWithTimeLog>();
-            serviceCollection.AddSingleton<IDepartmentManager, DepartmentManager>();
+            instance.AddSingleton<IDepartmentConverter<SqlDataReader>, DepartmentConverter>();
+            instance.AddSingleton<IDeleteDepartment, DeleteDepartment>();
+            instance.AddSingleton<IGetDepartmentById, GetDepartmentById>();
+            instance.AddSingleton<IGetDepartmentList, GetDepartmentList>();
+            instance.AddSingleton<ISearchDepartment, SearchDepartment>();
+            instance.AddSingleton<IInsertDepartment, InsertDepartment>();
+            instance.AddSingleton<IUpdateDepartment, UpdateDepartment>();
+            instance.AddSingleton<IGetDepartmentListWithTimeLog, GetDepartmentListWithTimeLog>();
+            instance.AddSingleton<IDepartmentManager, DepartmentManager>();
             #endregion
 
             #region DepartmentHead
-            serviceCollection.AddSingleton<IDepartmentHeadConverter<SqlDataReader>, DepartmentHeadConverter>();
-            serviceCollection.AddSingleton<IDeleteDepartmentHead, DeleteDepartmentHead>();
-            serviceCollection.AddSingleton<IGetDepartmentHeadById, GetDepartmentHeadById>();
-            serviceCollection.AddSingleton<IGetDepartmentHeadList, GetDepartmentHeadList>();
-            serviceCollection.AddSingleton<IInsertDepartmentHead, InsertDepartmentHead>();
-            serviceCollection.AddSingleton<IUpdateDepartmentHead, UpdateDepartmentHead>();
-            serviceCollection.AddSingleton<IDepartmentHeadManager, DepartmentHeadManager>();
+            instance.AddSingleton<IDepartmentHeadConverter<SqlDataReader>, DepartmentHeadConverter>();
+            instance.AddSingleton<IDeleteDepartmentHead, DeleteDepartmentHead>();
+            instance.AddSingleton<IGetDepartmentHeadById, GetDepartmentHeadById>();
+            instance.AddSingleton<IGetDepartmentHeadList, GetDepartmentHeadList>();
+            instance.AddSingleton<IInsertDepartmentHead, InsertDepartmentHead>();
+            instance.AddSingleton<IUpdateDepartmentHead, UpdateDepartmentHead>();
+            instance.AddSingleton<IDepartmentHeadManager, DepartmentHeadManager>();
             #endregion
 
             #region ExamSet
-            serviceCollection.AddSingleton<IExamSetConverter<SqlDataReader>, ExamSetConverter>();
-            serviceCollection.AddSingleton<IDeleteExamSet, DeleteExamSet>();
-            serviceCollection.AddSingleton<IGetExamSetById, GetExamSetById>();
-            serviceCollection.AddSingleton<IGetExamSetList, GetExamSetList>();
-            serviceCollection.AddSingleton<IInsertExamSet, InsertExamSet>();
-            serviceCollection.AddSingleton<IUpdateExamSet, UpdateExamSet>();
-            serviceCollection.AddSingleton<IExamSetManager, ExamSetManager>();
+            instance.AddSingleton<IExamSetConverter<SqlDataReader>, ExamSetConverter>();
+            instance.AddSingleton<IDeleteExamSet, DeleteExamSet>();
+            instance.AddSingleton<IGetExamSetById, GetExamSetById>();
+            instance.AddSingleton<IGetExamSetList, GetExamSetList>();
+            instance.AddSingleton<IInsertExamSet, InsertExamSet>();
+            instance.AddSingleton<IUpdateExamSet, UpdateExamSet>();
+            instance.AddSingleton<IExamSetManager, ExamSetManager>();
             #endregion
 
             #region EssayQuestion
-            serviceCollection.AddSingleton<IEssayQuestionConverter<SqlDataReader>, EssayQuestionConverter>();
-            serviceCollection.AddSingleton<IDeleteEssayQuestion, DeleteEssayQuestion>();
-            serviceCollection.AddSingleton<IGetEssayQuestionById, GetEssayQuestionById>();
-            serviceCollection.AddSingleton<IGetEssayQuestionList, GetEssayQuestionList>();
-            serviceCollection.AddSingleton<IInsertEssayQuestion, InsertEssayQuestion>();
-            serviceCollection.AddSingleton<IUpdateEssayQuestion, UpdateEssayQuestion>();
-            serviceCollection.AddSingleton<IEssayQuestionManager, EssayQuestionManager>();
+            instance.AddSingleton<IEssayQuestionConverter<SqlDataReader>, EssayQuestionConverter>();
+            instance.AddSingleton<IDeleteEssayQuestion, DeleteEssayQuestion>();
+            instance.AddSingleton<IGetEssayQuestionById, GetEssayQuestionById>();
+            instance.AddSingleton<IGetEssayQuestionList, GetEssayQuestionList>();
+            instance.AddSingleton<IInsertEssayQuestion, InsertEssayQuestion>();
+            instance.AddSingleton<IUpdateEssayQuestion, UpdateEssayQuestion>();
+            instance.AddSingleton<IEssayQuestionManager, EssayQuestionManager>();
             #endregion
 
             #region Exam
-            serviceCollection.AddSingleton<IExamConverter<SqlDataReader>, ExamConverter>();
-            serviceCollection.AddSingleton<IDeleteExam, DeleteExam>();
-            serviceCollection.AddSingleton<IGetExamById, GetExamById>();
-            serviceCollection.AddSingleton<IGetExamList, GetExamList>();
-            serviceCollection.AddSingleton<IInsertExam, InsertExam>();
-            serviceCollection.AddSingleton<IUpdateExam, UpdateExam>();
-            serviceCollection.AddSingleton<IExamManager, ExamManager>();
+            instance.AddSingleton<IExamConverter<SqlDataReader>, ExamConverter>();
+            instance.AddSingleton<IDeleteExam, DeleteExam>();
+            instance.AddSingleton<IGetExamById, GetExamById>();
+            instance.AddSingleton<IGetExamList, GetExamList>();
+            instance.AddSingleton<IInsertExam, InsertExam>();
+            instance.AddSingleton<IUpdateExam, UpdateExam>();
+            instance.AddSingleton<IExamManager, ExamManager>();
             #endregion
 
             #region ExamEssayAnswer
-            serviceCollection.AddSingleton<IExamEssayAnswerConverter<SqlDataReader>, ExamEssayAnswerConverter>();
-            serviceCollection.AddSingleton<IDeleteExamEssayAnswer, DeleteExamEssayAnswer>();
-            serviceCollection.AddSingleton<IGetExamEssayAnswerList, GetExamEssayAnswerList>();
-            serviceCollection.AddSingleton<IInsertExamEssayAnswer, InsertExamEssayAnswer>();
-            serviceCollection.AddSingleton<IUpdateExamEssayAnswer, UpdateExamEssayAnswer>();
-            serviceCollection.AddSingleton<IExamEssayAnswerManager, ExamEssayAnswerManager>();
+            instance.AddSingleton<IExamEssayAnswerConverter<SqlDataReader>, ExamEssayAnswerConverter>();
+            instance.AddSingleton<IDeleteExamEssayAnswer, DeleteExamEssayAnswer>();
+            instance.AddSingleton<IGetExamEssayAnswerList, GetExamEssayAnswerList>();
+            instance.AddSingleton<IInsertExamEssayAnswer, InsertExamEssayAnswer>();
+            instance.AddSingleton<IUpdateExamEssayAnswer, UpdateExamEssayAnswer>();
+            instance.AddSingleton<IExamEssayAnswerManager, ExamEssayAnswerManager>();
             #endregion
 
             #region ExamMultipleChoiceAnswer
-            serviceCollection.AddSingleton<IExamMultipleChoiceAnswerConverter<SqlDataReader>, ExamMultipleChoiceAnswerConverter>();
-            serviceCollection.AddSingleton<IDeleteExamMultipleChoiceAnswer, DeleteExamMultipleChoiceAnswer>();
-            serviceCollection.AddSingleton<IGetExamMultipleChoiceAnswerList, GetExamMultipleChoiceAnswerList>();
-            serviceCollection.AddSingleton<IInsertExamMultipleChoiceAnswer, InsertExamMultipleChoiceAnswer>();
-            serviceCollection.AddSingleton<IUpdateExamMultipleChoiceAnswer, UpdateExamMultipleChoiceAnswer>();
-            serviceCollection.AddSingleton<IExamMultipleChoiceAnswerManager, ExamMultipleChoiceAnswerManager>();
+            instance.AddSingleton<IExamMultipleChoiceAnswerConverter<SqlDataReader>, ExamMultipleChoiceAnswerConverter>();
+            instance.AddSingleton<IDeleteExamMultipleChoiceAnswer, DeleteExamMultipleChoiceAnswer>();
+            instance.AddSingleton<IGetExamMultipleChoiceAnswerList, GetExamMultipleChoiceAnswerList>();
+            instance.AddSingleton<IInsertExamMultipleChoiceAnswer, InsertExamMultipleChoiceAnswer>();
+            instance.AddSingleton<IUpdateExamMultipleChoiceAnswer, UpdateExamMultipleChoiceAnswer>();
+            instance.AddSingleton<IExamMultipleChoiceAnswerManager, ExamMultipleChoiceAnswerManager>();
             #endregion
 
             #region EmployeeType
-            serviceCollection.AddSingleton<IEmployeeTypeConverter<SqlDataReader>, EmployeeTypeConverter>();
-            serviceCollection.AddSingleton<IGetEmployeeTypeById, GetEmployeeTypeById>();
-            serviceCollection.AddSingleton<IGetEmployeeTypeList, GetEmployeeTypeList>();
-            serviceCollection.AddSingleton<IEmployeeTypeManager, EmployeeTypeManager>();
+            instance.AddSingleton<IEmployeeTypeConverter<SqlDataReader>, EmployeeTypeConverter>();
+            instance.AddSingleton<IGetEmployeeTypeById, GetEmployeeTypeById>();
+            instance.AddSingleton<IGetEmployeeTypeList, GetEmployeeTypeList>();
+            instance.AddSingleton<IEmployeeTypeManager, EmployeeTypeManager>();
             #endregion
 
             #region EmploymentStatus
-            serviceCollection.AddSingleton<IEmploymentStatusConverter<SqlDataReader>, EmploymentStatusConverter>();
-            serviceCollection.AddSingleton<IGetEmploymentStatusById, GetEmploymentStatusById>();
-            serviceCollection.AddSingleton<IGetEmploymentStatusList, GetEmploymentStatusList>();
-            serviceCollection.AddSingleton<IEmploymentStatusManager, EmploymentStatusManager>();
+            instance.AddSingleton<IEmploymentStatusConverter<SqlDataReader>, EmploymentStatusConverter>();
+            instance.AddSingleton<IGetEmploymentStatusById, GetEmploymentStatusById>();
+            instance.AddSingleton<IGetEmploymentStatusList, GetEmploymentStatusList>();
+            instance.AddSingleton<IEmploymentStatusManager, EmploymentStatusManager>();
             #endregion
 
             #region MultipleChoiceCandidateAnswer
-            serviceCollection.AddSingleton<IMultipleChoiceCandidateAnswerConverter<SqlDataReader>, MultipleChoiceCandidateAnswerConverter>();
-            serviceCollection.AddSingleton<IDeleteMultipleChoiceCandidateAnswer, DeleteMultipleChoiceCandidateAnswer>();
-            serviceCollection.AddSingleton<IGetMultipleChoiceCandidateAnswerById, GetMultipleChoiceCandidateAnswerById>();
-            serviceCollection.AddSingleton<IGetMultipleChoiceCandidateAnswerList, GetMultipleChoiceCandidateAnswerList>();
-            serviceCollection.AddSingleton<IInsertMultipleChoiceCandidateAnswer, InsertMultipleChoiceCandidateAnswer>();
-            serviceCollection.AddSingleton<IUpdateMultipleChoiceCandidateAnswer, UpdateMultipleChoiceCandidateAnswer>();
-            serviceCollection.AddSingleton<IMultipleChoiceCandidateAnswerManager, MultipleChoiceCandidateAnswerManager>();
+            instance.AddSingleton<IMultipleChoiceCandidateAnswerConverter<SqlDataReader>, MultipleChoiceCandidateAnswerConverter>();
+            instance.AddSingleton<IDeleteMultipleChoiceCandidateAnswer, DeleteMultipleChoiceCandidateAnswer>();
+            instance.AddSingleton<IGetMultipleChoiceCandidateAnswerById, GetMultipleChoiceCandidateAnswerById>();
+            instance.AddSingleton<IGetMultipleChoiceCandidateAnswerList, GetMultipleChoiceCandidateAnswerList>();
+            instance.AddSingleton<IInsertMultipleChoiceCandidateAnswer, InsertMultipleChoiceCandidateAnswer>();
+            instance.AddSingleton<IUpdateMultipleChoiceCandidateAnswer, UpdateMultipleChoiceCandidateAnswer>();
+            instance.AddSingleton<IMultipleChoiceCandidateAnswerManager, MultipleChoiceCandidateAnswerManager>();
             #endregion
 
             #region MultipleChoiceQuestion
-            serviceCollection.AddSingleton<IMultipleChoiceQuestionConverter<SqlDataReader>, MultipleChoiceQuestionConverter>();
-            serviceCollection.AddSingleton<IDeleteMultipleChoiceQuestion, DeleteMultipleChoiceQuestion>();
-            serviceCollection.AddSingleton<IGetMultipleChoiceQuestionById, GetMultipleChoiceQuestionById>();
-            serviceCollection.AddSingleton<IGetMultipleChoiceQuestionList, GetMultipleChoiceQuestionList>();
-            serviceCollection.AddSingleton<IInsertMultipleChoiceQuestion, InsertMultipleChoiceQuestion>();
-            serviceCollection.AddSingleton<IUpdateMultipleChoiceQuestion, UpdateMultipleChoiceQuestion>();
-            serviceCollection.AddSingleton<IMultipleChoiceQuestionManager, MultipleChoiceQuestionManager>();
+            instance.AddSingleton<IMultipleChoiceQuestionConverter<SqlDataReader>, MultipleChoiceQuestionConverter>();
+            instance.AddSingleton<IDeleteMultipleChoiceQuestion, DeleteMultipleChoiceQuestion>();
+            instance.AddSingleton<IGetMultipleChoiceQuestionById, GetMultipleChoiceQuestionById>();
+            instance.AddSingleton<IGetMultipleChoiceQuestionList, GetMultipleChoiceQuestionList>();
+            instance.AddSingleton<IInsertMultipleChoiceQuestion, InsertMultipleChoiceQuestion>();
+            instance.AddSingleton<IUpdateMultipleChoiceQuestion, UpdateMultipleChoiceQuestion>();
+            instance.AddSingleton<IMultipleChoiceQuestionManager, MultipleChoiceQuestionManager>();
             #endregion
 
             #region Position
-            serviceCollection.AddSingleton<IPositionConverter<SqlDataReader>, PositionConverter>();
-            serviceCollection.AddSingleton<IDeletePosition, DeletePosition>();
-            serviceCollection.AddSingleton<IGetPositionById, GetPositionById>();
-            serviceCollection.AddSingleton<IGetPositionList, GetPositionList>();
-            serviceCollection.AddSingleton<IInsertPosition, InsertPosition>();
-            serviceCollection.AddSingleton<IUpdatePosition, UpdatePosition>();
-            serviceCollection.AddSingleton<IPositionManager, PositionManager>();
+            instance.AddSingleton<IPositionConverter<SqlDataReader>, PositionConverter>();
+            instance.AddSingleton<IDeletePosition, DeletePosition>();
+            instance.AddSingleton<IGetPositionById, GetPositionById>();
+            instance.AddSingleton<IGetPositionList, GetPositionList>();
+            instance.AddSingleton<IInsertPosition, InsertPosition>();
+            instance.AddSingleton<IUpdatePosition, UpdatePosition>();
+            instance.AddSingleton<IPositionManager, PositionManager>();
             #endregion
 
             #region Employee
-            serviceCollection.AddSingleton<IEmployeeConverter<SqlDataReader>, EmployeeConverter>();
-            serviceCollection.AddSingleton<IDeleteEmployee, DeleteEmployee>();
-            serviceCollection.AddSingleton<IGetEmployeeById, GetEmployeeById>();
-            serviceCollection.AddSingleton<IGetEmployeeList, GetEmployeeList>();
-            serviceCollection.AddSingleton<IInsertEmployee, InsertEmployee>();
-            serviceCollection.AddSingleton<IUpdateEmployee, UpdateEmployee>();
-            serviceCollection.AddSingleton<ISearchEmployee, SearchEmployee>();
-            serviceCollection.AddSingleton<IGetEmployeeListWithTimeLog, GetEmployeeListWithTimeLog>();
-            serviceCollection.AddSingleton<ISearchEmployeeWithTimeLog, SearchEmployeeWithTimeLog>();
-            serviceCollection.AddSingleton<IGetEmployeeListWithTimeLogByDepartment, GetEmployeeListWithTimeLogByDepartment>();
-            serviceCollection.AddSingleton<IEmployeeManager, EmployeeManager>();
+            instance.AddSingleton<IEmployeeConverter<SqlDataReader>, EmployeeConverter>();
+            instance.AddSingleton<IDeleteEmployee, DeleteEmployee>();
+            instance.AddSingleton<IGetEmployeeById, GetEmployeeById>();
+            instance.AddSingleton<IGetEmployeeList, GetEmployeeList>();
+            instance.AddSingleton<IInsertEmployee, InsertEmployee>();
+            instance.AddSingleton<IUpdateEmployee, UpdateEmployee>();
+            instance.AddSingleton<ISearchEmployee, SearchEmployee>();
+            instance.AddSingleton<IGetEmployeeListWithTimeLog, GetEmployeeListWithTimeLog>();
+            instance.AddSingleton<ISearchEmployeeWithTimeLog, SearchEmployeeWithTimeLog>();
+            instance.AddSingleton<IGetEmployeeListWithTimeLogByDepartment, GetEmployeeListWithTimeLogByDepartment>();
+            instance.AddSingleton<IEmployeeManager, EmployeeManager>();
             #endregion
 
             #region EmployeeWorkTimeSchedule
-            serviceCollection.AddSingleton<IEmployeeWorkTimeScheduleConverter<SqlDataReader>, EmployeeWorkTimeScheduleConverter>();
-            serviceCollection.AddSingleton<IDeleteEmployeeWorkTimeSchedule, DeleteEmployeeWorkTimeSchedule>();
-            serviceCollection.AddSingleton<IGetEmployeeWorkTimeScheduleById, GetEmployeeWorkTimeScheduleById>();
-            serviceCollection.AddSingleton<IGetEmployeeWorkTimeScheduleList, GetEmployeeWorkTimeScheduleList>();
-            serviceCollection.AddSingleton<IInsertEmployeeWorkTimeSchedule, InsertEmployeeWorkTimeSchedule>();
-            serviceCollection.AddSingleton<IUpdateEmployeeWorkTimeSchedule, UpdateEmployeeWorkTimeSchedule>();
-            serviceCollection.AddSingleton<IEmployeeWorkTimeScheduleManager, EmployeeWorkTimeScheduleManager>();
+            instance.AddSingleton<IEmployeeWorkTimeScheduleConverter<SqlDataReader>, EmployeeWorkTimeScheduleConverter>();
+            instance.AddSingleton<IDeleteEmployeeWorkTimeSchedule, DeleteEmployeeWorkTimeSchedule>();
+            instance.AddSingleton<IGetEmployeeWorkTimeScheduleById, GetEmployeeWorkTimeScheduleById>();
+            instance.AddSingleton<IGetEmployeeWorkTimeScheduleList, GetEmployeeWorkTimeScheduleList>();
+            instance.AddSingleton<IInsertEmployeeWorkTimeSchedule, InsertEmployeeWorkTimeSchedule>();
+            instance.AddSingleton<IUpdateEmployeeWorkTimeSchedule, UpdateEmployeeWorkTimeSchedule>();
+            instance.AddSingleton<IEmployeeWorkTimeScheduleManager, EmployeeWorkTimeScheduleManager>();
             #endregion
 
             #region Locator
-            serviceCollection.AddSingleton<ILocatorConverter<SqlDataReader>, LocatorConverter>();
-            serviceCollection.AddSingleton<IDeleteLocator, DeleteLocator>();
-            serviceCollection.AddSingleton<IGetLocatorById, GetLocatorById>();
-            serviceCollection.AddSingleton<IGetLocatorList, GetLocatorList>();
-            serviceCollection.AddSingleton<IInsertLocator, InsertLocator>();
-            serviceCollection.AddSingleton<IUpdateLocator, UpdateLocator>();
-            serviceCollection.AddSingleton<ILocatorManager, LocatorManager>();
+            instance.AddSingleton<ILocatorConverter<SqlDataReader>, LocatorConverter>();
+            instance.AddSingleton<IDeleteLocator, DeleteLocator>();
+            instance.AddSingleton<IGetLocatorById, GetLocatorById>();
+            instance.AddSingleton<IGetLocatorList, GetLocatorList>();
+            instance.AddSingleton<IInsertLocator, InsertLocator>();
+            instance.AddSingleton<IUpdateLocator, UpdateLocator>();
+            instance.AddSingleton<ILocatorManager, LocatorManager>();
             #endregion
 
             #region LocatorLeaveType
-            serviceCollection.AddSingleton<ILocatorLeaveTypeConverter<SqlDataReader>, LocatorLeaveTypeConverter>();
-            serviceCollection.AddSingleton<IGetLocatorLeaveTypeById, GetLocatorLeaveTypeById>();
-            serviceCollection.AddSingleton<IGetLocatorLeaveTypeList, GetLocatorLeaveTypeList>();
-            serviceCollection.AddSingleton<ILocatorLeaveTypeManager, LocatorLeaveTypeManager>();
+            instance.AddSingleton<ILocatorLeaveTypeConverter<SqlDataReader>, LocatorLeaveTypeConverter>();
+            instance.AddSingleton<IGetLocatorLeaveTypeById, GetLocatorLeaveTypeById>();
+            instance.AddSingleton<IGetLocatorLeaveTypeList, GetLocatorLeaveTypeList>();
+            instance.AddSingleton<ILocatorLeaveTypeManager, LocatorLeaveTypeManager>();
             #endregion
 
             #region TimeLogType
-            serviceCollection.AddSingleton<ITimeLogTypeConverter<SqlDataReader>, TimeLogTypeConverter>();
-            serviceCollection.AddSingleton<IGetTimeLogTypeById, GetTimeLogTypeById>();
-            serviceCollection.AddSingleton<IGetTimeLogTypeList, GetTimeLogTypeList>();
-            serviceCollection.AddSingleton<ITimeLogTypeManager, TimeLogTypeManager>();
+            instance.AddSingleton<ITimeLogTypeConverter<SqlDataReader>, TimeLogTypeConverter>();
+            instance.AddSingleton<IGetTimeLogTypeById, GetTimeLogTypeById>();
+            instance.AddSingleton<IGetTimeLogTypeList, GetTimeLogTypeList>();
+            instance.AddSingleton<ITimeLogTypeManager, TimeLogTypeManager>();
             #endregion
 
             #region TimeLog
-            serviceCollection.AddSingleton<ITimeLogConverter<SqlDataReader>, TimeLogConverter>();
-            serviceCollection.AddSingleton<IDeleteTimeLog, DeleteTimeLog>();
-            serviceCollection.AddSingleton<IGetTimeLogById, GetTimeLogById>();
-            serviceCollection.AddSingleton<IGetTimeLogList, GetTimeLogList>();
-            serviceCollection.AddSingleton<IInsertTimeLog, InsertTimeLog>();
-            serviceCollection.AddSingleton<ILogEmployee, LogEmployee>();
-            serviceCollection.AddSingleton<IUpdateTimeLog, UpdateTimeLog>();
-            serviceCollection.AddSingleton<IGetActualTimeLogListByEmployeeCutOff, GetActualTimeLogListByEmployeeCutOff>();
-            serviceCollection.AddSingleton<IGetTimeLogListByCutOff, GetTimeLogListByCutOff>();
-            serviceCollection.AddSingleton<IGetTimeLogListByDepartmentCutOff, GetTimeLogListByDepartmentCutOff>();
-            serviceCollection.AddSingleton<IGetTimeLogListByEmployeeCutOff, GetTimeLogListByEmployeeCutOff>();
-            serviceCollection.AddSingleton<ITimeLogManager, TimeLogManager>();
+            instance.AddSingleton<ITimeLogConverter<SqlDataReader>, TimeLogConverter>();
+            instance.AddSingleton<IDeleteTimeLog, DeleteTimeLog>();
+            instance.AddSingleton<IGetTimeLogById, GetTimeLogById>();
+            instance.AddSingleton<IGetTimeLogList, GetTimeLogList>();
+            instance.AddSingleton<IInsertTimeLog, InsertTimeLog>();
+            instance.AddSingleton<ILogEmployee, LogEmployee>();
+            instance.AddSingleton<IUpdateTimeLog, UpdateTimeLog>();
+            instance.AddSingleton<IGetActualTimeLogListByEmployeeCutOff, GetActualTimeLogListByEmployeeCutOff>();
+            instance.AddSingleton<IGetTimeLogListByCutOff, GetTimeLogListByCutOff>();
+            instance.AddSingleton<IGetTimeLogListByDepartmentCutOff, GetTimeLogListByDepartmentCutOff>();
+            instance.AddSingleton<IGetTimeLogListByEmployeeCutOff, GetTimeLogListByEmployeeCutOff>();
+            instance.AddSingleton<ITimeLogManager, TimeLogManager>();
             #endregion
 
-            return serviceCollection;
+            return instance;
+        }
+
+        public static IServiceCollection UseBuiltInEntityResolver(this IServiceCollection instance)
+        {
+            instance.AddSingleton<IPersonPlaceholderResolver, PersonPlaceholderResolver>();
+
+            return instance;
         }
     }
 }
