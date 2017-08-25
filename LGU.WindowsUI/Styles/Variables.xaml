@@ -10,6 +10,10 @@
     <Thickness x:Key="DefaultMargin">8</Thickness>
     <GridLength x:Key="DefaultGridSpace">8</GridLength>
     <SolidColorBrush x:Key="DefaultSelectionBrush" Color="Red"/>
+    
+    <!-- KIOSK -->
+    <system:Double x:Key="KioskFontSize">18</system:Double>
+    <GridLength x:Key="KioskGridSpace">16</GridLength>
 
     <!-- EXTRA LARGE HEADER -->
     <system:Double x:Key="ExtraLargeHeaderFontSize">54</system:Double>
@@ -44,9 +48,10 @@
     <!-- OTHERS -->
     <Thickness x:Key="ContainerMargin">12</Thickness>
     <GridLength x:Key="ContainerGridSpace">12</GridLength>
-    <GridLength x:Key="KioskGridSpace">16</GridLength>
     <Thickness x:Key="SearchPadding">4</Thickness>
     <system:Double x:Key="MinDialogHeight">500</system:Double>
     <system:Double x:Key="MinDialogWidth">500</system:Double>
+    <system:Double x:Key="MaxDialogHeight">750</system:Double>
+    <system:Double x:Key="MaxDialogWidth">750</system:Double>
 
 </ResourceDictionary>

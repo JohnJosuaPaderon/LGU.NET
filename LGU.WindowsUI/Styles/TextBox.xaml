@@ -11,6 +11,11 @@
         <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource DefaultSelectionBrush}"/>
         <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}"/>
+        <Setter Property="CharacterCasing" Value="Upper"/>
+    </Style>
+
+    <Style x:Key="KioskTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource _TextBox}">
+        <Setter Property="FontSize" Value="{DynamicResource KioskFontSize}"/>
     </Style>
 
     <Style x:Key="SearchTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource MaterialDesignTextBox}">
