@@ -3,6 +3,7 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
@@ -46,6 +47,11 @@ namespace LGU.ViewModels
         public virtual void Initialize()
         {
             Debug.WriteLine("ViewModel has been Loaded.");
+        }
+
+        protected void Invoke(Action expression)
+        {
+            Application.Current?.Dispatcher.Invoke(expression);
         }
 
         protected void ShowInfoMessage(string message, string header)
