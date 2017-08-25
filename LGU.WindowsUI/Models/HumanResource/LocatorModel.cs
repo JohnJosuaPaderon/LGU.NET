@@ -14,6 +14,7 @@ namespace LGU.Models.HumanResource
             ExpectedReturnTime = source.ExpectedReturnTime;
             LeaveType = source.LeaveType;
             Purpose = source.Purpose;
+            DepartmentHead = source.DepartmentHead;
         }
 
         private long _Id;
@@ -65,6 +66,13 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Purpose, value); }
         }
 
+        private string _DepartmentHead;
+        public string DepartmentHead
+        {
+            get { return _DepartmentHead; }
+            set { SetProperty(ref _DepartmentHead, value); }
+        }
+
         public override Locator GetSource()
         {
             if (Requestor != null)
@@ -76,7 +84,8 @@ namespace LGU.Models.HumanResource
                      OfficeOutTime = OfficeOutTime,
                      ExpectedReturnTime = ExpectedReturnTime,
                      LeaveType = LeaveType,
-                     Purpose = Purpose
+                     Purpose = Purpose,
+                     DepartmentHead = DepartmentHead
                 };
             }
             else
