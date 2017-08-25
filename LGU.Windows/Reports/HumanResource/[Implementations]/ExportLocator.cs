@@ -9,19 +9,19 @@ namespace LGU.Reports.HumanResource
 {
     public sealed class ExportLocator : WordExportBase, IExportLocator
     {
-        public ExportLocator(IHumanResourceReportInfoProvider infoProvider)
+        public ExportLocator(ILocatorReportInfoProvider infoProvider)
         {
             r_InfoProvider = infoProvider;
         }
 
-        private readonly IHumanResourceReportInfoProvider r_InfoProvider;
+        private readonly ILocatorReportInfoProvider r_InfoProvider;
 
         public Locator Locator { get; set; }
 
         public void Export()
         {
             Initialize();
-            OpenTemplate(r_InfoProvider.LocatorTemplate);
+            OpenTemplate(r_InfoProvider.Template);
 
             foreach (Word.Field field in Document.Fields)
             {
@@ -48,10 +48,24 @@ namespace LGU.Reports.HumanResource
                         field.Result.Text = Locator.Requestor?.FullName;
                         break;
                     case "DEPARTMENT_HEAD":
-                        field.Result.Text = Locator.Requestor?.Department?.Head?.InformalFullName;
+                        if (string.IsNullOrWhiteSpace(Locator.DepartmentHead))
+                        {
+                            field.Result.Text = Locator.Requestor?.Department?.Head?.InformalFullName;
+                        }
+                        else
+                        {
+                            field.Result.Text = Locator.DepartmentHead;
+                        }
                         break;
                     case "DEPARTMENT_HEAD_TITLE":
-                        field.Result.Text = Locator.Requestor?.Department?.Head?.Title;
+                        if (string.IsNullOrWhiteSpace(Locator.DepartmentHead))
+                        {
+                            field.Result.Text = Locator.Requestor?.Department?.Head?.Title;
+                        }
+                        else
+                        {
+                            field.Result.Text = "DEPARTMENT HEAD";
+                        }
                         break;
                     default:
                         break;
@@ -59,8 +73,9 @@ namespace LGU.Reports.HumanResource
             }
 
             string fileName = $"{Locator.Requestor?.Id}-{DateTime.Now.ToString("yyyyMMdd-hhmmss")}.docx";
-            DirectoryResolver.Resolve(r_InfoProvider.LocatorSaveDirectory);
-            SaveAs(Path.Combine(r_InfoProvider.LocatorSaveDirectory, fileName));
+            DirectoryResolver.Resolve(r_InfoProvider.SaveDirectory);
+            Print();
+            //SaveAs(Path.Combine(r_InfoProvider.SaveDirectory, fileName));
         }
 
         public Task ExportAsync()
