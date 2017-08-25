@@ -8,6 +8,7 @@
 *.sln.docstates
 *.nuspec
 *.exe
+*.xls
 *.xlsx
 *.dotx
 *.docx
