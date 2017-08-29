@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class ExamSetManager : ManagerBase<ExamSet, int>, IExamSetManager
+    public sealed class ExamSetManager : ManagerBase<IExamSet, int>, IExamSetManager
     {
         private readonly IDeleteExamSet r_DeleteExamSet;
         private readonly IGetExamSetById r_GetExamSetById;
@@ -31,7 +31,7 @@ namespace LGU.EntityManagers.HumanResource
             r_UpdateExamSet = updateExamSet;
         }
 
-        public IProcessResult<ExamSet> Delete(ExamSet data)
+        public IProcessResult<IExamSet> Delete(IExamSet data)
         {
             if (data != null)
             {
@@ -43,11 +43,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
             }
         }
 
-        public async Task<IProcessResult<ExamSet>> DeleteAsync(ExamSet data)
+        public async Task<IProcessResult<IExamSet>> DeleteAsync(IExamSet data)
         {
             if (data != null)
             {
@@ -59,11 +59,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
             }
         }
 
-        public async Task<IProcessResult<ExamSet>> DeleteAsync(ExamSet data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamSet>> DeleteAsync(IExamSet data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -75,17 +75,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
             }
         }
 
-        public IProcessResult<ExamSet> GetById(int id)
+        public IProcessResult<IExamSet> GetById(int id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<ExamSet>(StaticSource[id]);
+                    return new ProcessResult<IExamSet>(StaticSource[id]);
                 }
                 else
                 {
@@ -98,17 +98,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set identifier.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set identifier.");
             }
         }
 
-        public async Task<IProcessResult<ExamSet>> GetByIdAsync(int id)
+        public async Task<IProcessResult<IExamSet>> GetByIdAsync(int id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<ExamSet>(StaticSource[id]);
+                    return new ProcessResult<IExamSet>(StaticSource[id]);
                 }
                 else
                 {
@@ -121,17 +121,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set identifier.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set identifier.");
             }
         }
 
-        public async Task<IProcessResult<ExamSet>> GetByIdAsync(int id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamSet>> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<ExamSet>(StaticSource[id]);
+                    return new ProcessResult<IExamSet>(StaticSource[id]);
                 }
                 else
                 {
@@ -144,11 +144,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set identifier.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set identifier.");
             }
         }
 
-        public IEnumerableProcessResult<ExamSet> GetList()
+        public IEnumerableProcessResult<IExamSet> GetList()
         {
             var result = r_GetExamSetList.Execute();
             AddUpdateIfSuccess(result);
@@ -156,7 +156,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<ExamSet>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IExamSet>> GetListAsync()
         {
             var result = await r_GetExamSetList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -164,7 +164,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<ExamSet>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IExamSet>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetExamSetList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);
@@ -172,7 +172,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public IProcessResult<ExamSet> Insert(ExamSet data)
+        public IProcessResult<IExamSet> Insert(IExamSet data)
         {
             if (data != null)
             {
@@ -184,11 +184,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
             }
         }
 
-        public async Task<IProcessResult<ExamSet>> InsertAsync(ExamSet data)
+        public async Task<IProcessResult<IExamSet>> InsertAsync(IExamSet data)
         {
             if (data != null)
             {
@@ -200,11 +200,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
             }
         }
 
-        public async Task<IProcessResult<ExamSet>> InsertAsync(ExamSet data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamSet>> InsertAsync(IExamSet data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -216,11 +216,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
             }
         }
 
-        public IProcessResult<ExamSet> Update(ExamSet data)
+        public IProcessResult<IExamSet> Update(IExamSet data)
         {
             if (data != null)
             {
@@ -232,11 +232,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
             }
         }
 
-        public async Task<IProcessResult<ExamSet>> UpdateAsync(ExamSet data)
+        public async Task<IProcessResult<IExamSet>> UpdateAsync(IExamSet data)
         {
             if (data != null)
             {
@@ -248,11 +248,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
             }
         }
 
-        public async Task<IProcessResult<ExamSet>> UpdateAsync(ExamSet data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamSet>> UpdateAsync(IExamSet data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -264,7 +264,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Invalid exam set.");
             }
         }
     }

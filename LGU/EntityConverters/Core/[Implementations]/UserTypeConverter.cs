@@ -11,7 +11,7 @@ namespace LGU.EntityConverters.Core
 {
     public sealed class UserTypeConverter : IUserTypeConverter<SqlDataReader>
     {
-        private UserType GetData(SqlDataReader reader)
+        private IUserType GetData(SqlDataReader reader)
         {
             return new UserType()
             {
@@ -20,99 +20,99 @@ namespace LGU.EntityConverters.Core
             };
         }
 
-        public IEnumerableProcessResult<UserType> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IUserType> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<UserType>();
+                var list = new List<IUserType>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<UserType>(list);
+                return new EnumerableProcessResult<IUserType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<UserType>(ex);
+                return new EnumerableProcessResult<IUserType>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<UserType>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IUserType>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<UserType>();
+                var list = new List<IUserType>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<UserType>(list);
+                return new EnumerableProcessResult<IUserType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<UserType>(ex);
+                return new EnumerableProcessResult<IUserType>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<UserType>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IUserType>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<UserType>();
+                var list = new List<IUserType>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<UserType>(list);
+                return new EnumerableProcessResult<IUserType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<UserType>(ex);
+                return new EnumerableProcessResult<IUserType>(ex);
             }
         }
 
-        public IProcessResult<UserType> FromReader(SqlDataReader reader)
+        public IProcessResult<IUserType> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<UserType>(GetData(reader));
+                return new ProcessResult<IUserType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<UserType>(ex);
+                return new ProcessResult<IUserType>(ex);
             }
         }
 
-        public async Task<IProcessResult<UserType>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IUserType>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<UserType>(GetData(reader));
+                return new ProcessResult<IUserType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<UserType>(ex);
+                return new ProcessResult<IUserType>(ex);
             }
         }
 
-        public async Task<IProcessResult<UserType>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IUserType>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<UserType>(GetData(reader));
+                return new ProcessResult<IUserType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<UserType>(ex);
+                return new ProcessResult<IUserType>(ex);
             }
         }
     }

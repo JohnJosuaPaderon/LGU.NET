@@ -2,9 +2,9 @@
 
 namespace LGU.Models.HumanResource
 {
-    public sealed class DepartmentModel : ModelBase<Department>
+    public sealed class DepartmentModel : ModelBase<IDepartment>
     {
-        public DepartmentModel(Department source) : base(source)
+        public DepartmentModel(IDepartment source) : base(source)
         {
             Id = source.Id;
             Description = source.Description;
@@ -32,7 +32,7 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Abbreviation, value); }
         }
 
-        public override Department GetSource()
+        public override IDepartment GetSource()
         {
             return new Department()
             {

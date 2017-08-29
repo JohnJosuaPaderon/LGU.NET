@@ -16,17 +16,17 @@ namespace LGU.EntityProcesses.Core
 
         private SqlQueryInfo QueryInfo => SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName());
 
-        public IEnumerableProcessResult<Module> Execute()
+        public IEnumerableProcessResult<IModule> Execute()
         {
             return r_SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<Module>> ExecuteAsync()
+        public Task<IEnumerableProcessResult<IModule>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<Module>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<IModule>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
         }

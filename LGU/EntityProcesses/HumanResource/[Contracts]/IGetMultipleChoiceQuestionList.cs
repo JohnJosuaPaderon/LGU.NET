@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetMultipleChoiceQuestionList : IEnumerableProcess<MultipleChoiceQuestion>
+    public interface IGetMultipleChoiceQuestionList : IEnumerableProcess<IMultipleChoiceQuestion>
     {
     }
 }

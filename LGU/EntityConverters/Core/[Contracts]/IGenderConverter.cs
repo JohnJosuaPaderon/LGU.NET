@@ -4,7 +4,7 @@ using System.Data.Common;
 
 namespace LGU.EntityConverters.Core
 {
-    public interface IGenderConverter<TDataReader> : IDataConverter<Gender, TDataReader>
+    public interface IGenderConverter<TDataReader> : IDataConverter<IGender, TDataReader>
         where TDataReader : DbDataReader
     {
     }

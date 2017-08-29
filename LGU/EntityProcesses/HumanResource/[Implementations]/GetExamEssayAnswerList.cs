@@ -16,17 +16,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         private SqlQueryInfo QueryInfo => SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName());
 
-        public IEnumerableProcessResult<ExamEssayAnswer> Execute()
+        public IEnumerableProcessResult<IExamEssayAnswer> Execute()
         {
             return r_SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<ExamEssayAnswer>> ExecuteAsync()
+        public Task<IEnumerableProcessResult<IExamEssayAnswer>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<ExamEssayAnswer>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<IExamEssayAnswer>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
         }

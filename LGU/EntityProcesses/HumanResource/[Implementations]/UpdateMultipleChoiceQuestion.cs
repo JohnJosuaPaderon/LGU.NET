@@ -15,10 +15,10 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public MultipleChoiceQuestion MultipleChoiceQuestion { get; set; }
+        public IMultipleChoiceQuestion MultipleChoiceQuestion { get; set; }
 
-        private SqlQueryInfo<MultipleChoiceQuestion> QueryInfo =>
-            SqlQueryInfo<MultipleChoiceQuestion>.CreateProcedureQueryInfo(MultipleChoiceQuestion, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IMultipleChoiceQuestion> QueryInfo =>
+            SqlQueryInfo<IMultipleChoiceQuestion>.CreateProcedureQueryInfo(MultipleChoiceQuestion, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", MultipleChoiceQuestion.Id)
             .AddInputParameter("@_ExamSetId", MultipleChoiceQuestion.Set?.Id)
             .AddInputParameter("@_Description", MultipleChoiceQuestion.Description)
@@ -26,29 +26,29 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_MaxAnswerCount", MultipleChoiceQuestion.MaxAnswerCount)
             .AddLogByParameter();
 
-        private IProcessResult<MultipleChoiceQuestion> GetProcessResult(MultipleChoiceQuestion data, SqlCommand command, int affectedRows)
+        private IProcessResult<IMultipleChoiceQuestion> GetProcessResult(IMultipleChoiceQuestion data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                return new ProcessResult<MultipleChoiceQuestion>(data);
+                return new ProcessResult<IMultipleChoiceQuestion>(data);
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Failed to update multiple choice question.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Failed to update multiple choice question.");
             }
         }
 
-        public IProcessResult<MultipleChoiceQuestion> Execute()
+        public IProcessResult<IMultipleChoiceQuestion> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<MultipleChoiceQuestion>> ExecuteAsync()
+        public Task<IProcessResult<IMultipleChoiceQuestion>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<MultipleChoiceQuestion>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IMultipleChoiceQuestion>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

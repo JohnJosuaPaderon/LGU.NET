@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class GenderManager : ManagerBase<Gender, short>, IGenderManager
+    public sealed class GenderManager : ManagerBase<IGender, short>, IGenderManager
     {
 
         private readonly IGetGenderById r_GetGenderById;
@@ -20,13 +20,13 @@ namespace LGU.EntityManagers.Core
             r_GetGenderList = getGenderList;
         }
 
-        public IProcessResult<Gender> GetById(short id)
+        public IProcessResult<IGender> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Gender>(StaticSource[id]);
+                    return new ProcessResult<IGender>(StaticSource[id]);
                 }
                 else
                 {
@@ -39,17 +39,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Gender>(ProcessResultStatus.Failed, "Invalid gender identifier.");
+                return new ProcessResult<IGender>(ProcessResultStatus.Failed, "Invalid gender identifier.");
             }
         }
 
-        public async Task<IProcessResult<Gender>> GetByIdAsync(short id)
+        public async Task<IProcessResult<IGender>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Gender>(StaticSource[id]);
+                    return new ProcessResult<IGender>(StaticSource[id]);
                 }
                 else
                 {
@@ -62,17 +62,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Gender>(ProcessResultStatus.Failed, "Invalid gender identifier.");
+                return new ProcessResult<IGender>(ProcessResultStatus.Failed, "Invalid gender identifier.");
             }
         }
 
-        public async Task<IProcessResult<Gender>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IGender>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Gender>(StaticSource[id]);
+                    return new ProcessResult<IGender>(StaticSource[id]);
                 }
                 else
                 {
@@ -85,11 +85,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Gender>(ProcessResultStatus.Failed, "Invalid gender identifier.");
+                return new ProcessResult<IGender>(ProcessResultStatus.Failed, "Invalid gender identifier.");
             }
         }
 
-        public IEnumerableProcessResult<Gender> GetList()
+        public IEnumerableProcessResult<IGender> GetList()
         {
             var result = r_GetGenderList.Execute();
             AddUpdateIfSuccess(result);
@@ -97,7 +97,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<Gender>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IGender>> GetListAsync()
         {
             var result = await r_GetGenderList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -105,7 +105,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<Gender>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IGender>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetGenderList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);

@@ -9,7 +9,7 @@ namespace LGU.EntityProcesses.Core
 {
     internal sealed class ConstructPersonInformalFullName : IConstructPersonInformalFullName
     {
-        public Person Person { get; set; }
+        public IPerson Person { get; set; }
 
         public IProcessResult<string> Execute()
         {

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public interface IUserManager : IEntityManager<User, long>
+    public interface IUserManager : IEntityManager<IUser, long>
     {
-        IProcessResult<User> Login(UserCredentials userCredentials);
-        Task<IProcessResult<User>> LoginAsync(UserCredentials userCredentials);
-        Task<IProcessResult<User>> LoginAsync(UserCredentials userCredentials, CancellationToken cancellationToken);
+        IProcessResult<IUser> Login(IUserCredentials userCredentials);
+        Task<IProcessResult<IUser>> LoginAsync(IUserCredentials userCredentials);
+        Task<IProcessResult<IUser>> LoginAsync(IUserCredentials userCredentials, CancellationToken cancellationToken);
         IProcessResult<bool> IsUsernameExists(SecureString secureUsername);
         Task<IProcessResult<bool>> IsUsernameExistsAsync(SecureString secureUsername);
         Task<IProcessResult<bool>> IsUsernameExistsAsync(SecureString secureUsername, CancellationToken cancellationToken);

@@ -11,7 +11,7 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class TimeLogTypeConverter : ITimeLogTypeConverter<SqlDataReader>
     {
-        private TimeLogType GetData(SqlDataReader reader)
+        private ITimeLogType GetData(SqlDataReader reader)
         {
             return new TimeLogType()
             {
@@ -20,99 +20,99 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        public IEnumerableProcessResult<TimeLogType> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<ITimeLogType> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<TimeLogType>();
+                var list = new List<ITimeLogType>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<TimeLogType>(list);
+                return new EnumerableProcessResult<ITimeLogType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<TimeLogType>(ex);
+                return new EnumerableProcessResult<ITimeLogType>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<TimeLogType>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<ITimeLogType>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<TimeLogType>();
+                var list = new List<ITimeLogType>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<TimeLogType>(list);
+                return new EnumerableProcessResult<ITimeLogType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<TimeLogType>(ex);
+                return new EnumerableProcessResult<ITimeLogType>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<TimeLogType>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ITimeLogType>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<TimeLogType>();
+                var list = new List<ITimeLogType>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<TimeLogType>(list);
+                return new EnumerableProcessResult<ITimeLogType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<TimeLogType>(ex);
+                return new EnumerableProcessResult<ITimeLogType>(ex);
             }
         }
 
-        public IProcessResult<TimeLogType> FromReader(SqlDataReader reader)
+        public IProcessResult<ITimeLogType> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<TimeLogType>(GetData(reader));
+                return new ProcessResult<ITimeLogType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<TimeLogType>(ex);
+                return new ProcessResult<ITimeLogType>(ex);
             }
         }
 
-        public async Task<IProcessResult<TimeLogType>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<ITimeLogType>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<TimeLogType>(GetData(reader));
+                return new ProcessResult<ITimeLogType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<TimeLogType>(ex);
+                return new ProcessResult<ITimeLogType>(ex);
             }
         }
 
-        public async Task<IProcessResult<TimeLogType>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ITimeLogType>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<TimeLogType>(GetData(reader));
+                return new ProcessResult<ITimeLogType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<TimeLogType>(ex);
+                return new ProcessResult<ITimeLogType>(ex);
             }
         }
     }

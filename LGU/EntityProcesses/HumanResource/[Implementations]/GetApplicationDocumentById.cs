@@ -21,17 +21,17 @@ namespace LGU.EntityProcesses.HumanResource
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
             .AddInputParameter("@_Id", ApplicationDocumentId);
 
-        public IProcessResult<ApplicationDocument> Execute()
+        public IProcessResult<IApplicationDocument> Execute()
         {
             return r_SqlHelper.ExecuteReader(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<ApplicationDocument>> ExecuteAsync()
+        public Task<IProcessResult<IApplicationDocument>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<ApplicationDocument>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IApplicationDocument>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
         }

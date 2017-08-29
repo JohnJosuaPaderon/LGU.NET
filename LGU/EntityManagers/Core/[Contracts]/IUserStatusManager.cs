@@ -3,7 +3,7 @@ using LGU.Entities.Core;
 
 namespace LGU.EntityManagers.Core
 {
-    public interface IUserStatusManager : IStaticEntityManager<UserStatus, short>
+    public interface IUserStatusManager : IStaticEntityManager<IUserStatus, short>
     {
     }
 }

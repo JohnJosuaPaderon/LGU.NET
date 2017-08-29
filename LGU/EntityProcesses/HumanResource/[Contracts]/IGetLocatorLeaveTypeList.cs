@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetLocatorLeaveTypeList : IEnumerableProcess<LocatorLeaveType>
+    public interface IGetLocatorLeaveTypeList : IEnumerableProcess<ILocatorLeaveType>
     {
     }
 }

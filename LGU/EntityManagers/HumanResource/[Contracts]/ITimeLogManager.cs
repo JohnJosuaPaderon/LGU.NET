@@ -7,22 +7,22 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface ITimeLogManager : IEntityManager<TimeLog, long>
+    public interface ITimeLogManager : IEntityManager<ITimeLog, long>
     {
-        IProcessResult<TimeLog> Log(Employee employee);
-        Task<IProcessResult<TimeLog>> LogAsync(Employee employee);
-        Task<IProcessResult<TimeLog>> LogAsync(Employee employee, CancellationToken cancellationToken);
-        IEnumerableProcessResult<TimeLog> GetActualListByEmployeeCutOff(Employee employee, ValueRange<DateTime> cutOff);
-        Task<IEnumerableProcessResult<TimeLog>> GetActualListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff);
-        Task<IEnumerableProcessResult<TimeLog>> GetActualListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff, CancellationToken cancellationToken);
-        IEnumerableProcessResult<TimeLog> GetListByCutOff(ValueRange<DateTime> cutOff);
-        Task<IEnumerableProcessResult<TimeLog>> GetListByCutOffAsync(ValueRange<DateTime> cutOff);
-        Task<IEnumerableProcessResult<TimeLog>> GetListByCutOffAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken);
-        IEnumerableProcessResult<TimeLog> GetListByDepartmentCutOff(Department department, ValueRange<DateTime> cutOff);
-        Task<IEnumerableProcessResult<TimeLog>> GetListByDepartmentCutOffAsync(Department department, ValueRange<DateTime> cutOff);
-        Task<IEnumerableProcessResult<TimeLog>> GetListByDepartmentCutOffAsync(Department department, ValueRange<DateTime> cutOff, CancellationToken cancellationToken);
-        IEnumerableProcessResult<TimeLog> GetListByEmployeeCutOff(Employee employee, ValueRange<DateTime> cutOff);
-        Task<IEnumerableProcessResult<TimeLog>> GetListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff);
-        Task<IEnumerableProcessResult<TimeLog>> GetListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff, CancellationToken cancellationToken);
+        IProcessResult<ITimeLog> Log(IEmployee employee);
+        Task<IProcessResult<ITimeLog>> LogAsync(IEmployee employee);
+        Task<IProcessResult<ITimeLog>> LogAsync(IEmployee employee, CancellationToken cancellationToken);
+        IEnumerableProcessResult<ITimeLog> GetActualListByEmployeeCutOff(IEmployee employee, ValueRange<DateTime> cutOff);
+        Task<IEnumerableProcessResult<ITimeLog>> GetActualListByEmployeeCutOffAsync(IEmployee employee, ValueRange<DateTime> cutOff);
+        Task<IEnumerableProcessResult<ITimeLog>> GetActualListByEmployeeCutOffAsync(IEmployee employee, ValueRange<DateTime> cutOff, CancellationToken cancellationToken);
+        IEnumerableProcessResult<ITimeLog> GetListByCutOff(ValueRange<DateTime> cutOff);
+        Task<IEnumerableProcessResult<ITimeLog>> GetListByCutOffAsync(ValueRange<DateTime> cutOff);
+        Task<IEnumerableProcessResult<ITimeLog>> GetListByCutOffAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken);
+        IEnumerableProcessResult<ITimeLog> GetListByDepartmentCutOff(IDepartment department, ValueRange<DateTime> cutOff);
+        Task<IEnumerableProcessResult<ITimeLog>> GetListByDepartmentCutOffAsync(IDepartment department, ValueRange<DateTime> cutOff);
+        Task<IEnumerableProcessResult<ITimeLog>> GetListByDepartmentCutOffAsync(IDepartment department, ValueRange<DateTime> cutOff, CancellationToken cancellationToken);
+        IEnumerableProcessResult<ITimeLog> GetListByEmployeeCutOff(IEmployee employee, ValueRange<DateTime> cutOff);
+        Task<IEnumerableProcessResult<ITimeLog>> GetListByEmployeeCutOffAsync(IEmployee employee, ValueRange<DateTime> cutOff);
+        Task<IEnumerableProcessResult<ITimeLog>> GetListByEmployeeCutOffAsync(IEmployee employee, ValueRange<DateTime> cutOff, CancellationToken cancellationToken);
     }
 }

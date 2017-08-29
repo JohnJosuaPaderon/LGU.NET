@@ -62,7 +62,7 @@ namespace LGU
             }
         }
 
-        public IEnumerable<ConnectionString> GetSource()
+        public IEnumerable<IConnectionString> GetSource()
         {
             var list = new List<ConnectionString>();
 
@@ -78,7 +78,7 @@ namespace LGU
             return list;
         }
 
-        public void Overwrite(bool isEncrypted, IEnumerable<ConnectionString> connectionStrings)
+        public void Overwrite(bool isEncrypted, IEnumerable<IConnectionString> connectionStrings)
         {
             JConnectionStrings.Clear();
 

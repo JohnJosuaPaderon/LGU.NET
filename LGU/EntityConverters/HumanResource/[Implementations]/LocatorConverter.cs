@@ -23,7 +23,7 @@ namespace LGU.EntityConverters.HumanResource
             r_LocatorLeaveTypeManager = locatorLeaveTypeManager;
         }
 
-        private Locator GetData(Employee requestor, LocatorLeaveType leaveType, SqlDataReader reader)
+        private ILocator GetData(IEmployee requestor, ILocatorLeaveType leaveType, SqlDataReader reader)
         {
             return new Locator(requestor)
             {
@@ -37,7 +37,7 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        private Locator GetData(SqlDataReader reader)
+        private ILocator GetData(SqlDataReader reader)
         {
             var requestorResult = r_EmployeeManager.GetById(reader.GetInt64("RequestorId"));
             var leaveTypeResult = r_LocatorLeaveTypeManager.GetById(reader.GetInt16("LeaveTypeId"));
@@ -45,7 +45,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(requestorResult.Data, leaveTypeResult.Data, reader);
         }
 
-        private async Task<Locator> GetDataAsync(SqlDataReader reader)
+        private async Task<ILocator> GetDataAsync(SqlDataReader reader)
         {
             var requestorResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("RequestorId"));
             var leaveTypeResult = await r_LocatorLeaveTypeManager.GetByIdAsync(reader.GetInt16("LeaveTypeId"));
@@ -53,7 +53,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(requestorResult.Data, leaveTypeResult.Data, reader);
         }
 
-        private async Task<Locator> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<ILocator> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var requestorResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("RequestorId"), cancellationToken);
             var leaveTypeResult = await r_LocatorLeaveTypeManager.GetByIdAsync(reader.GetInt16("LeaveTypeId"), cancellationToken);
@@ -61,99 +61,99 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(requestorResult.Data, leaveTypeResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<Locator> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<ILocator> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Locator>();
+                var list = new List<ILocator>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Locator>(list);
+                return new EnumerableProcessResult<ILocator>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Locator>(ex);
+                return new EnumerableProcessResult<ILocator>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Locator>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<ILocator>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Locator>();
+                var list = new List<ILocator>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Locator>(list);
+                return new EnumerableProcessResult<ILocator>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Locator>(ex);
+                return new EnumerableProcessResult<ILocator>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Locator>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ILocator>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<Locator>();
+                var list = new List<ILocator>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Locator>(list);
+                return new EnumerableProcessResult<ILocator>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Locator>(ex);
+                return new EnumerableProcessResult<ILocator>(ex);
             }
         }
 
-        public IProcessResult<Locator> FromReader(SqlDataReader reader)
+        public IProcessResult<ILocator> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<Locator>(GetData(reader));
+                return new ProcessResult<ILocator>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Locator>(ex);
+                return new ProcessResult<ILocator>(ex);
             }
         }
 
-        public async Task<IProcessResult<Locator>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<ILocator>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<Locator>(GetData(reader));
+                return new ProcessResult<ILocator>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Locator>(ex);
+                return new ProcessResult<ILocator>(ex);
             }
         }
 
-        public async Task<IProcessResult<Locator>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ILocator>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<Locator>(GetData(reader));
+                return new ProcessResult<ILocator>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Locator>(ex);
+                return new ProcessResult<ILocator>(ex);
             }
         }
     }

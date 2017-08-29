@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetMultipleChoiceQuestionById : IProcess<MultipleChoiceQuestion>
+    public interface IGetMultipleChoiceQuestionById : IProcess<IMultipleChoiceQuestion>
     {
         long MultipleChoiceQuestionId { get; set; }
     }

@@ -16,7 +16,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public Employee Employee { get; set; }
+        public IEmployee Employee { get; set; }
         public ValueRange<DateTime> CutOff { get; set; }
 
         private SqlQueryInfo QueryInfo =>
@@ -25,17 +25,17 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_CutOffBegin", CutOff.Begin)
             .AddInputParameter("@_CutOffEnd", CutOff.End);
 
-        public IEnumerableProcessResult<TimeLog> Execute()
+        public IEnumerableProcessResult<ITimeLog> Execute()
         {
             return r_SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<TimeLog>> ExecuteAsync()
+        public Task<IEnumerableProcessResult<ITimeLog>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<TimeLog>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<ITimeLog>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
         }

@@ -21,17 +21,17 @@ namespace LGU.EntityProcesses.HumanResource
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
             .AddInputParameter("@_Id", WorkTimeScheduleId);
 
-        public IProcessResult<EmployeeWorkTimeSchedule> Execute()
+        public IProcessResult<IEmployeeWorkTimeSchedule> Execute()
         {
             return r_SqlHelper.ExecuteReader(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<EmployeeWorkTimeSchedule>> ExecuteAsync()
+        public Task<IProcessResult<IEmployeeWorkTimeSchedule>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<EmployeeWorkTimeSchedule>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IEmployeeWorkTimeSchedule>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
         }

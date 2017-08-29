@@ -15,36 +15,36 @@ namespace LGU.EntityProcesses.Core
         {
         }
 
-        public User User { get; set; }
+        public IUser User { get; set; }
 
-        private SqlQueryInfo<User> QueryInfo =>
-            SqlQueryInfo<User>.CreateProcedureQueryInfo(User, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IUser> QueryInfo =>
+            SqlQueryInfo<IUser>.CreateProcedureQueryInfo(User, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", User.Id)
             .AddLogByParameter();
 
-        private IProcessResult<User> GetProcessResult(User data, SqlCommand command, int affectedRows)
+        private IProcessResult<IUser> GetProcessResult(IUser data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                return new ProcessResult<User>(data);
+                return new ProcessResult<IUser>(data);
             }
             else
             {
-                return new ProcessResult<User>(ProcessResultStatus.Failed);
+                return new ProcessResult<IUser>(ProcessResultStatus.Failed);
             }
         }
 
-        public IProcessResult<User> Execute()
+        public IProcessResult<IUser> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<User>> ExecuteAsync()
+        public Task<IProcessResult<IUser>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<User>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IUser>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

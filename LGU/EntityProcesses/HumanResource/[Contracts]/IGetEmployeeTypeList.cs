@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetEmployeeTypeList : IEnumerableProcess<EmployeeType>
+    public interface IGetEmployeeTypeList : IEnumerableProcess<IEmployeeType>
     {
     }
 }

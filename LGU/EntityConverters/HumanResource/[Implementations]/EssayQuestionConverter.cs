@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.HumanResource
             r_ExamSetManager = examSetManager;
         }
 
-        private EssayQuestion GetData(ExamSet set, SqlDataReader reader)
+        private IEssayQuestion GetData(IExamSet set, SqlDataReader reader)
         {
             if (set != null)
             {
@@ -37,120 +37,120 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private EssayQuestion GetData(SqlDataReader reader)
+        private IEssayQuestion GetData(SqlDataReader reader)
         {
             var setResult = r_ExamSetManager.GetById(reader.GetInt32("SetId"));
 
             return GetData(setResult.Data, reader);
         }
 
-        private async Task<EssayQuestion> GetDataAsync(SqlDataReader reader)
+        private async Task<IEssayQuestion> GetDataAsync(SqlDataReader reader)
         {
             var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"));
 
             return GetData(setResult.Data, reader);
         }
 
-        private async Task<EssayQuestion> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IEssayQuestion> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"), cancellationToken);
 
             return GetData(setResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<EssayQuestion> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IEssayQuestion> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<EssayQuestion>();
+                var list = new List<IEssayQuestion>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<EssayQuestion>(list);
+                return new EnumerableProcessResult<IEssayQuestion>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<EssayQuestion>(ex);
+                return new EnumerableProcessResult<IEssayQuestion>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<EssayQuestion>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IEssayQuestion>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<EssayQuestion>();
+                var list = new List<IEssayQuestion>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<EssayQuestion>(list);
+                return new EnumerableProcessResult<IEssayQuestion>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<EssayQuestion>(ex);
+                return new EnumerableProcessResult<IEssayQuestion>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<EssayQuestion>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEssayQuestion>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<EssayQuestion>();
+                var list = new List<IEssayQuestion>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableProcessResult<EssayQuestion>(list);
+                return new EnumerableProcessResult<IEssayQuestion>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<EssayQuestion>(ex);
+                return new EnumerableProcessResult<IEssayQuestion>(ex);
             }
         }
 
-        public IProcessResult<EssayQuestion> FromReader(SqlDataReader reader)
+        public IProcessResult<IEssayQuestion> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<EssayQuestion>(GetData(reader));
+                return new ProcessResult<IEssayQuestion>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<EssayQuestion>(ex);
+                return new ProcessResult<IEssayQuestion>(ex);
             }
         }
 
-        public async Task<IProcessResult<EssayQuestion>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IEssayQuestion>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<EssayQuestion>(await GetDataAsync(reader));
+                return new ProcessResult<IEssayQuestion>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<EssayQuestion>(ex);
+                return new ProcessResult<IEssayQuestion>(ex);
             }
         }
 
-        public async Task<IProcessResult<EssayQuestion>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEssayQuestion>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<EssayQuestion>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<IEssayQuestion>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<EssayQuestion>(ex);
+                return new ProcessResult<IEssayQuestion>(ex);
             }
         }
     }

@@ -16,12 +16,31 @@ namespace LGU.Reports.HumanResource
 
         private readonly ILocatorReportInfoProvider r_InfoProvider;
 
-        public Locator Locator { get; set; }
+        public ILocator Locator { get; set; }
 
         public void Export()
         {
             Initialize();
             OpenTemplate(r_InfoProvider.Template);
+
+            string departmentHead = string.Empty;
+            string departmentHeadTitle = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(Locator.DepartmentHead))
+            {
+                departmentHead = Locator.DepartmentHead;
+                departmentHeadTitle = "Department Head";
+            }
+            else if (Locator.Requestor?.DepartmentHead != null)
+            {
+                departmentHead = Locator.Requestor.DepartmentHead.InformalFullName;
+                departmentHeadTitle = Locator.Requestor.DepartmentHead.Title;
+            }
+            else
+            {
+                departmentHead = Locator?.Requestor?.Department?.Head?.InformalFullName;
+                departmentHeadTitle = Locator?.Requestor?.Department?.Head?.Title;
+            }
 
             foreach (Word.Field field in Document.Fields)
             {
@@ -48,24 +67,10 @@ namespace LGU.Reports.HumanResource
                         field.Result.Text = Locator.Requestor?.FullName;
                         break;
                     case "DEPARTMENT_HEAD":
-                        if (string.IsNullOrWhiteSpace(Locator.DepartmentHead))
-                        {
-                            field.Result.Text = Locator.Requestor?.Department?.Head?.InformalFullName;
-                        }
-                        else
-                        {
-                            field.Result.Text = Locator.DepartmentHead;
-                        }
+                        field.Result.Text = departmentHead;
                         break;
                     case "DEPARTMENT_HEAD_TITLE":
-                        if (string.IsNullOrWhiteSpace(Locator.DepartmentHead))
-                        {
-                            field.Result.Text = Locator.Requestor?.Department?.Head?.Title;
-                        }
-                        else
-                        {
-                            field.Result.Text = "DEPARTMENT HEAD";
-                        }
+                        field.Result.Text = departmentHeadTitle;
                         break;
                     default:
                         break;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class EmploymentStatusManager : ManagerBase<EmploymentStatus, short>, IEmploymentStatusManager
+    public sealed class EmploymentStatusManager : ManagerBase<IEmploymentStatus, short>, IEmploymentStatusManager
     {
         private readonly IGetEmploymentStatusById r_GetEmploymentStatusById;
         private readonly IGetEmploymentStatusList r_GetEmploymentStatusList;
@@ -19,13 +19,13 @@ namespace LGU.EntityManagers.HumanResource
             r_GetEmploymentStatusList = getEmploymentStatusList;
         }
 
-        public IProcessResult<EmploymentStatus> GetById(short id)
+        public IProcessResult<IEmploymentStatus> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EmploymentStatus>(StaticSource[id]);
+                    return new ProcessResult<IEmploymentStatus>(StaticSource[id]);
                 }
                 else
                 {
@@ -38,17 +38,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmploymentStatus>(ProcessResultStatus.Failed, "Invalid employment status identifier.");
+                return new ProcessResult<IEmploymentStatus>(ProcessResultStatus.Failed, "Invalid employment status identifier.");
             }
         }
 
-        public async Task<IProcessResult<EmploymentStatus>> GetByIdAsync(short id)
+        public async Task<IProcessResult<IEmploymentStatus>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EmploymentStatus>(StaticSource[id]);
+                    return new ProcessResult<IEmploymentStatus>(StaticSource[id]);
                 }
                 else
                 {
@@ -61,17 +61,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmploymentStatus>(ProcessResultStatus.Failed, "Invalid employment status identifier.");
+                return new ProcessResult<IEmploymentStatus>(ProcessResultStatus.Failed, "Invalid employment status identifier.");
             }
         }
 
-        public async Task<IProcessResult<EmploymentStatus>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmploymentStatus>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EmploymentStatus>(StaticSource[id]);
+                    return new ProcessResult<IEmploymentStatus>(StaticSource[id]);
                 }
                 else
                 {
@@ -84,11 +84,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmploymentStatus>(ProcessResultStatus.Failed, "Invalid employment status identifier.");
+                return new ProcessResult<IEmploymentStatus>(ProcessResultStatus.Failed, "Invalid employment status identifier.");
             }
         }
 
-        public IEnumerableProcessResult<EmploymentStatus> GetList()
+        public IEnumerableProcessResult<IEmploymentStatus> GetList()
         {
             var result = r_GetEmploymentStatusList.Execute();
             AddUpdateIfSuccess(result);
@@ -96,7 +96,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<EmploymentStatus>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IEmploymentStatus>> GetListAsync()
         {
             var result = await r_GetEmploymentStatusList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -104,7 +104,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<EmploymentStatus>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEmploymentStatus>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetEmploymentStatusList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);

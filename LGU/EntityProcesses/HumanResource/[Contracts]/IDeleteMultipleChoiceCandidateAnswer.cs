@@ -3,8 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IDeleteMultipleChoiceCandidateAnswer : IProcess<MultipleChoiceCandidateAnswer>
+    public interface IDeleteMultipleChoiceCandidateAnswer : IProcess<IMultipleChoiceCandidateAnswer>
     {
-        MultipleChoiceCandidateAnswer MultipleChoiceCandidateAnswer { get; set; }
+        IMultipleChoiceCandidateAnswer MultipleChoiceCandidateAnswer { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface ISearchDepartment : IEnumerableProcess<Department>
+    public interface ISearchDepartment : IEnumerableProcess<IDepartment>
     {
         string SearchKey { get; set; }
     }

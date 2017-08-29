@@ -3,9 +3,9 @@ using System;
 
 namespace LGU.Models.HumanResource
 {
-    public sealed class LocatorModel : ModelBase<Locator>
+    public sealed class LocatorModel : ModelBase<ILocator>
     {
-        public LocatorModel(Locator source) : base(source)
+        public LocatorModel(ILocator source) : base(source)
         {
             Id = source.Id;
             Requestor = source.Requestor;
@@ -24,8 +24,8 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Id, value); }
         }
 
-        private Employee _Requestor;
-        public Employee Requestor
+        private IEmployee _Requestor;
+        public IEmployee Requestor
         {
             get { return _Requestor; }
             set { SetProperty(ref _Requestor, value); }
@@ -52,8 +52,8 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _ExpectedReturnTime, value); }
         }
 
-        private LocatorLeaveType _LeaveType;
-        public LocatorLeaveType LeaveType
+        private ILocatorLeaveType _LeaveType;
+        public ILocatorLeaveType LeaveType
         {
             get { return _LeaveType; }
             set { SetProperty(ref _LeaveType, value); }
@@ -73,7 +73,7 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _DepartmentHead, value); }
         }
 
-        public override Locator GetSource()
+        public override ILocator GetSource()
         {
             if (Requestor != null)
             {

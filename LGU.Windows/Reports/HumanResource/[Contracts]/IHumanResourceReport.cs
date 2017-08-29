@@ -7,9 +7,9 @@ namespace LGU.Reports.HumanResource
 {
     public interface IHumanResourceReport
     {
-        void ExportTimeLog(IEnumerable<TimeLog> timeLog, ValueRange<DateTime> cutOffs, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler);
-        Task ExportTimeLogAsync(IEnumerable<TimeLog> timeLogs, ValueRange<DateTime> cutOff, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler);
-        void ExportLocator(Locator locator, IExportEventHandler eventHandler);
-        Task ExportLocatorAsync(Locator locator, IExportEventHandler eventHandler);
+        void ExportTimeLog(IEnumerable<ITimeLog> timeLog, ValueRange<DateTime> cutOffs, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler);
+        Task ExportTimeLogAsync(IEnumerable<ITimeLog> timeLogs, ValueRange<DateTime> cutOff, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler);
+        void ExportLocator(ILocator locator, IExportEventHandler eventHandler);
+        Task ExportLocatorAsync(ILocator locator, IExportEventHandler eventHandler);
     }
 }

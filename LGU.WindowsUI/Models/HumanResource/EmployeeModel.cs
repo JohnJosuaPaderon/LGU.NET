@@ -3,9 +3,9 @@ using LGU.Utilities;
 
 namespace LGU.Models.HumanResource
 {
-    public class EmployeeModel : ModelBase<Employee>
+    public class EmployeeModel : ModelBase<IEmployee>
     {
-        public EmployeeModel(Employee source) : base(source)
+        public EmployeeModel(IEmployee source) : base(source)
         {
             Id = source.Id;
             FirstName = source.FirstName;
@@ -64,29 +64,29 @@ namespace LGU.Models.HumanResource
         public string FullName { get; private set; }
         public string InformalFullName { get; private set; }
 
-        private Department _Department;
-        public Department Department
+        private IDepartment _Department;
+        public IDepartment Department
         {
             get { return _Department; }
             set { SetProperty(ref _Department, value); }
         }
 
-        private Position _Position;
-        public Position Position
+        private IPosition _Position;
+        public IPosition Position
         {
             get { return _Position; }
             set { SetProperty(ref _Position, value); }
         }
 
-        private EmployeeType _Type;
-        public EmployeeType Type
+        private IEmployeeType _Type;
+        public IEmployeeType Type
         {
             get { return _Type; }
             set { SetProperty(ref _Type, value); }
         }
 
-        private EmploymentStatus _EmploymentStatus;
-        public EmploymentStatus EmploymentStatus
+        private IEmploymentStatus _EmploymentStatus;
+        public IEmploymentStatus EmploymentStatus
         {
             get { return _EmploymentStatus; }
             set { SetProperty(ref _EmploymentStatus, value); }
@@ -105,7 +105,7 @@ namespace LGU.Models.HumanResource
             RaisePropertyChanged(nameof(InformalFullName));
         }
 
-        public override Employee GetSource()
+        public override IEmployee GetSource()
         {
             return new Employee()
             {

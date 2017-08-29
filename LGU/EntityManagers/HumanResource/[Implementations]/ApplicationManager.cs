@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class ApplicationManager : ManagerBase<Application, long>, IApplicationManager
+    public sealed class ApplicationManager : ManagerBase<IApplication, long>, IApplicationManager
     {
         private readonly IDeleteApplication r_Delete;
         private readonly IGetApplicationById r_GetById;
@@ -28,7 +28,7 @@ namespace LGU.EntityManagers.HumanResource
             r_Update = update;
         }
 
-        public IProcessResult<Application> Delete(Application data)
+        public IProcessResult<IApplication> Delete(IApplication data)
         {
             if (data != null)
             {
@@ -37,11 +37,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application.");
             }
         }
 
-        public async Task<IProcessResult<Application>> DeleteAsync(Application data)
+        public async Task<IProcessResult<IApplication>> DeleteAsync(IApplication data)
         {
             if (data != null)
             {
@@ -50,11 +50,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application.");
             }
         }
 
-        public async Task<IProcessResult<Application>> DeleteAsync(Application data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplication>> DeleteAsync(IApplication data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -63,17 +63,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application.");
             }
         }
 
-        public IProcessResult<Application> GetById(long id)
+        public IProcessResult<IApplication> GetById(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Application>(StaticSource[id]);
+                    return new ProcessResult<IApplication>(StaticSource[id]);
                 }
                 else
                 {
@@ -83,17 +83,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application identifier.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application identifier.");
             }
         }
 
-        public async Task<IProcessResult<Application>> GetByIdAsync(long id)
+        public async Task<IProcessResult<IApplication>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Application>(StaticSource[id]);
+                    return new ProcessResult<IApplication>(StaticSource[id]);
                 }
                 else
                 {
@@ -103,17 +103,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application identifier.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application identifier.");
             }
         }
 
-        public async Task<IProcessResult<Application>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplication>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Application>(StaticSource[id]);
+                    return new ProcessResult<IApplication>(StaticSource[id]);
                 }
                 else
                 {
@@ -123,26 +123,26 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application identifier.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application identifier.");
             }
         }
 
-        public IEnumerableProcessResult<Application> GetList()
+        public IEnumerableProcessResult<IApplication> GetList()
         {
             return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
-        public async Task<IEnumerableProcessResult<Application>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IApplication>> GetListAsync()
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
-        public async Task<IEnumerableProcessResult<Application>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IApplication>> GetListAsync(CancellationToken cancellationToken)
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }
 
-        public IProcessResult<Application> Insert(Application data)
+        public IProcessResult<IApplication> Insert(IApplication data)
         {
             if (data != null)
             {
@@ -151,11 +151,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application.");
             }
         }
 
-        public async Task<IProcessResult<Application>> InsertAsync(Application data)
+        public async Task<IProcessResult<IApplication>> InsertAsync(IApplication data)
         {
             if (data != null)
             {
@@ -164,11 +164,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application.");
             }
         }
 
-        public async Task<IProcessResult<Application>> InsertAsync(Application data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplication>> InsertAsync(IApplication data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -177,11 +177,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application.");
             }
         }
 
-        public IProcessResult<Application> Update(Application data)
+        public IProcessResult<IApplication> Update(IApplication data)
         {
             if (data != null)
             {
@@ -190,11 +190,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application.");
             }
         }
 
-        public async Task<IProcessResult<Application>> UpdateAsync(Application data)
+        public async Task<IProcessResult<IApplication>> UpdateAsync(IApplication data)
         {
             if (data != null)
             {
@@ -203,11 +203,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application.");
             }
         }
 
-        public async Task<IProcessResult<Application>> UpdateAsync(Application data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplication>> UpdateAsync(IApplication data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -216,7 +216,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Invalid application.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Invalid application.");
             }
         }
     }

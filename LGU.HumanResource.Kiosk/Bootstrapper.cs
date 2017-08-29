@@ -13,6 +13,7 @@ namespace LGU.HumanResource.Kiosk
             Container.RegisterTypeForNavigation<MainKioskView>();
             Container.RegisterTypeForNavigation<KioskServiceSelectionView>();
             Container.RegisterTypeForNavigation<KioskLocatorView>();
+            Container.RegisterTypeForNavigation<KioskActualTimeLogView>();
         }
 
         protected override void InitializeServices()

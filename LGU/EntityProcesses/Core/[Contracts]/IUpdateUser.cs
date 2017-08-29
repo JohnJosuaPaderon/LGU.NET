@@ -3,8 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.Core
 {
-    public interface IUpdateUser : IProcess<User>
+    public interface IUpdateUser : IProcess<IUser>
     {
-        User User { get; set; }
+        IUser User { get; set; }
     }
 }

@@ -3,9 +3,9 @@ using LGU.Utilities;
 
 namespace LGU.Models.Core
 {
-    public class UserSignUpModel : ModelBase<User>
+    public class UserSignUpModel : ModelBase<IUser>
     {
-        public UserSignUpModel(User source) : base(source)
+        public UserSignUpModel(IUser source) : base(source)
         {
             Id = source.Id;
             DisplayName = source.DisplayName;
@@ -52,28 +52,28 @@ namespace LGU.Models.Core
             set { SetProperty(ref _ConfirmPassword, value); }
         }
 
-        private UserType _Type;
-        public UserType Type
+        private IUserType _Type;
+        public IUserType Type
         {
             get { return _Type; }
             set { SetProperty(ref _Type, value); }
         }
 
-        private UserStatus _Status;
-        public UserStatus Status
+        private IUserStatus _Status;
+        public IUserStatus Status
         {
             get { return _Status; }
             set { SetProperty(ref _Status, value); }
         }
 
-        private Person _Owner;
-        public Person Owner
+        private IPerson _Owner;
+        public IPerson Owner
         {
             get { return _Owner; }
             set { SetProperty(ref _Owner, value); }
         }
 
-        public override User GetSource()
+        public override IUser GetSource()
         {
             if (Owner != null)
             {

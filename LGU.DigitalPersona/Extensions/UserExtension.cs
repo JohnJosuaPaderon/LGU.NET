@@ -5,7 +5,7 @@ namespace LGU.Extensions
 {
     public static class UserExtension
     {
-        public static void AddFingerPrint(this DPFP.ID.User instance, FingerPrint fingerPrint)
+        public static void AddFingerPrint(this DPFP.ID.User instance, IFingerPrint fingerPrint)
         {
             if (fingerPrint.Data != null)
             {

@@ -16,10 +16,10 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public DepartmentHead DepartmentHead { get; set; }
+        public IDepartmentHead DepartmentHead { get; set; }
 
-        private SqlQueryInfo<DepartmentHead> QueryInfo =>
-            SqlQueryInfo<DepartmentHead>.CreateProcedureQueryInfo(DepartmentHead, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IDepartmentHead> QueryInfo =>
+            SqlQueryInfo<IDepartmentHead>.CreateProcedureQueryInfo(DepartmentHead, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddOutputParameter("@_Id", DbType.Int32)
             .AddInputParameter("@_FirstName", DepartmentHead.FirstName)
             .AddInputParameter("@_MiddleName", DepartmentHead.MiddleName)
@@ -31,30 +31,30 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_Title", DepartmentHead.Title)
             .AddLogByParameter();
 
-        private IProcessResult<DepartmentHead> GetProcessResult(DepartmentHead data, SqlCommand command, int affectedRows)
+        private IProcessResult<IDepartmentHead> GetProcessResult(IDepartmentHead data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
                 data.Id = command.Parameters.GetInt32("@_Id");
-                return new ProcessResult<DepartmentHead>(DepartmentHead);
+                return new ProcessResult<IDepartmentHead>(DepartmentHead);
             }
             else
             {
-                return new ProcessResult<DepartmentHead>(ProcessResultStatus.Failed, "Failed to insert department head.");
+                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Failed to insert department head.");
             }
         }
 
-        public IProcessResult<DepartmentHead> Execute()
+        public IProcessResult<IDepartmentHead> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<DepartmentHead>> ExecuteAsync()
+        public Task<IProcessResult<IDepartmentHead>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<DepartmentHead>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IDepartmentHead>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

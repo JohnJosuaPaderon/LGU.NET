@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface IDepartmentManager : IEntityManager<Department, int>
+    public interface IDepartmentManager : IEntityManager<IDepartment, int>
     {
-        IEnumerableProcessResult<Department> Search(string searchKey);
-        Task<IEnumerableProcessResult<Department>> SearchAsync(string searchKey);
-        Task<IEnumerableProcessResult<Department>> SearchAsync(string searchKey, CancellationToken cancellationToken);
-        IEnumerableProcessResult<Department> GetListWithTimeLog(ValueRange<DateTime> cutOff);
-        Task<IEnumerableProcessResult<Department>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff);
-        Task<IEnumerableProcessResult<Department>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken);
+        IEnumerableProcessResult<IDepartment> Search(string searchKey);
+        Task<IEnumerableProcessResult<IDepartment>> SearchAsync(string searchKey);
+        Task<IEnumerableProcessResult<IDepartment>> SearchAsync(string searchKey, CancellationToken cancellationToken);
+        IEnumerableProcessResult<IDepartment> GetListWithTimeLog(ValueRange<DateTime> cutOff);
+        Task<IEnumerableProcessResult<IDepartment>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff);
+        Task<IEnumerableProcessResult<IDepartment>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken);
     }
 }

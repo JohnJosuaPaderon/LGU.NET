@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetPositionList : IEnumerableProcess<Position>
+    public interface IGetPositionList : IEnumerableProcess<IPosition>
     {
     }
 }

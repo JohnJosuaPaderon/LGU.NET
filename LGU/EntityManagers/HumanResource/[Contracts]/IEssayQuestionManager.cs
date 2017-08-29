@@ -3,7 +3,7 @@ using LGU.Entities.HumanResource;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface IEssayQuestionManager : IEntityManager<EssayQuestion, long>
+    public interface IEssayQuestionManager : IEntityManager<IEssayQuestion, long>
     {
     }
 }

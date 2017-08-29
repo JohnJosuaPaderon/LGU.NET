@@ -21,17 +21,17 @@ namespace LGU.EntityProcesses.Core
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
             .AddInputParameter("@_SearchKey", SearchKey);
 
-        public IEnumerableProcessResult<Person> Execute()
+        public IEnumerableProcessResult<IPerson> Execute()
         {
             return r_SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<Person>> ExecuteAsync()
+        public Task<IEnumerableProcessResult<IPerson>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<Person>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<IPerson>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
         }

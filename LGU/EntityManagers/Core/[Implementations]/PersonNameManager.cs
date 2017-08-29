@@ -17,19 +17,19 @@ namespace LGU.EntityManagers.Core
             r_ConstructPersonMiddleInitials = constructPersonMiddleInitials;
         }
 
-        public IProcessResult<string> ConstructFullName(Person person)
+        public IProcessResult<string> ConstructFullName(IPerson person)
         {
             r_ConstructPersonFullName.Person = person;
             return r_ConstructPersonFullName.Execute();
         }
 
-        public IProcessResult<string> ConstructInformalFullName(Person person)
+        public IProcessResult<string> ConstructInformalFullName(IPerson person)
         {
             r_ConstructPersonInformalFullName.Person = person;
             return r_ConstructPersonInformalFullName.Execute();
         }
 
-        public IProcessResult<string> ConstructMiddleInitials(Person person)
+        public IProcessResult<string> ConstructMiddleInitials(IPerson person)
         {
             r_ConstructPersonMiddleInitials.Person = person;
             return r_ConstructPersonMiddleInitials.Execute();

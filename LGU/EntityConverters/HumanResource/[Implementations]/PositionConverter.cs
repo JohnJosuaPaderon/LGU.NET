@@ -11,7 +11,7 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class PositionConverter : IPositionConverter<SqlDataReader>
     {
-        private Position GetData(SqlDataReader reader)
+        private IPosition GetData(SqlDataReader reader)
         {
             return new Position()
             {
@@ -21,99 +21,99 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        public IEnumerableProcessResult<Position> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IPosition> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Position>();
+                var list = new List<IPosition>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Position>(list);
+                return new EnumerableProcessResult<IPosition>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Position>(ex);
+                return new EnumerableProcessResult<IPosition>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Position>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IPosition>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Position>();
+                var list = new List<IPosition>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Position>(list);
+                return new EnumerableProcessResult<IPosition>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Position>(ex);
+                return new EnumerableProcessResult<IPosition>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Position>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IPosition>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<Position>();
+                var list = new List<IPosition>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Position>(list);
+                return new EnumerableProcessResult<IPosition>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Position>(ex);
+                return new EnumerableProcessResult<IPosition>(ex);
             }
         }
 
-        public IProcessResult<Position> FromReader(SqlDataReader reader)
+        public IProcessResult<IPosition> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<Position>(GetData(reader));
+                return new ProcessResult<IPosition>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Position>(ex);
+                return new ProcessResult<IPosition>(ex);
             }
         }
 
-        public async Task<IProcessResult<Position>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IPosition>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<Position>(GetData(reader));
+                return new ProcessResult<IPosition>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Position>(ex);
+                return new ProcessResult<IPosition>(ex);
             }
         }
 
-        public async Task<IProcessResult<Position>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPosition>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<Position>(GetData(reader));
+                return new ProcessResult<IPosition>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Position>(ex);
+                return new ProcessResult<IPosition>(ex);
             }
         }
     }

@@ -3,7 +3,7 @@ using LGU.Entities.HumanResource;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface ILocatorManager : IEntityManager<Locator, long>
+    public interface ILocatorManager : IEntityManager<ILocator, long>
     {
     }
 }

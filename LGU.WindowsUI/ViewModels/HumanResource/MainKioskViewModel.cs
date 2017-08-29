@@ -112,14 +112,14 @@ namespace LGU.ViewModels.HumanResource
             LastDataUpdate = CurrentDate;
 
             // Uncomment this for testing without FingerPrint Scanner.
-            //EmployeeModel testEmployee = null;
+            EmployeeModel testEmployee = null;
 
             if (result.Status == ProcessResultStatus.Success)
             {
                 if (result.DataList != null && result.DataList.Any())
                 {
                     // Uncomment this for testing without FingerPrint Scanner.
-                    //testEmployee = new EmployeeModel(result.DataList.First().Employee);
+                    testEmployee = new EmployeeModel(result.DataList.First().Employee);
 
                     foreach (var item in result.DataList)
                     {
@@ -133,7 +133,7 @@ namespace LGU.ViewModels.HumanResource
                 r_CurrentDateTimer.Start();
 
                 // Uncomment this for testing without FingerPrint Scanner.
-                //Employee = testEmployee;
+                Employee = testEmployee;
             }
             else
             {
@@ -210,7 +210,7 @@ namespace LGU.ViewModels.HumanResource
             }
         }
 
-        private void AddUpdateFingerPrintUser(EmployeeFingerPrintSet fingerPrintSet)
+        private void AddUpdateFingerPrintUser(IEmployeeFingerPrintSet fingerPrintSet)
         {
             var employeeId = fingerPrintSet.Employee.Id.ToString();
             var userId = new UserID(employeeId);

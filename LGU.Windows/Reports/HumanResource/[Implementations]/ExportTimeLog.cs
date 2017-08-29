@@ -19,13 +19,13 @@ namespace LGU.Reports.HumanResource
 
         private readonly ITimeLogReportInfoProvider r_InfoProvider;
 
-        public IEnumerable<TimeLog> TimeLogs { get; set; }
+        public IEnumerable<ITimeLog> TimeLogs { get; set; }
         public ValueRange<DateTime> CutOff { get; set; }
         public TimeLogExportOption ExportOption { get; set; }
         public TimeLogFileSegregation FileSegregration { get; set; }
         public bool PrintAfterSave { get; set; }
 
-        private Dictionary<Department, List<Employee>> Segregated;
+        private Dictionary<IDepartment, List<IEmployee>> Segregated;
 
         public void Export()
         {
@@ -46,31 +46,35 @@ namespace LGU.Reports.HumanResource
             }
         }
 
-        private void SetTimeLog(TimeLog timeLog)
+        private void SetTimeLog(ITimeLog timeLog)
         {
             var loginRowIndex = (r_InfoProvider.LogRowStart - 1) + timeLog.LoginDate?.Day ?? 1;
             var logoutRowIndex = (r_InfoProvider.LogRowStart - 1) + timeLog.LogoutDate?.Day ?? 1;
             var loginColumnIndex = timeLog.LoginDate?.Hour <= 12 ? r_InfoProvider.AmLoginColumn : r_InfoProvider.PmLoginColumn;
             var logoutColumnIndex = timeLog.LogoutDate?.Hour <= 12 ? r_InfoProvider.AmLogoutColumn : r_InfoProvider.PmLogoutColumn;
 
-            Excel.Range loginRange = ActiveWorksheet.Cells[loginRowIndex, loginColumnIndex];
-            Excel.Range logoutRange = ActiveWorksheet.Cells[logoutRowIndex, logoutColumnIndex];
+            Excel.Range amLoginRange = ActiveWorksheet.Cells[loginRowIndex, r_InfoProvider.AmLoginColumn];
+            Excel.Range amLogoutRange = ActiveWorksheet.Cells[logoutRowIndex, r_InfoProvider.AmLogoutColumn];
+            Excel.Range pmLoginRange = ActiveWorksheet.Cells[loginRowIndex, r_InfoProvider.PmLoginColumn];
+            Excel.Range pmLogoutRange = ActiveWorksheet.Cells[logoutRowIndex, r_InfoProvider.PmLogoutColumn];
 
-            if (!IsNullOrEmpty(loginRange))
+            if (!(IsNullOrWhiteSpace(amLoginRange) && IsNullOrWhiteSpace(pmLoginRange)))
             {
-                loginRange = ActiveWorksheet.Cells[loginRowIndex, r_InfoProvider.OtLoginColumn];
+                loginColumnIndex = r_InfoProvider.OtLoginColumn;
+                //loginRange = ActiveWorksheet.Cells[loginRowIndex, r_InfoProvider.OtLoginColumn];
             }
 
-            if (!IsNullOrEmpty(logoutRange))
+            if (!(IsNullOrWhiteSpace(amLogoutRange) && IsNullOrWhiteSpace(pmLogoutRange)))
             {
-                logoutRange = ActiveWorksheet.Cells[logoutRowIndex, r_InfoProvider.OtLogoutColumn];
+                logoutColumnIndex = r_InfoProvider.OtLogoutColumn;
+                //logoutRange = ActiveWorksheet.Cells[logoutRowIndex, r_InfoProvider.OtLogoutColumn];
             }
 
             SetCellValue(loginRowIndex, loginColumnIndex, timeLog.LoginDate?.ToString(r_InfoProvider.TimeLogFormat));
             SetCellValue(logoutRowIndex, logoutColumnIndex, timeLog.LogoutDate?.ToString(r_InfoProvider.TimeLogFormat));
         }
 
-        private void WriteCellValues(Employee employee, IEnumerable<TimeLog> timeLogs)
+        private void WriteCellValues(IEmployee employee, IEnumerable<ITimeLog> timeLogs)
         {
             SetCellValue(r_InfoProvider.EmployeeCell, employee.FullName);
             SetCellValue(r_InfoProvider.CutOffCell, CutOff.ToFormattedString());
@@ -276,13 +280,13 @@ namespace LGU.Reports.HumanResource
 
         private void Segregate()
         {
-            Segregated = new Dictionary<Department, List<Employee>>();
+            Segregated = new Dictionary<IDepartment, List<IEmployee>>();
 
             foreach (var timeLog in TimeLogs)
             {
                 if (!Segregated.ContainsKey(timeLog.Employee?.Department))
                 {
-                    Segregated.Add(timeLog.Employee.Department, new List<Employee>());
+                    Segregated.Add(timeLog.Employee.Department, new List<IEmployee>());
                 }
 
                 if (!Segregated[timeLog.Employee.Department].Contains(timeLog.Employee))

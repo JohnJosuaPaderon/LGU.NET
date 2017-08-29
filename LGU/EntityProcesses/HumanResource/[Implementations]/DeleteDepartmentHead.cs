@@ -15,36 +15,36 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        private SqlQueryInfo<DepartmentHead> QueryInfo =>
-            SqlQueryInfo<DepartmentHead>.CreateProcedureQueryInfo(DepartmentHead, GetQualifiedDbObjectName(), GetProcessResult, true)
+        public IDepartmentHead DepartmentHead { get; set; }
+
+        private SqlQueryInfo<IDepartmentHead> QueryInfo =>
+            SqlQueryInfo<IDepartmentHead>.CreateProcedureQueryInfo(DepartmentHead, GetQualifiedDbObjectName(), GetProcessResult, true)
                 .AddInputParameter("Id", DepartmentHead.Id)
                 .AddLogByParameter();
 
-        private IProcessResult<DepartmentHead> GetProcessResult(DepartmentHead DepartmentHead, SqlCommand command, int affectedRows)
+        private IProcessResult<IDepartmentHead> GetProcessResult(IDepartmentHead DepartmentHead, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                return new ProcessResult<DepartmentHead>(DepartmentHead);
+                return new ProcessResult<IDepartmentHead>(DepartmentHead);
             }
             else
             {
-                return new ProcessResult<DepartmentHead>(ProcessResultStatus.Failed, "Failed to delete department head.");
+                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Failed to delete department head.");
             }
         }
 
-        public DepartmentHead DepartmentHead { get; set; }
-
-        public IProcessResult<DepartmentHead> Execute()
+        public IProcessResult<IDepartmentHead> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<DepartmentHead>> ExecuteAsync()
+        public Task<IProcessResult<IDepartmentHead>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<DepartmentHead>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IDepartmentHead>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

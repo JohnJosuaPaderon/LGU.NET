@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.HumanResource
             r_EmployeeManager = employeeManager;
         }
 
-        private EmployeeWorkTimeSchedule GetData(Employee employee, SqlDataReader reader)
+        private IEmployeeWorkTimeSchedule GetData(IEmployee employee, SqlDataReader reader)
         {
             if (employee != null)
             {
@@ -30,7 +30,8 @@ namespace LGU.EntityConverters.HumanResource
                     WorkTimeEnd = reader.GetDateTime("WorkTimeEnd"),
                     EffectivityDate = reader.GetNullableDateTime("EffectivityDate"),
                     IsEnabled = reader.GetBoolean("IsEnabled"),
-                    InvocationLevel = reader.GetInt32("InvocationLevel")
+                    InvocationLevel = reader.GetInt32("InvocationLevel"),
+                    WorkTimeLength = reader.GetTimeSpan("WorkTimeLength")
                 };
             }
             else
@@ -39,117 +40,117 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private EmployeeWorkTimeSchedule GetData(SqlDataReader reader)
+        private IEmployeeWorkTimeSchedule GetData(SqlDataReader reader)
         {
             var employeeResult = r_EmployeeManager.GetById(reader.GetInt64("EmployeeId"));
             return GetData(employeeResult.Data, reader);
         }
 
-        private async Task<EmployeeWorkTimeSchedule> GetDataAsync(SqlDataReader reader)
+        private async Task<IEmployeeWorkTimeSchedule> GetDataAsync(SqlDataReader reader)
         {
             var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"));
             return GetData(employeeResult.Data, reader);
         }
 
-        private async Task<EmployeeWorkTimeSchedule> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IEmployeeWorkTimeSchedule> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"), cancellationToken);
             return GetData(employeeResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<EmployeeWorkTimeSchedule> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IEmployeeWorkTimeSchedule> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<EmployeeWorkTimeSchedule>();
+                var list = new List<IEmployeeWorkTimeSchedule>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<EmployeeWorkTimeSchedule>(list);
+                return new EnumerableProcessResult<IEmployeeWorkTimeSchedule>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<EmployeeWorkTimeSchedule>(ex);
+                return new EnumerableProcessResult<IEmployeeWorkTimeSchedule>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<EmployeeWorkTimeSchedule>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IEmployeeWorkTimeSchedule>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<EmployeeWorkTimeSchedule>();
+                var list = new List<IEmployeeWorkTimeSchedule>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<EmployeeWorkTimeSchedule>(list);
+                return new EnumerableProcessResult<IEmployeeWorkTimeSchedule>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<EmployeeWorkTimeSchedule>(ex);
+                return new EnumerableProcessResult<IEmployeeWorkTimeSchedule>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<EmployeeWorkTimeSchedule>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEmployeeWorkTimeSchedule>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<EmployeeWorkTimeSchedule>();
+                var list = new List<IEmployeeWorkTimeSchedule>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableProcessResult<EmployeeWorkTimeSchedule>(list);
+                return new EnumerableProcessResult<IEmployeeWorkTimeSchedule>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<EmployeeWorkTimeSchedule>(ex);
+                return new EnumerableProcessResult<IEmployeeWorkTimeSchedule>(ex);
             }
         }
 
-        public IProcessResult<EmployeeWorkTimeSchedule> FromReader(SqlDataReader reader)
+        public IProcessResult<IEmployeeWorkTimeSchedule> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<EmployeeWorkTimeSchedule>(GetData(reader));
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ex);
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ex);
             }
         }
 
-        public async Task<IProcessResult<EmployeeWorkTimeSchedule>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IEmployeeWorkTimeSchedule>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<EmployeeWorkTimeSchedule>(await GetDataAsync(reader));
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ex);
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ex);
             }
         }
 
-        public async Task<IProcessResult<EmployeeWorkTimeSchedule>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployeeWorkTimeSchedule>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<EmployeeWorkTimeSchedule>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ex);
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ex);
             }
         }
     }

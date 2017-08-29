@@ -3,7 +3,7 @@ using LGU.Entities.HumanResource;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface IApplicantManager : IEntityManager<Applicant, long>
+    public interface IApplicantManager : IEntityManager<IApplicant, long>
     {
     }
 }

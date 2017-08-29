@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class EmployeeWorkTimeScheduleManager : ManagerBase<EmployeeWorkTimeSchedule, long>, IEmployeeWorkTimeScheduleManager
+    public sealed class EmployeeWorkTimeScheduleManager : ManagerBase<IEmployeeWorkTimeSchedule, long>, IEmployeeWorkTimeScheduleManager
     {
         private readonly IDeleteEmployeeWorkTimeSchedule r_Delete;
         private readonly IGetEmployeeWorkTimeScheduleById r_GetById;
@@ -28,7 +28,7 @@ namespace LGU.EntityManagers.HumanResource
             r_Update = update;
         }
 
-        public IProcessResult<EmployeeWorkTimeSchedule> Delete(EmployeeWorkTimeSchedule data)
+        public IProcessResult<IEmployeeWorkTimeSchedule> Delete(IEmployeeWorkTimeSchedule data)
         {
             if (data != null)
             {
@@ -37,11 +37,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
             }
         }
 
-        public async Task<IProcessResult<EmployeeWorkTimeSchedule>> DeleteAsync(EmployeeWorkTimeSchedule data)
+        public async Task<IProcessResult<IEmployeeWorkTimeSchedule>> DeleteAsync(IEmployeeWorkTimeSchedule data)
         {
             if (data != null)
             {
@@ -50,11 +50,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
             }
         }
 
-        public async Task<IProcessResult<EmployeeWorkTimeSchedule>> DeleteAsync(EmployeeWorkTimeSchedule data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployeeWorkTimeSchedule>> DeleteAsync(IEmployeeWorkTimeSchedule data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -63,17 +63,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
             }
         }
 
-        public IProcessResult<EmployeeWorkTimeSchedule> GetById(long id)
+        public IProcessResult<IEmployeeWorkTimeSchedule> GetById(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EmployeeWorkTimeSchedule>(StaticSource[id]);
+                    return new ProcessResult<IEmployeeWorkTimeSchedule>(StaticSource[id]);
                 }
                 else
                 {
@@ -83,17 +83,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule identifier.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule identifier.");
             }
         }
 
-        public async Task<IProcessResult<EmployeeWorkTimeSchedule>> GetByIdAsync(long id)
+        public async Task<IProcessResult<IEmployeeWorkTimeSchedule>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EmployeeWorkTimeSchedule>(StaticSource[id]);
+                    return new ProcessResult<IEmployeeWorkTimeSchedule>(StaticSource[id]);
                 }
                 else
                 {
@@ -103,17 +103,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule identifier.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule identifier.");
             }
         }
 
-        public async Task<IProcessResult<EmployeeWorkTimeSchedule>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployeeWorkTimeSchedule>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EmployeeWorkTimeSchedule>(StaticSource[id]);
+                    return new ProcessResult<IEmployeeWorkTimeSchedule>(StaticSource[id]);
                 }
                 else
                 {
@@ -123,26 +123,26 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule identifier.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule identifier.");
             }
         }
 
-        public IEnumerableProcessResult<EmployeeWorkTimeSchedule> GetList()
+        public IEnumerableProcessResult<IEmployeeWorkTimeSchedule> GetList()
         {
             return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
-        public async Task<IEnumerableProcessResult<EmployeeWorkTimeSchedule>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IEmployeeWorkTimeSchedule>> GetListAsync()
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
-        public async Task<IEnumerableProcessResult<EmployeeWorkTimeSchedule>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEmployeeWorkTimeSchedule>> GetListAsync(CancellationToken cancellationToken)
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }
 
-        public IProcessResult<EmployeeWorkTimeSchedule> Insert(EmployeeWorkTimeSchedule data)
+        public IProcessResult<IEmployeeWorkTimeSchedule> Insert(IEmployeeWorkTimeSchedule data)
         {
             if (data != null)
             {
@@ -151,11 +151,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
             }
         }
 
-        public async Task<IProcessResult<EmployeeWorkTimeSchedule>> InsertAsync(EmployeeWorkTimeSchedule data)
+        public async Task<IProcessResult<IEmployeeWorkTimeSchedule>> InsertAsync(IEmployeeWorkTimeSchedule data)
         {
             if (data != null)
             {
@@ -164,11 +164,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
             }
         }
 
-        public async Task<IProcessResult<EmployeeWorkTimeSchedule>> InsertAsync(EmployeeWorkTimeSchedule data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployeeWorkTimeSchedule>> InsertAsync(IEmployeeWorkTimeSchedule data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -177,11 +177,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
             }
         }
 
-        public IProcessResult<EmployeeWorkTimeSchedule> Update(EmployeeWorkTimeSchedule data)
+        public IProcessResult<IEmployeeWorkTimeSchedule> Update(IEmployeeWorkTimeSchedule data)
         {
             if (data != null)
             {
@@ -190,11 +190,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
             }
         }
 
-        public async Task<IProcessResult<EmployeeWorkTimeSchedule>> UpdateAsync(EmployeeWorkTimeSchedule data)
+        public async Task<IProcessResult<IEmployeeWorkTimeSchedule>> UpdateAsync(IEmployeeWorkTimeSchedule data)
         {
             if (data != null)
             {
@@ -203,11 +203,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
             }
         }
 
-        public async Task<IProcessResult<EmployeeWorkTimeSchedule>> UpdateAsync(EmployeeWorkTimeSchedule data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployeeWorkTimeSchedule>> UpdateAsync(IEmployeeWorkTimeSchedule data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -216,7 +216,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
+                return new ProcessResult<IEmployeeWorkTimeSchedule>(ProcessResultStatus.Failed, "Invalid work time schedule.");
             }
         }
     }

@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.Core
             r_GenderManager = genderManager;
         }
 
-        private Person GetData(Gender gender, SqlDataReader reader)
+        private IPerson GetData(IGender gender, SqlDataReader reader)
         {
             return new Person()
             {
@@ -34,120 +34,120 @@ namespace LGU.EntityConverters.Core
             };
         }
 
-        private Person GetData(SqlDataReader reader)
+        private IPerson GetData(SqlDataReader reader)
         {
             var genderResult = r_GenderManager.GetById(reader.GetInt16("GenderId"));
 
             return GetData(genderResult.Data, reader);
         }
 
-        private async Task<Person> GetDataAsync(SqlDataReader reader)
+        private async Task<IPerson> GetDataAsync(SqlDataReader reader)
         {
             var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"));
 
             return GetData(genderResult.Data, reader);
         }
 
-        private async Task<Person> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IPerson> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"), cancellationToken);
 
             return GetData(genderResult.Data, reader);
         }
 
-        public IProcessResult<Person> FromReader(SqlDataReader reader)
+        public IProcessResult<IPerson> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<Person>(GetData(reader));
+                return new ProcessResult<IPerson>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Person>(ex);
+                return new ProcessResult<IPerson>(ex);
             }
         }
 
-        public async Task<IProcessResult<Person>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IPerson>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<Person>(await GetDataAsync(reader));
+                return new ProcessResult<IPerson>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Person>(ex);
+                return new ProcessResult<IPerson>(ex);
             }
         }
 
-        public async Task<IProcessResult<Person>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPerson>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<Person>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<IPerson>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Person>(ex);
+                return new ProcessResult<IPerson>(ex);
             }
         }
 
-        public IEnumerableProcessResult<Person> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IPerson> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Person>();
+                var list = new List<IPerson>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Person>(list);
+                return new EnumerableProcessResult<IPerson>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Person>(ex);
+                return new EnumerableProcessResult<IPerson>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Person>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IPerson>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Person>();
+                var list = new List<IPerson>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<Person>(list);
+                return new EnumerableProcessResult<IPerson>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Person>(ex);
+                return new EnumerableProcessResult<IPerson>(ex);
             }
         }
 
-        public  async Task<IEnumerableProcessResult<Person>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public  async Task<IEnumerableProcessResult<IPerson>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<Person>();
+                var list = new List<IPerson>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableProcessResult<Person>(list);
+                return new EnumerableProcessResult<IPerson>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Person>(ex);
+                return new EnumerableProcessResult<IPerson>(ex);
             }
         }
     }

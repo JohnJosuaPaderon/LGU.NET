@@ -21,17 +21,17 @@ namespace LGU.EntityProcesses.HumanResource
             return new ProcessResult(ProcessResultStatus.Success);
         }
 
-        public IEnumerableProcessResult<EmployeeFingerPrintSet> Execute()
+        public IEnumerableProcessResult<IEmployeeFingerPrintSet> Execute()
         {
             return r_SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> ExecuteAsync()
+        public Task<IEnumerableProcessResult<IEmployeeFingerPrintSet>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<IEmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class DocumentManager : ManagerBase<Document, long>, IDocumentManager
+    public sealed class DocumentManager : ManagerBase<IDocument, long>, IDocumentManager
     {
         private readonly IDeleteDocument r_DeleteDocument;
         private readonly IGetDocumentById r_GetDocumentById;
@@ -28,7 +28,7 @@ namespace LGU.EntityManagers.Core
             r_UpdateDocument = updateDocument;
         }
 
-        public IProcessResult<Document> Delete(Document data)
+        public IProcessResult<IDocument> Delete(IDocument data)
         {
             if (data != null)
             {
@@ -40,11 +40,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document.");
             }
         }
 
-        public async Task<IProcessResult<Document>> DeleteAsync(Document data)
+        public async Task<IProcessResult<IDocument>> DeleteAsync(IDocument data)
         {
             if (data != null)
             {
@@ -56,11 +56,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document.");
             }
         }
 
-        public async Task<IProcessResult<Document>> DeleteAsync(Document data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDocument>> DeleteAsync(IDocument data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -72,17 +72,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document.");
             }
         }
 
-        public IProcessResult<Document> GetById(long id)
+        public IProcessResult<IDocument> GetById(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Document>(StaticSource[id]);
+                    return new ProcessResult<IDocument>(StaticSource[id]);
                 }
 
                 r_GetDocumentById.DocumentId = id;
@@ -93,17 +93,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document identifier.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document identifier.");
             }
         }
 
-        public async Task<IProcessResult<Document>> GetByIdAsync(long id)
+        public async Task<IProcessResult<IDocument>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Document>(StaticSource[id]);
+                    return new ProcessResult<IDocument>(StaticSource[id]);
                 }
 
                 r_GetDocumentById.DocumentId = id;
@@ -114,17 +114,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document identifier.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document identifier.");
             }
         }
 
-        public async Task<IProcessResult<Document>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDocument>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Document>(StaticSource[id]);
+                    return new ProcessResult<IDocument>(StaticSource[id]);
                 }
 
                 r_GetDocumentById.DocumentId = id;
@@ -135,11 +135,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document identifier.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document identifier.");
             }
         }
 
-        public IEnumerableProcessResult<Document> GetList()
+        public IEnumerableProcessResult<IDocument> GetList()
         {
             var result = r_GetDocumentList.Execute();
             AddUpdateIfSuccess(result);
@@ -147,7 +147,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<Document>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IDocument>> GetListAsync()
         {
             var result = await r_GetDocumentList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -155,7 +155,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<Document>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IDocument>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetDocumentList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);
@@ -163,7 +163,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public IProcessResult<Document> Insert(Document data)
+        public IProcessResult<IDocument> Insert(IDocument data)
         {
             if (data != null)
             {
@@ -175,11 +175,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document.");
             }
         }
 
-        public async Task<IProcessResult<Document>> InsertAsync(Document data)
+        public async Task<IProcessResult<IDocument>> InsertAsync(IDocument data)
         {
             if (data != null)
             {
@@ -191,11 +191,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document.");
             }
         }
 
-        public async Task<IProcessResult<Document>> InsertAsync(Document data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDocument>> InsertAsync(IDocument data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -207,11 +207,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document.");
             }
         }
 
-        public IProcessResult<Document> Update(Document data)
+        public IProcessResult<IDocument> Update(IDocument data)
         {
             if (data != null)
             {
@@ -223,11 +223,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document.");
             }
         }
 
-        public async Task<IProcessResult<Document>> UpdateAsync(Document data)
+        public async Task<IProcessResult<IDocument>> UpdateAsync(IDocument data)
         {
             if (data != null)
             {
@@ -239,11 +239,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document.");
             }
         }
 
-        public async Task<IProcessResult<Document>> UpdateAsync(Document data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDocument>> UpdateAsync(IDocument data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -255,7 +255,7 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Document>(ProcessResultStatus.Failed, "Invalid document.");
+                return new ProcessResult<IDocument>(ProcessResultStatus.Failed, "Invalid document.");
             }
         }
     }

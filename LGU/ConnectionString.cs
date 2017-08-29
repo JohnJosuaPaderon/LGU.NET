@@ -2,7 +2,7 @@
 
 namespace LGU
 {
-    public sealed class ConnectionString
+    public sealed class ConnectionString : IConnectionString
     {
         public string Key { get; set; }
         public SecureString Value { get; set; }

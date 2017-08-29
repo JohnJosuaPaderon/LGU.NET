@@ -3,8 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.Core
 {
-    public interface IInsertDocument : IProcess<Document>
+    public interface IInsertDocument : IProcess<IDocument>
     {
-        Document Document { get; set; }
+        IDocument Document { get; set; }
     }
 }

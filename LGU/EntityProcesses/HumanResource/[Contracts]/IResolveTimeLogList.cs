@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IResolveTimeLogList : IEnumerableProcess<TimeLog>
+    public interface IResolveTimeLogList : IEnumerableProcess<ITimeLog>
     {
-        IEnumerable<TimeLog> TimeLogs { get; set; }
+        IEnumerable<ITimeLog> TimeLogs { get; set; }
     }
 }

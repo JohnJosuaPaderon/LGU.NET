@@ -11,7 +11,7 @@ namespace LGU.EntityConverters.Core
 {
     public sealed class ModuleConverter : IModuleConverter<SqlDataReader>
     {
-        private Module GetData(SqlDataReader reader)
+        private IModule GetData(SqlDataReader reader)
         {
             return new Module()
             {
@@ -20,99 +20,99 @@ namespace LGU.EntityConverters.Core
             };
         }
 
-        public IEnumerableProcessResult<Module> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IModule> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Module>();
+                var list = new List<IModule>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Module>(list);
+                return new EnumerableProcessResult<IModule>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Module>(ex);
+                return new EnumerableProcessResult<IModule>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Module>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IModule>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Module>();
+                var list = new List<IModule>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Module>(list);
+                return new EnumerableProcessResult<IModule>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Module>(ex);
+                return new EnumerableProcessResult<IModule>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Module>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IModule>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<Module>();
+                var list = new List<IModule>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Module>(list);
+                return new EnumerableProcessResult<IModule>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Module>(ex);
+                return new EnumerableProcessResult<IModule>(ex);
             }
         }
 
-        public IProcessResult<Module> FromReader(SqlDataReader reader)
+        public IProcessResult<IModule> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<Module>(GetData(reader));
+                return new ProcessResult<IModule>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Module>(ex);
+                return new ProcessResult<IModule>(ex);
             }
         }
 
-        public async Task<IProcessResult<Module>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IModule>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<Module>(GetData(reader));
+                return new ProcessResult<IModule>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Module>(ex);
+                return new ProcessResult<IModule>(ex);
             }
         }
 
-        public async Task<IProcessResult<Module>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IModule>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<Module>(GetData(reader));
+                return new ProcessResult<IModule>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Module>(ex);
+                return new ProcessResult<IModule>(ex);
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public interface IEmployeeWorkTimeScheduleConverter<TDataReader> : IDataConverter<EmployeeWorkTimeSchedule, TDataReader>
+    public interface IEmployeeWorkTimeScheduleConverter<TDataReader> : IDataConverter<IEmployeeWorkTimeSchedule, TDataReader>
         where TDataReader : DbDataReader
     {
     }

@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.HumanResource
             r_ExamSetManager = examSetManager;
         }
 
-        private MultipleChoiceQuestion GetData(ExamSet set, SqlDataReader reader)
+        private IMultipleChoiceQuestion GetData(IExamSet set, SqlDataReader reader)
         {
             if (set != null)
             {
@@ -36,120 +36,120 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private MultipleChoiceQuestion GetData(SqlDataReader reader)
+        private IMultipleChoiceQuestion GetData(SqlDataReader reader)
         {
             var setResult = r_ExamSetManager.GetById(reader.GetInt32("SetId"));
 
             return GetData(setResult.Data, reader);
         }
 
-        private async Task<MultipleChoiceQuestion> GetDataAsync(SqlDataReader reader)
+        private async Task<IMultipleChoiceQuestion> GetDataAsync(SqlDataReader reader)
         {
             var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"));
 
             return GetData(setResult.Data, reader);
         }
 
-        private async Task<MultipleChoiceQuestion> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IMultipleChoiceQuestion> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"), cancellationToken);
 
             return GetData(setResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<MultipleChoiceQuestion> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IMultipleChoiceQuestion> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<MultipleChoiceQuestion>();
+                var list = new List<IMultipleChoiceQuestion>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<MultipleChoiceQuestion>(list);
+                return new EnumerableProcessResult<IMultipleChoiceQuestion>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<MultipleChoiceQuestion>(ex);
+                return new EnumerableProcessResult<IMultipleChoiceQuestion>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<MultipleChoiceQuestion>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IMultipleChoiceQuestion>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<MultipleChoiceQuestion>();
+                var list = new List<IMultipleChoiceQuestion>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<MultipleChoiceQuestion>(list);
+                return new EnumerableProcessResult<IMultipleChoiceQuestion>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<MultipleChoiceQuestion>(ex);
+                return new EnumerableProcessResult<IMultipleChoiceQuestion>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<MultipleChoiceQuestion>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IMultipleChoiceQuestion>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<MultipleChoiceQuestion>();
+                var list = new List<IMultipleChoiceQuestion>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableProcessResult<MultipleChoiceQuestion>(list);
+                return new EnumerableProcessResult<IMultipleChoiceQuestion>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<MultipleChoiceQuestion>(ex);
+                return new EnumerableProcessResult<IMultipleChoiceQuestion>(ex);
             }
         }
 
-        public IProcessResult<MultipleChoiceQuestion> FromReader(SqlDataReader reader)
+        public IProcessResult<IMultipleChoiceQuestion> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<MultipleChoiceQuestion>(GetData(reader));
+                return new ProcessResult<IMultipleChoiceQuestion>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ex);
+                return new ProcessResult<IMultipleChoiceQuestion>(ex);
             }
         }
 
-        public async Task<IProcessResult<MultipleChoiceQuestion>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<MultipleChoiceQuestion>(await GetDataAsync(reader));
+                return new ProcessResult<IMultipleChoiceQuestion>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ex);
+                return new ProcessResult<IMultipleChoiceQuestion>(ex);
             }
         }
 
-        public async Task<IProcessResult<MultipleChoiceQuestion>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<MultipleChoiceQuestion>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<IMultipleChoiceQuestion>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ex);
+                return new ProcessResult<IMultipleChoiceQuestion>(ex);
             }
         }
     }

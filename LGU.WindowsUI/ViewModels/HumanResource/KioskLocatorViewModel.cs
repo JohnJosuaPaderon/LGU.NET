@@ -29,7 +29,7 @@ namespace LGU.ViewModels.HumanResource
             ChangeExpectedReturnTimePageCommand = new DelegateCommand<object>(ChangeExpectedReturnTimePage);
             InitializeCommand = new DelegateCommand(Initialize);
             PrintCommand = new DelegateCommand(Print);
-            LeaveTypes = new ObservableCollection<LocatorLeaveType>();
+            LeaveTypes = new ObservableCollection<ILocatorLeaveType>();
             Locator = new LocatorModel(new Locator(MainKioskViewModel.SelectedKioskEmployee.GetSource()))
             {
                 Date = DateTime.Now,
@@ -48,7 +48,7 @@ namespace LGU.ViewModels.HumanResource
         public DelegateCommand<object> ChangeExpectedReturnTimePageCommand { get; }
         public DelegateCommand InitializeCommand { get; }
         public DelegateCommand PrintCommand { get; }
-        public ObservableCollection<LocatorLeaveType> LeaveTypes { get; }
+        public ObservableCollection<ILocatorLeaveType> LeaveTypes { get; }
 
         private LocatorModel _Locator;
         public LocatorModel Locator

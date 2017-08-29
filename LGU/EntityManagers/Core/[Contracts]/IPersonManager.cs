@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public interface IPersonManager : IEntityManager<Person, long>
+    public interface IPersonManager : IEntityManager<IPerson, long>
     {
-        IEnumerableProcessResult<Person> Search(string searchKey);
-        Task<IEnumerableProcessResult<Person>> SearchAsync(string searchKey);
-        Task<IEnumerableProcessResult<Person>> SearchAsync(string searchKey, CancellationToken cancellationToken);
+        IEnumerableProcessResult<IPerson> Search(string searchKey);
+        Task<IEnumerableProcessResult<IPerson>> SearchAsync(string searchKey);
+        Task<IEnumerableProcessResult<IPerson>> SearchAsync(string searchKey, CancellationToken cancellationToken);
     }
 }

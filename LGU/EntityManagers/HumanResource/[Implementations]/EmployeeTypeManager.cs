@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class EmployeeTypeManager : ManagerBase<EmployeeType, short>, IEmployeeTypeManager
+    public sealed class EmployeeTypeManager : ManagerBase<IEmployeeType, short>, IEmployeeTypeManager
     {
         private readonly IGetEmployeeTypeById r_GetEmployeeTypeById;
         private readonly IGetEmployeeTypeList r_GetEmployeeTypeList;
@@ -19,13 +19,13 @@ namespace LGU.EntityManagers.HumanResource
             r_GetEmployeeTypeList = getEmployeeTypeList;
         }
 
-        public IProcessResult<EmployeeType> GetById(short id)
+        public IProcessResult<IEmployeeType> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EmployeeType>(StaticSource[id]);
+                    return new ProcessResult<IEmployeeType>(StaticSource[id]);
                 }
                 else
                 {
@@ -38,17 +38,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeType>(ProcessResultStatus.Failed, "Invalid employee type identifier.");
+                return new ProcessResult<IEmployeeType>(ProcessResultStatus.Failed, "Invalid employee type identifier.");
             }
         }
 
-        public async Task<IProcessResult<EmployeeType>> GetByIdAsync(short id)
+        public async Task<IProcessResult<IEmployeeType>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EmployeeType>(StaticSource[id]);
+                    return new ProcessResult<IEmployeeType>(StaticSource[id]);
                 }
                 else
                 {
@@ -61,17 +61,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeType>(ProcessResultStatus.Failed, "Invalid employee type identifier.");
+                return new ProcessResult<IEmployeeType>(ProcessResultStatus.Failed, "Invalid employee type identifier.");
             }
         }
 
-        public async Task<IProcessResult<EmployeeType>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployeeType>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EmployeeType>(StaticSource[id]);
+                    return new ProcessResult<IEmployeeType>(StaticSource[id]);
                 }
                 else
                 {
@@ -84,11 +84,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EmployeeType>(ProcessResultStatus.Failed, "Invalid employee type identifier.");
+                return new ProcessResult<IEmployeeType>(ProcessResultStatus.Failed, "Invalid employee type identifier.");
             }
         }
 
-        public IEnumerableProcessResult<EmployeeType> GetList()
+        public IEnumerableProcessResult<IEmployeeType> GetList()
         {
             var result = r_GetEmployeeTypeList.Execute();
             AddUpdateIfSuccess(result);
@@ -96,7 +96,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<EmployeeType>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IEmployeeType>> GetListAsync()
         {
             var result = await r_GetEmployeeTypeList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -104,7 +104,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<EmployeeType>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEmployeeType>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetEmployeeTypeList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);

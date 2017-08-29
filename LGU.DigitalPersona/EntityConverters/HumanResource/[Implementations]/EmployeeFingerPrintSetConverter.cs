@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.HumanResource
             r_EmployeeManager = employeeManager;
         }
 
-        private EmployeeFingerPrintSet GetData(Employee employee, SqlDataReader reader)
+        private IEmployeeFingerPrintSet GetData(IEmployee employee, SqlDataReader reader)
         {
             var leftThumb = reader.GetByteArray("LeftThumb");
             var leftIndexFinger = reader.GetByteArray("LeftIndexFinger");
@@ -58,7 +58,7 @@ namespace LGU.EntityConverters.HumanResource
             return result;
         }
 
-        private EmployeeFingerPrintSet GetData(SqlDataReader reader)
+        private IEmployeeFingerPrintSet GetData(SqlDataReader reader)
         {
             var employeeResult = r_EmployeeManager.GetById(reader.GetInt64("Id"));
 
@@ -72,7 +72,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private async Task<EmployeeFingerPrintSet> GetDataAsync(SqlDataReader reader)
+        private async Task<IEmployeeFingerPrintSet> GetDataAsync(SqlDataReader reader)
         {
             var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("Id"));
 
@@ -86,7 +86,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private async Task<EmployeeFingerPrintSet> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IEmployeeFingerPrintSet> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("Id"), cancellationToken);
 
@@ -100,99 +100,99 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IEnumerableProcessResult<EmployeeFingerPrintSet> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IEmployeeFingerPrintSet> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<EmployeeFingerPrintSet>();
+                var list = new List<IEmployeeFingerPrintSet>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<EmployeeFingerPrintSet>(list);
+                return new EnumerableProcessResult<IEmployeeFingerPrintSet>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<EmployeeFingerPrintSet>(ex);
+                return new EnumerableProcessResult<IEmployeeFingerPrintSet>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IEmployeeFingerPrintSet>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<EmployeeFingerPrintSet>();
+                var list = new List<IEmployeeFingerPrintSet>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<EmployeeFingerPrintSet>(list);
+                return new EnumerableProcessResult<IEmployeeFingerPrintSet>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<EmployeeFingerPrintSet>(ex);
+                return new EnumerableProcessResult<IEmployeeFingerPrintSet>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<EmployeeFingerPrintSet>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEmployeeFingerPrintSet>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<EmployeeFingerPrintSet>();
+                var list = new List<IEmployeeFingerPrintSet>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableProcessResult<EmployeeFingerPrintSet>(list);
+                return new EnumerableProcessResult<IEmployeeFingerPrintSet>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<EmployeeFingerPrintSet>(ex);
+                return new EnumerableProcessResult<IEmployeeFingerPrintSet>(ex);
             }
         }
 
-        public IProcessResult<EmployeeFingerPrintSet> FromReader(SqlDataReader reader)
+        public IProcessResult<IEmployeeFingerPrintSet> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<EmployeeFingerPrintSet>(GetData(reader));
+                return new ProcessResult<IEmployeeFingerPrintSet>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<EmployeeFingerPrintSet>(ex);
+                return new ProcessResult<IEmployeeFingerPrintSet>(ex);
             }
         }
 
-        public async Task<IProcessResult<EmployeeFingerPrintSet>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IEmployeeFingerPrintSet>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<EmployeeFingerPrintSet>(await GetDataAsync(reader));
+                return new ProcessResult<IEmployeeFingerPrintSet>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<EmployeeFingerPrintSet>(ex);
+                return new ProcessResult<IEmployeeFingerPrintSet>(ex);
             }
         }
 
-        public async Task<IProcessResult<EmployeeFingerPrintSet>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployeeFingerPrintSet>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<EmployeeFingerPrintSet>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<IEmployeeFingerPrintSet>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<EmployeeFingerPrintSet>(ex);
+                return new ProcessResult<IEmployeeFingerPrintSet>(ex);
             }
         }
     }

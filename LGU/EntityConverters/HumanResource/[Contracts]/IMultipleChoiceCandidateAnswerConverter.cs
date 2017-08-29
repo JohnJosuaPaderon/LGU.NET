@@ -4,7 +4,7 @@ using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public interface IMultipleChoiceCandidateAnswerConverter<TDataReader> : IDataConverter<MultipleChoiceCandidateAnswer, TDataReader>
+    public interface IMultipleChoiceCandidateAnswerConverter<TDataReader> : IDataConverter<IMultipleChoiceCandidateAnswer, TDataReader>
         where TDataReader : DbDataReader
     {
     }

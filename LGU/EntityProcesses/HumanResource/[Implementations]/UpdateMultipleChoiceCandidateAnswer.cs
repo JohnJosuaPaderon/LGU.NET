@@ -15,39 +15,39 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public MultipleChoiceCandidateAnswer MultipleChoiceCandidateAnswer { get; set; }
+        public IMultipleChoiceCandidateAnswer MultipleChoiceCandidateAnswer { get; set; }
 
-        private SqlQueryInfo<MultipleChoiceCandidateAnswer> QueryInfo =>
-            SqlQueryInfo<MultipleChoiceCandidateAnswer>.CreateProcedureQueryInfo(MultipleChoiceCandidateAnswer, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IMultipleChoiceCandidateAnswer> QueryInfo =>
+            SqlQueryInfo<IMultipleChoiceCandidateAnswer>.CreateProcedureQueryInfo(MultipleChoiceCandidateAnswer, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", MultipleChoiceCandidateAnswer.Id)
             .AddInputParameter("@_QuestionId", MultipleChoiceCandidateAnswer.Question?.Id)
             .AddInputParameter("@_Description", MultipleChoiceCandidateAnswer.Description)
             .AddInputParameter("@_IsCorrect", MultipleChoiceCandidateAnswer.IsCorrect)
             .AddLogByParameter();
 
-        private IProcessResult<MultipleChoiceCandidateAnswer> GetProcessResult(MultipleChoiceCandidateAnswer data, SqlCommand command, int affectedRows)
+        private IProcessResult<IMultipleChoiceCandidateAnswer> GetProcessResult(IMultipleChoiceCandidateAnswer data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                return new ProcessResult<MultipleChoiceCandidateAnswer>(data);
+                return new ProcessResult<IMultipleChoiceCandidateAnswer>(data);
             }
             else
             {
-                return new ProcessResult<MultipleChoiceCandidateAnswer>(ProcessResultStatus.Failed, "Failed to update multiple choice candidate answer.");
+                return new ProcessResult<IMultipleChoiceCandidateAnswer>(ProcessResultStatus.Failed, "Failed to update multiple choice candidate answer.");
             }
         }
 
-        public IProcessResult<MultipleChoiceCandidateAnswer> Execute()
+        public IProcessResult<IMultipleChoiceCandidateAnswer> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<MultipleChoiceCandidateAnswer>> ExecuteAsync()
+        public Task<IProcessResult<IMultipleChoiceCandidateAnswer>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<MultipleChoiceCandidateAnswer>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IMultipleChoiceCandidateAnswer>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

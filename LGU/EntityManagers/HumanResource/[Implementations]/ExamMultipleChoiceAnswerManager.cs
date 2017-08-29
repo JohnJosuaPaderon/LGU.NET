@@ -25,7 +25,7 @@ namespace LGU.EntityManagers.HumanResource
             r_UpdateExamMultipleChoiceAnswer = updateExamMultipleChoiceAnswer;
         }
 
-        public IProcessResult<ExamMultipleChoiceAnswer> Delete(ExamMultipleChoiceAnswer data)
+        public IProcessResult<IExamMultipleChoiceAnswer> Delete(IExamMultipleChoiceAnswer data)
         {
             if (data != null)
             {
@@ -34,11 +34,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamMultipleChoiceAnswer>> DeleteAsync(ExamMultipleChoiceAnswer data)
+        public async Task<IProcessResult<IExamMultipleChoiceAnswer>> DeleteAsync(IExamMultipleChoiceAnswer data)
         {
             if (data != null)
             {
@@ -47,11 +47,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamMultipleChoiceAnswer>> DeleteAsync(ExamMultipleChoiceAnswer data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamMultipleChoiceAnswer>> DeleteAsync(IExamMultipleChoiceAnswer data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -60,26 +60,26 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
             }
         }
 
-        public IEnumerableProcessResult<ExamMultipleChoiceAnswer> GetList()
+        public IEnumerableProcessResult<IExamMultipleChoiceAnswer> GetList()
         {
             return r_GetExamMultipleChoiceAnswerList.Execute();
         }
 
-        public Task<IEnumerableProcessResult<ExamMultipleChoiceAnswer>> GetListAsync()
+        public Task<IEnumerableProcessResult<IExamMultipleChoiceAnswer>> GetListAsync()
         {
             return r_GetExamMultipleChoiceAnswerList.ExecuteAsync();
         }
 
-        public Task<IEnumerableProcessResult<ExamMultipleChoiceAnswer>> GetListAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<IExamMultipleChoiceAnswer>> GetListAsync(CancellationToken cancellationToken)
         {
             return r_GetExamMultipleChoiceAnswerList.ExecuteAsync(cancellationToken);
         }
 
-        public IProcessResult<ExamMultipleChoiceAnswer> Insert(ExamMultipleChoiceAnswer data)
+        public IProcessResult<IExamMultipleChoiceAnswer> Insert(IExamMultipleChoiceAnswer data)
         {
             if (data != null)
             {
@@ -88,11 +88,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamMultipleChoiceAnswer>> InsertAsync(ExamMultipleChoiceAnswer data)
+        public async Task<IProcessResult<IExamMultipleChoiceAnswer>> InsertAsync(IExamMultipleChoiceAnswer data)
         {
             if (data != null)
             {
@@ -101,11 +101,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamMultipleChoiceAnswer>> InsertAsync(ExamMultipleChoiceAnswer data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamMultipleChoiceAnswer>> InsertAsync(IExamMultipleChoiceAnswer data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -114,11 +114,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
             }
         }
 
-        public IProcessResult<ExamMultipleChoiceAnswer> Update(ExamMultipleChoiceAnswer data)
+        public IProcessResult<IExamMultipleChoiceAnswer> Update(IExamMultipleChoiceAnswer data)
         {
             if (data != null)
             {
@@ -127,11 +127,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamMultipleChoiceAnswer>> UpdateAsync(ExamMultipleChoiceAnswer data)
+        public async Task<IProcessResult<IExamMultipleChoiceAnswer>> UpdateAsync(IExamMultipleChoiceAnswer data)
         {
             if (data != null)
             {
@@ -140,11 +140,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamMultipleChoiceAnswer>> UpdateAsync(ExamMultipleChoiceAnswer data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamMultipleChoiceAnswer>> UpdateAsync(IExamMultipleChoiceAnswer data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -153,7 +153,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ProcessResultStatus.Failed, "Invalid exam multiple choice answer.");
             }
         }
     }

@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetEssayQuestionById : IProcess<EssayQuestion>
+    public interface IGetEssayQuestionById : IProcess<IEssayQuestion>
     {
         long EssayQuestionId { get; set; }
     }

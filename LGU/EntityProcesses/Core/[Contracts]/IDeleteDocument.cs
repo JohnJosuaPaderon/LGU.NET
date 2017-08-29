@@ -3,8 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.Core
 {
-    public interface IDeleteDocument : IProcess<Document>
+    public interface IDeleteDocument : IProcess<IDocument>
     {
-        Document Document { get; set; }
+        IDocument Document { get; set; }
     }
 }

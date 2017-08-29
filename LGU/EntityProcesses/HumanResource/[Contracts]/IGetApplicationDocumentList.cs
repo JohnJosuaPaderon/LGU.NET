@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetApplicationDocumentList : IEnumerableProcess<ApplicationDocument>
+    public interface IGetApplicationDocumentList : IEnumerableProcess<IApplicationDocument>
     {
     }
 }

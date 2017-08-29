@@ -2,6 +2,6 @@
 {
     public interface IEntity<TIdentifier>
     {
-        TIdentifier Id { get; }
+        TIdentifier Id { get; set; }
     }
 }

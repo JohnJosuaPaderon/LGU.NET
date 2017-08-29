@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class UserStatusManager : ManagerBase<UserStatus, short>, IUserStatusManager
+    public sealed class UserStatusManager : ManagerBase<IUserStatus, short>, IUserStatusManager
     {
         private readonly IGetUserStatusById r_GetUserStatusById;
         private readonly IGetUserStatusList r_GetUserStatusList;
@@ -19,13 +19,13 @@ namespace LGU.EntityManagers.Core
             r_GetUserStatusList = getUserStatusList;
         }
 
-        public IProcessResult<UserStatus> GetById(short id)
+        public IProcessResult<IUserStatus> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<UserStatus>(StaticSource[id]);
+                    return new ProcessResult<IUserStatus>(StaticSource[id]);
                 }
                 else
                 {
@@ -38,17 +38,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<UserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
+                return new ProcessResult<IUserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
             }
         }
 
-        public async Task<IProcessResult<UserStatus>> GetByIdAsync(short id)
+        public async Task<IProcessResult<IUserStatus>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<UserStatus>(StaticSource[id]);
+                    return new ProcessResult<IUserStatus>(StaticSource[id]);
                 }
                 else
                 {
@@ -61,17 +61,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<UserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
+                return new ProcessResult<IUserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
             }
         }
 
-        public async Task<IProcessResult<UserStatus>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IUserStatus>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<UserStatus>(StaticSource[id]);
+                    return new ProcessResult<IUserStatus>(StaticSource[id]);
                 }
                 else
                 {
@@ -84,11 +84,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<UserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
+                return new ProcessResult<IUserStatus>(ProcessResultStatus.Failed, "Invalid user status identifier.");
             }
         }
 
-        public IEnumerableProcessResult<UserStatus> GetList()
+        public IEnumerableProcessResult<IUserStatus> GetList()
         {
             var result = r_GetUserStatusList.Execute();
             AddUpdateIfSuccess(result);
@@ -96,7 +96,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<UserStatus>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IUserStatus>> GetListAsync()
         {
             var result = await r_GetUserStatusList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -104,7 +104,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<UserStatus>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IUserStatus>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetUserStatusList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);

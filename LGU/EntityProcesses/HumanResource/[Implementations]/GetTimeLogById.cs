@@ -21,17 +21,17 @@ namespace LGU.EntityProcesses.HumanResource
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
             .AddInputParameter("@_Id", TimeLogId);
 
-        public IProcessResult<TimeLog> Execute()
+        public IProcessResult<ITimeLog> Execute()
         {
             return r_SqlHelper.ExecuteReader(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<TimeLog>> ExecuteAsync()
+        public Task<IProcessResult<ITimeLog>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<TimeLog>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<ITimeLog>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
         }

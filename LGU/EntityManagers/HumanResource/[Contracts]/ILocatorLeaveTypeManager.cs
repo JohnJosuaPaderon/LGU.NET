@@ -3,7 +3,7 @@ using LGU.Entities.HumanResource;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface ILocatorLeaveTypeManager : IStaticEntityManager<LocatorLeaveType, short>
+    public interface ILocatorLeaveTypeManager : IStaticEntityManager<ILocatorLeaveType, short>
     {
     }
 }

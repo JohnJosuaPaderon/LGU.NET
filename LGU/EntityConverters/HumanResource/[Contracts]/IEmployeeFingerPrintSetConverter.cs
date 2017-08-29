@@ -4,7 +4,7 @@ using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public interface IEmployeeFingerPrintSetConverter<TDataReader> : IDataConverter<EmployeeFingerPrintSet, TDataReader>
+    public interface IEmployeeFingerPrintSetConverter<TDataReader> : IDataConverter<IEmployeeFingerPrintSet, TDataReader>
         where TDataReader : DbDataReader
     {
     }

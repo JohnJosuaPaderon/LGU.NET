@@ -21,17 +21,17 @@ namespace LGU.EntityProcesses.HumanResource
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
                 .AddInputParameter("@_Id", LocatorLeaveTypeId);
 
-        public IProcessResult<LocatorLeaveType> Execute()
+        public IProcessResult<ILocatorLeaveType> Execute()
         {
             return r_SqlHelper.ExecuteReader(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<LocatorLeaveType>> ExecuteAsync()
+        public Task<IProcessResult<ILocatorLeaveType>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<LocatorLeaveType>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<ILocatorLeaveType>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
         }

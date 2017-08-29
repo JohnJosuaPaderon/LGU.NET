@@ -5,6 +5,6 @@ namespace LGU.EntityProcesses.Core
 {
     public interface IConstructPersonInformalFullName : IProcess<string>
     {
-        Person Person { get; set; }
+        IPerson Person { get; set; }
     }
 }

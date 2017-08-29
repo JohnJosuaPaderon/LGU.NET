@@ -19,22 +19,25 @@ namespace LGU.EntityConverters.HumanResource
         private readonly IEmployeeTypeManager r_EmployeeTypeManager;
         private readonly IEmploymentStatusManager r_EmploymentStatusManager;
         private readonly IPositionManager r_PositionManager;
+        private readonly IDepartmentHeadManager r_DepartmentHeadManager;
 
         public EmployeeConverter(
             IGenderManager genderManager,
             IDepartmentManager departmentManager,
             IEmployeeTypeManager employeeTypeManager,
             IEmploymentStatusManager employmentStatusManager,
-            IPositionManager positionManager)
+            IPositionManager positionManager,
+            IDepartmentHeadManager departmentHeadManager)
         {
             r_GenderManager = genderManager;
             r_DepartmentManager = departmentManager;
             r_EmployeeTypeManager = employeeTypeManager;
             r_EmploymentStatusManager = employmentStatusManager;
             r_PositionManager = positionManager;
+            r_DepartmentHeadManager = departmentHeadManager;
         }
 
-        private Employee GetData(Gender gender, Department department, EmployeeType type, EmploymentStatus employmentStatus, Position position, SqlDataReader reader)
+        private IEmployee GetData(IGender gender, IDepartment department, IEmployeeType type, IEmploymentStatus employmentStatus, IPosition position, IDepartmentHead departmentHead, SqlDataReader reader)
         {
             return new Employee()
             {
@@ -49,136 +52,140 @@ namespace LGU.EntityConverters.HumanResource
                 EmploymentStatus = employmentStatus,
                 Gender = gender,
                 Position = position,
-                Type = type
+                Type = type,
+                DepartmentHead = departmentHead
             };
         }
 
-        private Employee GetData(SqlDataReader reader)
+        private IEmployee GetData(SqlDataReader reader)
         {
             var genderResult = r_GenderManager.GetById(reader.GetInt16("GenderId"));
             var departmentResult = r_DepartmentManager.GetById(reader.GetInt32("DepartmentId"));
             var typeResult = r_EmployeeTypeManager.GetById(reader.GetInt16("TypeId"));
             var employmentStatusResult = r_EmploymentStatusManager.GetById(reader.GetInt16("EmploymentStatusId"));
             var positionResult = r_PositionManager.GetById(reader.GetInt16("PositionId"));
+            var departmentHeadResult = r_DepartmentHeadManager.GetById(reader.GetInt64("DepartmentHeadId"));
 
-            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, reader);
+            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, departmentHeadResult.Data, reader);
         }
 
-        private async Task<Employee> GetDataAsync(SqlDataReader reader)
+        private async Task<IEmployee> GetDataAsync(SqlDataReader reader)
         {
             var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"));
             var departmentResult = await r_DepartmentManager.GetByIdAsync(reader.GetInt32("DepartmentId"));
             var typeResult = await r_EmployeeTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
             var employmentStatusResult = await r_EmploymentStatusManager.GetByIdAsync(reader.GetInt16("EmploymentStatusId"));
             var positionResult = await r_PositionManager.GetByIdAsync(reader.GetInt16("PositionId"));
+            var departmentHeadResult = await r_DepartmentHeadManager.GetByIdAsync(reader.GetInt64("DepartmentHeadId"));
 
-            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, reader);
+            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, departmentHeadResult.Data, reader);
         }
 
-        private async Task<Employee> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IEmployee> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"), cancellationToken);
             var departmentResult = await r_DepartmentManager.GetByIdAsync(reader.GetInt32("DepartmentId"), cancellationToken);
             var typeResult = await r_EmployeeTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
             var employmentStatusResult = await r_EmploymentStatusManager.GetByIdAsync(reader.GetInt16("EmploymentStatusId"), cancellationToken);
             var positionResult = await r_PositionManager.GetByIdAsync(reader.GetInt16("PositionId"), cancellationToken);
+            var departmentHeadResult = await r_DepartmentHeadManager.GetByIdAsync(reader.GetInt64("DepartmentHeadId"), cancellationToken);
 
-            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, reader);
+            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, departmentHeadResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<Employee> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IEmployee> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Employee>();
+                var list = new List<IEmployee>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Employee>(list);
+                return new EnumerableProcessResult<IEmployee>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Employee>(ex);
+                return new EnumerableProcessResult<IEmployee>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Employee>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IEmployee>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Employee>();
+                var list = new List<IEmployee>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<Employee>(list);
+                return new EnumerableProcessResult<IEmployee>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Employee>(ex);
+                return new EnumerableProcessResult<IEmployee>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Employee>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEmployee>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<Employee>();
+                var list = new List<IEmployee>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableProcessResult<Employee>(list);
+                return new EnumerableProcessResult<IEmployee>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Employee>(ex);
+                return new EnumerableProcessResult<IEmployee>(ex);
             }
         }
 
-        public IProcessResult<Employee> FromReader(SqlDataReader reader)
+        public IProcessResult<IEmployee> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<Employee>(GetData(reader));
+                return new ProcessResult<IEmployee>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Employee>(ex);
+                return new ProcessResult<IEmployee>(ex);
             }
         }
 
-        public async Task<IProcessResult<Employee>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IEmployee>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<Employee>(await GetDataAsync(reader));
+                return new ProcessResult<IEmployee>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Employee>(ex);
+                return new ProcessResult<IEmployee>(ex);
             }
         }
 
-        public async Task<IProcessResult<Employee>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployee>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<Employee>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<IEmployee>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Employee>(ex);
+                return new ProcessResult<IEmployee>(ex);
             }
         }
     }

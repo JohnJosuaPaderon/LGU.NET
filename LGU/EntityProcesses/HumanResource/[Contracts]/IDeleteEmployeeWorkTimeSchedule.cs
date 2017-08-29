@@ -3,8 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IDeleteEmployeeWorkTimeSchedule : IProcess<EmployeeWorkTimeSchedule>
+    public interface IDeleteEmployeeWorkTimeSchedule : IProcess<IEmployeeWorkTimeSchedule>
     {
-        EmployeeWorkTimeSchedule WorkTimeSchedule { get; set; }
+        IEmployeeWorkTimeSchedule WorkTimeSchedule { get; set; }
     }
 }

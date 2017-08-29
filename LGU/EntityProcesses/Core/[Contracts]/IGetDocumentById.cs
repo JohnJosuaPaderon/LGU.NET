@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.Core
 {
-    public interface IGetDocumentById : IProcess<Document>
+    public interface IGetDocumentById : IProcess<IDocument>
     {
         long DocumentId { get; set; }
     }

@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.Core
             r_DocumentPathTypeManager = documentPathTypeManager;
         }
 
-        private Document GetData(DocumentPathType pathType, SqlDataReader reader)
+        private IDocument GetData(IDocumentPathType pathType, SqlDataReader reader)
         {
             return new Document()
             {
@@ -32,103 +32,103 @@ namespace LGU.EntityConverters.Core
             };
         }
 
-        private Document GetData(SqlDataReader reader)
+        private IDocument GetData(SqlDataReader reader)
         {
             var pathTypeResult = r_DocumentPathTypeManager.GetById(reader.GetInt16("PathTypeId"));
 
             return GetData(pathTypeResult.Data, reader);
         }
 
-        private async Task<Document> GetDataAsync(SqlDataReader reader)
+        private async Task<IDocument> GetDataAsync(SqlDataReader reader)
         {
             var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"));
 
             return GetData(pathTypeResult.Data, reader);
         }
 
-        private async Task<Document> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IDocument> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"), cancellationToken);
 
             return GetData(pathTypeResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<Document> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IDocument> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Document>();
+                var list = new List<IDocument>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Document>(list);
+                return new EnumerableProcessResult<IDocument>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Document>(ex);
+                return new EnumerableProcessResult<IDocument>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Document>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IDocument>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Document>();
+                var list = new List<IDocument>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<Document>(list);
+                return new EnumerableProcessResult<IDocument>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Document>(ex);
+                return new EnumerableProcessResult<IDocument>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Document>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IDocument>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<Document>();
+                var list = new List<IDocument>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableProcessResult<Document>(list);
+                return new EnumerableProcessResult<IDocument>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Document>(ex);
+                return new EnumerableProcessResult<IDocument>(ex);
             }
         }
 
-        public IProcessResult<Document> FromReader(SqlDataReader reader)
+        public IProcessResult<IDocument> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<Document>(GetData(reader));
+                return new ProcessResult<IDocument>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Document>(ex);
+                return new ProcessResult<IDocument>(ex);
             }
         }
 
-        public Task<IProcessResult<Document>> FromReaderAsync(SqlDataReader reader)
+        public Task<IProcessResult<IDocument>> FromReaderAsync(SqlDataReader reader)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IProcessResult<Document>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public Task<IProcessResult<IDocument>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

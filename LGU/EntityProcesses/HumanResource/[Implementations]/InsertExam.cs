@@ -16,10 +16,10 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public Exam Exam { get; set; }
+        public IExam Exam { get; set; }
 
-        private SqlQueryInfo<Exam> QueryInfo =>
-            SqlQueryInfo<Exam>.CreateProcedureQueryInfo(Exam, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IExam> QueryInfo =>
+            SqlQueryInfo<IExam>.CreateProcedureQueryInfo(Exam, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddOutputParameter("@_Id", DbType.Int64)
             .AddInputParameter("@_ApplicationId", Exam.Application?.Id)
             .AddInputParameter("@_Date", Exam.Date)
@@ -27,30 +27,30 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_TotalScore", Exam.TotalScore)
             .AddLogByParameter();
 
-        private IProcessResult<Exam> GetProcessResult(Exam data, SqlCommand command, int affectedRows)
+        private IProcessResult<IExam> GetProcessResult(IExam data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
                 data.Id = command.Parameters.GetInt64("@_Id");
-                return new ProcessResult<Exam>(data);
+                return new ProcessResult<IExam>(data);
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Failed to insert exam.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Failed to insert exam.");
             }
         }
 
-        public IProcessResult<Exam> Execute()
+        public IProcessResult<IExam> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<Exam>> ExecuteAsync()
+        public Task<IProcessResult<IExam>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<Exam>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IExam>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

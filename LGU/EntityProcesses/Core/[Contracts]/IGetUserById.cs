@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.Core
 {
-    public interface IGetUserById : IProcess<User>
+    public interface IGetUserById : IProcess<IUser>
     {
         long UserId { get; set; }
     }

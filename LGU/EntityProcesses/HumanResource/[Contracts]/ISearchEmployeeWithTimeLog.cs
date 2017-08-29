@@ -4,7 +4,7 @@ using System;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface ISearchEmployeeWithTimeLog : IEnumerableProcess<Employee>
+    public interface ISearchEmployeeWithTimeLog : IEnumerableProcess<IEmployee>
     {
         string SearchKey { get; set; }
         ValueRange<DateTime> CutOff { get; set; }

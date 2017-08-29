@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetEmployeeWorkTimeScheduleList : IEnumerableProcess<EmployeeWorkTimeSchedule>
+    public interface IGetEmployeeWorkTimeScheduleList : IEnumerableProcess<IEmployeeWorkTimeSchedule>
     {
     }
 }

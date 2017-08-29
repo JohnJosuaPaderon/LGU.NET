@@ -26,7 +26,7 @@
             </Button>
         </materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskActualTimeLogView" Visibility="Collapsed">
+            <Button Command="{Binding NavigateCommand}" CommandParameter="KioskActualTimeLogView">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>

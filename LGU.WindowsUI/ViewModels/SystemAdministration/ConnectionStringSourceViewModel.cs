@@ -56,7 +56,7 @@ namespace LGU.ViewModels.SystemAdministration
 
         private void Save()
         {
-            var list = new List<ConnectionString>();
+            var list = new List<IConnectionString>();
 
             foreach (var item in ConnectionStrings)
             {

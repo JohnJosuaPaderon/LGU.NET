@@ -7,7 +7,7 @@ namespace LGU
     {
         bool IsEncrypted { get; }
         SecureString this[string key] { get; }
-        IEnumerable<ConnectionString> GetSource();
-        void Overwrite(bool isEncrypted, IEnumerable<ConnectionString> connectionStrings);
+        IEnumerable<IConnectionString> GetSource();
+        void Overwrite(bool isEncrypted, IEnumerable<IConnectionString> connectionStrings);
     }
 }

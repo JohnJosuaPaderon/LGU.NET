@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class DepartmentManager : ManagerBase<Department, int>, IDepartmentManager
+    public sealed class DepartmentManager : ManagerBase<IDepartment, int>, IDepartmentManager
     {
         private readonly IDeleteDepartment r_Delete;
         private readonly IGetDepartmentById r_GetById;
@@ -35,7 +35,7 @@ namespace LGU.EntityManagers.HumanResource
             r_GetListWithTimeLog = getListWithTimeLog;
         }
 
-        public IProcessResult<Department> Delete(Department data)
+        public IProcessResult<IDepartment> Delete(IDepartment data)
         {
             if (data != null)
             {
@@ -44,11 +44,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public async Task<IProcessResult<Department>> DeleteAsync(Department data)
+        public async Task<IProcessResult<IDepartment>> DeleteAsync(IDepartment data)
         {
             if (data != null)
             {
@@ -57,11 +57,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public async Task<IProcessResult<Department>> DeleteAsync(Department data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDepartment>> DeleteAsync(IDepartment data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -70,17 +70,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public IProcessResult<Department> GetById(int id)
+        public IProcessResult<IDepartment> GetById(int id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Department>(StaticSource[id]);
+                    return new ProcessResult<IDepartment>(StaticSource[id]);
                 }
                 else
                 {
@@ -90,17 +90,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department identifier.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department identifier.");
             }
         }
 
-        public async Task<IProcessResult<Department>> GetByIdAsync(int id)
+        public async Task<IProcessResult<IDepartment>> GetByIdAsync(int id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Department>(StaticSource[id]);
+                    return new ProcessResult<IDepartment>(StaticSource[id]);
                 }
                 else
                 {
@@ -110,17 +110,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department identifier.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department identifier.");
             }
         }
 
-        public async Task<IProcessResult<Department>> GetByIdAsync(int id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDepartment>> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Department>(StaticSource[id]);
+                    return new ProcessResult<IDepartment>(StaticSource[id]);
                 }
                 else
                 {
@@ -130,26 +130,26 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department identifier.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department identifier.");
             }
         }
 
-        public IEnumerableProcessResult<Department> GetList()
+        public IEnumerableProcessResult<IDepartment> GetList()
         {
             return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
-        public async Task<IEnumerableProcessResult<Department>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IDepartment>> GetListAsync()
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
-        public async Task<IEnumerableProcessResult<Department>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IDepartment>> GetListAsync(CancellationToken cancellationToken)
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }
 
-        public IProcessResult<Department> Insert(Department data)
+        public IProcessResult<IDepartment> Insert(IDepartment data)
         {
             if (data != null)
             {
@@ -158,11 +158,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public async Task<IProcessResult<Department>> InsertAsync(Department data)
+        public async Task<IProcessResult<IDepartment>> InsertAsync(IDepartment data)
         {
             if (data != null)
             {
@@ -171,11 +171,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public async Task<IProcessResult<Department>> InsertAsync(Department data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDepartment>> InsertAsync(IDepartment data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -184,11 +184,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public IProcessResult<Department> Update(Department data)
+        public IProcessResult<IDepartment> Update(IDepartment data)
         {
             if (data != null)
             {
@@ -197,11 +197,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public async Task<IProcessResult<Department>> UpdateAsync(Department data)
+        public async Task<IProcessResult<IDepartment>> UpdateAsync(IDepartment data)
         {
             if (data != null)
             {
@@ -210,11 +210,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public async Task<IProcessResult<Department>> UpdateAsync(Department data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDepartment>> UpdateAsync(IDepartment data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -223,11 +223,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Department>(ProcessResultStatus.Failed, "Invalid department.");
+                return new ProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public IEnumerableProcessResult<Department> Search(string searchKey)
+        public IEnumerableProcessResult<IDepartment> Search(string searchKey)
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
@@ -236,11 +236,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<Department>(ProcessResultStatus.Failed, "Invalid search key.");
+                return new EnumerableProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid search key.");
             }
         }
 
-        public async Task<IEnumerableProcessResult<Department>> SearchAsync(string searchKey)
+        public async Task<IEnumerableProcessResult<IDepartment>> SearchAsync(string searchKey)
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
@@ -249,11 +249,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<Department>(ProcessResultStatus.Failed, "Invalid search key.");
+                return new EnumerableProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid search key.");
             }
         }
 
-        public async Task<IEnumerableProcessResult<Department>> SearchAsync(string searchKey, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IDepartment>> SearchAsync(string searchKey, CancellationToken cancellationToken)
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
@@ -262,23 +262,23 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<Department>(ProcessResultStatus.Failed, "Invalid search key.");
+                return new EnumerableProcessResult<IDepartment>(ProcessResultStatus.Failed, "Invalid search key.");
             }
         }
 
-        public IEnumerableProcessResult<Department> GetListWithTimeLog(ValueRange<DateTime> cutOff)
+        public IEnumerableProcessResult<IDepartment> GetListWithTimeLog(ValueRange<DateTime> cutOff)
         {
             r_GetListWithTimeLog.CutOff = cutOff;
             return AddUpdateIfSuccess(r_GetListWithTimeLog.Execute());
         }
 
-        public async Task<IEnumerableProcessResult<Department>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff)
+        public async Task<IEnumerableProcessResult<IDepartment>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff)
         {
             r_GetListWithTimeLog.CutOff = cutOff;
             return AddUpdateIfSuccess(await r_GetListWithTimeLog.ExecuteAsync());
         }
 
-        public async Task<IEnumerableProcessResult<Department>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IDepartment>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
         {
             r_GetListWithTimeLog.CutOff = cutOff;
             return AddUpdateIfSuccess(await r_GetListWithTimeLog.ExecuteAsync(cancellationToken));

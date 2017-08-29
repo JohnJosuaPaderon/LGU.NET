@@ -2,9 +2,9 @@
 
 namespace LGU.Models.HumanResource
 {
-    public sealed class EmployeeFingerPrintSetModel : ModelBase<EmployeeFingerPrintSet>
+    public sealed class EmployeeFingerPrintSetModel : ModelBase<IEmployeeFingerPrintSet>
     {
-        public EmployeeFingerPrintSetModel(EmployeeFingerPrintSet source) : base(source)
+        public EmployeeFingerPrintSetModel(IEmployeeFingerPrintSet source) : base(source)
         {
             Employee = source.Employee;
             LeftThumb = new FingerPrintModel(source.LeftThumb);
@@ -19,8 +19,8 @@ namespace LGU.Models.HumanResource
             RightLittleFinger = new FingerPrintModel(source.RightLittleFinger);
         }
 
-        private Employee _Employee;
-        public Employee Employee
+        private IEmployee _Employee;
+        public IEmployee Employee
         {
             get { return _Employee; }
             set { SetProperty(ref _Employee, value); }
@@ -96,7 +96,7 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _RightLittleFinger, value); }
         }
 
-        public override EmployeeFingerPrintSet GetSource()
+        public override IEmployeeFingerPrintSet GetSource()
         {
             var fingerPrintSet = new EmployeeFingerPrintSet(Employee);
             fingerPrintSet.LeftThumb.Data = LeftThumb?.Data;

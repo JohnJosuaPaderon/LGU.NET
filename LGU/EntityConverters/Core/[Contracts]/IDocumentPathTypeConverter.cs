@@ -4,7 +4,7 @@ using System.Data.Common;
 
 namespace LGU.EntityConverters.Core
 {
-    public interface IDocumentPathTypeConverter<TDataReader> : IDataConverter<DocumentPathType, TDataReader>
+    public interface IDocumentPathTypeConverter<TDataReader> : IDataConverter<IDocumentPathType, TDataReader>
         where TDataReader : DbDataReader
     {
     }

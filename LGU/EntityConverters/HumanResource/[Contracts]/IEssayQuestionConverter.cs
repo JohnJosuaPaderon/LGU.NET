@@ -4,7 +4,7 @@ using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public interface IEssayQuestionConverter<TDataReader> : IDataConverter<EssayQuestion, TDataReader>
+    public interface IEssayQuestionConverter<TDataReader> : IDataConverter<IEssayQuestion, TDataReader>
         where TDataReader : DbDataReader
     {
     }

@@ -17,7 +17,7 @@ namespace LGU.EntityProcesses.HumanResource
         }
 
         public ValueRange<DateTime> CutOff { get; set; }
-        public Department Department { get; set; }
+        public IDepartment Department { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
@@ -25,17 +25,17 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_CutOffBegin", CutOff.Begin)
             .AddInputParameter("@_CutOffEnd", CutOff.End);
 
-        public IEnumerableProcessResult<Employee> Execute()
+        public IEnumerableProcessResult<IEmployee> Execute()
         {
             return r_SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<Employee>> ExecuteAsync()
+        public Task<IEnumerableProcessResult<IEmployee>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IEnumerableProcessResult<Employee>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<IEmployee>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
         }

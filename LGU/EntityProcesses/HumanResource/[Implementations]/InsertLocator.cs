@@ -16,10 +16,10 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public Locator Locator { get; set; }
+        public ILocator Locator { get; set; }
 
-        private SqlQueryInfo<Locator> QueryInfo =>
-            SqlQueryInfo<Locator>.CreateProcedureQueryInfo(Locator, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<ILocator> QueryInfo =>
+            SqlQueryInfo<ILocator>.CreateProcedureQueryInfo(Locator, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddOutputParameter("@_Id", DbType.Int64)
             .AddInputParameter("@_RequestorId", Locator.Requestor?.Id)
             .AddInputParameter("@_OfficeOutTime", Locator.OfficeOutTime)
@@ -30,30 +30,30 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_DepartmentHead", Locator.DepartmentHead)
             .AddLogByParameter();
 
-        private IProcessResult<Locator> GetProcessResult(Locator data, SqlCommand command, int affectedRows)
+        private IProcessResult<ILocator> GetProcessResult(ILocator data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
                 data.Id = command.Parameters.GetInt64("@_Id");
-                return new ProcessResult<Locator>(Locator);
+                return new ProcessResult<ILocator>(Locator);
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Failed to insert locator.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Failed to insert locator.");
             }
         }
 
-        public IProcessResult<Locator> Execute()
+        public IProcessResult<ILocator> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<Locator>> ExecuteAsync()
+        public Task<IProcessResult<ILocator>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<Locator>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<ILocator>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

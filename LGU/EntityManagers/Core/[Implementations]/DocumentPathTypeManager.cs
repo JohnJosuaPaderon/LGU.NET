@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class DocumentPathTypeManager : ManagerBase<DocumentPathType, short>, IDocumentPathTypeManager
+    public sealed class DocumentPathTypeManager : ManagerBase<IDocumentPathType, short>, IDocumentPathTypeManager
     {
         private readonly IGetDocumentPathTypeById r_GetDocumentPathTypeById;
         private readonly IGetDocumentPathTypeList r_GetDocumentPathTypeList;
@@ -19,13 +19,13 @@ namespace LGU.EntityManagers.Core
             r_GetDocumentPathTypeList = getDocumentPathTypeList;
         }
 
-        public IProcessResult<DocumentPathType> GetById(short id)
+        public IProcessResult<IDocumentPathType> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<DocumentPathType>(StaticSource[id]);
+                    return new ProcessResult<IDocumentPathType>(StaticSource[id]);
                 }
                 else
                 {
@@ -38,17 +38,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<DocumentPathType>(ProcessResultStatus.Failed, "Invalid document path type identifier.");
+                return new ProcessResult<IDocumentPathType>(ProcessResultStatus.Failed, "Invalid document path type identifier.");
             }
         }
 
-        public async Task<IProcessResult<DocumentPathType>> GetByIdAsync(short id)
+        public async Task<IProcessResult<IDocumentPathType>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<DocumentPathType>(StaticSource[id]);
+                    return new ProcessResult<IDocumentPathType>(StaticSource[id]);
                 }
                 else
                 {
@@ -61,17 +61,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<DocumentPathType>(ProcessResultStatus.Failed, "Invalid document path type identifier.");
+                return new ProcessResult<IDocumentPathType>(ProcessResultStatus.Failed, "Invalid document path type identifier.");
             }
         }
 
-        public async Task<IProcessResult<DocumentPathType>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDocumentPathType>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<DocumentPathType>(StaticSource[id]);
+                    return new ProcessResult<IDocumentPathType>(StaticSource[id]);
                 }
                 else
                 {
@@ -84,11 +84,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<DocumentPathType>(ProcessResultStatus.Failed, "Invalid document path type identifier.");
+                return new ProcessResult<IDocumentPathType>(ProcessResultStatus.Failed, "Invalid document path type identifier.");
             }
         }
 
-        public IEnumerableProcessResult<DocumentPathType> GetList()
+        public IEnumerableProcessResult<IDocumentPathType> GetList()
         {
             var result = r_GetDocumentPathTypeList.Execute();
             AddUpdateIfSuccess(result);
@@ -96,7 +96,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<DocumentPathType>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IDocumentPathType>> GetListAsync()
         {
             var result = await r_GetDocumentPathTypeList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -104,7 +104,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<DocumentPathType>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IDocumentPathType>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetDocumentPathTypeList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);

@@ -117,9 +117,9 @@ namespace LGU.Reports
             }
         }
 
-        protected bool IsNullOrEmpty(Excel.Range range)
+        protected bool IsNullOrWhiteSpace(Excel.Range range)
         {
-            return range.Value?.ToString() == string.Empty || range.Value2?.ToString() == string.Empty;
+            return string.IsNullOrWhiteSpace(range.Value?.ToString()) || string.IsNullOrWhiteSpace(range.Value2?.ToString());
         }
 
         protected void SetCellValue(int row, int column, object value)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class TimeLogTypeManager : ManagerBase<TimeLogType, short>, ITimeLogTypeManager
+    public sealed class TimeLogTypeManager : ManagerBase<ITimeLogType, short>, ITimeLogTypeManager
     {
         private readonly IGetTimeLogTypeById r_GetTimeLogTypeById;
         private readonly IGetTimeLogTypeList r_GetTimeLogTypeList;
@@ -19,13 +19,13 @@ namespace LGU.EntityManagers.HumanResource
             r_GetTimeLogTypeList = getTimeLogTypeList;
         }
 
-        public IProcessResult<TimeLogType> GetById(short id)
+        public IProcessResult<ITimeLogType> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<TimeLogType>(StaticSource[id]);
+                    return new ProcessResult<ITimeLogType>(StaticSource[id]);
                 }
                 else
                 {
@@ -38,17 +38,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
+                return new ProcessResult<ITimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
             }
         }
 
-        public async Task<IProcessResult<TimeLogType>> GetByIdAsync(short id)
+        public async Task<IProcessResult<ITimeLogType>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<TimeLogType>(StaticSource[id]);
+                    return new ProcessResult<ITimeLogType>(StaticSource[id]);
                 }
                 else
                 {
@@ -61,17 +61,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
+                return new ProcessResult<ITimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
             }
         }
 
-        public async Task<IProcessResult<TimeLogType>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ITimeLogType>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<TimeLogType>(StaticSource[id]);
+                    return new ProcessResult<ITimeLogType>(StaticSource[id]);
                 }
                 else
                 {
@@ -84,11 +84,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
+                return new ProcessResult<ITimeLogType>(ProcessResultStatus.Failed, "Invalid time log type identifier.");
             }
         }
 
-        public IEnumerableProcessResult<TimeLogType> GetList()
+        public IEnumerableProcessResult<ITimeLogType> GetList()
         {
             var result = r_GetTimeLogTypeList.Execute();
             AddUpdateIfSuccess(result);
@@ -96,7 +96,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<TimeLogType>> GetListAsync()
+        public async Task<IEnumerableProcessResult<ITimeLogType>> GetListAsync()
         {
             var result = await r_GetTimeLogTypeList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -104,7 +104,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<TimeLogType>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ITimeLogType>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetTimeLogTypeList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);

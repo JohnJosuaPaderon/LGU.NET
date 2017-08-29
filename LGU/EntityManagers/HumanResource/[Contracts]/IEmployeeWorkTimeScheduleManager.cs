@@ -3,7 +3,7 @@ using LGU.Entities.HumanResource;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface IEmployeeWorkTimeScheduleManager : IEntityManager<EmployeeWorkTimeSchedule, long>
+    public interface IEmployeeWorkTimeScheduleManager : IEntityManager<IEmployeeWorkTimeSchedule, long>
     {
     }
 }

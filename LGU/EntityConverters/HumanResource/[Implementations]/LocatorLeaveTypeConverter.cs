@@ -11,7 +11,7 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class LocatorLeaveTypeConverter : ILocatorLeaveTypeConverter<SqlDataReader>
     {
-        private LocatorLeaveType GetData(SqlDataReader reader)
+        private ILocatorLeaveType GetData(SqlDataReader reader)
         {
             return new LocatorLeaveType()
             {
@@ -20,99 +20,99 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        public IEnumerableProcessResult<LocatorLeaveType> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<ILocatorLeaveType> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<LocatorLeaveType>();
+                var list = new List<ILocatorLeaveType>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<LocatorLeaveType>(list);
+                return new EnumerableProcessResult<ILocatorLeaveType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<LocatorLeaveType>(ex);
+                return new EnumerableProcessResult<ILocatorLeaveType>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<LocatorLeaveType>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<ILocatorLeaveType>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<LocatorLeaveType>();
+                var list = new List<ILocatorLeaveType>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<LocatorLeaveType>(list);
+                return new EnumerableProcessResult<ILocatorLeaveType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<LocatorLeaveType>(ex);
+                return new EnumerableProcessResult<ILocatorLeaveType>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<LocatorLeaveType>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ILocatorLeaveType>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<LocatorLeaveType>();
+                var list = new List<ILocatorLeaveType>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<LocatorLeaveType>(list);
+                return new EnumerableProcessResult<ILocatorLeaveType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<LocatorLeaveType>(ex);
+                return new EnumerableProcessResult<ILocatorLeaveType>(ex);
             }
         }
 
-        public IProcessResult<LocatorLeaveType> FromReader(SqlDataReader reader)
+        public IProcessResult<ILocatorLeaveType> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<LocatorLeaveType>(GetData(reader));
+                return new ProcessResult<ILocatorLeaveType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<LocatorLeaveType>(ex);
+                return new ProcessResult<ILocatorLeaveType>(ex);
             }
         }
 
-        public async Task<IProcessResult<LocatorLeaveType>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<ILocatorLeaveType>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<LocatorLeaveType>(GetData(reader));
+                return new ProcessResult<ILocatorLeaveType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<LocatorLeaveType>(ex);
+                return new ProcessResult<ILocatorLeaveType>(ex);
             }
         }
 
-        public async Task<IProcessResult<LocatorLeaveType>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ILocatorLeaveType>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<LocatorLeaveType>(GetData(reader));
+                return new ProcessResult<ILocatorLeaveType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<LocatorLeaveType>(ex);
+                return new ProcessResult<ILocatorLeaveType>(ex);
             }
         }
     }

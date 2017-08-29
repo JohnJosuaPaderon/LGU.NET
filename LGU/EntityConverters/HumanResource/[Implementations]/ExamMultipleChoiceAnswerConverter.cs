@@ -26,7 +26,7 @@ namespace LGU.EntityConverters.HumanResource
             r_MultipleChoiceCandidateAnswerManager = multipleChoiceCandidateAnswerManager;
         }
 
-        private ExamMultipleChoiceAnswer GetData(Exam exam, MultipleChoiceQuestion question, MultipleChoiceCandidateAnswer answer, SqlDataReader reader)
+        private IExamMultipleChoiceAnswer GetData(IExam exam, IMultipleChoiceQuestion question, IMultipleChoiceCandidateAnswer answer, SqlDataReader reader)
         {
             if (exam != null && question != null)
             {
@@ -42,7 +42,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private ExamMultipleChoiceAnswer GetData(SqlDataReader reader)
+        private IExamMultipleChoiceAnswer GetData(SqlDataReader reader)
         {
             var examResult = r_ExamManager.GetById(reader.GetInt64("ExamId"));
             var questionResult = r_MultipleChoiceQuestionManager.GetById(reader.GetInt64("QuestionId"));
@@ -51,7 +51,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(examResult.Data, questionResult.Data, answerResult.Data, reader);
         }
 
-        private async Task<ExamMultipleChoiceAnswer> GetDataAsync(SqlDataReader reader)
+        private async Task<IExamMultipleChoiceAnswer> GetDataAsync(SqlDataReader reader)
         {
             var examResult = await r_ExamManager.GetByIdAsync(reader.GetInt64("ExamId"));
             var questionResult = await r_MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"));
@@ -60,7 +60,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(examResult.Data, questionResult.Data, answerResult.Data, reader);
         }
 
-        private async Task<ExamMultipleChoiceAnswer> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IExamMultipleChoiceAnswer> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var examResult = await r_ExamManager.GetByIdAsync(reader.GetInt64("ExamId"), cancellationToken);
             var questionResult = await r_MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"), cancellationToken);
@@ -69,99 +69,99 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(examResult.Data, questionResult.Data, answerResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<ExamMultipleChoiceAnswer> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IExamMultipleChoiceAnswer> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<ExamMultipleChoiceAnswer>();
+                var list = new List<IExamMultipleChoiceAnswer>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<ExamMultipleChoiceAnswer>(list);
+                return new EnumerableProcessResult<IExamMultipleChoiceAnswer>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ExamMultipleChoiceAnswer>(ex);
+                return new EnumerableProcessResult<IExamMultipleChoiceAnswer>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<ExamMultipleChoiceAnswer>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IExamMultipleChoiceAnswer>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<ExamMultipleChoiceAnswer>();
+                var list = new List<IExamMultipleChoiceAnswer>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<ExamMultipleChoiceAnswer>(list);
+                return new EnumerableProcessResult<IExamMultipleChoiceAnswer>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ExamMultipleChoiceAnswer>(ex);
+                return new EnumerableProcessResult<IExamMultipleChoiceAnswer>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<ExamMultipleChoiceAnswer>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IExamMultipleChoiceAnswer>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<ExamMultipleChoiceAnswer>();
+                var list = new List<IExamMultipleChoiceAnswer>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<ExamMultipleChoiceAnswer>(list);
+                return new EnumerableProcessResult<IExamMultipleChoiceAnswer>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ExamMultipleChoiceAnswer>(ex);
+                return new EnumerableProcessResult<IExamMultipleChoiceAnswer>(ex);
             }
         }
 
-        public IProcessResult<ExamMultipleChoiceAnswer> FromReader(SqlDataReader reader)
+        public IProcessResult<IExamMultipleChoiceAnswer> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<ExamMultipleChoiceAnswer>(GetData(reader));
+                return new ProcessResult<IExamMultipleChoiceAnswer>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ex);
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ex);
             }
         }
 
-        public async Task<IProcessResult<ExamMultipleChoiceAnswer>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IExamMultipleChoiceAnswer>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<ExamMultipleChoiceAnswer>(await GetDataAsync(reader));
+                return new ProcessResult<IExamMultipleChoiceAnswer>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ex);
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ex);
             }
         }
 
-        public async Task<IProcessResult<ExamMultipleChoiceAnswer>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamMultipleChoiceAnswer>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<ExamMultipleChoiceAnswer>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<IExamMultipleChoiceAnswer>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ExamMultipleChoiceAnswer>(ex);
+                return new ProcessResult<IExamMultipleChoiceAnswer>(ex);
             }
         }
     }

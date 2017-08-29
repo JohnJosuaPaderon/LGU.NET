@@ -15,36 +15,36 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        private SqlQueryInfo<Locator> QueryInfo =>
-            SqlQueryInfo<Locator>.CreateProcedureQueryInfo(Locator, GetQualifiedDbObjectName(), GetProcessResult, true)
+        public ILocator Locator { get; set; }
+
+        private SqlQueryInfo<ILocator> QueryInfo =>
+            SqlQueryInfo<ILocator>.CreateProcedureQueryInfo(Locator, GetQualifiedDbObjectName(), GetProcessResult, true)
                 .AddInputParameter("@_Id", Locator.Id)
                 .AddLogByParameter();
 
-        private IProcessResult<Locator> GetProcessResult(Locator Locator, SqlCommand command, int affectedRows)
+        private IProcessResult<ILocator> GetProcessResult(ILocator Locator, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                return new ProcessResult<Locator>(Locator);
+                return new ProcessResult<ILocator>(Locator);
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Failed to delete locator.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Failed to delete locator.");
             }
         }
 
-        public Locator Locator { get; set; }
-
-        public IProcessResult<Locator> Execute()
+        public IProcessResult<ILocator> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<Locator>> ExecuteAsync()
+        public Task<IProcessResult<ILocator>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<Locator>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<ILocator>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

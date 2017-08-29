@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class TimeLogManager : ManagerBase<TimeLog, long>, ITimeLogManager
+    public sealed class TimeLogManager : ManagerBase<ITimeLog, long>, ITimeLogManager
     {
         private readonly IDeleteTimeLog r_Delete;
         private readonly IGetTimeLogById r_GetById;
@@ -44,7 +44,7 @@ namespace LGU.EntityManagers.HumanResource
             r_GetListByEmployeeCutOff = getListByEmployeeCutOff;
         }
 
-        public IProcessResult<TimeLog> Delete(TimeLog data)
+        public IProcessResult<ITimeLog> Delete(ITimeLog data)
         {
             if (data != null)
             {
@@ -53,11 +53,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
             }
         }
 
-        public async Task<IProcessResult<TimeLog>> DeleteAsync(TimeLog data)
+        public async Task<IProcessResult<ITimeLog>> DeleteAsync(ITimeLog data)
         {
             if (data != null)
             {
@@ -66,11 +66,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
             }
         }
 
-        public async Task<IProcessResult<TimeLog>> DeleteAsync(TimeLog data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ITimeLog>> DeleteAsync(ITimeLog data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -79,11 +79,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
             }
         }
 
-        public IEnumerableProcessResult<TimeLog> GetActualListByEmployeeCutOff(Employee employee, ValueRange<DateTime> cutOff)
+        public IEnumerableProcessResult<ITimeLog> GetActualListByEmployeeCutOff(IEmployee employee, ValueRange<DateTime> cutOff)
         {
             if (employee != null)
             {
@@ -93,11 +93,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new EnumerableProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IEnumerableProcessResult<TimeLog>> GetActualListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff)
+        public async Task<IEnumerableProcessResult<ITimeLog>> GetActualListByEmployeeCutOffAsync(IEmployee employee, ValueRange<DateTime> cutOff)
         {
             if (employee != null)
             {
@@ -107,11 +107,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new EnumerableProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IEnumerableProcessResult<TimeLog>> GetActualListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ITimeLog>> GetActualListByEmployeeCutOffAsync(IEmployee employee, ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
         {
             if (employee != null)
             {
@@ -121,11 +121,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new EnumerableProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public IProcessResult<TimeLog> GetById(long id)
+        public IProcessResult<ITimeLog> GetById(long id)
         {
             if (id > 0)
             {
@@ -134,11 +134,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log identifier.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log identifier.");
             }
         }
 
-        public async Task<IProcessResult<TimeLog>> GetByIdAsync(long id)
+        public async Task<IProcessResult<ITimeLog>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
@@ -147,11 +147,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log identifier.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log identifier.");
             }
         }
 
-        public async Task<IProcessResult<TimeLog>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ITimeLog>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
@@ -160,44 +160,44 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log identifier.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log identifier.");
             }
         }
 
-        public IEnumerableProcessResult<TimeLog> GetList()
+        public IEnumerableProcessResult<ITimeLog> GetList()
         {
             return r_GetList.Execute();
         }
 
-        public Task<IEnumerableProcessResult<TimeLog>> GetListAsync()
+        public Task<IEnumerableProcessResult<ITimeLog>> GetListAsync()
         {
             return r_GetList.ExecuteAsync();
         }
 
-        public Task<IEnumerableProcessResult<TimeLog>> GetListAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<ITimeLog>> GetListAsync(CancellationToken cancellationToken)
         {
             return r_GetList.ExecuteAsync(cancellationToken);
         }
 
-        public IEnumerableProcessResult<TimeLog> GetListByCutOff(ValueRange<DateTime> cutOff)
+        public IEnumerableProcessResult<ITimeLog> GetListByCutOff(ValueRange<DateTime> cutOff)
         {
             r_GetListByCutOff.CutOff = cutOff;
             return r_GetListByCutOff.Execute();
         }
 
-        public async Task<IEnumerableProcessResult<TimeLog>> GetListByCutOffAsync(ValueRange<DateTime> cutOff)
+        public async Task<IEnumerableProcessResult<ITimeLog>> GetListByCutOffAsync(ValueRange<DateTime> cutOff)
         {
             r_GetListByCutOff.CutOff = cutOff;
             return await r_GetListByCutOff.ExecuteAsync();
         }
 
-        public async Task<IEnumerableProcessResult<TimeLog>> GetListByCutOffAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ITimeLog>> GetListByCutOffAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
         {
             r_GetListByCutOff.CutOff = cutOff;
             return await r_GetListByCutOff.ExecuteAsync(cancellationToken);
         }
 
-        public IEnumerableProcessResult<TimeLog> GetListByDepartmentCutOff(Department department, ValueRange<DateTime> cutOff)
+        public IEnumerableProcessResult<ITimeLog> GetListByDepartmentCutOff(IDepartment department, ValueRange<DateTime> cutOff)
         {
             if (department != null)
             {
@@ -207,11 +207,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid department.");
+                return new EnumerableProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public async Task<IEnumerableProcessResult<TimeLog>> GetListByDepartmentCutOffAsync(Department department, ValueRange<DateTime> cutOff)
+        public async Task<IEnumerableProcessResult<ITimeLog>> GetListByDepartmentCutOffAsync(IDepartment department, ValueRange<DateTime> cutOff)
         {
             if (department != null)
             {
@@ -221,11 +221,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid department.");
+                return new EnumerableProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public async Task<IEnumerableProcessResult<TimeLog>> GetListByDepartmentCutOffAsync(Department department, ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ITimeLog>> GetListByDepartmentCutOffAsync(IDepartment department, ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
         {
             if (department != null)
             {
@@ -235,11 +235,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid department.");
+                return new EnumerableProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid department.");
             }
         }
 
-        public IEnumerableProcessResult<TimeLog> GetListByEmployeeCutOff(Employee employee, ValueRange<DateTime> cutOff)
+        public IEnumerableProcessResult<ITimeLog> GetListByEmployeeCutOff(IEmployee employee, ValueRange<DateTime> cutOff)
         {
             if (employee != null)
             {
@@ -249,11 +249,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new EnumerableProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IEnumerableProcessResult<TimeLog>> GetListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff)
+        public async Task<IEnumerableProcessResult<ITimeLog>> GetListByEmployeeCutOffAsync(IEmployee employee, ValueRange<DateTime> cutOff)
         {
             if (employee != null)
             {
@@ -263,11 +263,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new EnumerableProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IEnumerableProcessResult<TimeLog>> GetListByEmployeeCutOffAsync(Employee employee, ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ITimeLog>> GetListByEmployeeCutOffAsync(IEmployee employee, ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
         {
             if (employee != null)
             {
@@ -277,11 +277,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new EnumerableProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new EnumerableProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public IProcessResult<TimeLog> Insert(TimeLog data)
+        public IProcessResult<ITimeLog> Insert(ITimeLog data)
         {
             if (data != null)
             {
@@ -290,11 +290,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
             }
         }
 
-        public async Task<IProcessResult<TimeLog>> InsertAsync(TimeLog data)
+        public async Task<IProcessResult<ITimeLog>> InsertAsync(ITimeLog data)
         {
             if (data != null)
             {
@@ -303,11 +303,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
             }
         }
 
-        public async Task<IProcessResult<TimeLog>> InsertAsync(TimeLog data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ITimeLog>> InsertAsync(ITimeLog data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -316,11 +316,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
             }
         }
 
-        public IProcessResult<TimeLog> Log(Employee employee)
+        public IProcessResult<ITimeLog> Log(IEmployee employee)
         {
             if (employee != null)
             {
@@ -329,11 +329,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IProcessResult<TimeLog>> LogAsync(Employee employee)
+        public async Task<IProcessResult<ITimeLog>> LogAsync(IEmployee employee)
         {
             if (employee != null)
             {
@@ -342,11 +342,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public async Task<IProcessResult<TimeLog>> LogAsync(Employee employee, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ITimeLog>> LogAsync(IEmployee employee, CancellationToken cancellationToken)
         {
             if (employee != null)
             {
@@ -355,11 +355,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
-        public IProcessResult<TimeLog> Update(TimeLog data)
+        public IProcessResult<ITimeLog> Update(ITimeLog data)
         {
             if (data != null)
             {
@@ -368,11 +368,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
             }
         }
 
-        public async Task<IProcessResult<TimeLog>> UpdateAsync(TimeLog data)
+        public async Task<IProcessResult<ITimeLog>> UpdateAsync(ITimeLog data)
         {
             if (data != null)
             {
@@ -381,11 +381,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
             }
         }
 
-        public async Task<IProcessResult<TimeLog>> UpdateAsync(TimeLog data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ITimeLog>> UpdateAsync(ITimeLog data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -394,7 +394,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Invalid time log.");
             }
         }
     }

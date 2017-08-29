@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.Core
 {
-    public interface IGetModuleList : IEnumerableProcess<Module>
+    public interface IGetModuleList : IEnumerableProcess<IModule>
     {
     }
 }

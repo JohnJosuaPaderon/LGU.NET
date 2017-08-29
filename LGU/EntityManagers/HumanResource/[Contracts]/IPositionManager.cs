@@ -3,7 +3,7 @@ using LGU.Entities.HumanResource;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface IPositionManager : IEntityManager<Position, int>
+    public interface IPositionManager : IEntityManager<IPosition, int>
     {
     }
 }

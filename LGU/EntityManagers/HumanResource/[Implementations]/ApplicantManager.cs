@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class ApplicantManager : ManagerBase<Applicant, long>, IApplicantManager
+    public sealed class ApplicantManager : ManagerBase<IApplicant, long>, IApplicantManager
     {
         private readonly IDeleteApplicant r_Delete;
         private readonly IGetApplicantById r_GetById;
@@ -28,7 +28,7 @@ namespace LGU.EntityManagers.HumanResource
             r_Update = update;
         }
 
-        public IProcessResult<Applicant> Delete(Applicant data)
+        public IProcessResult<IApplicant> Delete(IApplicant data)
         {
             if (data != null)
             {
@@ -37,11 +37,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant.");
             }
         }
 
-        public async Task<IProcessResult<Applicant>> DeleteAsync(Applicant data)
+        public async Task<IProcessResult<IApplicant>> DeleteAsync(IApplicant data)
         {
             if (data != null)
             {
@@ -50,11 +50,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant.");
             }
         }
 
-        public async Task<IProcessResult<Applicant>> DeleteAsync(Applicant data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicant>> DeleteAsync(IApplicant data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -63,17 +63,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant.");
             }
         }
 
-        public IProcessResult<Applicant> GetById(long id)
+        public IProcessResult<IApplicant> GetById(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Applicant>(StaticSource[id]);
+                    return new ProcessResult<IApplicant>(StaticSource[id]);
                 }
                 else
                 {
@@ -83,17 +83,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant identifier.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant identifier.");
             }
         }
 
-        public async Task<IProcessResult<Applicant>> GetByIdAsync(long id)
+        public async Task<IProcessResult<IApplicant>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Applicant>(StaticSource[id]);
+                    return new ProcessResult<IApplicant>(StaticSource[id]);
                 }
                 else
                 {
@@ -103,17 +103,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant identifier.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant identifier.");
             }
         }
 
-        public async Task<IProcessResult<Applicant>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicant>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Applicant>(StaticSource[id]);
+                    return new ProcessResult<IApplicant>(StaticSource[id]);
                 }
                 else
                 {
@@ -123,26 +123,26 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant identifier.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant identifier.");
             }
         }
 
-        public IEnumerableProcessResult<Applicant> GetList()
+        public IEnumerableProcessResult<IApplicant> GetList()
         {
             return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
-        public async Task<IEnumerableProcessResult<Applicant>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IApplicant>> GetListAsync()
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
-        public async Task<IEnumerableProcessResult<Applicant>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IApplicant>> GetListAsync(CancellationToken cancellationToken)
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }
 
-        public IProcessResult<Applicant> Insert(Applicant data)
+        public IProcessResult<IApplicant> Insert(IApplicant data)
         {
             if (data != null)
             {
@@ -151,11 +151,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant.");
             }
         }
 
-        public async Task<IProcessResult<Applicant>> InsertAsync(Applicant data)
+        public async Task<IProcessResult<IApplicant>> InsertAsync(IApplicant data)
         {
             if (data != null)
             {
@@ -164,11 +164,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant.");
             }
         }
 
-        public async Task<IProcessResult<Applicant>> InsertAsync(Applicant data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicant>> InsertAsync(IApplicant data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -177,11 +177,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant.");
             }
         }
 
-        public IProcessResult<Applicant> Update(Applicant data)
+        public IProcessResult<IApplicant> Update(IApplicant data)
         {
             if (data != null)
             {
@@ -190,11 +190,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant.");
             }
         }
 
-        public async Task<IProcessResult<Applicant>> UpdateAsync(Applicant data)
+        public async Task<IProcessResult<IApplicant>> UpdateAsync(IApplicant data)
         {
             if (data != null)
             {
@@ -203,11 +203,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant.");
             }
         }
 
-        public async Task<IProcessResult<Applicant>> UpdateAsync(Applicant data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicant>> UpdateAsync(IApplicant data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -216,7 +216,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Applicant>(ProcessResultStatus.Failed, "Invalid applicant.");
+                return new ProcessResult<IApplicant>(ProcessResultStatus.Failed, "Invalid applicant.");
             }
         }
     }

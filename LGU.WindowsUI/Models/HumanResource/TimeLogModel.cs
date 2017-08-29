@@ -3,9 +3,9 @@ using System;
 
 namespace LGU.Models.HumanResource
 {
-    public sealed class TimeLogModel : ModelBase<TimeLog>
+    public sealed class TimeLogModel : ModelBase<ITimeLog>
     {
-        public TimeLogModel(TimeLog source) : base(source)
+        public TimeLogModel(ITimeLog source) : base(source)
         {
             if (source != null)
             {
@@ -24,8 +24,8 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Id, value); }
         }
 
-        private Employee _Employee;
-        public Employee Employee
+        private IEmployee _Employee;
+        public IEmployee Employee
         {
             get { return _Employee; }
             set { SetProperty(ref _Employee, value); }
@@ -45,14 +45,14 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _LogoutDate, value); }
         }
 
-        private TimeLogType _Type;
-        public TimeLogType Type
+        private ITimeLogType _Type;
+        public ITimeLogType Type
         {
             get { return _Type; }
             set { SetProperty(ref _Type, value); }
         }
 
-        public override TimeLog GetSource()
+        public override ITimeLog GetSource()
         {
             if (Employee != null)
             {

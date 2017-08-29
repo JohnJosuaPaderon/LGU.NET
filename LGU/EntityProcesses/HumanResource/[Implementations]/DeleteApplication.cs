@@ -15,36 +15,36 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public Application Application { get; set; }
+        public IApplication Application { get; set; }
 
-        private SqlQueryInfo<Application> QueryInfo =>
-            SqlQueryInfo<Application>.CreateProcedureQueryInfo(Application, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IApplication> QueryInfo =>
+            SqlQueryInfo<IApplication>.CreateProcedureQueryInfo(Application, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", Application.Id)
             .AddLogByParameter();
 
-        private IProcessResult<Application> GetProcessResult(Application data, SqlCommand command, int affectedRows)
+        private IProcessResult<IApplication> GetProcessResult(IApplication data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                return new ProcessResult<Application>(data, ProcessResultStatus.Success);
+                return new ProcessResult<IApplication>(data, ProcessResultStatus.Success);
             }
             else
             {
-                return new ProcessResult<Application>(ProcessResultStatus.Failed, "Failed to delete application.");
+                return new ProcessResult<IApplication>(ProcessResultStatus.Failed, "Failed to delete application.");
             }
         }
 
-        public IProcessResult<Application> Execute()
+        public IProcessResult<IApplication> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<Application>> ExecuteAsync()
+        public Task<IProcessResult<IApplication>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<Application>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IApplication>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

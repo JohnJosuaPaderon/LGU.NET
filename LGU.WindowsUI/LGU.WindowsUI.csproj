@@ -254,6 +254,7 @@
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditLocatorDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\EmployeeFingerPrintEnrollmentViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\KioskActualTimeLogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\KioskLocatorViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\LauncherViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\LocatorViewModel.cs" />

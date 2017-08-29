@@ -15,29 +15,29 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public Position Position { get; set; }
+        public IPosition Position { get; set; }
 
-        private SqlQueryInfo<Position> QueryInfo =>
-            SqlQueryInfo<Position>.CreateProcedureQueryInfo(Position, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IPosition> QueryInfo =>
+            SqlQueryInfo<IPosition>.CreateProcedureQueryInfo(Position, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", Position.Id)
             .AddLogByParameter();
 
-        private IProcessResult<Position> GetProcessResult(Position data, SqlCommand command, int affectedRows)
+        private IProcessResult<IPosition> GetProcessResult(IPosition data, SqlCommand command, int affectedRows)
         {
-            return affectedRows > 0 ? new ProcessResult<Position>(data) : new ProcessResult<Position>(ProcessResultStatus.Failed, "Failed to delete position.");
+            return affectedRows > 0 ? new ProcessResult<IPosition>(data) : new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Failed to delete position.");
         }
 
-        public IProcessResult<Position> Execute()
+        public IProcessResult<IPosition> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<Position>> ExecuteAsync()
+        public Task<IProcessResult<IPosition>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<Position>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IPosition>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

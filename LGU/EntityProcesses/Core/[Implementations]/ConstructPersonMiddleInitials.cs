@@ -9,7 +9,7 @@ namespace LGU.EntityProcesses.Core
 {
     internal sealed class ConstructPersonMiddleInitials : IConstructPersonMiddleInitials
     {
-        public Person Person { get; set; }
+        public IPerson Person { get; set; }
 
         public IProcessResult<string> Execute()
         {
@@ -36,7 +36,7 @@ namespace LGU.EntityProcesses.Core
             throw new NotImplementedException();
         }
 
-        private static bool Validate(Person person, ref ProcessResultStatus status, ref string message)
+        private static bool Validate(IPerson person, ref ProcessResultStatus status, ref string message)
         {
             var returnValue = true;
 
@@ -50,7 +50,7 @@ namespace LGU.EntityProcesses.Core
             return returnValue;
         }
 
-        private static string Construct(Person person, ref ProcessResultStatus status, ref string message)
+        private static string Construct(IPerson person, ref ProcessResultStatus status, ref string message)
         {
             var hasMiddleName = HasValue(person.MiddleName);
 

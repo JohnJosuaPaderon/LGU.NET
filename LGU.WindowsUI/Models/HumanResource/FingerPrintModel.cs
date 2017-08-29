@@ -4,9 +4,9 @@ using System.Diagnostics;
 
 namespace LGU.Models.HumanResource
 {
-    public sealed class FingerPrintModel : ModelBase<FingerPrint>
+    public sealed class FingerPrintModel : ModelBase<IFingerPrint>
     {
-        public FingerPrintModel(FingerPrint source) : base(source)
+        public FingerPrintModel(IFingerPrint source) : base(source)
         {
             FingerType = source.FingerType;
             HandType = source.HandType;
@@ -34,7 +34,7 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Data, value, () => Debug.WriteLine("Set Data : HandType = {0}; FingerType = {1}", HandType, FingerType)); }
         }
 
-        public override FingerPrint GetSource()
+        public override IFingerPrint GetSource()
         {
             var fingerPrint = new FingerPrint(FingerType, HandType)
             {

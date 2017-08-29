@@ -2,9 +2,9 @@
 
 namespace LGU.Models.HumanResource
 {
-    public sealed class LocatorLeaveTypeModel : ModelBase<LocatorLeaveType>
+    public sealed class LocatorLeaveTypeModel : ModelBase<ILocatorLeaveType>
     {
-        public LocatorLeaveTypeModel(LocatorLeaveType source) : base(source)
+        public LocatorLeaveTypeModel(ILocatorLeaveType source) : base(source)
         {
             Id = source.Id;
             Description = source.Description;
@@ -24,7 +24,7 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Description, value); }
         }
 
-        public override LocatorLeaveType GetSource()
+        public override ILocatorLeaveType GetSource()
         {
             return new LocatorLeaveType()
             {

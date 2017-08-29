@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class ModuleManager : ManagerBase<Module, short>, IModuleManager
+    public sealed class ModuleManager : ManagerBase<IModule, short>, IModuleManager
     {
         private readonly IGetModuleById r_GetModuleById;
         private readonly IGetModuleList r_GetModuleList;
@@ -19,13 +19,13 @@ namespace LGU.EntityManagers.Core
             r_GetModuleList = getModuleList;
         }
 
-        public IProcessResult<Module> GetById(short id)
+        public IProcessResult<IModule> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Module>(StaticSource[id]);
+                    return new ProcessResult<IModule>(StaticSource[id]);
                 }
                 else
                 {
@@ -38,17 +38,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Module>(ProcessResultStatus.Failed, "Invalid module identifier.");
+                return new ProcessResult<IModule>(ProcessResultStatus.Failed, "Invalid module identifier.");
             }
         }
 
-        public async Task<IProcessResult<Module>> GetByIdAsync(short id)
+        public async Task<IProcessResult<IModule>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Module>(StaticSource[id]);
+                    return new ProcessResult<IModule>(StaticSource[id]);
                 }
                 else
                 {
@@ -61,17 +61,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Module>(ProcessResultStatus.Failed, "Invalid module identifier.");
+                return new ProcessResult<IModule>(ProcessResultStatus.Failed, "Invalid module identifier.");
             }
         }
 
-        public async Task<IProcessResult<Module>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IModule>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Module>(StaticSource[id]);
+                    return new ProcessResult<IModule>(StaticSource[id]);
                 }
                 else
                 {
@@ -84,11 +84,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<Module>(ProcessResultStatus.Failed, "Invalid module identifier.");
+                return new ProcessResult<IModule>(ProcessResultStatus.Failed, "Invalid module identifier.");
             }
         }
 
-        public IEnumerableProcessResult<Module> GetList()
+        public IEnumerableProcessResult<IModule> GetList()
         {
             var result = r_GetModuleList.Execute();
             AddUpdateIfSuccess(result);
@@ -96,7 +96,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<Module>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IModule>> GetListAsync()
         {
             var result = await r_GetModuleList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -104,7 +104,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<Module>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IModule>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetModuleList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);

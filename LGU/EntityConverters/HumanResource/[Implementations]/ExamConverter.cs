@@ -23,7 +23,7 @@ namespace LGU.EntityConverters.HumanResource
             r_ExamSetManager = examSetManager;
         }
 
-        private Exam GetData(Application application, ExamSet set, SqlDataReader reader)
+        private IExam GetData(IApplication application, IExamSet set, SqlDataReader reader)
         {
             if (application != null)
             {
@@ -41,7 +41,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private Exam GetData(SqlDataReader reader)
+        private IExam GetData(SqlDataReader reader)
         {
             var applicationResult = r_ApplicationManager.GetById(reader.GetInt64("ApplicationId"));
             var setResult = r_ExamSetManager.GetById(reader.GetInt32("SetId"));
@@ -49,7 +49,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, setResult.Data, reader);
         }
 
-        private async Task<Exam> GetDataAsync(SqlDataReader reader)
+        private async Task<IExam> GetDataAsync(SqlDataReader reader)
         {
             var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"));
             var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"));
@@ -57,7 +57,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, setResult.Data, reader);
         }
 
-        private async Task<Exam> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IExam> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"), cancellationToken);
             var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"), cancellationToken);
@@ -65,99 +65,99 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, setResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<Exam> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IExam> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Exam>();
+                var list = new List<IExam>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Exam>(list);
+                return new EnumerableProcessResult<IExam>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Exam>(ex);
+                return new EnumerableProcessResult<IExam>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Exam>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IExam>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Exam>();
+                var list = new List<IExam>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<Exam>(list);
+                return new EnumerableProcessResult<IExam>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Exam>(ex);
+                return new EnumerableProcessResult<IExam>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Exam>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IExam>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<Exam>();
+                var list = new List<IExam>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableProcessResult<Exam>(list);
+                return new EnumerableProcessResult<IExam>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Exam>(ex);
+                return new EnumerableProcessResult<IExam>(ex);
             }
         }
 
-        public IProcessResult<Exam> FromReader(SqlDataReader reader)
+        public IProcessResult<IExam> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<Exam>(GetData(reader));
+                return new ProcessResult<IExam>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Exam>(ex);
+                return new ProcessResult<IExam>(ex);
             }
         }
 
-        public async Task<IProcessResult<Exam>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IExam>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<Exam>(await GetDataAsync(reader));
+                return new ProcessResult<IExam>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Exam>(ex);
+                return new ProcessResult<IExam>(ex);
             }
         }
 
-        public async Task<IProcessResult<Exam>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExam>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<Exam>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<IExam>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Exam>(ex);
+                return new ProcessResult<IExam>(ex);
             }
         }
     }

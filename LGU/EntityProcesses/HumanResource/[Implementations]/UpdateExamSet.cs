@@ -15,38 +15,38 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public ExamSet ExamSet { get; set; }
+        public IExamSet ExamSet { get; set; }
 
-        private SqlQueryInfo<ExamSet> QueryInfo =>
-            SqlQueryInfo<ExamSet>.CreateProcedureQueryInfo(ExamSet, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IExamSet> QueryInfo =>
+            SqlQueryInfo<IExamSet>.CreateProcedureQueryInfo(ExamSet, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", ExamSet.Id)
             .AddInputParameter("@_Description", ExamSet.Description)
             .AddInputParameter("@_PassingScore", ExamSet.PassingScore)
             .AddLogByParameter();
 
-        private IProcessResult<ExamSet> GetProcessResult(ExamSet data, SqlCommand command, int affectedRows)
+        private IProcessResult<IExamSet> GetProcessResult(IExamSet data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                return new ProcessResult<ExamSet>(data);
+                return new ProcessResult<IExamSet>(data);
             }
             else
             {
-                return new ProcessResult<ExamSet>(ProcessResultStatus.Failed, "Failed to update exam set.");
+                return new ProcessResult<IExamSet>(ProcessResultStatus.Failed, "Failed to update exam set.");
             }
         }
 
-        public IProcessResult<ExamSet> Execute()
+        public IProcessResult<IExamSet> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<ExamSet>> ExecuteAsync()
+        public Task<IProcessResult<IExamSet>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<ExamSet>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IExamSet>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

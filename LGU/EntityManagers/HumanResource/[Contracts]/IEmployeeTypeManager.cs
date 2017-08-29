@@ -3,7 +3,7 @@ using LGU.Entities.HumanResource;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface IEmployeeTypeManager : IStaticEntityManager<EmployeeType, short>
+    public interface IEmployeeTypeManager : IStaticEntityManager<IEmployeeType, short>
     {
     }
 }

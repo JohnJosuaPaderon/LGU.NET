@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class UserManager : ManagerBase<User, long>, IUserManager
+    public sealed class UserManager : ManagerBase<IUser, long>, IUserManager
     {
         private readonly IDeleteUser r_DeleteUser;
         private readonly IGetUserById r_GetUserById;
@@ -35,7 +35,7 @@ namespace LGU.EntityManagers.Core
             r_IsUsernameExists = sUsernameExists;
         }
 
-        public IProcessResult<User> Delete(User user)
+        public IProcessResult<IUser> Delete(IUser user)
         {
             r_DeleteUser.User = user;
             var result = r_DeleteUser.Execute();
@@ -44,7 +44,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IProcessResult<User>> DeleteAsync(User user, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IUser>> DeleteAsync(IUser user, CancellationToken cancellationToken)
         {
             r_DeleteUser.User = user;
             var result = await r_DeleteUser.ExecuteAsync(cancellationToken);
@@ -53,7 +53,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IProcessResult<User>> DeleteAsync(User user)
+        public async Task<IProcessResult<IUser>> DeleteAsync(IUser user)
         {
             r_DeleteUser.User = user;
             var result = await r_DeleteUser.ExecuteAsync();
@@ -62,7 +62,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public IProcessResult<User> GetById(long userId)
+        public IProcessResult<IUser> GetById(long userId)
         {
             r_GetUserById.UserId = userId;
             var result = r_GetUserById.Execute();
@@ -71,7 +71,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IProcessResult<User>> GetByIdAsync(long userId, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IUser>> GetByIdAsync(long userId, CancellationToken cancellationToken)
         {
             r_GetUserById.UserId = userId;
             var result = await r_GetUserById.ExecuteAsync(cancellationToken);
@@ -80,7 +80,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IProcessResult<User>> GetByIdAsync(long userId)
+        public async Task<IProcessResult<IUser>> GetByIdAsync(long userId)
         {
             r_GetUserById.UserId = userId;
             var result = await r_GetUserById.ExecuteAsync();
@@ -89,7 +89,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public IEnumerableProcessResult<User> GetList()
+        public IEnumerableProcessResult<IUser> GetList()
         {
             var result = r_GetUserList.Execute();
             AddUpdateIfSuccess(result);
@@ -97,7 +97,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<User>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IUser>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetUserList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);
@@ -105,7 +105,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<User>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IUser>> GetListAsync()
         {
             var result = await r_GetUserList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -113,7 +113,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public IProcessResult<User> Insert(User user)
+        public IProcessResult<IUser> Insert(IUser user)
         {
             r_InsertUser.User = user;
             var result = r_InsertUser.Execute();
@@ -122,7 +122,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IProcessResult<User>> InsertAsync(User user, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IUser>> InsertAsync(IUser user, CancellationToken cancellationToken)
         {
             r_InsertUser.User = user;
             var result = await r_InsertUser.ExecuteAsync(cancellationToken);
@@ -131,7 +131,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IProcessResult<User>> InsertAsync(User user)
+        public async Task<IProcessResult<IUser>> InsertAsync(IUser user)
         {
             r_InsertUser.User = user;
             var result = await r_InsertUser.ExecuteAsync();
@@ -140,7 +140,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public IProcessResult<User> Update(User user)
+        public IProcessResult<IUser> Update(IUser user)
         {
             r_UpdateUser.User = user;
             var result = r_UpdateUser.Execute();
@@ -149,7 +149,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IProcessResult<User>> UpdateAsync(User user, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IUser>> UpdateAsync(IUser user, CancellationToken cancellationToken)
         {
             r_UpdateUser.User = user;
             var result = await r_UpdateUser.ExecuteAsync(cancellationToken);
@@ -158,7 +158,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IProcessResult<User>> UpdateAsync(User user)
+        public async Task<IProcessResult<IUser>> UpdateAsync(IUser user)
         {
             r_UpdateUser.User = user;
             var result = await r_UpdateUser.ExecuteAsync();
@@ -167,19 +167,19 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public IProcessResult<User> Login(UserCredentials userCredentials)
+        public IProcessResult<IUser> Login(IUserCredentials userCredentials)
         {
             r_LoginUser.UserCredentials = userCredentials;
             return r_LoginUser.Execute();
         }
 
-        public Task<IProcessResult<User>> LoginAsync(UserCredentials userCredentials)
+        public Task<IProcessResult<IUser>> LoginAsync(IUserCredentials userCredentials)
         {
             r_LoginUser.UserCredentials = userCredentials;
             return r_LoginUser.ExecuteAsync();
         }
 
-        public Task<IProcessResult<User>> LoginAsync(UserCredentials userCredentials, CancellationToken cancellationToken)
+        public Task<IProcessResult<IUser>> LoginAsync(IUserCredentials userCredentials, CancellationToken cancellationToken)
         {
             r_LoginUser.UserCredentials = userCredentials;
             return r_LoginUser.ExecuteAsync(cancellationToken);

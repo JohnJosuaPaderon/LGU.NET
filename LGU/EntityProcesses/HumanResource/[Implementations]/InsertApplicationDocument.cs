@@ -16,10 +16,10 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public ApplicationDocument ApplicationDocument { get; set; }
+        public IApplicationDocument ApplicationDocument { get; set; }
 
-        private SqlQueryInfo<ApplicationDocument> QueryInfo =>
-            SqlQueryInfo<ApplicationDocument>.CreateProcedureQueryInfo(ApplicationDocument, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IApplicationDocument> QueryInfo =>
+            SqlQueryInfo<IApplicationDocument>.CreateProcedureQueryInfo(ApplicationDocument, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddOutputParameter("@_Id", DbType.Int64)
             .AddInputParameter("@_Title", ApplicationDocument.Title)
             .AddInputParameter("@_Description", ApplicationDocument.Description)
@@ -29,30 +29,30 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_ApplicationId", ApplicationDocument.Application?.Id)
             .AddLogByParameter();
 
-        private IProcessResult<ApplicationDocument> GetProcessResult(ApplicationDocument data, SqlCommand command, int affectedRows)
+        private IProcessResult<IApplicationDocument> GetProcessResult(IApplicationDocument data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
                 data.Id = command.Parameters.GetInt64("@_Id");
-                return new ProcessResult<ApplicationDocument>(data);
+                return new ProcessResult<IApplicationDocument>(data);
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Failed to insert application document.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Failed to insert application document.");
             }
         }
 
-        public IProcessResult<ApplicationDocument> Execute()
+        public IProcessResult<IApplicationDocument> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<ApplicationDocument>> ExecuteAsync()
+        public Task<IProcessResult<IApplicationDocument>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<ApplicationDocument>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IApplicationDocument>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

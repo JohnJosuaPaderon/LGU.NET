@@ -16,39 +16,39 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public Position Position { get; set; }
+        public IPosition Position { get; set; }
 
-        private SqlQueryInfo<Position> QueryInfo =>
-            SqlQueryInfo<Position>.CreateProcedureQueryInfo(Position, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IPosition> QueryInfo =>
+            SqlQueryInfo<IPosition>.CreateProcedureQueryInfo(Position, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddOutputParameter("@_Id", DbType.Int32)
             .AddInputParameter("@_Description", Position.Description)
             .AddInputParameter("@_Abbreviation", Position.Abbreviation)
             .AddLogByParameter();
 
-        private IProcessResult<Position> GetProcessResult(Position data, SqlCommand command, int affectedRows)
+        private IProcessResult<IPosition> GetProcessResult(IPosition data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
                 Position.Id = command.Parameters.GetInt32("@_Id");
-                return new ProcessResult<Position>(data);
+                return new ProcessResult<IPosition>(data);
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Failed to insert position.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Failed to insert position.");
             }
         }
 
-        public IProcessResult<Position> Execute()
+        public IProcessResult<IPosition> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<Position>> ExecuteAsync()
+        public Task<IProcessResult<IPosition>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<Position>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IPosition>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

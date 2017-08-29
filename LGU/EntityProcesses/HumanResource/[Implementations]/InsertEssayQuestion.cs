@@ -16,10 +16,10 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public EssayQuestion EssayQuestion { get; set; }
+        public IEssayQuestion EssayQuestion { get; set; }
 
-        private SqlQueryInfo<EssayQuestion> QueryInfo =>
-            SqlQueryInfo<EssayQuestion>.CreateProcedureQueryInfo(EssayQuestion, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IEssayQuestion> QueryInfo =>
+            SqlQueryInfo<IEssayQuestion>.CreateProcedureQueryInfo(EssayQuestion, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddOutputParameter("@_Id", DbType.Int64)
             .AddInputParameter("@_SetId", EssayQuestion.Set?.Id)
             .AddInputParameter("@_Description", EssayQuestion.Description)
@@ -27,30 +27,30 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_MaxAnswerLength", EssayQuestion.MaxAnswerLength)
             .AddLogByParameter();
 
-        private IProcessResult<EssayQuestion> GetProcessResult(EssayQuestion data, SqlCommand command, int affectedRows)
+        private IProcessResult<IEssayQuestion> GetProcessResult(IEssayQuestion data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
                 data.Id = command.Parameters.GetInt64("@_Id");
-                return new ProcessResult<EssayQuestion>(data);
+                return new ProcessResult<IEssayQuestion>(data);
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Failed to insert essay question.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Failed to insert essay question.");
             }
         }
 
-        public IProcessResult<EssayQuestion> Execute()
+        public IProcessResult<IEssayQuestion> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<EssayQuestion>> ExecuteAsync()
+        public Task<IProcessResult<IEssayQuestion>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<EssayQuestion>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IEssayQuestion>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

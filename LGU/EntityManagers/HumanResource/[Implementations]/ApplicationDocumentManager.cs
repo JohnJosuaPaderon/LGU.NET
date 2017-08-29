@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class ApplicationDocumentManager : ManagerBase<ApplicationDocument, long>, IApplicationDocumentManager
+    public sealed class ApplicationDocumentManager : ManagerBase<IApplicationDocument, long>, IApplicationDocumentManager
     {
         private readonly IDeleteApplicationDocument r_Delete;
         private readonly IGetApplicationDocumentById r_GetById;
@@ -28,7 +28,7 @@ namespace LGU.EntityManagers.HumanResource
             r_Update = update;
         }
 
-        public IProcessResult<ApplicationDocument> Delete(ApplicationDocument data)
+        public IProcessResult<IApplicationDocument> Delete(IApplicationDocument data)
         {
             if (data != null)
             {
@@ -37,11 +37,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
             }
         }
 
-        public async Task<IProcessResult<ApplicationDocument>> DeleteAsync(ApplicationDocument data)
+        public async Task<IProcessResult<IApplicationDocument>> DeleteAsync(IApplicationDocument data)
         {
             if (data != null)
             {
@@ -50,11 +50,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
             }
         }
 
-        public async Task<IProcessResult<ApplicationDocument>> DeleteAsync(ApplicationDocument data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicationDocument>> DeleteAsync(IApplicationDocument data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -63,17 +63,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
             }
         }
 
-        public IProcessResult<ApplicationDocument> GetById(long id)
+        public IProcessResult<IApplicationDocument> GetById(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<ApplicationDocument>(StaticSource[id]);
+                    return new ProcessResult<IApplicationDocument>(StaticSource[id]);
                 }
                 else
                 {
@@ -83,17 +83,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document identifier.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document identifier.");
             }
         }
 
-        public async Task<IProcessResult<ApplicationDocument>> GetByIdAsync(long id)
+        public async Task<IProcessResult<IApplicationDocument>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<ApplicationDocument>(StaticSource[id]);
+                    return new ProcessResult<IApplicationDocument>(StaticSource[id]);
                 }
                 else
                 {
@@ -103,17 +103,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document identifier.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document identifier.");
             }
         }
 
-        public async Task<IProcessResult<ApplicationDocument>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicationDocument>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<ApplicationDocument>(StaticSource[id]);
+                    return new ProcessResult<IApplicationDocument>(StaticSource[id]);
                 }
                 else
                 {
@@ -123,26 +123,26 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document identifier.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document identifier.");
             }
         }
 
-        public IEnumerableProcessResult<ApplicationDocument> GetList()
+        public IEnumerableProcessResult<IApplicationDocument> GetList()
         {
             return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
-        public async Task<IEnumerableProcessResult<ApplicationDocument>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IApplicationDocument>> GetListAsync()
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
-        public async Task<IEnumerableProcessResult<ApplicationDocument>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IApplicationDocument>> GetListAsync(CancellationToken cancellationToken)
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }
 
-        public IProcessResult<ApplicationDocument> Insert(ApplicationDocument data)
+        public IProcessResult<IApplicationDocument> Insert(IApplicationDocument data)
         {
             if (data != null)
             {
@@ -151,11 +151,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
             }
         }
 
-        public async Task<IProcessResult<ApplicationDocument>> InsertAsync(ApplicationDocument data)
+        public async Task<IProcessResult<IApplicationDocument>> InsertAsync(IApplicationDocument data)
         {
             if (data != null)
             {
@@ -164,11 +164,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
             }
         }
 
-        public async Task<IProcessResult<ApplicationDocument>> InsertAsync(ApplicationDocument data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicationDocument>> InsertAsync(IApplicationDocument data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -177,11 +177,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
             }
         }
 
-        public IProcessResult<ApplicationDocument> Update(ApplicationDocument data)
+        public IProcessResult<IApplicationDocument> Update(IApplicationDocument data)
         {
             if (data != null)
             {
@@ -190,11 +190,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
             }
         }
 
-        public async Task<IProcessResult<ApplicationDocument>> UpdateAsync(ApplicationDocument data)
+        public async Task<IProcessResult<IApplicationDocument>> UpdateAsync(IApplicationDocument data)
         {
             if (data != null)
             {
@@ -203,11 +203,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
             }
         }
 
-        public async Task<IProcessResult<ApplicationDocument>> UpdateAsync(ApplicationDocument data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicationDocument>> UpdateAsync(IApplicationDocument data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -216,7 +216,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
+                return new ProcessResult<IApplicationDocument>(ProcessResultStatus.Failed, "Invalid application document.");
             }
         }
     }

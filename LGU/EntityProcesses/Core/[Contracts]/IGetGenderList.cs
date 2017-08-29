@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.Core
 {
-    public interface IGetGenderList : IEnumerableProcess<Gender>
+    public interface IGetGenderList : IEnumerableProcess<IGender>
     {
     }
 }

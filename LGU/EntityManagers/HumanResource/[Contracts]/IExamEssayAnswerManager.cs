@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface IExamEssayAnswerManager : IDataManager<ExamEssayAnswer>
+    public interface IExamEssayAnswerManager : IDataManager<IExamEssayAnswer>
     {
     }
 }

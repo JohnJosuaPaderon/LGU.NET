@@ -23,7 +23,7 @@ namespace LGU.EntityConverters.HumanResource
             r_EssayQuestionManager = essayQuestionManager;
         }
 
-        private ExamEssayAnswer GetData(Exam exam, EssayQuestion question, SqlDataReader reader)
+        private IExamEssayAnswer GetData(IExam exam, IEssayQuestion question, SqlDataReader reader)
         {
             if (exam != null && question != null)
             {
@@ -39,7 +39,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private ExamEssayAnswer GetData(SqlDataReader reader)
+        private IExamEssayAnswer GetData(SqlDataReader reader)
         {
             var examResult = r_ExamManager.GetById(reader.GetInt64("ExamId"));
             var questionResult = r_EssayQuestionManager.GetById(reader.GetInt64("QuestionId"));
@@ -47,7 +47,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(examResult.Data, questionResult.Data, reader);
         }
 
-        private async Task<ExamEssayAnswer> GetDataAsync(SqlDataReader reader)
+        private async Task<IExamEssayAnswer> GetDataAsync(SqlDataReader reader)
         {
             var examResult = await r_ExamManager.GetByIdAsync(reader.GetInt64("ExamId"));
             var questionResult = await r_EssayQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"));
@@ -55,7 +55,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(examResult.Data, questionResult.Data, reader);
         }
 
-        private async Task<ExamEssayAnswer> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IExamEssayAnswer> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var examResult = await r_ExamManager.GetByIdAsync(reader.GetInt64("ExamId"), cancellationToken);
             var questionResult = await r_EssayQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"), cancellationToken);
@@ -63,99 +63,99 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(examResult.Data, questionResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<ExamEssayAnswer> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IExamEssayAnswer> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<ExamEssayAnswer>();
+                var list = new List<IExamEssayAnswer>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<ExamEssayAnswer>(list);
+                return new EnumerableProcessResult<IExamEssayAnswer>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ExamEssayAnswer>(ex);
+                return new EnumerableProcessResult<IExamEssayAnswer>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<ExamEssayAnswer>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IExamEssayAnswer>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<ExamEssayAnswer>();
+                var list = new List<IExamEssayAnswer>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<ExamEssayAnswer>(list);
+                return new EnumerableProcessResult<IExamEssayAnswer>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ExamEssayAnswer>(ex);
+                return new EnumerableProcessResult<IExamEssayAnswer>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<ExamEssayAnswer>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IExamEssayAnswer>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<ExamEssayAnswer>();
+                var list = new List<IExamEssayAnswer>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableProcessResult<ExamEssayAnswer>(list);
+                return new EnumerableProcessResult<IExamEssayAnswer>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ExamEssayAnswer>(ex);
+                return new EnumerableProcessResult<IExamEssayAnswer>(ex);
             }
         }
 
-        public IProcessResult<ExamEssayAnswer> FromReader(SqlDataReader reader)
+        public IProcessResult<IExamEssayAnswer> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<ExamEssayAnswer>(GetData(reader));
+                return new ProcessResult<IExamEssayAnswer>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ExamEssayAnswer>(ex);
+                return new ProcessResult<IExamEssayAnswer>(ex);
             }
         }
 
-        public async Task<IProcessResult<ExamEssayAnswer>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IExamEssayAnswer>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<ExamEssayAnswer>(await GetDataAsync(reader));
+                return new ProcessResult<IExamEssayAnswer>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ExamEssayAnswer>(ex);
+                return new ProcessResult<IExamEssayAnswer>(ex);
             }
         }
 
-        public async Task<IProcessResult<ExamEssayAnswer>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamEssayAnswer>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<ExamEssayAnswer>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<IExamEssayAnswer>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ExamEssayAnswer>(ex);
+                return new ProcessResult<IExamEssayAnswer>(ex);
             }
         }
     }

@@ -3,8 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IDeleteApplicant : IProcess<Applicant>
+    public interface IDeleteApplicant : IProcess<IApplicant>
     {
-        Applicant Applicant { get; set; }
+        IApplicant Applicant { get; set; }
     }
 }

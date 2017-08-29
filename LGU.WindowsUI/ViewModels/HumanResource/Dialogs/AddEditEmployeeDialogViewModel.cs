@@ -30,7 +30,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
         }
 
         public DelegateCommand SaveCommand { get; }
-        public ObservableCollection<Department> Departments { get; } = new ObservableCollection<Department>();
+        public ObservableCollection<IDepartment> Departments { get; } = new ObservableCollection<IDepartment>();
 
         private EmployeeModel _Employee;
         public EmployeeModel Employee

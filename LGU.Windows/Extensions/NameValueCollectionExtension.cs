@@ -14,10 +14,10 @@ namespace LGU.Extensions
             }
         }
 
-        private static T GetValueBase<T>(NameValueCollection jObject, string key, Func<object, T> converter)
+        private static T GetValueBase<T>(NameValueCollection nameValues, string key, Func<object, T> converter)
         {
             Validate(key);
-            return converter(jObject[key]);
+            return converter(nameValues[key]);
         }
 
         public static bool GetBoolean(this NameValueCollection instance, string key)

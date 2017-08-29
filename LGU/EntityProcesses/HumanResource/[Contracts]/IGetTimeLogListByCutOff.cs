@@ -4,7 +4,7 @@ using System;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetTimeLogListByCutOff : IEnumerableProcess<TimeLog>
+    public interface IGetTimeLogListByCutOff : IEnumerableProcess<ITimeLog>
     {
         ValueRange<DateTime> CutOff { get; set; }
     }

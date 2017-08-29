@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetLocatorLeaveTypeById : IProcess<LocatorLeaveType>
+    public interface IGetLocatorLeaveTypeById : IProcess<ILocatorLeaveType>
     {
         short LocatorLeaveTypeId { get; set; }
     }

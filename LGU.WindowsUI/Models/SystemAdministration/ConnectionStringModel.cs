@@ -2,9 +2,9 @@
 
 namespace LGU.Models.SystemAdministration
 {
-    public sealed class ConnectionStringModel : ModelBase<ConnectionString>
+    public sealed class ConnectionStringModel : ModelBase<IConnectionString>
     {
-        public ConnectionStringModel(ConnectionString source) : base(source)
+        public ConnectionStringModel(IConnectionString source) : base(source)
         {
             Key = source.Key;
             Value = SecureStringConverter.Convert(source.Value);
@@ -24,7 +24,7 @@ namespace LGU.Models.SystemAdministration
             set { SetProperty(ref _Value, value); }
         }
 
-        public override ConnectionString GetSource()
+        public override IConnectionString GetSource()
         {
             return new ConnectionString()
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class LocatorManager : ManagerBase<Locator, long>, ILocatorManager
+    public sealed class LocatorManager : ManagerBase<ILocator, long>, ILocatorManager
     {
         private readonly IDeleteLocator r_Delete;
         private readonly IGetLocatorById r_GetById;
@@ -28,7 +28,7 @@ namespace LGU.EntityManagers.HumanResource
             r_Update = update;
         }
 
-        public IProcessResult<Locator> Delete(Locator data)
+        public IProcessResult<ILocator> Delete(ILocator data)
         {
             if (data != null)
             {
@@ -37,11 +37,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator.");
             }
         }
 
-        public async Task<IProcessResult<Locator>> DeleteAsync(Locator data)
+        public async Task<IProcessResult<ILocator>> DeleteAsync(ILocator data)
         {
             if (data != null)
             {
@@ -50,11 +50,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator.");
             }
         }
 
-        public async Task<IProcessResult<Locator>> DeleteAsync(Locator data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ILocator>> DeleteAsync(ILocator data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -63,17 +63,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator.");
             }
         }
 
-        public IProcessResult<Locator> GetById(long id)
+        public IProcessResult<ILocator> GetById(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Locator>(StaticSource[id]);
+                    return new ProcessResult<ILocator>(StaticSource[id]);
                 }
                 else
                 {
@@ -83,17 +83,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator identifier.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator identifier.");
             }
         }
 
-        public async Task<IProcessResult<Locator>> GetByIdAsync(long id)
+        public async Task<IProcessResult<ILocator>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Locator>(StaticSource[id]);
+                    return new ProcessResult<ILocator>(StaticSource[id]);
                 }
                 else
                 {
@@ -103,17 +103,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator identifier.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator identifier.");
             }
         }
 
-        public async Task<IProcessResult<Locator>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ILocator>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Locator>(StaticSource[id]);
+                    return new ProcessResult<ILocator>(StaticSource[id]);
                 }
                 else
                 {
@@ -123,26 +123,26 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator identifier.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator identifier.");
             }
         }
 
-        public IEnumerableProcessResult<Locator> GetList()
+        public IEnumerableProcessResult<ILocator> GetList()
         {
             return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
-        public async Task<IEnumerableProcessResult<Locator>> GetListAsync()
+        public async Task<IEnumerableProcessResult<ILocator>> GetListAsync()
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
-        public async Task<IEnumerableProcessResult<Locator>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ILocator>> GetListAsync(CancellationToken cancellationToken)
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }
 
-        public IProcessResult<Locator> Insert(Locator data)
+        public IProcessResult<ILocator> Insert(ILocator data)
         {
             if (data != null)
             {
@@ -151,11 +151,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator.");
             }
         }
 
-        public async Task<IProcessResult<Locator>> InsertAsync(Locator data)
+        public async Task<IProcessResult<ILocator>> InsertAsync(ILocator data)
         {
             if (data != null)
             {
@@ -164,11 +164,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator.");
             }
         }
 
-        public async Task<IProcessResult<Locator>> InsertAsync(Locator data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ILocator>> InsertAsync(ILocator data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -177,11 +177,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator.");
             }
         }
 
-        public IProcessResult<Locator> Update(Locator data)
+        public IProcessResult<ILocator> Update(ILocator data)
         {
             if (data != null)
             {
@@ -190,11 +190,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator.");
             }
         }
 
-        public async Task<IProcessResult<Locator>> UpdateAsync(Locator data)
+        public async Task<IProcessResult<ILocator>> UpdateAsync(ILocator data)
         {
             if (data != null)
             {
@@ -203,11 +203,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator.");
             }
         }
 
-        public async Task<IProcessResult<Locator>> UpdateAsync(Locator data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ILocator>> UpdateAsync(ILocator data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -216,7 +216,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Locator>(ProcessResultStatus.Failed, "Invalid locator.");
+                return new ProcessResult<ILocator>(ProcessResultStatus.Failed, "Invalid locator.");
             }
         }
     }

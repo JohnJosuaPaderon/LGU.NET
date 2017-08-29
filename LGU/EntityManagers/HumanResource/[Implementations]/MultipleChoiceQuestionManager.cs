@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class MultipleChoiceQuestionManager : ManagerBase<MultipleChoiceQuestion, long>, IMultipleChoiceQuestionManager
+    public sealed class MultipleChoiceQuestionManager : ManagerBase<IMultipleChoiceQuestion, long>, IMultipleChoiceQuestionManager
     {
         private readonly IDeleteMultipleChoiceQuestion r_DeleteMultipleChoiceQuestion;
         private readonly IGetMultipleChoiceQuestionById r_GetMultipleChoiceQuestionById;
@@ -28,7 +28,7 @@ namespace LGU.EntityManagers.HumanResource
             r_UpdateMultipleChoiceQuestion = updateMultipleChoiceQuestion;
         }
 
-        public IProcessResult<MultipleChoiceQuestion> Delete(MultipleChoiceQuestion data)
+        public IProcessResult<IMultipleChoiceQuestion> Delete(IMultipleChoiceQuestion data)
         {
             if (data != null)
             {
@@ -40,11 +40,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
             }
         }
 
-        public async Task<IProcessResult<MultipleChoiceQuestion>> DeleteAsync(MultipleChoiceQuestion data)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> DeleteAsync(IMultipleChoiceQuestion data)
         {
             if (data != null)
             {
@@ -56,11 +56,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
             }
         }
 
-        public async Task<IProcessResult<MultipleChoiceQuestion>> DeleteAsync(MultipleChoiceQuestion data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> DeleteAsync(IMultipleChoiceQuestion data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -72,17 +72,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
             }
         }
 
-        public IProcessResult<MultipleChoiceQuestion> GetById(long id)
+        public IProcessResult<IMultipleChoiceQuestion> GetById(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<MultipleChoiceQuestion>(StaticSource[id]);
+                    return new ProcessResult<IMultipleChoiceQuestion>(StaticSource[id]);
                 }
                 else
                 {
@@ -95,17 +95,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question identifier.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question identifier.");
             }
         }
 
-        public async Task<IProcessResult<MultipleChoiceQuestion>> GetByIdAsync(long id)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<MultipleChoiceQuestion>(StaticSource[id]);
+                    return new ProcessResult<IMultipleChoiceQuestion>(StaticSource[id]);
                 }
                 else
                 {
@@ -118,17 +118,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question identifier.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question identifier.");
             }
         }
 
-        public async Task<IProcessResult<MultipleChoiceQuestion>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<MultipleChoiceQuestion>(StaticSource[id]);
+                    return new ProcessResult<IMultipleChoiceQuestion>(StaticSource[id]);
                 }
                 else
                 {
@@ -141,11 +141,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question identifier.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question identifier.");
             }
         }
 
-        public IEnumerableProcessResult<MultipleChoiceQuestion> GetList()
+        public IEnumerableProcessResult<IMultipleChoiceQuestion> GetList()
         {
             var result = r_GetMultipleChoiceQuestionList.Execute();
             AddUpdateIfSuccess(result);
@@ -153,7 +153,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<MultipleChoiceQuestion>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IMultipleChoiceQuestion>> GetListAsync()
         {
             var result = await r_GetMultipleChoiceQuestionList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -161,7 +161,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<MultipleChoiceQuestion>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IMultipleChoiceQuestion>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetMultipleChoiceQuestionList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);
@@ -169,7 +169,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public IProcessResult<MultipleChoiceQuestion> Insert(MultipleChoiceQuestion data)
+        public IProcessResult<IMultipleChoiceQuestion> Insert(IMultipleChoiceQuestion data)
         {
             if (data != null)
             {
@@ -181,11 +181,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
             }
         }
 
-        public async Task<IProcessResult<MultipleChoiceQuestion>> InsertAsync(MultipleChoiceQuestion data)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> InsertAsync(IMultipleChoiceQuestion data)
         {
             if (data != null)
             {
@@ -197,11 +197,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
             }
         }
 
-        public async Task<IProcessResult<MultipleChoiceQuestion>> InsertAsync(MultipleChoiceQuestion data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> InsertAsync(IMultipleChoiceQuestion data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -213,11 +213,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
             }
         }
 
-        public IProcessResult<MultipleChoiceQuestion> Update(MultipleChoiceQuestion data)
+        public IProcessResult<IMultipleChoiceQuestion> Update(IMultipleChoiceQuestion data)
         {
             if (data != null)
             {
@@ -229,11 +229,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
             }
         }
 
-        public async Task<IProcessResult<MultipleChoiceQuestion>> UpdateAsync(MultipleChoiceQuestion data)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> UpdateAsync(IMultipleChoiceQuestion data)
         {
             if (data != null)
             {
@@ -245,11 +245,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
             }
         }
 
-        public async Task<IProcessResult<MultipleChoiceQuestion>> UpdateAsync(MultipleChoiceQuestion data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> UpdateAsync(IMultipleChoiceQuestion data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -261,7 +261,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<MultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
+                return new ProcessResult<IMultipleChoiceQuestion>(ProcessResultStatus.Failed, "Invalid multiple choice question.");
             }
         }
     }

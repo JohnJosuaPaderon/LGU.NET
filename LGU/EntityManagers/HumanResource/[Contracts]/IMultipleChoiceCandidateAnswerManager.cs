@@ -3,7 +3,7 @@ using LGU.Entities.HumanResource;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface IMultipleChoiceCandidateAnswerManager : IEntityManager<MultipleChoiceCandidateAnswer, long>
+    public interface IMultipleChoiceCandidateAnswerManager : IEntityManager<IMultipleChoiceCandidateAnswer, long>
     {
     }
 }

@@ -3,8 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IUpdateEmployeeFingerPrintSet : IProcess<EmployeeFingerPrintSet>
+    public interface IUpdateEmployeeFingerPrintSet : IProcess<IEmployeeFingerPrintSet>
     {
-        EmployeeFingerPrintSet FingerPrintSet { get; set; }
+        IEmployeeFingerPrintSet FingerPrintSet { get; set; }
     }
 }

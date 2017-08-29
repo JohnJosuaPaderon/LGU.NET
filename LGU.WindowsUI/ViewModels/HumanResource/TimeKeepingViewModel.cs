@@ -239,7 +239,7 @@ namespace LGU.ViewModels.HumanResource
             }
         }
 
-        private void AddUpdateFingerPrintUser(EmployeeFingerPrintSet fingerPrintSet)
+        private void AddUpdateFingerPrintUser(IEmployeeFingerPrintSet fingerPrintSet)
         {
             var employeeId = fingerPrintSet.Employee.Id.ToString();
             var userId = new UserID(employeeId);

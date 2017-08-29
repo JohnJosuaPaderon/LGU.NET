@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.HumanResource
             r_DepartmentHeadManager = departmentHeadManager;
         }
 
-        private Department GetData(DepartmentHead head, SqlDataReader reader)
+        private IDepartment GetData(IDepartmentHead head, SqlDataReader reader)
         {
             return new Department()
             {
@@ -30,106 +30,106 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        private Department GetData(SqlDataReader reader)
+        private IDepartment GetData(SqlDataReader reader)
         {
             var headResult = r_DepartmentHeadManager.GetById(reader.GetInt64("HeadId"));
             return GetData(headResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<Department> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IDepartment> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Department>();
+                var list = new List<IDepartment>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Department>(list);
+                return new EnumerableProcessResult<IDepartment>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Department>(ex);
+                return new EnumerableProcessResult<IDepartment>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Department>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IDepartment>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Department>();
+                var list = new List<IDepartment>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Department>(list);
+                return new EnumerableProcessResult<IDepartment>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Department>(ex);
+                return new EnumerableProcessResult<IDepartment>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Department>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IDepartment>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<Department>();
+                var list = new List<IDepartment>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Department>(list);
+                return new EnumerableProcessResult<IDepartment>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Department>(ex);
+                return new EnumerableProcessResult<IDepartment>(ex);
             }
 
         }
 
-        public IProcessResult<Department> FromReader(SqlDataReader reader)
+        public IProcessResult<IDepartment> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<Department>(GetData(reader));
+                return new ProcessResult<IDepartment>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Department>(ex);
+                return new ProcessResult<IDepartment>(ex);
             }
         }
 
-        public async Task<IProcessResult<Department>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IDepartment>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<Department>(GetData(reader));
+                return new ProcessResult<IDepartment>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Department>(ex);
+                return new ProcessResult<IDepartment>(ex);
             }
         }
 
-        public async Task<IProcessResult<Department>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDepartment>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<Department>(GetData(reader));
+                return new ProcessResult<IDepartment>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Department>(ex);
+                return new ProcessResult<IDepartment>(ex);
             }
         }
     }

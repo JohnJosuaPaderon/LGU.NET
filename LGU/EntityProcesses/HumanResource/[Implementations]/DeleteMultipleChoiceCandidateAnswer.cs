@@ -15,29 +15,29 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public MultipleChoiceCandidateAnswer MultipleChoiceCandidateAnswer { get; set; }
+        public IMultipleChoiceCandidateAnswer MultipleChoiceCandidateAnswer { get; set; }
 
-        private SqlQueryInfo<MultipleChoiceCandidateAnswer> QueryInfo =>
-            SqlQueryInfo<MultipleChoiceCandidateAnswer>.CreateProcedureQueryInfo(MultipleChoiceCandidateAnswer, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IMultipleChoiceCandidateAnswer> QueryInfo =>
+            SqlQueryInfo<IMultipleChoiceCandidateAnswer>.CreateProcedureQueryInfo(MultipleChoiceCandidateAnswer, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", MultipleChoiceCandidateAnswer.Id)
             .AddLogByParameter();
 
-        private IProcessResult<MultipleChoiceCandidateAnswer> GetProcessResult(MultipleChoiceCandidateAnswer data, SqlCommand command, int affectedRows)
+        private IProcessResult<IMultipleChoiceCandidateAnswer> GetProcessResult(IMultipleChoiceCandidateAnswer data, SqlCommand command, int affectedRows)
         {
-            return affectedRows > 0 ? new ProcessResult<MultipleChoiceCandidateAnswer>(data) : new ProcessResult<MultipleChoiceCandidateAnswer>(ProcessResultStatus.Failed, "Faiedl to delete multiple choice candidate answer.");
+            return affectedRows > 0 ? new ProcessResult<IMultipleChoiceCandidateAnswer>(data) : new ProcessResult<IMultipleChoiceCandidateAnswer>(ProcessResultStatus.Failed, "Faiedl to delete multiple choice candidate answer.");
         }
 
-        public IProcessResult<MultipleChoiceCandidateAnswer> Execute()
+        public IProcessResult<IMultipleChoiceCandidateAnswer> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<MultipleChoiceCandidateAnswer>> ExecuteAsync()
+        public Task<IProcessResult<IMultipleChoiceCandidateAnswer>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<MultipleChoiceCandidateAnswer>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IMultipleChoiceCandidateAnswer>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

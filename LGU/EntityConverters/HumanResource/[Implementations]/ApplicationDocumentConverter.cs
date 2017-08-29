@@ -25,7 +25,7 @@ namespace LGU.EntityConverters.HumanResource
             r_ApplicationManager = applicationManager;
         }
 
-        private ApplicationDocument GetData(Application application, DocumentPathType pathType, SqlDataReader reader)
+        private IApplicationDocument GetData(IApplication application, IDocumentPathType pathType, SqlDataReader reader)
         {
             if (application != null)
             {
@@ -45,7 +45,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private ApplicationDocument GetData(SqlDataReader reader)
+        private IApplicationDocument GetData(SqlDataReader reader)
         {
             var applicationResult = r_ApplicationManager.GetById(reader.GetInt64("ApplicationId"));
             var pathTypeResult = r_DocumentPathTypeManager.GetById(reader.GetInt16("PathTypeId"));
@@ -53,7 +53,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, pathTypeResult.Data, reader);
         }
 
-        private async Task<ApplicationDocument> GetDataAsync(SqlDataReader reader)
+        private async Task<IApplicationDocument> GetDataAsync(SqlDataReader reader)
         {
             var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"));
             var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"));
@@ -61,7 +61,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, pathTypeResult.Data, reader);
         }
 
-        private async Task<ApplicationDocument> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IApplicationDocument> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"), cancellationToken);
             var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"), cancellationToken);
@@ -69,99 +69,99 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, pathTypeResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<ApplicationDocument> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IApplicationDocument> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<ApplicationDocument>();
+                var list = new List<IApplicationDocument>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<ApplicationDocument>(list);
+                return new EnumerableProcessResult<IApplicationDocument>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ApplicationDocument>(ex);
+                return new EnumerableProcessResult<IApplicationDocument>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<ApplicationDocument>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IApplicationDocument>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<ApplicationDocument>();
+                var list = new List<IApplicationDocument>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(await GetDataAsync(reader));
                 }
 
-                return new EnumerableProcessResult<ApplicationDocument>(list);
+                return new EnumerableProcessResult<IApplicationDocument>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ApplicationDocument>(ex);
+                return new EnumerableProcessResult<IApplicationDocument>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<ApplicationDocument>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IApplicationDocument>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<ApplicationDocument>();
+                var list = new List<IApplicationDocument>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(await GetDataAsync(reader, cancellationToken));
                 }
 
-                return new EnumerableProcessResult<ApplicationDocument>(list);
+                return new EnumerableProcessResult<IApplicationDocument>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ApplicationDocument>(ex);
+                return new EnumerableProcessResult<IApplicationDocument>(ex);
             }
         }
 
-        public IProcessResult<ApplicationDocument> FromReader(SqlDataReader reader)
+        public IProcessResult<IApplicationDocument> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<ApplicationDocument>(GetData(reader));
+                return new ProcessResult<IApplicationDocument>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ApplicationDocument>(ex);
+                return new ProcessResult<IApplicationDocument>(ex);
             }
         }
 
-        public async Task<IProcessResult<ApplicationDocument>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IApplicationDocument>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<ApplicationDocument>(await GetDataAsync(reader));
+                return new ProcessResult<IApplicationDocument>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ApplicationDocument>(ex);
+                return new ProcessResult<IApplicationDocument>(ex);
             }
         }
 
-        public async Task<IProcessResult<ApplicationDocument>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicationDocument>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<ApplicationDocument>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<IApplicationDocument>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ApplicationDocument>(ex);
+                return new ProcessResult<IApplicationDocument>(ex);
             }
         }
     }

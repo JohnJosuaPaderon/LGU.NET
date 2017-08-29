@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class PositionManager : ManagerBase<Position, int>, IPositionManager
+    public sealed class PositionManager : ManagerBase<IPosition, int>, IPositionManager
     {
         private readonly IDeletePosition r_DeletePosition;
         private readonly IGetPositionById r_GetPositionById;
@@ -28,7 +28,7 @@ namespace LGU.EntityManagers.HumanResource
             r_UpdatePosition = updatePosition;
         }
 
-        public IProcessResult<Position> Delete(Position data)
+        public IProcessResult<IPosition> Delete(IPosition data)
         {
             if (data != null)
             {
@@ -40,11 +40,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position.");
             }
         }
 
-        public async Task<IProcessResult<Position>> DeleteAsync(Position data)
+        public async Task<IProcessResult<IPosition>> DeleteAsync(IPosition data)
         {
             if (data != null)
             {
@@ -56,11 +56,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position.");
             }
         }
 
-        public async Task<IProcessResult<Position>> DeleteAsync(Position data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPosition>> DeleteAsync(IPosition data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -72,17 +72,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position.");
             }
         }
 
-        public IProcessResult<Position> GetById(int id)
+        public IProcessResult<IPosition> GetById(int id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Position>(StaticSource[id]);
+                    return new ProcessResult<IPosition>(StaticSource[id]);
                 }
                 else
                 {
@@ -95,17 +95,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position identifier.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position identifier.");
             }
         }
 
-        public async Task<IProcessResult<Position>> GetByIdAsync(int id)
+        public async Task<IProcessResult<IPosition>> GetByIdAsync(int id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Position>(StaticSource[id]);
+                    return new ProcessResult<IPosition>(StaticSource[id]);
                 }
                 else
                 {
@@ -118,17 +118,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position identifier.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position identifier.");
             }
         }
 
-        public async Task<IProcessResult<Position>> GetByIdAsync(int id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPosition>> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Position>(StaticSource[id]);
+                    return new ProcessResult<IPosition>(StaticSource[id]);
                 }
                 else
                 {
@@ -141,11 +141,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position identifier.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position identifier.");
             }
         }
 
-        public IEnumerableProcessResult<Position> GetList()
+        public IEnumerableProcessResult<IPosition> GetList()
         {
             var result = r_GetPositionList.Execute();
             AddUpdateIfSuccess(result);
@@ -153,7 +153,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<Position>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IPosition>> GetListAsync()
         {
             var result = await r_GetPositionList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -161,7 +161,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<Position>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IPosition>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetPositionList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);
@@ -169,7 +169,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public IProcessResult<Position> Insert(Position data)
+        public IProcessResult<IPosition> Insert(IPosition data)
         {
             if (data != null)
             {
@@ -181,11 +181,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position.");
             }
         }
 
-        public async Task<IProcessResult<Position>> InsertAsync(Position data)
+        public async Task<IProcessResult<IPosition>> InsertAsync(IPosition data)
         {
             if (data != null)
             {
@@ -197,11 +197,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position.");
             }
         }
 
-        public async Task<IProcessResult<Position>> InsertAsync(Position data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPosition>> InsertAsync(IPosition data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -213,11 +213,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position.");
             }
         }
 
-        public IProcessResult<Position> Update(Position data)
+        public IProcessResult<IPosition> Update(IPosition data)
         {
             if (data != null)
             {
@@ -229,11 +229,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position.");
             }
         }
 
-        public async Task<IProcessResult<Position>> UpdateAsync(Position data)
+        public async Task<IProcessResult<IPosition>> UpdateAsync(IPosition data)
         {
             if (data != null)
             {
@@ -245,11 +245,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position.");
             }
         }
 
-        public async Task<IProcessResult<Position>> UpdateAsync(Position data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPosition>> UpdateAsync(IPosition data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -261,7 +261,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Position>(ProcessResultStatus.Failed, "Invalid position.");
+                return new ProcessResult<IPosition>(ProcessResultStatus.Failed, "Invalid position.");
             }
         }
     }

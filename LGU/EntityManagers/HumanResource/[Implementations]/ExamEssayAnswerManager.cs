@@ -25,7 +25,7 @@ namespace LGU.EntityManagers.HumanResource
             r_UpdateExamEssayAnswer = updateExamEssayAnswer;
         }
 
-        public IProcessResult<ExamEssayAnswer> Delete(ExamEssayAnswer data)
+        public IProcessResult<IExamEssayAnswer> Delete(IExamEssayAnswer data)
         {
             if (data != null)
             {
@@ -34,11 +34,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
+                return new ProcessResult<IExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamEssayAnswer>> DeleteAsync(ExamEssayAnswer data)
+        public async Task<IProcessResult<IExamEssayAnswer>> DeleteAsync(IExamEssayAnswer data)
         {
             if (data != null)
             {
@@ -47,11 +47,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
+                return new ProcessResult<IExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamEssayAnswer>> DeleteAsync(ExamEssayAnswer data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamEssayAnswer>> DeleteAsync(IExamEssayAnswer data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -60,26 +60,26 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
+                return new ProcessResult<IExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
             }
         }
 
-        public IEnumerableProcessResult<ExamEssayAnswer> GetList()
+        public IEnumerableProcessResult<IExamEssayAnswer> GetList()
         {
             return r_GetExamEssayAnswerList.Execute();
         }
 
-        public Task<IEnumerableProcessResult<ExamEssayAnswer>> GetListAsync()
+        public Task<IEnumerableProcessResult<IExamEssayAnswer>> GetListAsync()
         {
             return r_GetExamEssayAnswerList.ExecuteAsync();
         }
 
-        public Task<IEnumerableProcessResult<ExamEssayAnswer>> GetListAsync(CancellationToken cancellationToken)
+        public Task<IEnumerableProcessResult<IExamEssayAnswer>> GetListAsync(CancellationToken cancellationToken)
         {
             return r_GetExamEssayAnswerList.ExecuteAsync(cancellationToken);
         }
 
-        public IProcessResult<ExamEssayAnswer> Insert(ExamEssayAnswer data)
+        public IProcessResult<IExamEssayAnswer> Insert(IExamEssayAnswer data)
         {
             if (data != null)
             {
@@ -88,11 +88,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
+                return new ProcessResult<IExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamEssayAnswer>> InsertAsync(ExamEssayAnswer data)
+        public async Task<IProcessResult<IExamEssayAnswer>> InsertAsync(IExamEssayAnswer data)
         {
             if (data != null)
             {
@@ -101,11 +101,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
+                return new ProcessResult<IExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamEssayAnswer>> InsertAsync(ExamEssayAnswer data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamEssayAnswer>> InsertAsync(IExamEssayAnswer data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -114,11 +114,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
+                return new ProcessResult<IExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
             }
         }
 
-        public IProcessResult<ExamEssayAnswer> Update(ExamEssayAnswer data)
+        public IProcessResult<IExamEssayAnswer> Update(IExamEssayAnswer data)
         {
             if (data != null)
             {
@@ -127,11 +127,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
+                return new ProcessResult<IExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamEssayAnswer>> UpdateAsync(ExamEssayAnswer data)
+        public async Task<IProcessResult<IExamEssayAnswer>> UpdateAsync(IExamEssayAnswer data)
         {
             if (data != null)
             {
@@ -140,11 +140,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
+                return new ProcessResult<IExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
             }
         }
 
-        public async Task<IProcessResult<ExamEssayAnswer>> UpdateAsync(ExamEssayAnswer data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamEssayAnswer>> UpdateAsync(IExamEssayAnswer data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -153,7 +153,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<ExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
+                return new ProcessResult<IExamEssayAnswer>(ProcessResultStatus.Failed, "Invalid exam essay answer.");
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public interface IEmployeeTypeConverter<TDataReader> : IDataConverter<EmployeeType, TDataReader>
+    public interface IEmployeeTypeConverter<TDataReader> : IDataConverter<IEmployeeType, TDataReader>
         where TDataReader : DbDataReader
     {
     }

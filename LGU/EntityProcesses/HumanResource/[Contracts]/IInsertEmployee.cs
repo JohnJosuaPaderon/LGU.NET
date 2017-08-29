@@ -3,8 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IInsertEmployee : IProcess<Employee>
+    public interface IInsertEmployee : IProcess<IEmployee>
     {
-        Employee Employee { get; set; }
+        IEmployee Employee { get; set; }
     }
 }

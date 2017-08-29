@@ -15,36 +15,36 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public TimeLog TimeLog { get; set; }
+        public ITimeLog TimeLog { get; set; }
 
-        private SqlQueryInfo<TimeLog> QueryInfo =>
-            SqlQueryInfo<TimeLog>.CreateProcedureQueryInfo(TimeLog, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<ITimeLog> QueryInfo =>
+            SqlQueryInfo<ITimeLog>.CreateProcedureQueryInfo(TimeLog, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", TimeLog.Id)
             .AddLogByParameter();
 
-        private IProcessResult<TimeLog> GetProcessResult(TimeLog data, SqlCommand command, int affectedRows)
+        private IProcessResult<ITimeLog> GetProcessResult(ITimeLog data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                return new ProcessResult<TimeLog>(data, ProcessResultStatus.Success);
+                return new ProcessResult<ITimeLog>(data, ProcessResultStatus.Success);
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Failed to delete time log.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Failed to delete time log.");
             }
         }
 
-        public IProcessResult<TimeLog> Execute()
+        public IProcessResult<ITimeLog> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<TimeLog>> ExecuteAsync()
+        public Task<IProcessResult<ITimeLog>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<TimeLog>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<ITimeLog>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

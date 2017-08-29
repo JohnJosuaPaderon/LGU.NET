@@ -3,8 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IUpdateLocator : IProcess<Locator>
+    public interface IUpdateLocator : IProcess<ILocator>
     {
-        Locator Locator { get; set; }
+        ILocator Locator { get; set; }
     }
 }

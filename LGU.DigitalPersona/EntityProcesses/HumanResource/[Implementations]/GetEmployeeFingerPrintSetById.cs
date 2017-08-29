@@ -15,7 +15,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public Employee Employee { get; set; }
+        public IEmployee Employee { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName("GetEmployeeFingerPrintSetById"), GetProcessResult)
@@ -26,17 +26,17 @@ namespace LGU.EntityProcesses.HumanResource
             return new ProcessResult(ProcessResultStatus.Success);
         }
 
-        public IProcessResult<EmployeeFingerPrintSet> Execute()
+        public IProcessResult<IEmployeeFingerPrintSet> Execute()
         {
             return r_SqlHelper.ExecuteReader(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<EmployeeFingerPrintSet>> ExecuteAsync()
+        public Task<IProcessResult<IEmployeeFingerPrintSet>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<EmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IEmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
         }

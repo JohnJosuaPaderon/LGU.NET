@@ -3,8 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IDeleteTimeLog : IProcess<TimeLog>
+    public interface IDeleteTimeLog : IProcess<ITimeLog>
     {
-        TimeLog TimeLog { get; set; }
+        ITimeLog TimeLog { get; set; }
     }
 }

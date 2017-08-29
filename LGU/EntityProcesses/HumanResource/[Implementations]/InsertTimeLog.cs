@@ -16,10 +16,10 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public TimeLog TimeLog { get; set; }
+        public ITimeLog TimeLog { get; set; }
 
-        private SqlQueryInfo<TimeLog> QueryInfo =>
-            SqlQueryInfo<TimeLog>.CreateProcedureQueryInfo(TimeLog, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<ITimeLog> QueryInfo =>
+            SqlQueryInfo<ITimeLog>.CreateProcedureQueryInfo(TimeLog, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddOutputParameter("@_Id", DbType.Int64)
             .AddInputParameter("@_EmployeeId", TimeLog.Employee?.Id)
             .AddInputParameter("@_LoginDate", TimeLog.LoginDate)
@@ -27,30 +27,30 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_TypeId", TimeLog.Type?.Id)
             .AddLogByParameter();
 
-        private IProcessResult<TimeLog> GetProcessResult(TimeLog data, SqlCommand command, int affectedRows)
+        private IProcessResult<ITimeLog> GetProcessResult(ITimeLog data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
                 data.Id = command.Parameters.GetInt64("@_Id");
-                return new ProcessResult<TimeLog>(data);
+                return new ProcessResult<ITimeLog>(data);
             }
             else
             {
-                return new ProcessResult<TimeLog>(ProcessResultStatus.Failed, "Failed to insert time log.");
+                return new ProcessResult<ITimeLog>(ProcessResultStatus.Failed, "Failed to insert time log.");
             }
         }
 
-        public IProcessResult<TimeLog> Execute()
+        public IProcessResult<ITimeLog> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<TimeLog>> ExecuteAsync()
+        public Task<IProcessResult<ITimeLog>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<TimeLog>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<ITimeLog>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

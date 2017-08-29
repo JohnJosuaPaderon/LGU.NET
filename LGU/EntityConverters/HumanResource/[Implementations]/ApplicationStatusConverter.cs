@@ -11,7 +11,7 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class ApplicationStatusConverter : IApplicationStatusConverter<SqlDataReader>
     {
-        private ApplicationStatus GetData(SqlDataReader reader)
+        private IApplicationStatus GetData(SqlDataReader reader)
         {
             return new ApplicationStatus()
             {
@@ -20,99 +20,99 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        public IEnumerableProcessResult<ApplicationStatus> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IApplicationStatus> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<ApplicationStatus>();
+                var list = new List<IApplicationStatus>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<ApplicationStatus>(list);
+                return new EnumerableProcessResult<IApplicationStatus>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ApplicationStatus>(ex);
+                return new EnumerableProcessResult<IApplicationStatus>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<ApplicationStatus>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IApplicationStatus>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<ApplicationStatus>();
+                var list = new List<IApplicationStatus>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<ApplicationStatus>(list);
+                return new EnumerableProcessResult<IApplicationStatus>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ApplicationStatus>(ex);
+                return new EnumerableProcessResult<IApplicationStatus>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<ApplicationStatus>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IApplicationStatus>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<ApplicationStatus>();
+                var list = new List<IApplicationStatus>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<ApplicationStatus>(list);
+                return new EnumerableProcessResult<IApplicationStatus>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<ApplicationStatus>(ex);
+                return new EnumerableProcessResult<IApplicationStatus>(ex);
             }
         }
 
-        public IProcessResult<ApplicationStatus> FromReader(SqlDataReader reader)
+        public IProcessResult<IApplicationStatus> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<ApplicationStatus>(GetData(reader));
+                return new ProcessResult<IApplicationStatus>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ApplicationStatus>(ex);
+                return new ProcessResult<IApplicationStatus>(ex);
             }
         }
 
-        public async Task<IProcessResult<ApplicationStatus>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IApplicationStatus>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<ApplicationStatus>(GetData(reader));
+                return new ProcessResult<IApplicationStatus>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ApplicationStatus>(ex);
+                return new ProcessResult<IApplicationStatus>(ex);
             }
         }
 
-        public async Task<IProcessResult<ApplicationStatus>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicationStatus>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<ApplicationStatus>(GetData(reader));
+                return new ProcessResult<IApplicationStatus>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<ApplicationStatus>(ex);
+                return new ProcessResult<IApplicationStatus>(ex);
             }
         }
     }

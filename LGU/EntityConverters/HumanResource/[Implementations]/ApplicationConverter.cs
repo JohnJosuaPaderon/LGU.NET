@@ -26,7 +26,7 @@ namespace LGU.EntityConverters.HumanResource
             r_PositionManager = positionManager;
         }
 
-        private Application GetData(Applicant applicant, ApplicationStatus status, Position applyingPosition, SqlDataReader reader)
+        private IApplication GetData(IApplicant applicant, IApplicationStatus status, IPosition applyingPosition, SqlDataReader reader)
         {
             if (applicant != null)
             {
@@ -44,7 +44,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private Application GetData(SqlDataReader reader)
+        private IApplication GetData(SqlDataReader reader)
         {
             var applicantResult = r_ApplicantManager.GetById(reader.GetInt64("ApplicantId"));
             var statusResult = r_ApplicationStatusManager.GetById(reader.GetInt16("StatusId"));
@@ -53,7 +53,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicantResult.Data, statusResult.Data, applyingPositionResult.Data, reader);
         }
 
-        private async Task<Application> GetDataAsync(SqlDataReader reader)
+        private async Task<IApplication> GetDataAsync(SqlDataReader reader)
         {
             var applicantResult = await r_ApplicantManager.GetByIdAsync(reader.GetInt64("ApplicantId"));
             var statusResult = await r_ApplicationStatusManager.GetByIdAsync(reader.GetInt16("StatusId"));
@@ -62,7 +62,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicantResult.Data, statusResult.Data, applyingPositionResult.Data, reader);
         }
 
-        private async Task<Application> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IApplication> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             var applicantResult = await r_ApplicantManager.GetByIdAsync(reader.GetInt64("ApplicantId"), cancellationToken);
             var statusResult = await r_ApplicationStatusManager.GetByIdAsync(reader.GetInt16("StatusId"), cancellationToken);
@@ -71,99 +71,99 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicantResult.Data, statusResult.Data, applyingPositionResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<Application> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IApplication> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Application>();
+                var list = new List<IApplication>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Application>(list);
+                return new EnumerableProcessResult<IApplication>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Application>(ex);
+                return new EnumerableProcessResult<IApplication>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Application>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IApplication>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<Application>();
+                var list = new List<IApplication>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Application>(list);
+                return new EnumerableProcessResult<IApplication>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Application>(ex);
+                return new EnumerableProcessResult<IApplication>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<Application>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IApplication>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<Application>();
+                var list = new List<IApplication>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<Application>(list);
+                return new EnumerableProcessResult<IApplication>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<Application>(ex);
+                return new EnumerableProcessResult<IApplication>(ex);
             }
         }
 
-        public IProcessResult<Application> FromReader(SqlDataReader reader)
+        public IProcessResult<IApplication> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<Application>(GetData(reader));
+                return new ProcessResult<IApplication>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Application>(ex);
+                return new ProcessResult<IApplication>(ex);
             }
         }
 
-        public async Task<IProcessResult<Application>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IApplication>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<Application>(await GetDataAsync(reader));
+                return new ProcessResult<IApplication>(await GetDataAsync(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Application>(ex);
+                return new ProcessResult<IApplication>(ex);
             }
         }
 
-        public async Task<IProcessResult<Application>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplication>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<Application>(await GetDataAsync(reader, cancellationToken));
+                return new ProcessResult<IApplication>(await GetDataAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<Application>(ex);
+                return new ProcessResult<IApplication>(ex);
             }
         }
     }

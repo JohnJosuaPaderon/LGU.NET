@@ -16,24 +16,24 @@ namespace LGU.EntityProcesses.Core
         {
         }
 
-        public UserCredentials UserCredentials { get; set; }
+        public IUserCredentials UserCredentials { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
             .AddInputParameter("@_Username", SecureHash.ComputeSHA512(UserCredentials.SecureUsername))
             .AddInputParameter("@_Password", SecureHash.ComputeSHA512(UserCredentials.SecurePassword));
 
-        public IProcessResult<User> Execute()
+        public IProcessResult<IUser> Execute()
         {
             return r_SqlHelper.ExecuteReader(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<User>> ExecuteAsync()
+        public Task<IProcessResult<IUser>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
         }
 
-        public Task<IProcessResult<User>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IUser>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
         }

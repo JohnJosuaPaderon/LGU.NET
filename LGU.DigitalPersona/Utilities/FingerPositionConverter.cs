@@ -5,7 +5,7 @@ namespace LGU.Utilities
 {
     public static class FingerPositionConverter
     {
-        public static FingerPosition FromFingerPrint(FingerPrint fingerPrint)
+        public static FingerPosition FromFingerPrint(IFingerPrint fingerPrint)
         {
             switch (fingerPrint.HandType)
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class EssayQuestionManager : ManagerBase<EssayQuestion, long>, IEssayQuestionManager
+    public sealed class EssayQuestionManager : ManagerBase<IEssayQuestion, long>, IEssayQuestionManager
     {
         private readonly IDeleteEssayQuestion r_DeleteEssayQuestion;
         private readonly IGetEssayQuestionById r_GetEssayQuestionById;
@@ -28,7 +28,7 @@ namespace LGU.EntityManagers.HumanResource
             r_UpdateEssayQuestion = updateEssayQuestion;
         }
 
-        public IProcessResult<EssayQuestion> Delete(EssayQuestion data)
+        public IProcessResult<IEssayQuestion> Delete(IEssayQuestion data)
         {
             if (data != null)
             {
@@ -40,11 +40,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
             }
         }
 
-        public async Task<IProcessResult<EssayQuestion>> DeleteAsync(EssayQuestion data)
+        public async Task<IProcessResult<IEssayQuestion>> DeleteAsync(IEssayQuestion data)
         {
             if (data != null)
             {
@@ -56,11 +56,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
             }
         }
 
-        public async Task<IProcessResult<EssayQuestion>> DeleteAsync(EssayQuestion data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEssayQuestion>> DeleteAsync(IEssayQuestion data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -72,17 +72,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
             }
         }
 
-        public IProcessResult<EssayQuestion> GetById(long id)
+        public IProcessResult<IEssayQuestion> GetById(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EssayQuestion>(StaticSource[id]);
+                    return new ProcessResult<IEssayQuestion>(StaticSource[id]);
                 }
                 else
                 {
@@ -95,17 +95,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question identifier.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question identifier.");
             }
         }
 
-        public async Task<IProcessResult<EssayQuestion>> GetByIdAsync(long id)
+        public async Task<IProcessResult<IEssayQuestion>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EssayQuestion>(StaticSource[id]);
+                    return new ProcessResult<IEssayQuestion>(StaticSource[id]);
                 }
                 else
                 {
@@ -118,17 +118,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question identifier.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question identifier.");
             }
         }
 
-        public async Task<IProcessResult<EssayQuestion>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEssayQuestion>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<EssayQuestion>(StaticSource[id]);
+                    return new ProcessResult<IEssayQuestion>(StaticSource[id]);
                 }
                 else
                 {
@@ -141,11 +141,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question identifier.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question identifier.");
             }
         }
 
-        public IEnumerableProcessResult<EssayQuestion> GetList()
+        public IEnumerableProcessResult<IEssayQuestion> GetList()
         {
             var result = r_GetEssayQuestionList.Execute();
             AddUpdateIfSuccess(result);
@@ -153,7 +153,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<EssayQuestion>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IEssayQuestion>> GetListAsync()
         {
             var result = await r_GetEssayQuestionList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -161,7 +161,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<EssayQuestion>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEssayQuestion>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetEssayQuestionList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);
@@ -169,7 +169,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public IProcessResult<EssayQuestion> Insert(EssayQuestion data)
+        public IProcessResult<IEssayQuestion> Insert(IEssayQuestion data)
         {
             if (data != null)
             {
@@ -181,11 +181,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
             }
         }
 
-        public async Task<IProcessResult<EssayQuestion>> InsertAsync(EssayQuestion data)
+        public async Task<IProcessResult<IEssayQuestion>> InsertAsync(IEssayQuestion data)
         {
             if (data != null)
             {
@@ -197,11 +197,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
             }
         }
 
-        public async Task<IProcessResult<EssayQuestion>> InsertAsync(EssayQuestion data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEssayQuestion>> InsertAsync(IEssayQuestion data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -213,11 +213,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
             }
         }
 
-        public IProcessResult<EssayQuestion> Update(EssayQuestion data)
+        public IProcessResult<IEssayQuestion> Update(IEssayQuestion data)
         {
             if (data != null)
             {
@@ -229,11 +229,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
             }
         }
 
-        public async Task<IProcessResult<EssayQuestion>> UpdateAsync(EssayQuestion data)
+        public async Task<IProcessResult<IEssayQuestion>> UpdateAsync(IEssayQuestion data)
         {
             if (data != null)
             {
@@ -245,11 +245,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
             }
         }
 
-        public async Task<IProcessResult<EssayQuestion>> UpdateAsync(EssayQuestion data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEssayQuestion>> UpdateAsync(IEssayQuestion data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -261,7 +261,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<EssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
+                return new ProcessResult<IEssayQuestion>(ProcessResultStatus.Failed, "Invalid essay question.");
             }
         }
     }

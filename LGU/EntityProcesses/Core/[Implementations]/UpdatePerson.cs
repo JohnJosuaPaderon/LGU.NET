@@ -15,10 +15,10 @@ namespace LGU.EntityProcesses.Core
         {
         }
 
-        public Person Person { get; set; }
+        public IPerson Person { get; set; }
 
-        private SqlQueryInfo<Person> QueryInfo =>
-            SqlQueryInfo<Person>.CreateProcedureQueryInfo(Person, GetQualifiedDbObjectName(), GetProcessResult, true)
+        private SqlQueryInfo<IPerson> QueryInfo =>
+            SqlQueryInfo<IPerson>.CreateProcedureQueryInfo(Person, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", Person.Id)
             .AddInputParameter("@_FirstName", Person.FirstName)
             .AddInputParameter("@_MiddleName", Person.MiddleName)
@@ -29,29 +29,29 @@ namespace LGU.EntityProcesses.Core
             .AddInputParameter("@_Deceased", Person.Deceased)
             .AddLogByParameter();
 
-        private IProcessResult<Person> GetProcessResult(Person data, SqlCommand command, int affectedRows)
+        private IProcessResult<IPerson> GetProcessResult(IPerson data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                return new ProcessResult<Person>(data);
+                return new ProcessResult<IPerson>(data);
             }
             else
             {
-                return new ProcessResult<Person>(ProcessResultStatus.Failed, "Failed to update person.");
+                return new ProcessResult<IPerson>(ProcessResultStatus.Failed, "Failed to update person.");
             }
         }
 
-        public IProcessResult<Person> Execute()
+        public IProcessResult<IPerson> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<Person>> ExecuteAsync()
+        public Task<IProcessResult<IPerson>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<Person>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IPerson>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

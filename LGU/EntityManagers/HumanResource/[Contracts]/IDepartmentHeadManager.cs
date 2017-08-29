@@ -3,7 +3,7 @@ using LGU.Entities.HumanResource;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface IDepartmentHeadManager : IEntityManager<DepartmentHead, long>
+    public interface IDepartmentHeadManager : IEntityManager<IDepartmentHead, long>
     {
     }
 }

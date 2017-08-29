@@ -9,7 +9,7 @@ namespace LGU.EntityProcesses.Core
 {
     internal sealed class ConstructPersonFullName : IConstructPersonFullName
     {
-        public Person Person { get; set; }
+        public IPerson Person { get; set; }
 
         public IProcessResult<string> Execute()
         {
@@ -35,7 +35,7 @@ namespace LGU.EntityProcesses.Core
             throw new NotImplementedException();
         }
 
-        private static string Construct(Person person, ref ProcessResultStatus status, ref string message)
+        private static string Construct(IPerson person, ref ProcessResultStatus status, ref string message)
         {
             var hasLastName = HasValue(person.LastName);
             var hasFirstName = HasValue(person.FirstName);
@@ -62,7 +62,7 @@ namespace LGU.EntityProcesses.Core
             }
         }
 
-        private static void AppendMiddleName(Person person, bool hasMiddleName, StringBuilder builder)
+        private static void AppendMiddleName(IPerson person, bool hasMiddleName, StringBuilder builder)
         {
             if (hasMiddleName)
             {
@@ -70,7 +70,7 @@ namespace LGU.EntityProcesses.Core
             }
         }
 
-        private static void AppendFirstName(Person person, bool hasFirstName, bool hasMiddleName, StringBuilder builder)
+        private static void AppendFirstName(IPerson person, bool hasFirstName, bool hasMiddleName, StringBuilder builder)
         {
             if (hasFirstName)
             {
@@ -83,7 +83,7 @@ namespace LGU.EntityProcesses.Core
             }
         }
 
-        private static void AppendNameSuffix(Person person, bool hasFirstName, bool hasMiddleName, bool hasNameSuffix, StringBuilder builder)
+        private static void AppendNameSuffix(IPerson person, bool hasFirstName, bool hasMiddleName, bool hasNameSuffix, StringBuilder builder)
         {
             if (hasNameSuffix)
             {
@@ -96,7 +96,7 @@ namespace LGU.EntityProcesses.Core
             }
         }
 
-        private static void AppendLastName(Person person, bool hasLastName, bool hasFirstName, bool hasMiddleName, bool hasNameSuffix, StringBuilder builder)
+        private static void AppendLastName(IPerson person, bool hasLastName, bool hasFirstName, bool hasMiddleName, bool hasNameSuffix, StringBuilder builder)
         {
             if (hasLastName)
             {
@@ -118,7 +118,7 @@ namespace LGU.EntityProcesses.Core
             return !string.IsNullOrWhiteSpace(arg);
         }
 
-        private static bool Validate(Person person, ref ProcessResultStatus status, ref string message)
+        private static bool Validate(IPerson person, ref ProcessResultStatus status, ref string message)
         {
             var result = true;
 

@@ -22,6 +22,6 @@ namespace LGU.Extensions
             {
                 return string.Format("{0:MMMM d, yyyy} - {1:MMMM d, yyyy}", instance.Begin, instance.End);
             }
-        }
+        }           
     }
 }

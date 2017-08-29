@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class ExamManager : ManagerBase<Exam, long>, IExamManager
+    public sealed class ExamManager : ManagerBase<IExam, long>, IExamManager
     {
         private readonly IDeleteExam r_DeleteExam;
         private readonly IGetExamById r_GetExamById;
@@ -28,7 +28,7 @@ namespace LGU.EntityManagers.HumanResource
             r_UpdateExam = updateExam;
         }
 
-        public IProcessResult<Exam> Delete(Exam data)
+        public IProcessResult<IExam> Delete(IExam data)
         {
             if (data != null)
             {
@@ -40,11 +40,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam.");
             }
         }
 
-        public async Task<IProcessResult<Exam>> DeleteAsync(Exam data)
+        public async Task<IProcessResult<IExam>> DeleteAsync(IExam data)
         {
             if (data != null)
             {
@@ -56,11 +56,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam.");
             }
         }
 
-        public async Task<IProcessResult<Exam>> DeleteAsync(Exam data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExam>> DeleteAsync(IExam data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -72,17 +72,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam.");
             }
         }
 
-        public IProcessResult<Exam> GetById(long id)
+        public IProcessResult<IExam> GetById(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Exam>(StaticSource[id]);
+                    return new ProcessResult<IExam>(StaticSource[id]);
                 }
                 else
                 {
@@ -95,17 +95,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam identifier.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam identifier.");
             }
         }
 
-        public async Task<IProcessResult<Exam>> GetByIdAsync(long id)
+        public async Task<IProcessResult<IExam>> GetByIdAsync(long id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Exam>(StaticSource[id]);
+                    return new ProcessResult<IExam>(StaticSource[id]);
                 }
                 else
                 {
@@ -118,17 +118,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam identifier.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam identifier.");
             }
         }
 
-        public async Task<IProcessResult<Exam>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExam>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<Exam>(StaticSource[id]);
+                    return new ProcessResult<IExam>(StaticSource[id]);
                 }
                 else
                 {
@@ -141,11 +141,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam identifier.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam identifier.");
             }
         }
 
-        public IEnumerableProcessResult<Exam> GetList()
+        public IEnumerableProcessResult<IExam> GetList()
         {
             var result = r_GetExamList.Execute();
             AddUpdateIfSuccess(result);
@@ -153,7 +153,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<Exam>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IExam>> GetListAsync()
         {
             var result = await r_GetExamList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -161,7 +161,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<Exam>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IExam>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetExamList.ExecuteAsync(cancellationToken);
             AddUpdateIfSuccess(result);
@@ -169,7 +169,7 @@ namespace LGU.EntityManagers.HumanResource
             return result;
         }
 
-        public IProcessResult<Exam> Insert(Exam data)
+        public IProcessResult<IExam> Insert(IExam data)
         {
             if (data != null)
             {
@@ -181,11 +181,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam.");
             }
         }
 
-        public async Task<IProcessResult<Exam>> InsertAsync(Exam data)
+        public async Task<IProcessResult<IExam>> InsertAsync(IExam data)
         {
             if (data != null)
             {
@@ -197,11 +197,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam.");
             }
         }
 
-        public async Task<IProcessResult<Exam>> InsertAsync(Exam data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExam>> InsertAsync(IExam data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -213,11 +213,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam.");
             }
         }
 
-        public IProcessResult<Exam> Update(Exam data)
+        public IProcessResult<IExam> Update(IExam data)
         {
             if (data != null)
             {
@@ -229,11 +229,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam.");
             }
         }
 
-        public async Task<IProcessResult<Exam>> UpdateAsync(Exam data)
+        public async Task<IProcessResult<IExam>> UpdateAsync(IExam data)
         {
             if (data != null)
             {
@@ -245,11 +245,11 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam.");
             }
         }
 
-        public async Task<IProcessResult<Exam>> UpdateAsync(Exam data, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExam>> UpdateAsync(IExam data, CancellationToken cancellationToken)
         {
             if (data != null)
             {
@@ -261,7 +261,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<Exam>(ProcessResultStatus.Failed, "Invalid exam.");
+                return new ProcessResult<IExam>(ProcessResultStatus.Failed, "Invalid exam.");
             }
         }
     }

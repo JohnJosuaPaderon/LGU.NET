@@ -5,8 +5,8 @@ namespace LGU.EntityManagers.Core
 {
     public interface IPersonNameManager
     {
-        IProcessResult<string> ConstructFullName(Person person);
-        IProcessResult<string> ConstructMiddleInitials(Person person);
-        IProcessResult<string> ConstructInformalFullName(Person person);
+        IProcessResult<string> ConstructFullName(IPerson person);
+        IProcessResult<string> ConstructMiddleInitials(IPerson person);
+        IProcessResult<string> ConstructInformalFullName(IPerson person);
     }
 }

@@ -11,7 +11,7 @@ namespace LGU.EntityConverters.Core
 {
     public sealed class DocumentPathTypeConverter : IDocumentPathTypeConverter<SqlDataReader>
     {
-        private DocumentPathType GetData(SqlDataReader reader)
+        private IDocumentPathType GetData(SqlDataReader reader)
         {
             return new DocumentPathType()
             {
@@ -20,99 +20,99 @@ namespace LGU.EntityConverters.Core
             };
         }
 
-        public IEnumerableProcessResult<DocumentPathType> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IDocumentPathType> EnumerableFromReader(SqlDataReader reader)
         {
             try
             {
-                var list = new List<DocumentPathType>();
+                var list = new List<IDocumentPathType>();
 
                 while (reader.Read())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<DocumentPathType>(list);
+                return new EnumerableProcessResult<IDocumentPathType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<DocumentPathType>(ex);
+                return new EnumerableProcessResult<IDocumentPathType>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<DocumentPathType>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IDocumentPathType>> EnumerableFromReaderAsync(SqlDataReader reader)
         {
             try
             {
-                var list = new List<DocumentPathType>();
+                var list = new List<IDocumentPathType>();
 
                 while (await reader.ReadAsync())
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<DocumentPathType>(list);
+                return new EnumerableProcessResult<IDocumentPathType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<DocumentPathType>(ex);
+                return new EnumerableProcessResult<IDocumentPathType>(ex);
             }
         }
 
-        public async Task<IEnumerableProcessResult<DocumentPathType>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IDocumentPathType>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
-                var list = new List<DocumentPathType>();
+                var list = new List<IDocumentPathType>();
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
                     list.Add(GetData(reader));
                 }
 
-                return new EnumerableProcessResult<DocumentPathType>(list);
+                return new EnumerableProcessResult<IDocumentPathType>(list);
             }
             catch (Exception ex)
             {
-                return new EnumerableProcessResult<DocumentPathType>(ex);
+                return new EnumerableProcessResult<IDocumentPathType>(ex);
             }
         }
 
-        public IProcessResult<DocumentPathType> FromReader(SqlDataReader reader)
+        public IProcessResult<IDocumentPathType> FromReader(SqlDataReader reader)
         {
             try
             {
                 reader.Read();
-                return new ProcessResult<DocumentPathType>(GetData(reader));
+                return new ProcessResult<IDocumentPathType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<DocumentPathType>(ex);
+                return new ProcessResult<IDocumentPathType>(ex);
             }
         }
 
-        public async Task<IProcessResult<DocumentPathType>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IDocumentPathType>> FromReaderAsync(SqlDataReader reader)
         {
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<DocumentPathType>(GetData(reader));
+                return new ProcessResult<IDocumentPathType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<DocumentPathType>(ex);
+                return new ProcessResult<IDocumentPathType>(ex);
             }
         }
 
-        public async Task<IProcessResult<DocumentPathType>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDocumentPathType>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<DocumentPathType>(GetData(reader));
+                return new ProcessResult<IDocumentPathType>(GetData(reader));
             }
             catch (Exception ex)
             {
-                return new ProcessResult<DocumentPathType>(ex);
+                return new ProcessResult<IDocumentPathType>(ex);
             }
         }
     }

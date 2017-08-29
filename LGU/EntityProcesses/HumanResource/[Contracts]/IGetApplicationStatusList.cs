@@ -3,7 +3,7 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetApplicationStatusList : IEnumerableProcess<ApplicationStatus>
+    public interface IGetApplicationStatusList : IEnumerableProcess<IApplicationStatus>
     {
     }
 }

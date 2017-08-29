@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class UserTypeManager : ManagerBase<UserType, short>, IUserTypeManager
+    public sealed class UserTypeManager : ManagerBase<IUserType, short>, IUserTypeManager
     {
         private readonly IGetUserTypeById r_GetUserTypeById;
         private readonly IGetUserTypeList r_GetUserTypeList;
@@ -17,13 +17,13 @@ namespace LGU.EntityManagers.Core
             r_GetUserTypeList = getUserTypeList;
         }
 
-        public IProcessResult<UserType> GetById(short id)
+        public IProcessResult<IUserType> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<UserType>(StaticSource[id]);
+                    return new ProcessResult<IUserType>(StaticSource[id]);
                 }
                 else
                 {
@@ -36,17 +36,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<UserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
+                return new ProcessResult<IUserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
             }
         }
 
-        public async Task<IProcessResult<UserType>> GetByIdAsync(short id)
+        public async Task<IProcessResult<IUserType>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<UserType>(StaticSource[id]);
+                    return new ProcessResult<IUserType>(StaticSource[id]);
                 }
                 else
                 {
@@ -59,17 +59,17 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<UserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
+                return new ProcessResult<IUserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
             }
         }
 
-        public async Task<IProcessResult<UserType>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IUserType>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<UserType>(StaticSource[id]);
+                    return new ProcessResult<IUserType>(StaticSource[id]);
                 }
                 else
                 {
@@ -82,11 +82,11 @@ namespace LGU.EntityManagers.Core
             }
             else
             {
-                return new ProcessResult<UserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
+                return new ProcessResult<IUserType>(ProcessResultStatus.Failed, "Invalid user type identifier.");
             }
         }
 
-        public IEnumerableProcessResult<UserType> GetList()
+        public IEnumerableProcessResult<IUserType> GetList()
         {
             var result = r_GetUserTypeList.Execute();
             AddUpdateIfSuccess(result);
@@ -94,7 +94,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<UserType>> GetListAsync()
+        public async Task<IEnumerableProcessResult<IUserType>> GetListAsync()
         {
             var result = await r_GetUserTypeList.ExecuteAsync();
             AddUpdateIfSuccess(result);
@@ -102,7 +102,7 @@ namespace LGU.EntityManagers.Core
             return result;
         }
 
-        public async Task<IEnumerableProcessResult<UserType>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IUserType>> GetListAsync(CancellationToken cancellationToken)
         {
             var result = await r_GetUserTypeList.ExecuteAsync();
             AddUpdateIfSuccess(result);

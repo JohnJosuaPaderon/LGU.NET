@@ -15,36 +15,36 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public EmployeeFingerPrintSet FingerPrintSet { get; set; }
+        public IEmployeeFingerPrintSet FingerPrintSet { get; set; }
 
-        private SqlQueryInfo<EmployeeFingerPrintSet> QueryInfo =>
-            SqlQueryInfo<EmployeeFingerPrintSet>.CreateProcedureQueryInfo(FingerPrintSet, GetQualifiedDbObjectName("DeleteEmployeeFingerPrintSet"), GetProcessResult, true)
+        private SqlQueryInfo<IEmployeeFingerPrintSet> QueryInfo =>
+            SqlQueryInfo<IEmployeeFingerPrintSet>.CreateProcedureQueryInfo(FingerPrintSet, GetQualifiedDbObjectName("DeleteEmployeeFingerPrintSet"), GetProcessResult, true)
             .AddInputParameter("@_Id", FingerPrintSet.Employee?.Id)
             .AddLogByParameter();
 
-        private IProcessResult<EmployeeFingerPrintSet> GetProcessResult(EmployeeFingerPrintSet data, SqlCommand command, int affectedRows)
+        private IProcessResult<IEmployeeFingerPrintSet> GetProcessResult(IEmployeeFingerPrintSet data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                return new ProcessResult<EmployeeFingerPrintSet>(data);
+                return new ProcessResult<IEmployeeFingerPrintSet>(data);
             }
             else
             {
-                return new ProcessResult<EmployeeFingerPrintSet>(ProcessResultStatus.Failed);
+                return new ProcessResult<IEmployeeFingerPrintSet>(ProcessResultStatus.Failed);
             }
         }
 
-        public IProcessResult<EmployeeFingerPrintSet> Execute()
+        public IProcessResult<IEmployeeFingerPrintSet> Execute()
         {
             return r_SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
-        public Task<IProcessResult<EmployeeFingerPrintSet>> ExecuteAsync()
+        public Task<IProcessResult<IEmployeeFingerPrintSet>> ExecuteAsync()
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
-        public Task<IProcessResult<EmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
+        public Task<IProcessResult<IEmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
         {
             return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }

@@ -4,7 +4,7 @@ using System;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetUpdatedEmployeeFingerPrintSetList : IEnumerableProcess<EmployeeFingerPrintSet>
+    public interface IGetUpdatedEmployeeFingerPrintSetList : IEnumerableProcess<IEmployeeFingerPrintSet>
     {
         DateTime LogDate { get; set; }
     }

@@ -4,6 +4,6 @@ namespace LGU.Reports.HumanResource
 {
     public interface IExportLocator : IExport
     {
-        Locator Locator { get; set; }
+        ILocator Locator { get; set; }
     }
 }

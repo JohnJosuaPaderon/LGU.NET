@@ -10,7 +10,6 @@ using Prism.Events;
 using Prism.Regions;
 using System;
 using System.Diagnostics;
-using System.Windows;
 
 namespace LGU.ViewModels.HumanResource.Dialogs
 {
@@ -132,11 +131,6 @@ namespace LGU.ViewModels.HumanResource.Dialogs
                     Invoke(() => ScannerLog = "Can't terminate capture.");
                 }
             }
-        }
-
-        private void Invoke(Action expression)
-        {
-            Application.Current.Dispatcher.Invoke(expression);
         }
 
         private void ProcessFingerPrint(Sample sample)

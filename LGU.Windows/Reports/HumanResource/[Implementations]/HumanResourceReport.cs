@@ -7,7 +7,7 @@ namespace LGU.Reports.HumanResource
 {
     public sealed class HumanResourceReport : IHumanResourceReport
     {
-        public void ExportLocator(Locator locator, IExportEventHandler eventHandler)
+        public void ExportLocator(ILocator locator, IExportEventHandler eventHandler)
         {
             using (var export = SystemRuntime.GetService<IExportLocator>())
             {
@@ -18,7 +18,7 @@ namespace LGU.Reports.HumanResource
             }
         }
 
-        public async Task ExportLocatorAsync(Locator locator, IExportEventHandler eventHandler)
+        public async Task ExportLocatorAsync(ILocator locator, IExportEventHandler eventHandler)
         {
             using (var export = SystemRuntime.GetService<IExportLocator>())
             {
@@ -29,7 +29,7 @@ namespace LGU.Reports.HumanResource
             }
         }
 
-        public void ExportTimeLog(IEnumerable<TimeLog> timeLogs, ValueRange<DateTime> cutOff, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler)
+        public void ExportTimeLog(IEnumerable<ITimeLog> timeLogs, ValueRange<DateTime> cutOff, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler)
         {
             using (var export = SystemRuntime.GetService<IExportTimeLog>())
             {
@@ -42,7 +42,7 @@ namespace LGU.Reports.HumanResource
             }
         }
 
-        public async Task ExportTimeLogAsync(IEnumerable<TimeLog> timeLogs, ValueRange<DateTime> cutOff, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler)
+        public async Task ExportTimeLogAsync(IEnumerable<ITimeLog> timeLogs, ValueRange<DateTime> cutOff, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler)
         {
             using (var export = SystemRuntime.GetService<IExportTimeLog>())
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class LocatorLeaveTypeManager : ManagerBase<LocatorLeaveType, short>, ILocatorLeaveTypeManager
+    public sealed class LocatorLeaveTypeManager : ManagerBase<ILocatorLeaveType, short>, ILocatorLeaveTypeManager
     {
         private readonly IGetLocatorLeaveTypeById r_GetById;
         private readonly IGetLocatorLeaveTypeList r_GetList;
@@ -19,13 +19,13 @@ namespace LGU.EntityManagers.HumanResource
             r_GetList = getList;
         }
 
-        public IProcessResult<LocatorLeaveType> GetById(short id)
+        public IProcessResult<ILocatorLeaveType> GetById(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<LocatorLeaveType>(StaticSource[id]);
+                    return new ProcessResult<ILocatorLeaveType>(StaticSource[id]);
                 }
                 else
                 {
@@ -35,17 +35,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<LocatorLeaveType>(ProcessResultStatus.Failed, "Invalid locator leave type identifier.");
+                return new ProcessResult<ILocatorLeaveType>(ProcessResultStatus.Failed, "Invalid locator leave type identifier.");
             }
         }
 
-        public async Task<IProcessResult<LocatorLeaveType>> GetByIdAsync(short id)
+        public async Task<IProcessResult<ILocatorLeaveType>> GetByIdAsync(short id)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<LocatorLeaveType>(StaticSource[id]);
+                    return new ProcessResult<ILocatorLeaveType>(StaticSource[id]);
                 }
                 else
                 {
@@ -55,17 +55,17 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<LocatorLeaveType>(ProcessResultStatus.Failed, "Invalid locator leave type identifier.");
+                return new ProcessResult<ILocatorLeaveType>(ProcessResultStatus.Failed, "Invalid locator leave type identifier.");
             }
         }
 
-        public async Task<IProcessResult<LocatorLeaveType>> GetByIdAsync(short id, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ILocatorLeaveType>> GetByIdAsync(short id, CancellationToken cancellationToken)
         {
             if (id > 0)
             {
                 if (StaticSource.ContainsId(id))
                 {
-                    return new ProcessResult<LocatorLeaveType>(StaticSource[id]);
+                    return new ProcessResult<ILocatorLeaveType>(StaticSource[id]);
                 }
                 else
                 {
@@ -75,21 +75,21 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<LocatorLeaveType>(ProcessResultStatus.Failed, "Invalid locator leave type identifier.");
+                return new ProcessResult<ILocatorLeaveType>(ProcessResultStatus.Failed, "Invalid locator leave type identifier.");
             }
         }
 
-        public IEnumerableProcessResult<LocatorLeaveType> GetList()
+        public IEnumerableProcessResult<ILocatorLeaveType> GetList()
         {
             return AddUpdateIfSuccess(r_GetList.Execute());
         }
 
-        public async Task<IEnumerableProcessResult<LocatorLeaveType>> GetListAsync()
+        public async Task<IEnumerableProcessResult<ILocatorLeaveType>> GetListAsync()
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
         }
 
-        public async Task<IEnumerableProcessResult<LocatorLeaveType>> GetListAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ILocatorLeaveType>> GetListAsync(CancellationToken cancellationToken)
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
         }

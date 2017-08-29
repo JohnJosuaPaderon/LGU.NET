@@ -4,9 +4,9 @@ using System;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetTimeLogListByDepartmentCutOff : IEnumerableProcess<TimeLog>
+    public interface IGetTimeLogListByDepartmentCutOff : IEnumerableProcess<ITimeLog>
     {
-        Department Department { get; set; }
+        IDepartment Department { get; set; }
         ValueRange<DateTime> CutOff { get; set; }
     }
 }

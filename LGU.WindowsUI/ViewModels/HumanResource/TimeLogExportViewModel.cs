@@ -27,8 +27,8 @@ namespace LGU.ViewModels.HumanResource
             PrintCommand = new DelegateCommand(Print);
             InitializeCommand = new DelegateCommand(Initialize);
 
-            Departments = new ObservableCollection<Department>();
-            Employees = new ObservableCollection<Employee>();
+            Departments = new ObservableCollection<IDepartment>();
+            Employees = new ObservableCollection<IEmployee>();
             ExportOptions = new ObservableCollection<TimeLogExportOption>();
             FileSegregations = new ObservableCollection<TimeLogFileSegregation>();
 
@@ -50,8 +50,8 @@ namespace LGU.ViewModels.HumanResource
         public DelegateCommand PrintCommand { get; }
         public DelegateCommand InitializeCommand { get; }
 
-        public ObservableCollection<Department> Departments { get; }
-        public ObservableCollection<Employee> Employees { get; }
+        public ObservableCollection<IDepartment> Departments { get; }
+        public ObservableCollection<IEmployee> Employees { get; }
         public ObservableCollection<TimeLogExportOption> ExportOptions { get; }
         public ObservableCollection<TimeLogFileSegregation> FileSegregations { get; }
 
@@ -62,15 +62,15 @@ namespace LGU.ViewModels.HumanResource
             set { SetProperty(ref _CutOff, value); }
         }
 
-        private Department _SelectedDepartment;
-        public Department SelectedDepartment
+        private IDepartment _SelectedDepartment;
+        public IDepartment SelectedDepartment
         {
             get { return _SelectedDepartment; }
             set { SetProperty(ref _SelectedDepartment, value); }
         }
 
-        private Employee _SelectedEmployee;
-        public Employee SelectedEmployee
+        private IEmployee _SelectedEmployee;
+        public IEmployee SelectedEmployee
         {
             get { return _SelectedEmployee; }
             set { SetProperty(ref _SelectedEmployee, value); }
@@ -147,7 +147,7 @@ namespace LGU.ViewModels.HumanResource
 
         private async void Print()
         {
-            IEnumerableProcessResult<TimeLog> result = null;
+            IEnumerableProcessResult<ITimeLog> result = null;
 
             switch (SelectedExportOption)
             {
@@ -193,14 +193,14 @@ namespace LGU.ViewModels.HumanResource
         #region Export EventHandlers
         public void OnException(Exception exception)
         {
-            EnqueueMessage(exception.Message);
             Invoke(() => DialogHelper.CloseDialog());
+            EnqueueMessage(exception.Message);
         }
 
         public void OnError(string message)
         {
-            EnqueueMessage(message);
             Invoke(() => DialogHelper.CloseDialog());
+            EnqueueMessage(message);
         }
 
         public void OnExported(string[] filePaths)
@@ -211,8 +211,8 @@ namespace LGU.ViewModels.HumanResource
 
         public void OnExported(string filePath)
         {
-            EnqueueMessage("Successfully exported.");
             Invoke(() => DialogHelper.CloseDialog());
+            EnqueueMessage("Successfully exported.");
         } 
         #endregion
     }
