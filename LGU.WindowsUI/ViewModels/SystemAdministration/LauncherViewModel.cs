@@ -13,7 +13,7 @@ namespace LGU.ViewModels.SystemAdministration
 
         public LauncherViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_SystemAdministratorManager = SystemRuntime.GetService<ISystemAdministratorManager>();
+            r_SystemAdministratorManager = ApplicationDomain.GetService<ISystemAdministratorManager>();
             VerifyCommand = new DelegateCommand(Verify);
             Initialize();
         }

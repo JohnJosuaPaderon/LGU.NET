@@ -20,7 +20,7 @@ namespace LGU.ViewModels.HumanResource
             RequestSearchCommand = new DelegateCommand(RequestSearch);
             AddCommand = new DelegateCommand(Add);
             EditCommand = new DelegateCommand(Edit);
-            r_DepartmentManager = SystemRuntime.GetService<IDepartmentManager>();
+            r_DepartmentManager = ApplicationDomain.GetService<IDepartmentManager>();
         }
 
         public ObservableCollection<DepartmentModel> Departments { get; } = new ObservableCollection<DepartmentModel>();

@@ -24,13 +24,13 @@ namespace LGU
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
-            SystemRuntime.SystemDirectory = ConfigurationManager.AppSettings["SystemDirectory"];
-            SystemRuntime.ReportDirectory = ConfigurationManager.AppSettings.GetString("ReportDirectory");
-            SystemRuntime.ReportTemplateDirectory = ConfigurationManager.AppSettings.GetString("ReportTemplateDirectory");
-            SystemRuntime.DebugMode = ConfigurationManager.AppSettings.GetBoolean("DebugMode");
+            ApplicationDomain.SystemDirectory = ConfigurationManager.AppSettings["SystemDirectory"];
+            ApplicationDomain.ReportDirectory = ConfigurationManager.AppSettings.GetString("ReportDirectory");
+            ApplicationDomain.ReportTemplateDirectory = ConfigurationManager.AppSettings.GetString("ReportTemplateDirectory");
+            ApplicationDomain.DebugMode = ConfigurationManager.AppSettings.GetBoolean("DebugMode");
             InitializeServices();
             
-            SystemRuntime.Instantiate(ServiceCollection);
+            ApplicationDomain.Instantiate(ServiceCollection);
         }
 
         protected virtual void InitializeServices()

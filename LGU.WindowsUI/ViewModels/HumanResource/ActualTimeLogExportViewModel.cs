@@ -15,8 +15,8 @@ namespace LGU.ViewModels.HumanResource
     {
         public ActualTimeLogExportViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_EmployeeManager = SystemRuntime.GetService<IEmployeeManager>();
-            r_TimeLogManager = SystemRuntime.GetService<ITimeLogManager>();
+            r_EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
+            r_TimeLogManager = ApplicationDomain.GetService<ITimeLogManager>();
 
             Employees = new ObservableCollection<EmployeeModel>();
             TimeLogs = new ObservableCollection<TimeLogModel>();

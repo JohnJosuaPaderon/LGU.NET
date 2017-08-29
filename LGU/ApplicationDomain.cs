@@ -5,7 +5,7 @@ using System.IO;
 
 namespace LGU
 {
-    public static class SystemRuntime
+    public static class ApplicationDomain
     {
         public static void Instantiate(IServiceCollection serviceCollection)
         {

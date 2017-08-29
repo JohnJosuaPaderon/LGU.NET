@@ -30,10 +30,10 @@ namespace LGU.ViewModels.HumanResource
 
         public TimeKeepingViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_EmployeeFingerPrintSetManager = SystemRuntime.GetService<IEmployeeFingerPrintSetManager>();
-            r_TimeLogManager = SystemRuntime.GetService<ITimeLogManager>();
-            r_SystemManager = SystemRuntime.GetService<ISystemManager>();
-            r_ConnectionStringSource = SystemRuntime.GetService<IConnectionStringSource>();
+            r_EmployeeFingerPrintSetManager = ApplicationDomain.GetService<IEmployeeFingerPrintSetManager>();
+            r_TimeLogManager = ApplicationDomain.GetService<ITimeLogManager>();
+            r_SystemManager = ApplicationDomain.GetService<ISystemManager>();
+            r_ConnectionStringSource = ApplicationDomain.GetService<IConnectionStringSource>();
             r_Capture = new Capture();
             Users = new UserCollection(1000000);
             Identification = new Identification(ref Users)

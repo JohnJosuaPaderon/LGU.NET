@@ -18,7 +18,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         public AddEditDepartmentDialogViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_DepartmentManager = SystemRuntime.GetService<IDepartmentManager>();
+            r_DepartmentManager = ApplicationDomain.GetService<IDepartmentManager>();
             SaveCommand = new DelegateCommand(Save);
             r_AddDepartmentEvent = r_EventAggregator.GetEvent<AddDepartmentEvent>();
             r_EditDepartmentEvent = r_EventAggregator.GetEvent<EditDepartmentEvent>();

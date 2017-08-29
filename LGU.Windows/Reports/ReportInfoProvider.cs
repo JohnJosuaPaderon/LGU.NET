@@ -20,12 +20,12 @@ namespace LGU.Reports
 
         protected string GetReportTemplatePath(string key)
         {
-            return SystemRuntime.ResolveReportTemplatePath(GetString(key));
+            return ApplicationDomain.ResolveReportTemplatePath(GetString(key));
         }
 
         protected string GetReportDirectory(string key)
         {
-            return SystemRuntime.ResolveReportPath(GetString(key));
+            return ApplicationDomain.ResolveReportPath(GetString(key));
         }
 
         protected string AppendAppSettingOwner(string key)

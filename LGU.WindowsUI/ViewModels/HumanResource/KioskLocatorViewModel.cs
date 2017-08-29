@@ -20,9 +20,9 @@ namespace LGU.ViewModels.HumanResource
     {
         public KioskLocatorViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_LocatorLeaveTypeManager = SystemRuntime.GetService<ILocatorLeaveTypeManager>();
-            r_HumanResourceReport = SystemRuntime.GetService<IHumanResourceReport>();
-            r_LocatorManager = SystemRuntime.GetService<ILocatorManager>();
+            r_LocatorLeaveTypeManager = ApplicationDomain.GetService<ILocatorLeaveTypeManager>();
+            r_HumanResourceReport = ApplicationDomain.GetService<IHumanResourceReport>();
+            r_LocatorManager = ApplicationDomain.GetService<ILocatorManager>();
             r_KioskEmployeeChangedEvent = r_EventAggregator.GetEvent<KioskEmployeeChangedEvent>();
 
             ChangeOfficeOutTimePageCommand = new DelegateCommand<object>(ChangeOfficeOutTimePage);

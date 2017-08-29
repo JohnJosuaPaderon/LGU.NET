@@ -9,7 +9,7 @@ namespace LGU.Processes
         {
         }
 
-        public EnumerableProcessResult(Exception exception) : this(SystemRuntime.DebugMode ? exception.Message : "An exception has been thrown.", exception)
+        public EnumerableProcessResult(Exception exception) : this(ApplicationDomain.DebugMode ? exception.Message : "An exception has been thrown.", exception)
         {
         }
 

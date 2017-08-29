@@ -9,7 +9,7 @@ namespace LGU.Reports.HumanResource
     {
         public void ExportLocator(ILocator locator, IExportEventHandler eventHandler)
         {
-            using (var export = SystemRuntime.GetService<IExportLocator>())
+            using (var export = ApplicationDomain.GetService<IExportLocator>())
             {
                 export.EventHandler = eventHandler;
                 export.Locator = locator;
@@ -20,7 +20,7 @@ namespace LGU.Reports.HumanResource
 
         public async Task ExportLocatorAsync(ILocator locator, IExportEventHandler eventHandler)
         {
-            using (var export = SystemRuntime.GetService<IExportLocator>())
+            using (var export = ApplicationDomain.GetService<IExportLocator>())
             {
                 export.EventHandler = eventHandler;
                 export.Locator = locator;
@@ -31,7 +31,7 @@ namespace LGU.Reports.HumanResource
 
         public void ExportTimeLog(IEnumerable<ITimeLog> timeLogs, ValueRange<DateTime> cutOff, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler)
         {
-            using (var export = SystemRuntime.GetService<IExportTimeLog>())
+            using (var export = ApplicationDomain.GetService<IExportTimeLog>())
             {
                 export.EventHandler = eventHandler;
                 export.TimeLogs = timeLogs;
@@ -44,7 +44,7 @@ namespace LGU.Reports.HumanResource
 
         public async Task ExportTimeLogAsync(IEnumerable<ITimeLog> timeLogs, ValueRange<DateTime> cutOff, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler)
         {
-            using (var export = SystemRuntime.GetService<IExportTimeLog>())
+            using (var export = ApplicationDomain.GetService<IExportTimeLog>())
             {
                 export.EventHandler = eventHandler;
                 export.TimeLogs = timeLogs;

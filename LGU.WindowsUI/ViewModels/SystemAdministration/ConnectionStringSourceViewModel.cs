@@ -13,7 +13,7 @@ namespace LGU.ViewModels.SystemAdministration
 
         public ConnectionStringSourceViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_ConnectionStringSource = SystemRuntime.GetService<IConnectionStringSource>();
+            r_ConnectionStringSource = ApplicationDomain.GetService<IConnectionStringSource>();
             LoadCommand = new DelegateCommand(Initialize);
             SaveCommand = new DelegateCommand(Save);
             AddCommand = new DelegateCommand(Add);

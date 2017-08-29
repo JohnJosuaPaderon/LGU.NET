@@ -37,7 +37,7 @@ namespace LGU
 
         private string GetPath()
         {
-            var connectionStringSourcePath = SystemRuntime.ResolveSystemPath(ConfigurationManager.AppSettings["ConnectionStringSource"]);
+            var connectionStringSourcePath = ApplicationDomain.ResolveSystemPath(ConfigurationManager.AppSettings["ConnectionStringSource"]);
 
             if (string.IsNullOrWhiteSpace(connectionStringSourcePath))
             {

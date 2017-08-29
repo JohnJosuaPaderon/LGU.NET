@@ -57,7 +57,7 @@ namespace LGU.Data.Extensions
 
         public static SqlQueryInfo<T> AddLogByParameter<T>(this SqlQueryInfo<T> queryInfo)
         {
-            queryInfo.Parameters.AddInput("@_LogBy", SystemRuntime.LogByInfo);
+            queryInfo.Parameters.AddInput("@_LogBy", ApplicationDomain.LogByInfo);
             return queryInfo;
         }
     }

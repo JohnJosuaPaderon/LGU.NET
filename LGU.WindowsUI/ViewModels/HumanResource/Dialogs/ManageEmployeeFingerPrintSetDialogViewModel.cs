@@ -22,7 +22,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         public ManageEmployeeFingerPrintSetDialogViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_EmployeeFingerPrintSetManager = SystemRuntime.GetService<IEmployeeFingerPrintSetManager>();
+            r_EmployeeFingerPrintSetManager = ApplicationDomain.GetService<IEmployeeFingerPrintSetManager>();
 
             r_ManageEmployeeFingerPrintSetEvent = r_EventAggregator.GetEvent<ManageEmployeeFingerPrintSetEvent>();
             Capture = new Capture();

@@ -22,8 +22,8 @@ namespace LGU.ViewModels.HumanResource
 
         public EmployeeFingerPrintEnrollmentViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_EmployeeManager = SystemRuntime.GetService<IEmployeeManager>();
-            r_EmployeeFingerPrintSetManager = SystemRuntime.GetService<IEmployeeFingerPrintSetManager>();
+            r_EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
+            r_EmployeeFingerPrintSetManager = ApplicationDomain.GetService<IEmployeeFingerPrintSetManager>();
 
             r_EmployeeEvent = r_EventAggregator.GetEvent<EmployeeEvent>();
             r_AddEmployeeEvent = r_EventAggregator.GetEvent<AddEmployeeEvent>();

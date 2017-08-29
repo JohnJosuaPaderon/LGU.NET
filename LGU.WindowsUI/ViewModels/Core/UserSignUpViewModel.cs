@@ -16,7 +16,7 @@ namespace LGU.ViewModels.Core
 
         public UserSignUpViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_UserManager = SystemRuntime.GetService<IUserManager>();
+            r_UserManager = ApplicationDomain.GetService<IUserManager>();
             SaveCommand = new DelegateCommand(Save);
             User = new UserSignUpModel(new User());
         }

@@ -21,7 +21,7 @@ namespace LGU.ViewModels.HumanResource
                 Employee = MainKioskViewModel.SelectedKioskEmployee;
             }
 
-            r_TimeLogManager = SystemRuntime.GetService<ITimeLogManager>();
+            r_TimeLogManager = ApplicationDomain.GetService<ITimeLogManager>();
             r_KioskEmployeeChangedEvent = r_EventAggregator.GetEvent<KioskEmployeeChangedEvent>();
 
             TimeLogs = new ObservableCollection<ITimeLog>();

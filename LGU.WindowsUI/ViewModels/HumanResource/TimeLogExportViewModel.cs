@@ -17,10 +17,10 @@ namespace LGU.ViewModels.HumanResource
     {
         public TimeLogExportViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_DepartmentManager = SystemRuntime.GetService<IDepartmentManager>();
-            r_EmployeeManager = SystemRuntime.GetService<IEmployeeManager>();
-            r_TimeLogManager = SystemRuntime.GetService<ITimeLogManager>();
-            r_HumanResourceReport = SystemRuntime.GetService<IHumanResourceReport>();
+            r_DepartmentManager = ApplicationDomain.GetService<IDepartmentManager>();
+            r_EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
+            r_TimeLogManager = ApplicationDomain.GetService<ITimeLogManager>();
+            r_HumanResourceReport = ApplicationDomain.GetService<IHumanResourceReport>();
 
             GetDepartmentCommand = new DelegateCommand(GetDepartment);
             GetEmployeeCommand = new DelegateCommand(GetEmployee);

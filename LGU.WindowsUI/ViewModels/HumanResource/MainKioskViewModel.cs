@@ -32,8 +32,8 @@ namespace LGU.ViewModels.HumanResource
             r_Users = new UserCollection(10_000);
             r_Identification = new Identification(ref r_Users);
             r_Capture = new Capture();
-            r_EmployeeFingerPrintSetManager = SystemRuntime.GetService<IEmployeeFingerPrintSetManager>();
-            r_SystemManager = SystemRuntime.GetService<ISystemManager>();
+            r_EmployeeFingerPrintSetManager = ApplicationDomain.GetService<IEmployeeFingerPrintSetManager>();
+            r_SystemManager = ApplicationDomain.GetService<ISystemManager>();
             r_EmployeeDictionary = new Dictionary<string, EmployeeModel>();
             r_DataUpdateTimer = new Timer(60_000);
             r_CurrentDateTimer = new Timer(1_000);
