@@ -13,14 +13,14 @@ namespace LGU.ViewModels.HumanResource
         public MainViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator, MainViewContentRegion)
         {
             MenuItems.Add(new MenuItem { HeaderText = "Departments", Icon = PackIconKind.ChartBar, ViewName = nameof(DepartmentManagementView) });
-            MenuItems.Add(new MenuItem { HeaderText = "Employee Finger Prints", Icon = PackIconKind.Fingerprint, ViewName = nameof(EmployeeFingerPrintEnrollmentView) });
+            MenuItems.Add(new MenuItem { HeaderText = "Employees", Icon = PackIconKind.AccountMultiple, ViewName = nameof(EmployeeFingerPrintEnrollmentView) });
             MenuItems.Add(new MenuItem { HeaderText = "DTR Export", Icon = PackIconKind.ClockEnd, ViewName = nameof(TimeLogExportView) });
             MenuItems.Add(new MenuItem { HeaderText = "Actual Time-Logs", Icon = PackIconKind.ClockEnd, ViewName = nameof(ActualTimeLogExportView) });
             MenuItems.Add(new MenuItem { HeaderText = "Locator", Icon = PackIconKind.AccountLocation, ViewName = nameof(LocatorView) });
             MenuItems.Add(new MenuItem { HeaderText = "User Sign-up", Icon = PackIconKind.AccountPlus, ViewName = nameof(UserSignUpView) });
+            MenuItems.Add(new MenuItem { HeaderText = "Salary Grades", Icon = PackIconKind.ChartAreaspline, ViewName = nameof(SalaryGradeManagementView) });
 
             r_ChangeHeaderEvent.Subscribe(header => Header = header);
-            r_TitleEvent.Publish("Human Resource & Development Office");
         }
 
         private string _Header;

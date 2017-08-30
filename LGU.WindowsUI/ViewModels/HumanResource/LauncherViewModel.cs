@@ -10,6 +10,8 @@ namespace LGU.ViewModels.HumanResource
         public LauncherViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
             NavigateCommand = new DelegateCommand<string>(Navigate);
+
+            r_TitleEvent.Publish("Human Resource & Development Office");
         }
 
         public DelegateCommand<string> NavigateCommand { get; }

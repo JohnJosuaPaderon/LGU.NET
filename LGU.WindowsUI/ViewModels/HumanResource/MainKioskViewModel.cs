@@ -46,6 +46,7 @@ namespace LGU.ViewModels.HumanResource
             r_ShowMaxRestorButtonEvent.Publish(false);
             r_ShowMinButtonEvent.Publish(false);
             r_ShowTitleBarEvent.Publish(false);
+            r_AccountDisplayEvent.Publish(false);
 
             EndSessionCommand = new DelegateCommand(EndSession);
             InitializeCommand = new DelegateCommand(Initialize);
@@ -112,19 +113,21 @@ namespace LGU.ViewModels.HumanResource
             LastDataUpdate = CurrentDate;
 
             // Uncomment this for testing without FingerPrint Scanner.
-            EmployeeModel testEmployee = null;
+            //EmployeeModel testEmployee = null;
 
             if (result.Status == ProcessResultStatus.Success)
             {
                 if (result.DataList != null && result.DataList.Any())
                 {
                     // Uncomment this for testing without FingerPrint Scanner.
-                    testEmployee = new EmployeeModel(result.DataList.First().Employee);
+                    //testEmployee = new EmployeeModel(result.DataList.First().Employee);
 
-                    foreach (var item in result.DataList)
-                    {
-                        AddUpdateFingerPrintUser(item);
-                    }
+                    Parallel.ForEach(result.DataList, item => AddUpdateFingerPrintUser(item));
+
+                    //foreach (var item in result.DataList)
+                    //{
+                    //    AddUpdateFingerPrintUser(item);
+                    //}
 
                     SelectedPage = 1;
                 }
@@ -133,7 +136,7 @@ namespace LGU.ViewModels.HumanResource
                 r_CurrentDateTimer.Start();
 
                 // Uncomment this for testing without FingerPrint Scanner.
-                Employee = testEmployee;
+                //Employee = testEmployee;
             }
             else
             {

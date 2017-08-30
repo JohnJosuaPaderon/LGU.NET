@@ -28,7 +28,7 @@ namespace LGU.ViewModels.HumanResource
             GetTimeLogsCommand = new DelegateCommand(GetTimeLogs);
 
             CutOff = new ValueRangeModel<DateTime>(new ValueRange<DateTime>(DateTime.Now));
-            r_KioskEmployeeChangedEvent.Subscribe(arg => Employee = arg);
+            r_KioskEmployeeChangedEvent.Subscribe(OnKioskEmployeeChanged);
         }
 
         private readonly ITimeLogManager r_TimeLogManager;
@@ -74,6 +74,12 @@ namespace LGU.ViewModels.HumanResource
             {
                 EnqueueMessage("Invalid employee.");
             }
+        }
+
+        private void OnKioskEmployeeChanged(EmployeeModel employee)
+        {
+            Employee = employee;
+            GetTimeLogs();
         }
     }
 }
