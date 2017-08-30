@@ -189,6 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapperBase.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\DateTimeRangeDisplayConverter.cs" />
     <Compile Include="Converters\DialogModeAddToVisibilityConverter.cs" />
     <Compile Include="Converters\FingerPrintToDisplayConverter.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Converters\NullableToPackIconStateConverter.cs" />
     <Compile Include="Converters\TimeFileSegregationToDisplayConverter.cs" />
     <Compile Include="Converters\TimeLogExportOptionToDisplayConverter.cs" />
+    <Compile Include="Events\AccountDisplayEvent.cs" />
     <Compile Include="Events\HumanResource\AddDepartmentEvent.cs" />
     <Compile Include="Events\HumanResource\AddEmployeeEvent.cs" />
     <Compile Include="Events\HumanResource\AddLocatorEvent.cs" />
@@ -263,6 +265,7 @@
     <Compile Include="ViewModels\HumanResource\MainViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PreviewDepartmentViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PreviewEmployeeViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\SalaryGradeManagementViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\TimeKeepingResult.cs" />
     <Compile Include="ViewModels\HumanResource\TimeKeepingViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\TimeLogExportViewModel.cs" />
@@ -332,6 +335,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\PreviewEmployeeView.xaml.cs">
       <DependentUpon>PreviewEmployeeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\SalaryGradeManagementView.xaml.cs">
+      <DependentUpon>SalaryGradeManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\TimeKeepingView.xaml.cs">
       <DependentUpon>TimeKeepingView.xaml</DependentUpon>
@@ -519,6 +525,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\PreviewEmployeeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\SalaryGradeManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
