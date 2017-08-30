@@ -285,6 +285,26 @@ namespace LGU.Extensions
             instance.AddSingleton<ILocatorLeaveTypeManager, LocatorLeaveTypeManager>();
             #endregion
 
+            #region SalaryGrade
+            instance.AddSingleton<ISalaryGradeConverter<SqlDataReader>, SalaryGradeConverter>();
+            instance.AddSingleton<IDeleteSalaryGrade, DeleteSalaryGrade>();
+            instance.AddSingleton<IGetSalaryGradeById, GetSalaryGradeById>();
+            instance.AddSingleton<IGetSalaryGradeList, GetSalaryGradeList>();
+            instance.AddSingleton<IInsertSalaryGrade, InsertSalaryGrade>();
+            instance.AddSingleton<IUpdateSalaryGrade, UpdateSalaryGrade>();
+            instance.AddSingleton<ISalaryGradeManager, SalaryGradeManager>();
+            #endregion
+
+            #region SalaryGradeBatch
+            instance.AddSingleton<ISalaryGradeBatchConverter<SqlDataReader>, SalaryGradeBatchConverter>();
+            instance.AddSingleton<IDeleteSalaryGradeBatch, DeleteSalaryGradeBatch>();
+            instance.AddSingleton<IGetSalaryGradeBatchById, GetSalaryGradeBatchById>();
+            instance.AddSingleton<IGetSalaryGradeBatchList, GetSalaryGradeBatchList>();
+            instance.AddSingleton<IInsertSalaryGradeBatch, InsertSalaryGradeBatch>();
+            instance.AddSingleton<IUpdateSalaryGradeBatch, UpdateSalaryGradeBatch>();
+            instance.AddSingleton<ISalaryGradeBatchManager, SalaryGradeBatchManager>();
+            #endregion
+
             #region TimeLogType
             instance.AddSingleton<ITimeLogTypeConverter<SqlDataReader>, TimeLogTypeConverter>();
             instance.AddSingleton<IGetTimeLogTypeById, GetTimeLogTypeById>();
