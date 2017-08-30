@@ -110,12 +110,17 @@
             </materialDesign:TransitioningContent>
             <materialDesign:TransitioningContent Grid.Row="2" OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn,Duration=0:0:1}">
                 <materialDesign:Card VerticalAlignment="Stretch">
-                    <DataGrid ItemsSource="{Binding TimeLogs}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Time-In" Binding="{Binding LoginDate,StringFormat='MMM dd, yyyy hh:mm tt'}"/>
-                            <DataGridTextColumn Header="Time-Out" Binding="{Binding LogoutDate,StringFormat='MMM dd, yyyy hh:mm tt'}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <Grid>
+                        <DataGrid ItemsSource="{Binding TimeLogs}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Time-In" Binding="{Binding LoginDate,StringFormat='MMM dd, yyyy hh:mm tt'}"/>
+                                <DataGridTextColumn Header="Time-Out" Binding="{Binding LogoutDate,StringFormat='MMM dd, yyyy hh:mm tt'}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Style="{DynamicResource DataManagerButton}" Command="{Binding GetTimeLogsCommand}">
+                            <materialDesign:PackIcon Kind="Refresh" Height="30" Width="30"/>
+                        </Button>
+                    </Grid>
                 </materialDesign:Card>
             </materialDesign:TransitioningContent>
         </Grid>

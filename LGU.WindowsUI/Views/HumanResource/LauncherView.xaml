@@ -22,7 +22,7 @@
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource NavigationTextBlock}"/>
             </ItemsControl.Resources>
             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-                <Button Command="{Binding NavigateCommand}" CommandParameter="DepartmentManagementView">
+                <Button Command="{Binding NavigateCommand}" CommandParameter="DepartmentManagementView" ToolTip="View and manage departments">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -34,19 +34,19 @@
                 </Button>
             </materialDesign:TransitioningContent>
             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-                <Button Command="{Binding NavigateCommand}" CommandParameter="EmployeeFingerPrintEnrollmentView">
+                <Button Command="{Binding NavigateCommand}" CommandParameter="EmployeeFingerPrintEnrollmentView" ToolTip="View and manage employees">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <materialDesign:PackIcon Kind="Fingerprint" Height="135" Width="135" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Row="1" Text="Finger Print Enrollment"/>
+                        <materialDesign:PackIcon Kind="AccountMultiple" Height="135" Width="135" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Text="Employees"/>
                     </Grid>
                 </Button>
             </materialDesign:TransitioningContent>
             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-                <Button Command="{Binding NavigateCommand}" CommandParameter="TimeLogExportView">
+                <Button Command="{Binding NavigateCommand}" CommandParameter="TimeLogExportView" ToolTip="Export Daily time records.">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -58,7 +58,7 @@
                 </Button>
             </materialDesign:TransitioningContent>
             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-                <Button Command="{Binding NavigateCommand}" CommandParameter="ActualTimeLogExportView">
+                <Button Command="{Binding NavigateCommand}" CommandParameter="ActualTimeLogExportView" ToolTip="View actual time-logs of employees.">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -70,7 +70,7 @@
                 </Button>
             </materialDesign:TransitioningContent>
             <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
-                <Button Command="{Binding NavigateCommand}" CommandParameter="LocatorView">
+                <Button Command="{Binding NavigateCommand}" CommandParameter="LocatorView" ToolTip="View and manage locators.">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -78,6 +78,18 @@
                         </Grid.RowDefinitions>
                         <materialDesign:PackIcon Kind="AccountLocation" Height="135" Width="135" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <TextBlock Grid.Row="1" Text="Locator"/>
+                    </Grid>
+                </Button>
+            </materialDesign:TransitioningContent>
+            <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
+                <Button Command="{Binding NavigateCommand}" CommandParameter="SalaryGradeManagementView" ToolTip="View and manage Salary Grades.">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:PackIcon Kind="ChartAreaspline" Height="135" Width="135" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Text="Salary Grades"/>
                     </Grid>
                 </Button>
             </materialDesign:TransitioningContent>

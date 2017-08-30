@@ -14,7 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary Source="/LGU.WindowsUI;component/Styles/Default.xaml"/>
     </UserControl.Resources>
-    <materialDesign:Transitioner SelectedIndex="{Binding SelectedPage,FallbackValue=2}">
+    <materialDesign:Transitioner SelectedIndex="{Binding SelectedPage,FallbackValue=0}">
         <materialDesign:Transitioner.Resources>
             <Style TargetType="{x:Type materialDesign:TransitionerSlide}" BasedOn="{StaticResource StackTransitionerSlide}"/>
         </materialDesign:Transitioner.Resources>
@@ -49,8 +49,8 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{Binding Employee.InformalFullName,FallbackValue=Juan Dela Cruz}" FontSize="90" Style="{DynamicResource ExtraLargeHeaderTextBlock}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0 10 0 0"/>
-                                <TextBlock Grid.Row="1" Text="{Binding Employee.Department.Description,FallbackValue=Department}" FontWeight="Normal" Style="{DynamicResource LargeHeaderTextBlock}" HorizontalAlignment="Stretch" Margin="0 -10 0 0"/>
+                                <TextBlock Grid.Row="0" Text="{Binding Employee.InformalFullName}" FontSize="90" Style="{DynamicResource ExtraLargeHeaderTextBlock}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0 10 0 0"/>
+                                <TextBlock Grid.Row="1" Text="{Binding Employee.Department.Description}" FontWeight="Normal" Style="{DynamicResource LargeHeaderTextBlock}" HorizontalAlignment="Stretch" Margin="0 -10 0 0"/>
                             </Grid>
                             <Viewbox Grid.Column="1" Height="150" Margin="15">
                                 <Border BorderBrush="White" BorderThickness="1">

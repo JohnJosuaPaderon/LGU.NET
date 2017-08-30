@@ -18,6 +18,7 @@
                 </StackPanel.Resources>
                 <TextBox Text="{Binding Employee.FullName,Mode=OneWay}" materialDesign:HintAssist.Hint="Name"/>
                 <TextBox Text="{Binding Employee.Department.Description}" materialDesign:HintAssist.Hint="Department"/>
+                <TextBox Text="{Binding Employee.Type.Description}" materialDesign:HintAssist.Hint="Type"/>
             </StackPanel>
         </StackPanel>
     </materialDesign:Card>
