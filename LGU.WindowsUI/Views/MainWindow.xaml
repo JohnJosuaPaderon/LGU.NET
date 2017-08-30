@@ -5,6 +5,7 @@
                      xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
                      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                      xmlns:viewModels="clr-namespace:LGU.ViewModels"
+                     xmlns:converters="clr-namespace:LGU.Converters"
                      prism:ViewModelLocator.AutoWireViewModel="True"
                      Background="{DynamicResource MaterialDesignPaper}"
                      Title="{Binding Title}"
@@ -14,7 +15,8 @@
                      ShowMinButton="{Binding ShowMinButton}"
                      ShowMaxRestoreButton="{Binding ShowMaxRestoreButton}"
                      ShowTitleBar="{Binding ShowTitleBar}"
-                     TitleCaps="False">
+                     TitleCaps="False"
+                     TitlebarHeight="36">
     <mahApps:MetroWindow.TitleTemplate>
         <DataTemplate>
             <TextBlock Text="{Binding}" FontFamily="Roboto" VerticalAlignment="Center" Margin="10 0" FontSize="15"/>
@@ -23,6 +25,25 @@
     <mahApps:MetroWindow.Resources>
         <ResourceDictionary Source="../Styles/Default.xaml"/>
     </mahApps:MetroWindow.Resources>
+    <mahApps:MetroWindow.RightWindowCommands>
+        <mahApps:WindowCommands>
+            <Grid Visibility="{Binding AccountDisplay,Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="John Josua R. Paderon" VerticalAlignment="Center" FontSize="15"/>
+                <Button Grid.Column="2" ToolTip="Logout" Padding="4">
+                    <materialDesign:PackIcon Kind="AccountOff" Height="25" Width="25"/>
+                </Button>
+                <Button Grid.Column="3" ToolTip="Account Settings" Padding="4">
+                    <materialDesign:PackIcon Kind="AccountSettingsVariant" Height="25" Width="25"/>
+                </Button>
+            </Grid>
+        </mahApps:WindowCommands>
+    </mahApps:MetroWindow.RightWindowCommands>
     <materialDesign:DialogHost Identifier="{x:Static viewModels:MainWindowViewModel.MainDialogName}">
         <Grid>
             <ContentControl prism:RegionManager.RegionName="{x:Static viewModels:MainWindowViewModel.MainContentRegionName}"/>
