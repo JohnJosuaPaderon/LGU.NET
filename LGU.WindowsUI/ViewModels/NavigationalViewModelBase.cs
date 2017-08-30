@@ -9,7 +9,7 @@ namespace LGU.ViewModels
     {
         public NavigationalViewModelBase(IRegionManager regionManager, IEventAggregator eventAggregator, string navigationTargetRegion) : base(regionManager, eventAggregator)
         {
-            MenuWidth = 450;
+            MenuWidth = 350;
             NavigateCommand = new DelegateCommand(Navigate);
             NavigationTargetRegion = navigationTargetRegion;
         }

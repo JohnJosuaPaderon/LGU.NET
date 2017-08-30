@@ -23,6 +23,7 @@ namespace LGU.ViewModels
             r_ShowMinButtonEvent.Subscribe(arg => ShowMinButton = arg);
             r_ShowMaxRestorButtonEvent.Subscribe(arg => ShowMaxRestoreButton = arg);
             r_ShowTitleBarEvent.Subscribe(arg => ShowTitleBar = arg);
+            r_AccountDisplayEvent.Subscribe(arg => AccountDisplay = arg);
         }
 
         private string _Title = "Welcome to LGU.NET";
@@ -72,6 +73,13 @@ namespace LGU.ViewModels
         {
             get { return _ShowTitleBar; }
             set { SetProperty(ref _ShowTitleBar, value); }
+        }
+
+        private bool _AccountDisplay = true;
+        public bool AccountDisplay
+        {
+            get { return _AccountDisplay; }
+            set { SetProperty(ref _AccountDisplay, value); }
         }
 
         public override void Initialize()

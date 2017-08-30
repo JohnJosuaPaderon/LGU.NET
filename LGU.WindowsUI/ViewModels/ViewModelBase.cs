@@ -23,6 +23,7 @@ namespace LGU.ViewModels
             r_ShowMinButtonEvent = r_EventAggregator.GetEvent<ShowMinButtonEvent>();
             r_ShowMaxRestorButtonEvent = r_EventAggregator.GetEvent<ShowMaxRestoreButtonEvent>();
             r_ShowTitleBarEvent = r_EventAggregator.GetEvent<ShowTitleBarEvent>();
+            r_AccountDisplayEvent = r_EventAggregator.GetEvent<AccountDisplayEvent>();
 
             ResetMouseCaptureCommand = new DelegateCommand(ResetMouseCapture);
         }
@@ -36,6 +37,7 @@ namespace LGU.ViewModels
         protected readonly ShowMinButtonEvent r_ShowMinButtonEvent;
         protected readonly ShowMaxRestoreButtonEvent r_ShowMaxRestorButtonEvent;
         protected readonly ShowTitleBarEvent r_ShowTitleBarEvent;
+        protected readonly AccountDisplayEvent r_AccountDisplayEvent;
 
         public DelegateCommand ResetMouseCaptureCommand { get; }
 
