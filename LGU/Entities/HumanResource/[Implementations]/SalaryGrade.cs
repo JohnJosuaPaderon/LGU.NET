@@ -6,7 +6,8 @@ namespace LGU.Entities.HumanResource
     {
         static SalaryGrade()
         {
-
+            MinGrade = 1;
+            MaxGrade = 33;
         }
 
         public static int MinGrade { get; }
