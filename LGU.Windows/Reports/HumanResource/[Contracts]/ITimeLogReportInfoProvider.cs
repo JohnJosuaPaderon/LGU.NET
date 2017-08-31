@@ -16,5 +16,6 @@
         ExcelCell EmployeeCell { get; }
         string TimeLogFormat { get; }
         string PathFormat { get; }
+        bool IncludeFileMap { get; }
     }
 }
