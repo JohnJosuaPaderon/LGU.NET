@@ -225,6 +225,9 @@
     <Compile Include="Models\HumanResource\FingerPrintModel.cs" />
     <Compile Include="Models\HumanResource\LocatorLeaveTypeModel.cs" />
     <Compile Include="Models\HumanResource\LocatorModel.cs" />
+    <Compile Include="Models\HumanResource\SalaryGradeBatchModel.cs" />
+    <Compile Include="Models\HumanResource\SalaryGradeModel.cs" />
+    <Compile Include="Models\HumanResource\SalaryGradeStepModel.cs" />
     <Compile Include="Models\HumanResource\SelectableEmployeeModel.cs" />
     <Compile Include="Models\HumanResource\TimeLogModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
@@ -250,6 +253,7 @@
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\HumanResource\ActualTimeLogExportViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\ApplicationMainViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\CreateNewSalaryGradeViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\DepartmentManagementViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditDepartmentDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditEmployeeDialogViewModel.cs" />
@@ -290,6 +294,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\ApplicationMainView.xaml.cs">
       <DependentUpon>ApplicationMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\CreateNewSalaryGradeView.xaml.cs">
+      <DependentUpon>CreateNewSalaryGradeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\DepartmentManagementView.xaml.cs">
       <DependentUpon>DepartmentManagementView.xaml</DependentUpon>
@@ -465,6 +472,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\ApplicationMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\CreateNewSalaryGradeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
