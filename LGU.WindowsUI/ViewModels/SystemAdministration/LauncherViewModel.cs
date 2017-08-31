@@ -62,10 +62,5 @@ namespace LGU.ViewModels.SystemAdministration
                 Message = "Invalid administrator's key.";
             }
         }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
     }
 }

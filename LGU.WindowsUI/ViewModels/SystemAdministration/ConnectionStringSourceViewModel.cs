@@ -41,7 +41,7 @@ namespace LGU.ViewModels.SystemAdministration
             set { SetProperty(ref _IsEncrypted, value); }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
 
