@@ -82,7 +82,7 @@ namespace LGU.ViewModels
             set { SetProperty(ref _AccountDisplay, value); }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             r_EventAggregator.GetEvent<WindowStateEvent>().Subscribe(ws => WindowState = ws);
             r_EventAggregator.GetEvent<NewMessageEvent>().Subscribe(nm => MessageQueue.Enqueue(nm));

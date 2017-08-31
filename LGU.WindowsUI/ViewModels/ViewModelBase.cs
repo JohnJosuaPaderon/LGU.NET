@@ -26,6 +26,7 @@ namespace LGU.ViewModels
             r_AccountDisplayEvent = r_EventAggregator.GetEvent<AccountDisplayEvent>();
 
             ResetMouseCaptureCommand = new DelegateCommand(ResetMouseCapture);
+            InitializeCommand = new DelegateCommand(Initialize);
         }
 
         protected readonly IRegionManager r_RegionManager;
@@ -40,13 +41,14 @@ namespace LGU.ViewModels
         protected readonly AccountDisplayEvent r_AccountDisplayEvent;
 
         public DelegateCommand ResetMouseCaptureCommand { get; }
+        public DelegateCommand InitializeCommand { get; }
 
         private void ResetMouseCapture()
         {
             Mouse.Capture(null);
         }
 
-        public virtual void Initialize()
+        protected virtual void Initialize()
         {
             Debug.WriteLine("ViewModel has been Loaded.");
         }
