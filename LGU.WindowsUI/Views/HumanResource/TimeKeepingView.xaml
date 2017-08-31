@@ -4,6 +4,7 @@
              xmlns:prism="http://prismlibrary.com/"             
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:viewModels="clr-namespace:LGU.ViewModels.HumanResource"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -56,6 +57,11 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <materialDesign:DrawerHost>
         <Grid>
             <Grid.RowDefinitions>

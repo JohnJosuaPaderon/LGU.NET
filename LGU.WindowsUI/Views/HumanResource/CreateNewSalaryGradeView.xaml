@@ -1,0 +1,119 @@
+﻿<UserControl x:Class="LGU.Views.HumanResource.CreateNewSalaryGradeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:models="clr-namespace:LGU.Models.HumanResource"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <ResourceDictionary Source="../../Styles/Default.xaml"/>
+    </UserControl.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <materialDesign:DialogHost>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="{DynamicResource DefaultMargin}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <materialDesign:Card Grid.Row="0">
+                    <Grid Margin="{DynamicResource DefaultMargin}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" MinWidth="200" materialDesign:HintAssist.Hint="Effectivity Date" IsReadOnly="True" Text="{Binding Batch.EffectivityDate,StringFormat='MMMM dd, yyyy'}"/>
+                        <Button Grid.Column="1" Style="{DynamicResource FieldButton}" Content="Change" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                            <Button.CommandParameter>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource ExpandInTransitioningContent}">
+                                        <Calendar SelectedDate="{Binding Batch.EffectivityDate}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="SelectedDatesChanged">
+                                                    <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </Calendar>
+                                    </materialDesign:TransitioningContent>
+                                    <materialDesign:TransitioningContent Grid.Row="1" Style="{DynamicResource SlideInFromBottomTransitioningContent}">
+                                        <Grid Margin="{DynamicResource DefaultMargin}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button Grid.Column="1" Style="{DynamicResource ConfirmButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
+                                        </Grid>
+                                    </materialDesign:TransitioningContent>
+                                </Grid>
+                            </Button.CommandParameter>
+                        </Button>
+                        <TextBox Grid.Column="3" materialDesign:HintAssist.Hint="Description" Text="{Binding Batch.Description}"/>
+                    </Grid>
+                </materialDesign:Card>
+                <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
+                    <Grid>
+                        <DataGrid IsReadOnly="False" ItemsSource="{Binding SalaryGrades}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Salary Grade" Binding="{Binding Number}" IsReadOnly="True">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="TextAlignment" Value="Right"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Step 1" Binding="{Binding Steps[0].Amount,StringFormat='#,##0.00'}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="TextAlignment" Value="Right"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Step 2" Binding="{Binding Steps[1].Amount,StringFormat='#,##0.00'}"/>
+                                <DataGridTextColumn Header="Step 3" Binding="{Binding Steps[2].Amount,StringFormat='#,##0.00'}"/>
+                                <DataGridTextColumn Header="Step 4" Binding="{Binding Steps[3].Amount,StringFormat='#,##0.00'}"/>
+                                <DataGridTextColumn Header="Step 5" Binding="{Binding Steps[4].Amount,StringFormat='#,##0.00'}"/>
+                                <DataGridTextColumn Header="Step 6" Binding="{Binding Steps[5].Amount,StringFormat='#,##0.00'}"/>
+                                <DataGridTextColumn Header="Step 7" Binding="{Binding Steps[6].Amount,StringFormat='#,##0.00'}"/>
+                                <DataGridTextColumn Header="Step 8" Binding="{Binding Steps[7].Amount,StringFormat='#,##0.00'}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Style="{DynamicResource DataManagerButton}" Command="{Binding AddNewSalaryGradeCommand}">
+                            <materialDesign:PackIcon Kind="Plus" Height="30" Width="30"/>
+                        </Button>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+            <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource SlideInFromBottomTransitioningContent}">
+                <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="2" Content="Save" Height="40" MinWidth="100" Command="{Binding SaveCommand}"/>
+                        <Button Grid.Column="4" Content="Cancel" Height="40" MinWidth="100" Command="{Binding NavigateCommand}" CommandParameter="SalaryGradeManagementView"/>
+                    </Grid>
+                </materialDesign:ColorZone>
+            </materialDesign:TransitioningContent>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>

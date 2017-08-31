@@ -3,11 +3,11 @@
 namespace LGU.Views.HumanResource
 {
     /// <summary>
-    /// Interaction logic for DepartmentManagementView
+    /// Interaction logic for CreateNewSalaryGradeView
     /// </summary>
-    public partial class DepartmentManagementView : UserControl
+    public partial class CreateNewSalaryGradeView : UserControl
     {
-        public DepartmentManagementView()
+        public CreateNewSalaryGradeView()
         {
             InitializeComponent();
         }
