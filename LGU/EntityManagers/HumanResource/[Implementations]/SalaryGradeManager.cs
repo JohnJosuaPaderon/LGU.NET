@@ -13,19 +13,22 @@ namespace LGU.EntityManagers.HumanResource
         private readonly IGetSalaryGradeList r_GetList;
         private readonly IInsertSalaryGrade r_Insert;
         private readonly IUpdateSalaryGrade r_Update;
+        private readonly IGetSalaryGradeListByBatch r_GetListByBatch;
 
         public SalaryGradeManager(
             IDeleteSalaryGrade delete,
             IGetSalaryGradeById getById,
             IGetSalaryGradeList getList,
             IInsertSalaryGrade insert,
-            IUpdateSalaryGrade update)
+            IUpdateSalaryGrade update,
+            IGetSalaryGradeListByBatch getListByBatch)
         {
             r_Delete = delete;
             r_GetById = getById;
             r_GetList = getList;
             r_Insert = insert;
             r_Update = update;
+            r_GetListByBatch = getListByBatch;
         }
 
         public IProcessResult<ISalaryGrade> Delete(ISalaryGrade data)
@@ -140,6 +143,45 @@ namespace LGU.EntityManagers.HumanResource
         public async Task<IEnumerableProcessResult<ISalaryGrade>> GetListAsync(CancellationToken cancellationToken)
         {
             return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
+        }
+
+        public IEnumerableProcessResult<ISalaryGrade> GetListByBatch(ISalaryGradeBatch batch)
+        {
+            if (batch != null)
+            {
+                r_GetListByBatch.Batch = batch;
+                return AddUpdateIfSuccess(r_GetListByBatch.Execute());
+            }
+            else
+            {
+                return new EnumerableProcessResult<ISalaryGrade>(ProcessResultStatus.Failed, "Invalid salary grade batch");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<ISalaryGrade>> GetListByBatchAsync(ISalaryGradeBatch batch)
+        {
+            if (batch != null)
+            {
+                r_GetListByBatch.Batch = batch;
+                return AddUpdateIfSuccess(await r_GetListByBatch.ExecuteAsync());
+            }
+            else
+            {
+                return new EnumerableProcessResult<ISalaryGrade>(ProcessResultStatus.Failed, "Invalid salary grade batch");
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<ISalaryGrade>> GetListByBatchAsync(ISalaryGradeBatch batch, CancellationToken cancellationToken)
+        {
+            if (batch != null)
+            {
+                r_GetListByBatch.Batch = batch;
+                return AddUpdateIfSuccess(await r_GetListByBatch.ExecuteAsync(cancellationToken));
+            }
+            else
+            {
+                return new EnumerableProcessResult<ISalaryGrade>(ProcessResultStatus.Failed, "Invalid salary grade batch");
+            }
         }
 
         public IProcessResult<ISalaryGrade> Insert(ISalaryGrade data)
