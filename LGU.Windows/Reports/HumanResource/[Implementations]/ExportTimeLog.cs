@@ -3,8 +3,10 @@ using LGU.Extensions;
 using LGU.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -26,11 +28,23 @@ namespace LGU.Reports.HumanResource
         public bool PrintAfterSave { get; set; }
 
         private Dictionary<IDepartment, List<IEmployee>> Segregated;
+        private StringBuilder FileMapBuilder;
+        private DateTime ExportDate;
 
         public void Export()
         {
             Segregate();
             Initialize();
+
+            ExportDate = DateTime.Now;
+
+            if (r_InfoProvider.IncludeFileMap)
+            {
+                FileMapBuilder = new StringBuilder();
+                FileMapBuilder.AppendLine($"Cut-Off: {CutOff.ToFormattedString()}");
+                FileMapBuilder.AppendLine($"Export-Date: {ExportDate.ToString("MMM dd, yyyy hh:mm:ss tt")}");
+                FileMapBuilder.AppendLine();
+            }
 
             switch (FileSegregration)
             {
@@ -43,6 +57,20 @@ namespace LGU.Reports.HumanResource
                 case TimeLogFileSegregation.PerEmployee:
                     ExportPerEmployee();
                     break;
+            }
+        }
+
+        private void SaveMap(string path)
+        {
+            if (r_InfoProvider.IncludeFileMap)
+            {
+                var endDate = DateTime.Now;
+                FileMapBuilder.AppendLine();
+                FileMapBuilder.Append('*', 37);
+                FileMapBuilder.AppendLine();
+                FileMapBuilder.AppendLine($"End of Map : {endDate.ToString("MMM dd, yyyy hh:mm:ss tt")}");
+                FileMapBuilder.AppendLine($"Run-time: {(endDate - ExportDate).ToWord()}");
+                File.WriteAllText(path, FileMapBuilder.ToString());
             }
         }
 
@@ -61,13 +89,11 @@ namespace LGU.Reports.HumanResource
             if (!(IsNullOrWhiteSpace(amLoginRange) && IsNullOrWhiteSpace(pmLoginRange)))
             {
                 loginColumnIndex = r_InfoProvider.OtLoginColumn;
-                //loginRange = ActiveWorksheet.Cells[loginRowIndex, r_InfoProvider.OtLoginColumn];
             }
 
             if (!(IsNullOrWhiteSpace(amLogoutRange) && IsNullOrWhiteSpace(pmLogoutRange)))
             {
                 logoutColumnIndex = r_InfoProvider.OtLogoutColumn;
-                //logoutRange = ActiveWorksheet.Cells[logoutRowIndex, r_InfoProvider.OtLogoutColumn];
             }
 
             SetCellValue(loginRowIndex, loginColumnIndex, timeLog.LoginDate?.ToString(r_InfoProvider.TimeLogFormat));
@@ -91,7 +117,6 @@ namespace LGU.Reports.HumanResource
 
             var departmentCounter = 1;
             var employeeCounter = 0;
-            var exportDate = DateTime.Now;
 
             foreach (var employees in Segregated.Values)
             {
@@ -99,11 +124,6 @@ namespace LGU.Reports.HumanResource
 
                 foreach (var employee in employees)
                 {
-                    if (Sheets.Count > 25)
-                    {
-                        break;
-                    }
-
                     var timeLogs = TimeLogs.Where(arg => arg.Employee == employee);
 
                     if (timeLogs.Any())
@@ -111,6 +131,11 @@ namespace LGU.Reports.HumanResource
                         var sheetName = $"{departmentCounter}-{employeeCounter}";
                         DuplicateTemplate(sheetName);
                         WriteCellValues(employee, timeLogs);
+
+                        if (r_InfoProvider.IncludeFileMap)
+                        {
+                            FileMapBuilder.AppendLine($"{sheetName}\t: {employee.FullName}");
+                        }
                     }
 
                     employeeCounter++;
@@ -121,11 +146,14 @@ namespace LGU.Reports.HumanResource
 
             try
             {
+                var path = Path.Combine(r_InfoProvider.SaveDirectory, ExportDate.ToString(r_InfoProvider.PathFormat));
                 DirectoryResolver.Resolve(r_InfoProvider.SaveDirectory);
-                var filePath = Path.Combine(r_InfoProvider.SaveDirectory, $"{exportDate.ToString(r_InfoProvider.PathFormat)}.xls");
+                var excelFile = $"{path}.xls";
+                var mapFile = $"{path}.xls.txt";
                 TemplateWorksheet.Delete();
-                Workbook.SaveAs(filePath);
-                EventHandler?.OnExported(filePath);
+                Workbook.SaveAs(excelFile);
+                SaveMap(mapFile);
+                EventHandler?.OnExported(excelFile);
             }
             catch (Exception ex)
             {
@@ -150,13 +178,13 @@ namespace LGU.Reports.HumanResource
             var departmentCounter = 1;
             var employeeCounter = 0;
             var filePaths = new List<string>();
-            var exportDate = DateTime.Now;
+            var directory = Path.Combine(r_InfoProvider.SaveDirectory, "Per Department", ExportDate.ToString(r_InfoProvider.PathFormat));
 
             foreach (var item in Segregated)
             {
-                if (Workbooks.Count > 5)
+                if (r_InfoProvider.IncludeFileMap)
                 {
-                    break;
+                    FileMapBuilder.AppendLine($"{departmentCounter}\t: {item.Key.Description}");
                 }
 
                 OpenTemplate(r_InfoProvider.Template);
@@ -171,6 +199,11 @@ namespace LGU.Reports.HumanResource
                         var sheetName = $"emp-{employeeCounter}";
                         DuplicateTemplate(sheetName);
                         WriteCellValues(employee, timeLogs);
+
+                        if (r_InfoProvider.IncludeFileMap)
+                        {
+                            FileMapBuilder.AppendLine($"\t{sheetName}\t: {employee.FullName}");
+                        }
                     }
 
                     employeeCounter++;
@@ -178,13 +211,13 @@ namespace LGU.Reports.HumanResource
 
                 try
                 {
-                    var directory = Path.Combine(r_InfoProvider.SaveDirectory, "Per Department", exportDate.ToString(r_InfoProvider.PathFormat));
                     DirectoryResolver.Resolve(directory);
-                    var filePath = Path.Combine(directory, $"dept-{departmentCounter}.xls");
+                    var filePath = Path.Combine(directory, $"{departmentCounter}.xls");
                     TemplateWorksheet.Delete();
                     Workbook.SaveAs(filePath);
                     filePaths.Add(filePath);
                 }
+
                 catch (Exception ex)
                 {
                     EventHandler?.OnException(ex);
@@ -194,6 +227,8 @@ namespace LGU.Reports.HumanResource
             }
 
             EventHandler?.OnExported(filePaths.ToArray());
+            SaveMap(Path.Combine(directory, "~map.txt"));
+
             if (r_InfoProvider.PrintAfterSave)
             {
                 try
@@ -215,13 +250,13 @@ namespace LGU.Reports.HumanResource
             var departmentCounter = 1;
             var employeeCounter = 0;
             var filePaths = new List<string>();
-            var exportDate = DateTime.Now;
+            var baseDirectory = Path.Combine(r_InfoProvider.SaveDirectory, "Per Employee", ExportDate.ToString(r_InfoProvider.PathFormat));
 
             foreach (var item in Segregated)
             {
-                if (Workbooks.Count > 5)
+                if (r_InfoProvider.IncludeFileMap)
                 {
-                    break;
+                    FileMapBuilder.AppendLine($"{departmentCounter}\t: {item.Key.Description}");
                 }
 
                 employeeCounter = 1;
@@ -237,13 +272,19 @@ namespace LGU.Reports.HumanResource
                         var sheetName = $"dtr";
                         DuplicateTemplate(sheetName);
                         WriteCellValues(employee, timeLogs);
+
+                        if (r_InfoProvider.IncludeFileMap)
+                        {
+                            FileMapBuilder.AppendLine($"\t{employeeCounter}\t: {employee.FullName}");
+                        }
                     }
 
                     try
                     {
-                        var directory = Path.Combine(r_InfoProvider.SaveDirectory, "Per Employee", exportDate.ToString(r_InfoProvider.PathFormat), $"dept-{departmentCounter}");
+                        var directory = Path.Combine(baseDirectory, $"{departmentCounter}");
                         DirectoryResolver.Resolve(directory);
-                        var filePath = Path.Combine(directory, $"emp-{employeeCounter}.xls");
+                        var filePath = Path.Combine(directory, $"{departmentCounter}.{employeeCounter}.xls");
+                        Debug.WriteLine(filePath);
                         TemplateWorksheet.Delete();
                         Workbook.SaveAs(filePath);
                         filePaths.Add(filePath);
@@ -262,6 +303,8 @@ namespace LGU.Reports.HumanResource
             }
 
             EventHandler?.OnExported(filePaths.ToArray());
+            SaveMap(Path.Combine(baseDirectory, "~map.txt"));
+
             if (r_InfoProvider.PrintAfterSave)
             {
                 try

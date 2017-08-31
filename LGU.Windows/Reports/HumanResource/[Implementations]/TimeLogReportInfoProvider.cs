@@ -18,6 +18,7 @@
             OtLogoutColumn = GetInt32(nameof(OtLogoutColumn));
             TimeLogFormat = GetString(nameof(TimeLogFormat));
             PathFormat = GetString(nameof(PathFormat));
+            IncludeFileMap = GetBoolean(nameof(IncludeFileMap));
         }
 
         public string Template { get; }
@@ -34,5 +35,6 @@
         public int OtLogoutColumn { get; }
         public string TimeLogFormat { get; }
         public string PathFormat { get; }
+        public bool IncludeFileMap { get; }
     }
 }
