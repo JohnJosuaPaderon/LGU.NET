@@ -27,7 +27,6 @@ namespace LGU.ViewModels.HumanResource
 
             ChangeOfficeOutTimePageCommand = new DelegateCommand<object>(ChangeOfficeOutTimePage);
             ChangeExpectedReturnTimePageCommand = new DelegateCommand<object>(ChangeExpectedReturnTimePage);
-            InitializeCommand = new DelegateCommand(Initialize);
             PrintCommand = new DelegateCommand(Print);
             LeaveTypes = new ObservableCollection<ILocatorLeaveType>();
             Locator = new LocatorModel(new Locator(MainKioskViewModel.SelectedKioskEmployee.GetSource()))
@@ -46,7 +45,6 @@ namespace LGU.ViewModels.HumanResource
 
         public DelegateCommand<object> ChangeOfficeOutTimePageCommand { get; }
         public DelegateCommand<object> ChangeExpectedReturnTimePageCommand { get; }
-        public DelegateCommand InitializeCommand { get; }
         public DelegateCommand PrintCommand { get; }
         public ObservableCollection<ILocatorLeaveType> LeaveTypes { get; }
 
@@ -113,7 +111,7 @@ namespace LGU.ViewModels.HumanResource
             SelectedExpectedReturnTimePage = Convert.ToInt32(page);
         }
 
-        public async override void Initialize()
+        protected async override void Initialize()
         {
             await GetLeaveTypesAsync();
         }

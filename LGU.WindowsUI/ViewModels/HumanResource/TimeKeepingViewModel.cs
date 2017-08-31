@@ -302,7 +302,7 @@ namespace LGU.ViewModels.HumanResource
             }
         }
 
-        public async override void Initialize()
+        protected async override void Initialize()
         {
             r_EventAggregator.GetEvent<TitleEvent>().Publish("Time-Keeping");
             r_Capture.EventHandler = this;

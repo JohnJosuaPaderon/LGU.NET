@@ -46,7 +46,7 @@ namespace LGU.ViewModels.HumanResource
             set { SetProperty(ref _SelectedDepartment, value, () => DepartmentEvent.Publish(value)); }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             DepartmentEvent = r_EventAggregator.GetEvent<DepartmentEvent>();

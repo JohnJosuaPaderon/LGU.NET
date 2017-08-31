@@ -49,7 +49,6 @@ namespace LGU.ViewModels.HumanResource
             r_AccountDisplayEvent.Publish(false);
 
             EndSessionCommand = new DelegateCommand(EndSession);
-            InitializeCommand = new DelegateCommand(Initialize);
             NavigateCommand = new DelegateCommand<string>(Navigate);
 
             r_DataUpdateTimer.Elapsed += DataUpdateTimer_Elapsed;
@@ -70,7 +69,6 @@ namespace LGU.ViewModels.HumanResource
         private DateTime LastDataUpdate { get; set; }
         private DateTime CurrentDate { get; set; }
         public DelegateCommand EndSessionCommand { get; }
-        public DelegateCommand InitializeCommand { get; }
         public DelegateCommand<string> NavigateCommand { get; }
 
         private int _SelectedPage;
@@ -87,7 +85,7 @@ namespace LGU.ViewModels.HumanResource
             set { SetProperty(ref _Employee, value, OnEmployeeChanged); }
         }
 
-        public async override void Initialize()
+        protected async override void Initialize()
         {
             Navigate(nameof(KioskServiceSelectionView));
             SelectedPage = 0;

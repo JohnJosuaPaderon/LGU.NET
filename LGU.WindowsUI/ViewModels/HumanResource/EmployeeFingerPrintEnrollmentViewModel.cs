@@ -111,10 +111,6 @@ namespace LGU.ViewModels.HumanResource
             }
         }
 
-        public override void Initialize()
-        {
-        }
-
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             r_ChangeHeaderEvent.Publish("Employees");

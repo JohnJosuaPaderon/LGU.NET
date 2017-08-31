@@ -25,7 +25,6 @@ namespace LGU.ViewModels.HumanResource
             GetDepartmentCommand = new DelegateCommand(GetDepartment);
             GetEmployeeCommand = new DelegateCommand(GetEmployee);
             PrintCommand = new DelegateCommand(Print);
-            InitializeCommand = new DelegateCommand(Initialize);
 
             Departments = new ObservableCollection<IDepartment>();
             Employees = new ObservableCollection<IEmployee>();
@@ -48,7 +47,6 @@ namespace LGU.ViewModels.HumanResource
         public DelegateCommand GetDepartmentCommand { get; }
         public DelegateCommand GetEmployeeCommand { get; }
         public DelegateCommand PrintCommand { get; }
-        public DelegateCommand InitializeCommand { get; }
 
         public ObservableCollection<IDepartment> Departments { get; }
         public ObservableCollection<IEmployee> Employees { get; }
@@ -90,7 +88,7 @@ namespace LGU.ViewModels.HumanResource
             set { SetProperty(ref _SelectedFileSegregation, value); }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             r_ChangeHeaderEvent.Publish("DTR Printing");
         }

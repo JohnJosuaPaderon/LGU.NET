@@ -14,11 +14,6 @@ namespace LGU.ViewModels.HumanResource
             r_EventAggregator.GetEvent<EmployeeEvent>().Subscribe(pl => Employee = pl);
         }
 
-        public override void Initialize()
-        {
-            
-        }
-
         public EmployeeModel Employee
         {
             get { return _Employee; }
