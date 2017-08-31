@@ -1,5 +1,4 @@
-﻿using LGU.ViewModels;
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 
 namespace LGU.Views
 {
@@ -11,9 +10,6 @@ namespace LGU.Views
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += (s, e) => ViewModel.Initialize();
         }
-
-        public MainWindowViewModel ViewModel => DataContext as MainWindowViewModel;
     }
 }

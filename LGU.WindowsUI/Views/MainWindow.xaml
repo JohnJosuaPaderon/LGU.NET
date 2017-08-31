@@ -6,6 +6,7 @@
                      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                      xmlns:viewModels="clr-namespace:LGU.ViewModels"
                      xmlns:converters="clr-namespace:LGU.Converters"
+                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                      prism:ViewModelLocator.AutoWireViewModel="True"
                      Background="{DynamicResource MaterialDesignPaper}"
                      Title="{Binding Title}"
@@ -25,9 +26,14 @@
     <mahApps:MetroWindow.Resources>
         <ResourceDictionary Source="../Styles/Default.xaml"/>
     </mahApps:MetroWindow.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <mahApps:MetroWindow.RightWindowCommands>
         <mahApps:WindowCommands>
-            <Grid Visibility="{Binding AccountDisplay,Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}">
+            <Grid Visibility="{Binding AccountDisplay,Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}" Margin="10 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
