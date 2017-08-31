@@ -80,4 +80,12 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="ExpandInTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
+        <Setter Property="OpeningEffect">
+            <Setter.Value>
+                <materialDesign:TransitionEffect Kind="ExpandIn" Duration="0:0:1"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
