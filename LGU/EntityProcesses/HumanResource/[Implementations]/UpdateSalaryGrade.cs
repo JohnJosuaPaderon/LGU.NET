@@ -20,6 +20,8 @@ namespace LGU.EntityProcesses.HumanResource
         public SqlQueryInfo<ISalaryGrade> QueryInfo =>
             SqlQueryInfo<ISalaryGrade>.CreateProcedureQueryInfo(SalaryGrade, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter("@_Id", SalaryGrade.Id)
+            .AddInputParameter("@_Number", SalaryGrade.Number)
+            .AddInputParameter("@_BatchId", SalaryGrade.Batch?.Id)
             .AddLogByParameter();
 
         private IProcessResult<ISalaryGrade> GetProcessResult(ISalaryGrade data, SqlCommand command, int affectedRows)
