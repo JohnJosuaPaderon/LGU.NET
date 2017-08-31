@@ -46,7 +46,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             set { SetProperty(ref _Multiple, value); }
         }
 
-        public async override void Initialize()
+        protected async override void Initialize()
         {
             base.Initialize();
             r_AddEmployeeEvent.Subscribe(e => SetData(e, "Add new Employee", DialogMode.Add));

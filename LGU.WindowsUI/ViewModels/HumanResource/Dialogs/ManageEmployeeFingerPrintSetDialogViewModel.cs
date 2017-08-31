@@ -87,7 +87,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             r_ManageEmployeeFingerPrintSetEvent.Subscribe((efps) => FingerPrintSet = efps);

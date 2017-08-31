@@ -41,7 +41,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             set { SetProperty(ref _Multiple, value); }
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             base.Initialize();
             r_AddDepartmentEvent.Subscribe(d => SetData(d, "Add new Department", DialogMode.Add));
