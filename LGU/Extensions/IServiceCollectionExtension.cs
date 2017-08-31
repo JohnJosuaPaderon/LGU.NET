@@ -292,6 +292,7 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetSalaryGradeList, GetSalaryGradeList>();
             instance.AddSingleton<IInsertSalaryGrade, InsertSalaryGrade>();
             instance.AddSingleton<IUpdateSalaryGrade, UpdateSalaryGrade>();
+            instance.AddSingleton<IGetSalaryGradeListByBatch, GetSalaryGradeListByBatch>();
             instance.AddSingleton<ISalaryGradeManager, SalaryGradeManager>();
             #endregion
 
@@ -303,6 +304,17 @@ namespace LGU.Extensions
             instance.AddSingleton<IInsertSalaryGradeBatch, InsertSalaryGradeBatch>();
             instance.AddSingleton<IUpdateSalaryGradeBatch, UpdateSalaryGradeBatch>();
             instance.AddSingleton<ISalaryGradeBatchManager, SalaryGradeBatchManager>();
+            #endregion
+
+            #region SalaryGradeStep
+            instance.AddSingleton<ISalaryGradeStepConverter<SqlDataReader>, SalaryGradeStepConverter>();
+            instance.AddSingleton<IDeleteSalaryGradeStep, DeleteSalaryGradeStep>();
+            instance.AddSingleton<IGetSalaryGradeStepById, GetSalaryGradeStepById>();
+            instance.AddSingleton<IGetSalaryGradeStepList, GetSalaryGradeStepList>();
+            instance.AddSingleton<IInsertSalaryGradeStep, InsertSalaryGradeStep>();
+            instance.AddSingleton<IUpdateSalaryGradeStep, UpdateSalaryGradeStep>();
+            instance.AddSingleton<IGetSalaryGradeStepListBySalaryGrade, GetSalaryGradeStepListBySalaryGrade>();
+            instance.AddSingleton<ISalaryGradeStepManager, SalaryGradeStepManager>();
             #endregion
 
             #region TimeLogType
