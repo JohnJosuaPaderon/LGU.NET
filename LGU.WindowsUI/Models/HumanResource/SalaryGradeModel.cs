@@ -1,4 +1,5 @@
 ﻿using LGU.Entities.HumanResource;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace LGU.Models.HumanResource
@@ -10,15 +11,25 @@ namespace LGU.Models.HumanResource
             Id = source.Id;
             Number = source.Number;
             Batch = source.Batch;
-            Steps = new ObservableCollection<SalaryGradeStepModel>();
-            Steps.Add(new SalaryGradeStepModel(new SalaryGradeStep(source, 1)));
-            Steps.Add(new SalaryGradeStepModel(new SalaryGradeStep(source, 2)));
-            Steps.Add(new SalaryGradeStepModel(new SalaryGradeStep(source, 3)));
-            Steps.Add(new SalaryGradeStepModel(new SalaryGradeStep(source, 4)));
-            Steps.Add(new SalaryGradeStepModel(new SalaryGradeStep(source, 5)));
-            Steps.Add(new SalaryGradeStepModel(new SalaryGradeStep(source, 6)));
-            Steps.Add(new SalaryGradeStepModel(new SalaryGradeStep(source, 7)));
-            Steps.Add(new SalaryGradeStepModel(new SalaryGradeStep(source, 8)));
+            Steps = new ObservableCollection<SalaryGradeStepModel>
+            {
+                new SalaryGradeStepModel(new SalaryGradeStep(source, 1)),
+                new SalaryGradeStepModel(new SalaryGradeStep(source, 2)),
+                new SalaryGradeStepModel(new SalaryGradeStep(source, 3)),
+                new SalaryGradeStepModel(new SalaryGradeStep(source, 4)),
+                new SalaryGradeStepModel(new SalaryGradeStep(source, 5)),
+                new SalaryGradeStepModel(new SalaryGradeStep(source, 6)),
+                new SalaryGradeStepModel(new SalaryGradeStep(source, 7)),
+                new SalaryGradeStepModel(new SalaryGradeStep(source, 8))
+            };
+        }
+
+        public SalaryGradeModel(ISalaryGrade source, IEnumerable<SalaryGradeStepModel> steps) : base(source)
+        {
+            Id = source.Id;
+            Number = source.Number;
+            Batch = source.Batch;
+            Steps = new ObservableCollection<SalaryGradeStepModel>(steps);
         }
 
         private long _Id;
