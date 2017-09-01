@@ -77,13 +77,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Header="Step 1" Binding="{Binding Steps[0].Amount,StringFormat='#,##0.00'}">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="TextAlignment" Value="Right"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>
-                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Step 1" Binding="{Binding Steps[0].Amount,StringFormat='#,##0.00'}"/>
                                 <DataGridTextColumn Header="Step 2" Binding="{Binding Steps[1].Amount,StringFormat='#,##0.00'}"/>
                                 <DataGridTextColumn Header="Step 3" Binding="{Binding Steps[2].Amount,StringFormat='#,##0.00'}"/>
                                 <DataGridTextColumn Header="Step 4" Binding="{Binding Steps[3].Amount,StringFormat='#,##0.00'}"/>
