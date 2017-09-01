@@ -303,6 +303,7 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetSalaryGradeBatchList, GetSalaryGradeBatchList>();
             instance.AddSingleton<IInsertSalaryGradeBatch, InsertSalaryGradeBatch>();
             instance.AddSingleton<IUpdateSalaryGradeBatch, UpdateSalaryGradeBatch>();
+            instance.AddSingleton<IGetCurrentSalaryGradeBatch, GetCurrentSalaryGradeBatch>();
             instance.AddSingleton<ISalaryGradeBatchManager, SalaryGradeBatchManager>();
             #endregion
 
