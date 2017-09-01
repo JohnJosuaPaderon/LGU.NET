@@ -23,6 +23,7 @@ namespace LGU.EntityConverters.HumanResource
         {
             return new SalaryGrade(batch, reader.GetInt32("Number"))
             {
+                Id = reader.GetInt64("Id")
             };
         }
 

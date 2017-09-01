@@ -1,4 +1,5 @@
-﻿using LGU.Entities.HumanResource;
+﻿using LGU.Data.Extensions;
+using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,11 @@ namespace LGU.EntityConverters.HumanResource
         {
             return new SalaryGradeBatch()
             {
+                Id = reader.GetInt32("Id"),
+                EffectivityDate = reader.GetDateTime("EffectivityDate"),
+                ExpiryDate = reader.GetNullableDateTime("ExpiryDate"),
+                Description = reader.GetString("Description")
+
             };
         }
 
