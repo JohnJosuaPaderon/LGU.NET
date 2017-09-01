@@ -13,19 +13,22 @@ namespace LGU.EntityManagers.HumanResource
         private readonly IGetSalaryGradeBatchList r_GetList;
         private readonly IInsertSalaryGradeBatch r_Insert;
         private readonly IUpdateSalaryGradeBatch r_Update;
+        private readonly IGetCurrentSalaryGradeBatch r_GetCurrent;
 
         public SalaryGradeBatchManager(
             IDeleteSalaryGradeBatch delete,
             IGetSalaryGradeBatchById getById,
             IGetSalaryGradeBatchList getList,
             IInsertSalaryGradeBatch insert,
-            IUpdateSalaryGradeBatch update)
+            IUpdateSalaryGradeBatch update,
+            IGetCurrentSalaryGradeBatch getCurrent)
         {
             r_Delete = delete;
             r_GetById = getById;
             r_GetList = getList;
             r_Insert = insert;
             r_Update = update;
+            r_GetCurrent = getCurrent;
         }
 
         public IProcessResult<ISalaryGradeBatch> Delete(ISalaryGradeBatch data)
@@ -125,6 +128,21 @@ namespace LGU.EntityManagers.HumanResource
             {
                 return new ProcessResult<ISalaryGradeBatch>(ProcessResultStatus.Failed, "Invalid salary grade batch identifier.");
             }
+        }
+
+        public IProcessResult<ISalaryGradeBatch> GetCurrent()
+        {
+            return AddUpdateIfSuccess(r_GetCurrent.Execute());
+        }
+
+        public async Task<IProcessResult<ISalaryGradeBatch>> GetCurrentAsync()
+        {
+            return AddUpdateIfSuccess(await r_GetCurrent.ExecuteAsync());
+        }
+
+        public async Task<IProcessResult<ISalaryGradeBatch>> GetCurrentAsync(CancellationToken cancellationToken)
+        {
+            return AddUpdateIfSuccess(await r_GetCurrent.ExecuteAsync(cancellationToken));
         }
 
         public IEnumerableProcessResult<ISalaryGradeBatch> GetList()
