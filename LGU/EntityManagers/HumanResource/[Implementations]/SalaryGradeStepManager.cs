@@ -14,6 +14,7 @@ namespace LGU.EntityManagers.HumanResource
         private readonly IInsertSalaryGradeStep r_Insert;
         private readonly IUpdateSalaryGradeStep r_Update;
         private readonly IGetSalaryGradeStepListBySalaryGrade r_GetListBySalaryGrade;
+        private readonly IGetSalaryGradeStepByNumberAndStep r_GetByNumberAndStep;
 
         public SalaryGradeStepManager(
             IDeleteSalaryGradeStep delete,
@@ -21,7 +22,8 @@ namespace LGU.EntityManagers.HumanResource
             IGetSalaryGradeStepList getList,
             IInsertSalaryGradeStep insert,
             IUpdateSalaryGradeStep update,
-            IGetSalaryGradeStepListBySalaryGrade getListBySalaryGrade)
+            IGetSalaryGradeStepListBySalaryGrade getListBySalaryGrade, 
+            IGetSalaryGradeStepByNumberAndStep getByNumberAndStep)
         {
             r_Delete = delete;
             r_GetById = getById;
@@ -29,6 +31,7 @@ namespace LGU.EntityManagers.HumanResource
             r_Insert = insert;
             r_Update = update;
             r_GetListBySalaryGrade = getListBySalaryGrade;
+            r_GetByNumberAndStep = getByNumberAndStep;
         }
 
         public IProcessResult<ISalaryGradeStep> Delete(ISalaryGradeStep data)
@@ -127,6 +130,63 @@ namespace LGU.EntityManagers.HumanResource
             else
             {
                 return new ProcessResult<ISalaryGradeStep>(ProcessResultStatus.Failed, "Invalid salary grade step identifier.");
+            }
+        }
+
+        public IProcessResult<ISalaryGradeStep> GetByNumberAndStep(int salaryGradeNumber, int step)
+        {
+            if (salaryGradeNumber <= 0)
+            {
+                return new ProcessResult<ISalaryGradeStep>(ProcessResultStatus.Failed, "Invalid salary grade number.");
+            }
+            else if (step <= 0)
+            {
+                return new ProcessResult<ISalaryGradeStep>(ProcessResultStatus.Failed, "Invalid step.");
+            }
+            else
+            {
+                r_GetByNumberAndStep.SalaryGradeNumber = salaryGradeNumber;
+                r_GetByNumberAndStep.Step = step;
+
+                return AddUpdateIfSuccess(r_GetByNumberAndStep.Execute());
+            }
+        }
+
+        public async Task<IProcessResult<ISalaryGradeStep>> GetByNumberAndStepAsync(int salaryGradeNumber, int step)
+        {
+            if (salaryGradeNumber <= 0)
+            {
+                return new ProcessResult<ISalaryGradeStep>(ProcessResultStatus.Failed, "Invalid salary grade number.");
+            }
+            else if (step <= 0)
+            {
+                return new ProcessResult<ISalaryGradeStep>(ProcessResultStatus.Failed, "Invalid step.");
+            }
+            else
+            {
+                r_GetByNumberAndStep.SalaryGradeNumber = salaryGradeNumber;
+                r_GetByNumberAndStep.Step = step;
+
+                return AddUpdateIfSuccess(await r_GetByNumberAndStep.ExecuteAsync());
+            }
+        }
+
+        public async Task<IProcessResult<ISalaryGradeStep>> GetByNumberAndStepAsync(int salaryGradeNumber, int step, CancellationToken cancellationToken)
+        {
+            if (salaryGradeNumber <= 0)
+            {
+                return new ProcessResult<ISalaryGradeStep>(ProcessResultStatus.Failed, "Invalid salary grade number.");
+            }
+            else if (step <= 0)
+            {
+                return new ProcessResult<ISalaryGradeStep>(ProcessResultStatus.Failed, "Invalid step.");
+            }
+            else
+            {
+                r_GetByNumberAndStep.SalaryGradeNumber = salaryGradeNumber;
+                r_GetByNumberAndStep.Step = step;
+
+                return AddUpdateIfSuccess(await r_GetByNumberAndStep.ExecuteAsync(cancellationToken));
             }
         }
 
