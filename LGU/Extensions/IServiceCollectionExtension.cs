@@ -21,16 +21,8 @@ namespace LGU.Extensions
             instance.AddSingleton<ISystemManager, SystemManager>();
             #endregion
 
-            // Core
-
-            #region DocumentPathType
-            instance.AddSingleton<IDocumentPathTypeConverter<SqlDataReader>, DocumentPathTypeConverter>();
-            instance.AddSingleton<IGetDocumentPathTypeById, GetDocumentPathTypeById>();
-            instance.AddSingleton<IGetDocumentPathTypeList, GetDocumentPathTypeList>();
-            instance.AddSingleton<IDocumentPathTypeManager, DocumentPathTypeManager>();
-            #endregion
-
-            #region Document
+            #region Core
+            // Document
             instance.AddSingleton<IDocumentConverter<SqlDataReader>, DocumentConverter>();
             instance.AddSingleton<IDeleteDocument, DeleteDocument>();
             instance.AddSingleton<IGetDocumentById, GetDocumentById>();
@@ -38,16 +30,26 @@ namespace LGU.Extensions
             instance.AddSingleton<IInsertDocument, InsertDocument>();
             instance.AddSingleton<IUpdateDocument, UpdateDocument>();
             instance.AddSingleton<IDocumentManager, DocumentManager>();
-            #endregion
 
-            #region Gender
+            // DocumentPathType
+            instance.AddSingleton<IDocumentPathTypeConverter<SqlDataReader>, DocumentPathTypeConverter>();
+            instance.AddSingleton<IGetDocumentPathTypeById, GetDocumentPathTypeById>();
+            instance.AddSingleton<IGetDocumentPathTypeList, GetDocumentPathTypeList>();
+            instance.AddSingleton<IDocumentPathTypeManager, DocumentPathTypeManager>();
+
+            // Gender
             instance.AddSingleton<IGenderConverter<SqlDataReader>, GenderConverter>();
             instance.AddSingleton<IGetGenderById, GetGenderById>();
             instance.AddSingleton<IGetGenderList, GetGenderList>();
             instance.AddSingleton<IGenderManager, GenderManager>();
-            #endregion
 
-            #region Person
+            // Module
+            instance.AddSingleton<IModuleConverter<SqlDataReader>, ModuleConverter>();
+            instance.AddSingleton<IGetModuleById, GetModuleById>();
+            instance.AddSingleton<IGetModuleList, GetModuleList>();
+            instance.AddSingleton<IModuleManager, ModuleManager>();
+
+            // Person
             instance.AddSingleton<IPersonConverter<SqlDataReader>, PersonConverter>();
             instance.AddSingleton<IDeletePerson, DeletePerson>();
             instance.AddSingleton<IGetPersonById, GetPersonById>();
@@ -56,30 +58,8 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdatePerson, UpdatePerson>();
             instance.AddSingleton<ISearchPerson, SearchPerson>();
             instance.AddSingleton<IPersonManager, PersonManager>();
-            #endregion
 
-            #region Module
-            instance.AddSingleton<IModuleConverter<SqlDataReader>, ModuleConverter>();
-            instance.AddSingleton<IGetModuleById, GetModuleById>();
-            instance.AddSingleton<IGetModuleList, GetModuleList>();
-            instance.AddSingleton<IModuleManager, ModuleManager>();
-            #endregion
-
-            #region UserStatus
-            instance.AddSingleton<IUserStatusConverter<SqlDataReader>, UserStatusConverter>();
-            instance.AddSingleton<IGetUserStatusById, GetUserStatusById>();
-            instance.AddSingleton<IGetUserStatusList, GetUserStatusList>();
-            instance.AddSingleton<IUserStatusManager, UserStatusManager>();
-            #endregion
-
-            #region UserType
-            instance.AddSingleton<IUserTypeConverter<SqlDataReader>, UserTypeConverter>();
-            instance.AddSingleton<IGetUserTypeById, GetUserTypeById>();
-            instance.AddSingleton<IGetUserTypeList, GetUserTypeList>();
-            instance.AddSingleton<IUserTypeManager, UserTypeManager>();
-            #endregion
-
-            #region User
+            // User
             instance.AddSingleton<IUserConverter<SqlDataReader>, UserConverter>();
             instance.AddSingleton<IDeleteUser, DeleteUser>();
             instance.AddSingleton<IGetUserById, GetUserById>();
@@ -89,18 +69,22 @@ namespace LGU.Extensions
             instance.AddSingleton<ILoginUser, LoginUser>();
             instance.AddSingleton<IIsUsernameExists, IsUsernameExists>();
             instance.AddSingleton<IUserManager, UserManager>();
+
+            // UserStatus
+            instance.AddSingleton<IUserStatusConverter<SqlDataReader>, UserStatusConverter>();
+            instance.AddSingleton<IGetUserStatusById, GetUserStatusById>();
+            instance.AddSingleton<IGetUserStatusList, GetUserStatusList>();
+            instance.AddSingleton<IUserStatusManager, UserStatusManager>();
+
+            // UserType
+            instance.AddSingleton<IUserTypeConverter<SqlDataReader>, UserTypeConverter>();
+            instance.AddSingleton<IGetUserTypeById, GetUserTypeById>();
+            instance.AddSingleton<IGetUserTypeList, GetUserTypeList>();
+            instance.AddSingleton<IUserTypeManager, UserTypeManager>();
             #endregion
 
-            // HumanResource
-
-            #region ApplicantStatus
-            instance.AddSingleton<IApplicantStatusConverter<SqlDataReader>, ApplicantStatusConverter>();
-            instance.AddSingleton<IGetApplicantStatusById, GetApplicantStatusById>();
-            instance.AddSingleton<IGetApplicantStatusList, GetApplicantStatusList>();
-            instance.AddSingleton<IApplicantStatusManager, ApplicantStatusManager>();
-            #endregion
-
-            #region Applicant
+            #region HumanResource
+            // Applicant
             instance.AddSingleton<IApplicantConverter<SqlDataReader>, ApplicantConverter>();
             instance.AddSingleton<IDeleteApplicant, DeleteApplicant>();
             instance.AddSingleton<IGetApplicantById, GetApplicantById>();
@@ -108,9 +92,14 @@ namespace LGU.Extensions
             instance.AddSingleton<IInsertApplicant, InsertApplicant>();
             instance.AddSingleton<IUpdateApplicant, UpdateApplicant>();
             instance.AddSingleton<IApplicantManager, ApplicantManager>();
-            #endregion
 
-            #region Application
+            // ApplicantStatus
+            instance.AddSingleton<IApplicantStatusConverter<SqlDataReader>, ApplicantStatusConverter>();
+            instance.AddSingleton<IGetApplicantStatusById, GetApplicantStatusById>();
+            instance.AddSingleton<IGetApplicantStatusList, GetApplicantStatusList>();
+            instance.AddSingleton<IApplicantStatusManager, ApplicantStatusManager>();
+
+            // Application
             instance.AddSingleton<IApplicationConverter<SqlDataReader>, ApplicationConverter>();
             instance.AddSingleton<IDeleteApplication, DeleteApplication>();
             instance.AddSingleton<IGetApplicationById, GetApplicationById>();
@@ -118,9 +107,8 @@ namespace LGU.Extensions
             instance.AddSingleton<IInsertApplication, InsertApplication>();
             instance.AddSingleton<IUpdateApplication, UpdateApplication>();
             instance.AddSingleton<IApplicationManager, ApplicationManager>();
-            #endregion
 
-            #region ApplicationDocument
+            // ApplicationDocument
             instance.AddSingleton<IApplicationDocumentConverter<SqlDataReader>, ApplicationDocumentConverter>();
             instance.AddSingleton<IDeleteApplicationDocument, DeleteApplicationDocument>();
             instance.AddSingleton<IGetApplicationDocumentById, GetApplicationDocumentById>();
@@ -128,9 +116,8 @@ namespace LGU.Extensions
             instance.AddSingleton<IInsertApplicationDocument, InsertApplicationDocument>();
             instance.AddSingleton<IUpdateApplicationDocument, UpdateApplicationDocument>();
             instance.AddSingleton<IApplicationDocumentManager, ApplicationDocumentManager>();
-            #endregion
 
-            #region Department
+            // Department
             instance.AddSingleton<IDepartmentConverter<SqlDataReader>, DepartmentConverter>();
             instance.AddSingleton<IDeleteDepartment, DeleteDepartment>();
             instance.AddSingleton<IGetDepartmentById, GetDepartmentById>();
@@ -140,9 +127,8 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateDepartment, UpdateDepartment>();
             instance.AddSingleton<IGetDepartmentListWithTimeLog, GetDepartmentListWithTimeLog>();
             instance.AddSingleton<IDepartmentManager, DepartmentManager>();
-            #endregion
 
-            #region DepartmentHead
+            // DepartmentHead
             instance.AddSingleton<IDepartmentHeadConverter<SqlDataReader>, DepartmentHeadConverter>();
             instance.AddSingleton<IDeleteDepartmentHead, DeleteDepartmentHead>();
             instance.AddSingleton<IGetDepartmentHeadById, GetDepartmentHeadById>();
@@ -150,101 +136,8 @@ namespace LGU.Extensions
             instance.AddSingleton<IInsertDepartmentHead, InsertDepartmentHead>();
             instance.AddSingleton<IUpdateDepartmentHead, UpdateDepartmentHead>();
             instance.AddSingleton<IDepartmentHeadManager, DepartmentHeadManager>();
-            #endregion
 
-            #region ExamSet
-            instance.AddSingleton<IExamSetConverter<SqlDataReader>, ExamSetConverter>();
-            instance.AddSingleton<IDeleteExamSet, DeleteExamSet>();
-            instance.AddSingleton<IGetExamSetById, GetExamSetById>();
-            instance.AddSingleton<IGetExamSetList, GetExamSetList>();
-            instance.AddSingleton<IInsertExamSet, InsertExamSet>();
-            instance.AddSingleton<IUpdateExamSet, UpdateExamSet>();
-            instance.AddSingleton<IExamSetManager, ExamSetManager>();
-            #endregion
-
-            #region EssayQuestion
-            instance.AddSingleton<IEssayQuestionConverter<SqlDataReader>, EssayQuestionConverter>();
-            instance.AddSingleton<IDeleteEssayQuestion, DeleteEssayQuestion>();
-            instance.AddSingleton<IGetEssayQuestionById, GetEssayQuestionById>();
-            instance.AddSingleton<IGetEssayQuestionList, GetEssayQuestionList>();
-            instance.AddSingleton<IInsertEssayQuestion, InsertEssayQuestion>();
-            instance.AddSingleton<IUpdateEssayQuestion, UpdateEssayQuestion>();
-            instance.AddSingleton<IEssayQuestionManager, EssayQuestionManager>();
-            #endregion
-
-            #region Exam
-            instance.AddSingleton<IExamConverter<SqlDataReader>, ExamConverter>();
-            instance.AddSingleton<IDeleteExam, DeleteExam>();
-            instance.AddSingleton<IGetExamById, GetExamById>();
-            instance.AddSingleton<IGetExamList, GetExamList>();
-            instance.AddSingleton<IInsertExam, InsertExam>();
-            instance.AddSingleton<IUpdateExam, UpdateExam>();
-            instance.AddSingleton<IExamManager, ExamManager>();
-            #endregion
-
-            #region ExamEssayAnswer
-            instance.AddSingleton<IExamEssayAnswerConverter<SqlDataReader>, ExamEssayAnswerConverter>();
-            instance.AddSingleton<IDeleteExamEssayAnswer, DeleteExamEssayAnswer>();
-            instance.AddSingleton<IGetExamEssayAnswerList, GetExamEssayAnswerList>();
-            instance.AddSingleton<IInsertExamEssayAnswer, InsertExamEssayAnswer>();
-            instance.AddSingleton<IUpdateExamEssayAnswer, UpdateExamEssayAnswer>();
-            instance.AddSingleton<IExamEssayAnswerManager, ExamEssayAnswerManager>();
-            #endregion
-
-            #region ExamMultipleChoiceAnswer
-            instance.AddSingleton<IExamMultipleChoiceAnswerConverter<SqlDataReader>, ExamMultipleChoiceAnswerConverter>();
-            instance.AddSingleton<IDeleteExamMultipleChoiceAnswer, DeleteExamMultipleChoiceAnswer>();
-            instance.AddSingleton<IGetExamMultipleChoiceAnswerList, GetExamMultipleChoiceAnswerList>();
-            instance.AddSingleton<IInsertExamMultipleChoiceAnswer, InsertExamMultipleChoiceAnswer>();
-            instance.AddSingleton<IUpdateExamMultipleChoiceAnswer, UpdateExamMultipleChoiceAnswer>();
-            instance.AddSingleton<IExamMultipleChoiceAnswerManager, ExamMultipleChoiceAnswerManager>();
-            #endregion
-
-            #region EmployeeType
-            instance.AddSingleton<IEmployeeTypeConverter<SqlDataReader>, EmployeeTypeConverter>();
-            instance.AddSingleton<IGetEmployeeTypeById, GetEmployeeTypeById>();
-            instance.AddSingleton<IGetEmployeeTypeList, GetEmployeeTypeList>();
-            instance.AddSingleton<IEmployeeTypeManager, EmployeeTypeManager>();
-            #endregion
-
-            #region EmploymentStatus
-            instance.AddSingleton<IEmploymentStatusConverter<SqlDataReader>, EmploymentStatusConverter>();
-            instance.AddSingleton<IGetEmploymentStatusById, GetEmploymentStatusById>();
-            instance.AddSingleton<IGetEmploymentStatusList, GetEmploymentStatusList>();
-            instance.AddSingleton<IEmploymentStatusManager, EmploymentStatusManager>();
-            #endregion
-
-            #region MultipleChoiceCandidateAnswer
-            instance.AddSingleton<IMultipleChoiceCandidateAnswerConverter<SqlDataReader>, MultipleChoiceCandidateAnswerConverter>();
-            instance.AddSingleton<IDeleteMultipleChoiceCandidateAnswer, DeleteMultipleChoiceCandidateAnswer>();
-            instance.AddSingleton<IGetMultipleChoiceCandidateAnswerById, GetMultipleChoiceCandidateAnswerById>();
-            instance.AddSingleton<IGetMultipleChoiceCandidateAnswerList, GetMultipleChoiceCandidateAnswerList>();
-            instance.AddSingleton<IInsertMultipleChoiceCandidateAnswer, InsertMultipleChoiceCandidateAnswer>();
-            instance.AddSingleton<IUpdateMultipleChoiceCandidateAnswer, UpdateMultipleChoiceCandidateAnswer>();
-            instance.AddSingleton<IMultipleChoiceCandidateAnswerManager, MultipleChoiceCandidateAnswerManager>();
-            #endregion
-
-            #region MultipleChoiceQuestion
-            instance.AddSingleton<IMultipleChoiceQuestionConverter<SqlDataReader>, MultipleChoiceQuestionConverter>();
-            instance.AddSingleton<IDeleteMultipleChoiceQuestion, DeleteMultipleChoiceQuestion>();
-            instance.AddSingleton<IGetMultipleChoiceQuestionById, GetMultipleChoiceQuestionById>();
-            instance.AddSingleton<IGetMultipleChoiceQuestionList, GetMultipleChoiceQuestionList>();
-            instance.AddSingleton<IInsertMultipleChoiceQuestion, InsertMultipleChoiceQuestion>();
-            instance.AddSingleton<IUpdateMultipleChoiceQuestion, UpdateMultipleChoiceQuestion>();
-            instance.AddSingleton<IMultipleChoiceQuestionManager, MultipleChoiceQuestionManager>();
-            #endregion
-
-            #region Position
-            instance.AddSingleton<IPositionConverter<SqlDataReader>, PositionConverter>();
-            instance.AddSingleton<IDeletePosition, DeletePosition>();
-            instance.AddSingleton<IGetPositionById, GetPositionById>();
-            instance.AddSingleton<IGetPositionList, GetPositionList>();
-            instance.AddSingleton<IInsertPosition, InsertPosition>();
-            instance.AddSingleton<IUpdatePosition, UpdatePosition>();
-            instance.AddSingleton<IPositionManager, PositionManager>();
-            #endregion
-
-            #region Employee
+            // Employee
             instance.AddSingleton<IEmployeeConverter<SqlDataReader>, EmployeeConverter>();
             instance.AddSingleton<IDeleteEmployee, DeleteEmployee>();
             instance.AddSingleton<IGetEmployeeById, GetEmployeeById>();
@@ -256,9 +149,21 @@ namespace LGU.Extensions
             instance.AddSingleton<ISearchEmployeeWithTimeLog, SearchEmployeeWithTimeLog>();
             instance.AddSingleton<IGetEmployeeListWithTimeLogByDepartment, GetEmployeeListWithTimeLogByDepartment>();
             instance.AddSingleton<IEmployeeManager, EmployeeManager>();
-            #endregion
 
-            #region EmployeeWorkTimeSchedule
+            // EmployeeSalaryGradeStep
+            instance.AddSingleton<IEmployeeSalaryGradeStepConverter<SqlDataReader>, EmployeeSalaryGradeStepConverter>();
+            instance.AddSingleton<IDeleteEmployeeSalaryGradeStep, DeleteEmployeeSalaryGradeStep>();
+            instance.AddSingleton<IGetEmployeeSalaryGradeStepList, GetEmployeeSalaryGradeStepList>();
+            instance.AddSingleton<IInsertEmployeeSalaryGradeStep, InsertEmployeeSalaryGradeStep>();
+            instance.AddSingleton<IUpdateEmployeeSalaryGradeStep, UpdateEmployeeSalaryGradeStep>();
+
+            // EmployeeType
+            instance.AddSingleton<IEmployeeTypeConverter<SqlDataReader>, EmployeeTypeConverter>();
+            instance.AddSingleton<IGetEmployeeTypeById, GetEmployeeTypeById>();
+            instance.AddSingleton<IGetEmployeeTypeList, GetEmployeeTypeList>();
+            instance.AddSingleton<IEmployeeTypeManager, EmployeeTypeManager>();
+
+            // EmployeeWorkTimeSchedule
             instance.AddSingleton<IEmployeeWorkTimeScheduleConverter<SqlDataReader>, EmployeeWorkTimeScheduleConverter>();
             instance.AddSingleton<IDeleteEmployeeWorkTimeSchedule, DeleteEmployeeWorkTimeSchedule>();
             instance.AddSingleton<IGetEmployeeWorkTimeScheduleById, GetEmployeeWorkTimeScheduleById>();
@@ -266,9 +171,57 @@ namespace LGU.Extensions
             instance.AddSingleton<IInsertEmployeeWorkTimeSchedule, InsertEmployeeWorkTimeSchedule>();
             instance.AddSingleton<IUpdateEmployeeWorkTimeSchedule, UpdateEmployeeWorkTimeSchedule>();
             instance.AddSingleton<IEmployeeWorkTimeScheduleManager, EmployeeWorkTimeScheduleManager>();
-            #endregion
 
-            #region Locator
+            // EmploymentStatus
+            instance.AddSingleton<IEmploymentStatusConverter<SqlDataReader>, EmploymentStatusConverter>();
+            instance.AddSingleton<IGetEmploymentStatusById, GetEmploymentStatusById>();
+            instance.AddSingleton<IGetEmploymentStatusList, GetEmploymentStatusList>();
+            instance.AddSingleton<IEmploymentStatusManager, EmploymentStatusManager>();
+
+            // EssayQuestion
+            instance.AddSingleton<IEssayQuestionConverter<SqlDataReader>, EssayQuestionConverter>();
+            instance.AddSingleton<IDeleteEssayQuestion, DeleteEssayQuestion>();
+            instance.AddSingleton<IGetEssayQuestionById, GetEssayQuestionById>();
+            instance.AddSingleton<IGetEssayQuestionList, GetEssayQuestionList>();
+            instance.AddSingleton<IInsertEssayQuestion, InsertEssayQuestion>();
+            instance.AddSingleton<IUpdateEssayQuestion, UpdateEssayQuestion>();
+            instance.AddSingleton<IEssayQuestionManager, EssayQuestionManager>();
+
+            // Exam
+            instance.AddSingleton<IExamConverter<SqlDataReader>, ExamConverter>();
+            instance.AddSingleton<IDeleteExam, DeleteExam>();
+            instance.AddSingleton<IGetExamById, GetExamById>();
+            instance.AddSingleton<IGetExamList, GetExamList>();
+            instance.AddSingleton<IInsertExam, InsertExam>();
+            instance.AddSingleton<IUpdateExam, UpdateExam>();
+            instance.AddSingleton<IExamManager, ExamManager>();
+
+            // ExamEssayAnswer
+            instance.AddSingleton<IExamEssayAnswerConverter<SqlDataReader>, ExamEssayAnswerConverter>();
+            instance.AddSingleton<IDeleteExamEssayAnswer, DeleteExamEssayAnswer>();
+            instance.AddSingleton<IGetExamEssayAnswerList, GetExamEssayAnswerList>();
+            instance.AddSingleton<IInsertExamEssayAnswer, InsertExamEssayAnswer>();
+            instance.AddSingleton<IUpdateExamEssayAnswer, UpdateExamEssayAnswer>();
+            instance.AddSingleton<IExamEssayAnswerManager, ExamEssayAnswerManager>();
+
+            // ExamMultipleChoice
+            instance.AddSingleton<IExamMultipleChoiceAnswerConverter<SqlDataReader>, ExamMultipleChoiceAnswerConverter>();
+            instance.AddSingleton<IDeleteExamMultipleChoiceAnswer, DeleteExamMultipleChoiceAnswer>();
+            instance.AddSingleton<IGetExamMultipleChoiceAnswerList, GetExamMultipleChoiceAnswerList>();
+            instance.AddSingleton<IInsertExamMultipleChoiceAnswer, InsertExamMultipleChoiceAnswer>();
+            instance.AddSingleton<IUpdateExamMultipleChoiceAnswer, UpdateExamMultipleChoiceAnswer>();
+            instance.AddSingleton<IExamMultipleChoiceAnswerManager, ExamMultipleChoiceAnswerManager>();
+
+            // ExamSet
+            instance.AddSingleton<IExamSetConverter<SqlDataReader>, ExamSetConverter>();
+            instance.AddSingleton<IDeleteExamSet, DeleteExamSet>();
+            instance.AddSingleton<IGetExamSetById, GetExamSetById>();
+            instance.AddSingleton<IGetExamSetList, GetExamSetList>();
+            instance.AddSingleton<IInsertExamSet, InsertExamSet>();
+            instance.AddSingleton<IUpdateExamSet, UpdateExamSet>();
+            instance.AddSingleton<IExamSetManager, ExamSetManager>();
+
+            // Locator
             instance.AddSingleton<ILocatorConverter<SqlDataReader>, LocatorConverter>();
             instance.AddSingleton<IDeleteLocator, DeleteLocator>();
             instance.AddSingleton<IGetLocatorById, GetLocatorById>();
@@ -276,16 +229,41 @@ namespace LGU.Extensions
             instance.AddSingleton<IInsertLocator, InsertLocator>();
             instance.AddSingleton<IUpdateLocator, UpdateLocator>();
             instance.AddSingleton<ILocatorManager, LocatorManager>();
-            #endregion
 
-            #region LocatorLeaveType
+            // LocatorLeaveType
             instance.AddSingleton<ILocatorLeaveTypeConverter<SqlDataReader>, LocatorLeaveTypeConverter>();
             instance.AddSingleton<IGetLocatorLeaveTypeById, GetLocatorLeaveTypeById>();
             instance.AddSingleton<IGetLocatorLeaveTypeList, GetLocatorLeaveTypeList>();
             instance.AddSingleton<ILocatorLeaveTypeManager, LocatorLeaveTypeManager>();
-            #endregion
 
-            #region SalaryGrade
+            // MultipleChoiceCandidateAnswer
+            instance.AddSingleton<IMultipleChoiceCandidateAnswerConverter<SqlDataReader>, MultipleChoiceCandidateAnswerConverter>();
+            instance.AddSingleton<IDeleteMultipleChoiceCandidateAnswer, DeleteMultipleChoiceCandidateAnswer>();
+            instance.AddSingleton<IGetMultipleChoiceCandidateAnswerById, GetMultipleChoiceCandidateAnswerById>();
+            instance.AddSingleton<IGetMultipleChoiceCandidateAnswerList, GetMultipleChoiceCandidateAnswerList>();
+            instance.AddSingleton<IInsertMultipleChoiceCandidateAnswer, InsertMultipleChoiceCandidateAnswer>();
+            instance.AddSingleton<IUpdateMultipleChoiceCandidateAnswer, UpdateMultipleChoiceCandidateAnswer>();
+            instance.AddSingleton<IMultipleChoiceCandidateAnswerManager, MultipleChoiceCandidateAnswerManager>();
+
+            // MultipleChoiceQuestion
+            instance.AddSingleton<IMultipleChoiceQuestionConverter<SqlDataReader>, MultipleChoiceQuestionConverter>();
+            instance.AddSingleton<IDeleteMultipleChoiceQuestion, DeleteMultipleChoiceQuestion>();
+            instance.AddSingleton<IGetMultipleChoiceQuestionById, GetMultipleChoiceQuestionById>();
+            instance.AddSingleton<IGetMultipleChoiceQuestionList, GetMultipleChoiceQuestionList>();
+            instance.AddSingleton<IInsertMultipleChoiceQuestion, InsertMultipleChoiceQuestion>();
+            instance.AddSingleton<IUpdateMultipleChoiceQuestion, UpdateMultipleChoiceQuestion>();
+            instance.AddSingleton<IMultipleChoiceQuestionManager, MultipleChoiceQuestionManager>();
+
+            // Position
+            instance.AddSingleton<IPositionConverter<SqlDataReader>, PositionConverter>();
+            instance.AddSingleton<IDeletePosition, DeletePosition>();
+            instance.AddSingleton<IGetPositionById, GetPositionById>();
+            instance.AddSingleton<IGetPositionList, GetPositionList>();
+            instance.AddSingleton<IInsertPosition, InsertPosition>();
+            instance.AddSingleton<IUpdatePosition, UpdatePosition>();
+            instance.AddSingleton<IPositionManager, PositionManager>();
+
+            // SalaryGrade
             instance.AddSingleton<ISalaryGradeConverter<SqlDataReader>, SalaryGradeConverter>();
             instance.AddSingleton<IDeleteSalaryGrade, DeleteSalaryGrade>();
             instance.AddSingleton<IGetSalaryGradeById, GetSalaryGradeById>();
@@ -294,9 +272,8 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateSalaryGrade, UpdateSalaryGrade>();
             instance.AddSingleton<IGetSalaryGradeListByBatch, GetSalaryGradeListByBatch>();
             instance.AddSingleton<ISalaryGradeManager, SalaryGradeManager>();
-            #endregion
 
-            #region SalaryGradeBatch
+            // SalaryGradeBatch
             instance.AddSingleton<ISalaryGradeBatchConverter<SqlDataReader>, SalaryGradeBatchConverter>();
             instance.AddSingleton<IDeleteSalaryGradeBatch, DeleteSalaryGradeBatch>();
             instance.AddSingleton<IGetSalaryGradeBatchById, GetSalaryGradeBatchById>();
@@ -305,9 +282,8 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateSalaryGradeBatch, UpdateSalaryGradeBatch>();
             instance.AddSingleton<IGetCurrentSalaryGradeBatch, GetCurrentSalaryGradeBatch>();
             instance.AddSingleton<ISalaryGradeBatchManager, SalaryGradeBatchManager>();
-            #endregion
 
-            #region SalaryGradeStep
+            // SalaryGradeStep
             instance.AddSingleton<ISalaryGradeStepConverter<SqlDataReader>, SalaryGradeStepConverter>();
             instance.AddSingleton<IDeleteSalaryGradeStep, DeleteSalaryGradeStep>();
             instance.AddSingleton<IGetSalaryGradeStepById, GetSalaryGradeStepById>();
@@ -315,17 +291,10 @@ namespace LGU.Extensions
             instance.AddSingleton<IInsertSalaryGradeStep, InsertSalaryGradeStep>();
             instance.AddSingleton<IUpdateSalaryGradeStep, UpdateSalaryGradeStep>();
             instance.AddSingleton<IGetSalaryGradeStepListBySalaryGrade, GetSalaryGradeStepListBySalaryGrade>();
+            instance.AddSingleton<IGetSalaryGradeStepByNumberAndStep, GetSalaryGradeStepByNumberAndStep>();
             instance.AddSingleton<ISalaryGradeStepManager, SalaryGradeStepManager>();
-            #endregion
 
-            #region TimeLogType
-            instance.AddSingleton<ITimeLogTypeConverter<SqlDataReader>, TimeLogTypeConverter>();
-            instance.AddSingleton<IGetTimeLogTypeById, GetTimeLogTypeById>();
-            instance.AddSingleton<IGetTimeLogTypeList, GetTimeLogTypeList>();
-            instance.AddSingleton<ITimeLogTypeManager, TimeLogTypeManager>();
-            #endregion
-
-            #region TimeLog
+            // TimeLog
             instance.AddSingleton<ITimeLogConverter<SqlDataReader>, TimeLogConverter>();
             instance.AddSingleton<IDeleteTimeLog, DeleteTimeLog>();
             instance.AddSingleton<IGetTimeLogById, GetTimeLogById>();
@@ -338,6 +307,12 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetTimeLogListByDepartmentCutOff, GetTimeLogListByDepartmentCutOff>();
             instance.AddSingleton<IGetTimeLogListByEmployeeCutOff, GetTimeLogListByEmployeeCutOff>();
             instance.AddSingleton<ITimeLogManager, TimeLogManager>();
+
+            // TimeLogType
+            instance.AddSingleton<ITimeLogTypeConverter<SqlDataReader>, TimeLogTypeConverter>();
+            instance.AddSingleton<IGetTimeLogTypeById, GetTimeLogTypeById>();
+            instance.AddSingleton<IGetTimeLogTypeList, GetTimeLogTypeList>();
+            instance.AddSingleton<ITimeLogTypeManager, TimeLogTypeManager>();
             #endregion
 
             return instance;
