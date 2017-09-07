@@ -1,20 +1,38 @@
-﻿using System;
-
-namespace LGU.Entities.HumanResource
+﻿namespace LGU.Entities.HumanResource
 {
-    public class EmployeeWorkTimeSchedule : Entity<long>, IEmployeeWorkTimeSchedule
+    public class EmployeeWorkTimeSchedule : IEmployeeWorkTimeSchedule
     {
-        public EmployeeWorkTimeSchedule(IEmployee employee)
+        public IEmployee Employee { get; set; }
+        public IWorkTimeSchedule WorkTimeSchedule { get; set; }
+
+        public static bool operator ==(EmployeeWorkTimeSchedule left, EmployeeWorkTimeSchedule right)
         {
-            Employee = employee ?? throw new ArgumentNullException(nameof(employee));
+            return Equals(left, right);
         }
 
-        public IEmployee Employee { get; }
-        public DateTime WorkTimeStart { get; set; }
-        public DateTime WorkTimeEnd { get; set; }
-        public DateTime? EffectivityDate { get; set; }
-        public TimeSpan WorkTimeLength { get; set; }
-        public bool IsEnabled { get; set; }
-        public int InvocationLevel { get; set; }
+        public static bool operator !=(EmployeeWorkTimeSchedule left, EmployeeWorkTimeSchedule right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (GetType() != obj.GetType()) return false;
+
+            var value = obj as EmployeeWorkTimeSchedule;
+
+            return
+                Employee.Equals(value.Employee) &&
+                WorkTimeSchedule.Equals(value.WorkTimeSchedule);
+        }
+
+        public override int GetHashCode()
+        {
+            return
+                Employee.GetHashCode() ^
+                WorkTimeSchedule.GetHashCode();
+        }
     }
 }

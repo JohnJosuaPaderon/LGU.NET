@@ -25,6 +25,7 @@ namespace LGU.Entities.HumanResource
             if (GetType() != obj.GetType()) return false;
 
             var value = obj as EmployeeSalaryGradeStep;
+
             return
                 Employee.Equals(value.Employee) &&
                 SalaryGradeStep.Equals(value.SalaryGradeStep);
