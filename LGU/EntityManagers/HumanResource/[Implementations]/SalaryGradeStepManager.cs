@@ -15,6 +15,7 @@ namespace LGU.EntityManagers.HumanResource
         private readonly IUpdateSalaryGradeStep r_Update;
         private readonly IGetSalaryGradeStepListBySalaryGrade r_GetListBySalaryGrade;
         private readonly IGetSalaryGradeStepByNumberAndStep r_GetByNumberAndStep;
+        private readonly IGetCurrentSalaryGradeStepByEmployee r_GetCurrentByEmployee;
 
         public SalaryGradeStepManager(
             IDeleteSalaryGradeStep delete,
@@ -23,7 +24,8 @@ namespace LGU.EntityManagers.HumanResource
             IInsertSalaryGradeStep insert,
             IUpdateSalaryGradeStep update,
             IGetSalaryGradeStepListBySalaryGrade getListBySalaryGrade, 
-            IGetSalaryGradeStepByNumberAndStep getByNumberAndStep)
+            IGetSalaryGradeStepByNumberAndStep getByNumberAndStep,
+            IGetCurrentSalaryGradeStepByEmployee getCurrentByEmployee)
         {
             r_Delete = delete;
             r_GetById = getById;
@@ -32,6 +34,7 @@ namespace LGU.EntityManagers.HumanResource
             r_Update = update;
             r_GetListBySalaryGrade = getListBySalaryGrade;
             r_GetByNumberAndStep = getByNumberAndStep;
+            r_GetCurrentByEmployee = getCurrentByEmployee;
         }
 
         public IProcessResult<ISalaryGradeStep> Delete(ISalaryGradeStep data)
@@ -187,6 +190,45 @@ namespace LGU.EntityManagers.HumanResource
                 r_GetByNumberAndStep.Step = step;
 
                 return AddUpdateIfSuccess(await r_GetByNumberAndStep.ExecuteAsync(cancellationToken));
+            }
+        }
+
+        public IProcessResult<ISalaryGradeStep> GetCurrentByEmployee(IEmployee employee)
+        {
+            if (employee != null)
+            {
+                r_GetCurrentByEmployee.Employee = employee;
+                return AddUpdateIfSuccess(r_GetCurrentByEmployee.Execute());
+            }
+            else
+            {
+                return new ProcessResult<ISalaryGradeStep>(ProcessResultStatus.Failed, "Invalid employee.");
+            }
+        }
+
+        public async Task<IProcessResult<ISalaryGradeStep>> GetCurrentByEmployeeAsync(IEmployee employee)
+        {
+            if (employee != null)
+            {
+                r_GetCurrentByEmployee.Employee = employee;
+                return AddUpdateIfSuccess(await r_GetCurrentByEmployee.ExecuteAsync());
+            }
+            else
+            {
+                return new ProcessResult<ISalaryGradeStep>(ProcessResultStatus.Failed, "Invalid employee.");
+            }
+        }
+
+        public async Task<IProcessResult<ISalaryGradeStep>> GetCurrentByEmployeeAsync(IEmployee employee, CancellationToken cancellationToken)
+        {
+            if (employee != null)
+            {
+                r_GetCurrentByEmployee.Employee = employee;
+                return AddUpdateIfSuccess(await r_GetCurrentByEmployee.ExecuteAsync(cancellationToken));
+            }
+            else
+            {
+                return new ProcessResult<ISalaryGradeStep>(ProcessResultStatus.Failed, "Invalid employee.");
             }
         }
 
