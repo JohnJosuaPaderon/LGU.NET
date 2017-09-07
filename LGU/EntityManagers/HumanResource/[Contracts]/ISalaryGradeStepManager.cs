@@ -14,5 +14,8 @@ namespace LGU.EntityManagers.HumanResource
         IProcessResult<ISalaryGradeStep> GetByNumberAndStep(int salaryGradeNumber, int step);
         Task<IProcessResult<ISalaryGradeStep>> GetByNumberAndStepAsync(int salaryGradeNumber, int step);
         Task<IProcessResult<ISalaryGradeStep>> GetByNumberAndStepAsync(int salaryGradeNumber, int step, CancellationToken cancellationToken);
+        IProcessResult<ISalaryGradeStep> GetCurrentByEmployee(IEmployee employee);
+        Task<IProcessResult<ISalaryGradeStep>> GetCurrentByEmployeeAsync(IEmployee employee);
+        Task<IProcessResult<ISalaryGradeStep>> GetCurrentByEmployeeAsync(IEmployee employee, CancellationToken cancellationToken);
     }
 }

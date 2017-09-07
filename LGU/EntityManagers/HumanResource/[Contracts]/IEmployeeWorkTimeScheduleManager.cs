@@ -1,9 +1,9 @@
-﻿using LGU.Entities;
-using LGU.Entities.HumanResource;
+﻿using LGU.Entities.HumanResource;
+using LGU.Processes;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public interface IEmployeeWorkTimeScheduleManager : IEntityManager<IEmployeeWorkTimeSchedule, long>
+    public interface IEmployeeWorkTimeScheduleManager : IDataManager<IEmployeeWorkTimeSchedule>
     {
     }
 }
