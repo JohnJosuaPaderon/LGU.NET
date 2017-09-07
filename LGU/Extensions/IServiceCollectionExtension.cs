@@ -21,8 +21,60 @@ namespace LGU.Extensions
             instance.AddSingleton<ISystemManager, SystemManager>();
             #endregion
 
-            #region Core
-            // Document
+            instance.UseSqlServerForCore();
+            instance.UseSqlServerForHumanResource();
+
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServerForCore(this IServiceCollection instance)
+        {
+            instance.UseSqlServer_Document();
+            instance.UseSqlServer_DocumentPathType();
+            instance.UseSqlServer_Gender();
+            instance.UseSqlServer_Module();
+            instance.UseSqlServer_Person();
+            instance.UseSqlServer_User();
+            instance.UseSqlServer_UserStatus();
+            instance.UseSqlServer_UserType();
+
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServerForHumanResource(this IServiceCollection instance)
+        {
+            instance.UseSqlServer_Applicant();
+            instance.UseSqlServer_ApplicantStatus();
+            instance.UseSqlServer_Application();
+            instance.UseSqlServer_ApplicationDocument();
+            instance.UseSqlServer_Department();
+            instance.UseSqlServer_DepartmentHead();
+            instance.UseSqlServer_Employee();
+            instance.UseSqlServer_EmployeeSalaryGradeStep();
+            instance.UseSqlServer_EmployeeType();
+            instance.UseSqlServer_EmployeeWorkTimeSchedule();
+            instance.UseSqlServer_EmploymentStatus();
+            instance.UseSqlServer_EssayQuestion();
+            instance.UseSqlServer_Exam();
+            instance.UseSqlServer_ExamEssayAnswer();
+            instance.UseSqlServer_ExamMultipleChoiceAnswer();
+            instance.UseSqlServer_Locator();
+            instance.UseSqlServer_LocatorLeaveType();
+            instance.UseSqlServer_MultipleChoiceCandidateAnswer();
+            instance.UseSqlServer_MultipleChoiceQuestion();
+            instance.UseSqlServer_Position();
+            instance.UseSqlServer_SalaryGrade();
+            instance.UseSqlServer_SalaryGradeBatch();
+            instance.UseSqlServer_SalaryGradeStep();
+            instance.UseSqlServer_TimeLog();
+            instance.UseSqlServer_TimeLogType();
+            instance.UseSqlServer_WorkTimeSchedule();
+
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Document(this IServiceCollection instance)
+        {
             instance.AddSingleton<IDocumentConverter<SqlDataReader>, DocumentConverter>();
             instance.AddSingleton<IDeleteDocument, DeleteDocument>();
             instance.AddSingleton<IGetDocumentById, GetDocumentById>();
@@ -31,25 +83,41 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateDocument, UpdateDocument>();
             instance.AddSingleton<IDocumentManager, DocumentManager>();
 
-            // DocumentPathType
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_DocumentPathType(this IServiceCollection instance)
+        {
             instance.AddSingleton<IDocumentPathTypeConverter<SqlDataReader>, DocumentPathTypeConverter>();
             instance.AddSingleton<IGetDocumentPathTypeById, GetDocumentPathTypeById>();
             instance.AddSingleton<IGetDocumentPathTypeList, GetDocumentPathTypeList>();
             instance.AddSingleton<IDocumentPathTypeManager, DocumentPathTypeManager>();
 
-            // Gender
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Gender(this IServiceCollection instance)
+        {
             instance.AddSingleton<IGenderConverter<SqlDataReader>, GenderConverter>();
             instance.AddSingleton<IGetGenderById, GetGenderById>();
             instance.AddSingleton<IGetGenderList, GetGenderList>();
             instance.AddSingleton<IGenderManager, GenderManager>();
 
-            // Module
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Module(this IServiceCollection instance)
+        {
             instance.AddSingleton<IModuleConverter<SqlDataReader>, ModuleConverter>();
             instance.AddSingleton<IGetModuleById, GetModuleById>();
             instance.AddSingleton<IGetModuleList, GetModuleList>();
             instance.AddSingleton<IModuleManager, ModuleManager>();
 
-            // Person
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Person(this IServiceCollection instance)
+        {
             instance.AddSingleton<IPersonConverter<SqlDataReader>, PersonConverter>();
             instance.AddSingleton<IDeletePerson, DeletePerson>();
             instance.AddSingleton<IGetPersonById, GetPersonById>();
@@ -59,7 +127,11 @@ namespace LGU.Extensions
             instance.AddSingleton<ISearchPerson, SearchPerson>();
             instance.AddSingleton<IPersonManager, PersonManager>();
 
-            // User
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_User(this IServiceCollection instance)
+        {
             instance.AddSingleton<IUserConverter<SqlDataReader>, UserConverter>();
             instance.AddSingleton<IDeleteUser, DeleteUser>();
             instance.AddSingleton<IGetUserById, GetUserById>();
@@ -70,21 +142,31 @@ namespace LGU.Extensions
             instance.AddSingleton<IIsUsernameExists, IsUsernameExists>();
             instance.AddSingleton<IUserManager, UserManager>();
 
-            // UserStatus
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_UserStatus(this IServiceCollection instance)
+        {
             instance.AddSingleton<IUserStatusConverter<SqlDataReader>, UserStatusConverter>();
             instance.AddSingleton<IGetUserStatusById, GetUserStatusById>();
             instance.AddSingleton<IGetUserStatusList, GetUserStatusList>();
             instance.AddSingleton<IUserStatusManager, UserStatusManager>();
 
-            // UserType
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_UserType(this IServiceCollection instance)
+        {
             instance.AddSingleton<IUserTypeConverter<SqlDataReader>, UserTypeConverter>();
             instance.AddSingleton<IGetUserTypeById, GetUserTypeById>();
             instance.AddSingleton<IGetUserTypeList, GetUserTypeList>();
             instance.AddSingleton<IUserTypeManager, UserTypeManager>();
-            #endregion
 
-            #region HumanResource
-            // Applicant
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Applicant(this IServiceCollection instance)
+        {
             instance.AddSingleton<IApplicantConverter<SqlDataReader>, ApplicantConverter>();
             instance.AddSingleton<IDeleteApplicant, DeleteApplicant>();
             instance.AddSingleton<IGetApplicantById, GetApplicantById>();
@@ -93,13 +175,21 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateApplicant, UpdateApplicant>();
             instance.AddSingleton<IApplicantManager, ApplicantManager>();
 
-            // ApplicantStatus
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_ApplicantStatus(this IServiceCollection instance)
+        {
             instance.AddSingleton<IApplicantStatusConverter<SqlDataReader>, ApplicantStatusConverter>();
             instance.AddSingleton<IGetApplicantStatusById, GetApplicantStatusById>();
             instance.AddSingleton<IGetApplicantStatusList, GetApplicantStatusList>();
             instance.AddSingleton<IApplicantStatusManager, ApplicantStatusManager>();
 
-            // Application
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Application(this IServiceCollection instance)
+        {
             instance.AddSingleton<IApplicationConverter<SqlDataReader>, ApplicationConverter>();
             instance.AddSingleton<IDeleteApplication, DeleteApplication>();
             instance.AddSingleton<IGetApplicationById, GetApplicationById>();
@@ -108,7 +198,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateApplication, UpdateApplication>();
             instance.AddSingleton<IApplicationManager, ApplicationManager>();
 
-            // ApplicationDocument
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_ApplicationDocument(this IServiceCollection instance)
+        {
             instance.AddSingleton<IApplicationDocumentConverter<SqlDataReader>, ApplicationDocumentConverter>();
             instance.AddSingleton<IDeleteApplicationDocument, DeleteApplicationDocument>();
             instance.AddSingleton<IGetApplicationDocumentById, GetApplicationDocumentById>();
@@ -117,7 +211,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateApplicationDocument, UpdateApplicationDocument>();
             instance.AddSingleton<IApplicationDocumentManager, ApplicationDocumentManager>();
 
-            // Department
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Department(this IServiceCollection instance)
+        {
             instance.AddSingleton<IDepartmentConverter<SqlDataReader>, DepartmentConverter>();
             instance.AddSingleton<IDeleteDepartment, DeleteDepartment>();
             instance.AddSingleton<IGetDepartmentById, GetDepartmentById>();
@@ -128,7 +226,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetDepartmentListWithTimeLog, GetDepartmentListWithTimeLog>();
             instance.AddSingleton<IDepartmentManager, DepartmentManager>();
 
-            // DepartmentHead
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_DepartmentHead(this IServiceCollection instance)
+        {
             instance.AddSingleton<IDepartmentHeadConverter<SqlDataReader>, DepartmentHeadConverter>();
             instance.AddSingleton<IDeleteDepartmentHead, DeleteDepartmentHead>();
             instance.AddSingleton<IGetDepartmentHeadById, GetDepartmentHeadById>();
@@ -137,7 +239,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateDepartmentHead, UpdateDepartmentHead>();
             instance.AddSingleton<IDepartmentHeadManager, DepartmentHeadManager>();
 
-            // Employee
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Employee(this IServiceCollection instance)
+        {
             instance.AddSingleton<IEmployeeConverter<SqlDataReader>, EmployeeConverter>();
             instance.AddSingleton<IDeleteEmployee, DeleteEmployee>();
             instance.AddSingleton<IGetEmployeeById, GetEmployeeById>();
@@ -150,35 +256,55 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetEmployeeListWithTimeLogByDepartment, GetEmployeeListWithTimeLogByDepartment>();
             instance.AddSingleton<IEmployeeManager, EmployeeManager>();
 
-            // EmployeeSalaryGradeStep
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_EmployeeSalaryGradeStep(this IServiceCollection instance)
+        {
             instance.AddSingleton<IEmployeeSalaryGradeStepConverter<SqlDataReader>, EmployeeSalaryGradeStepConverter>();
             instance.AddSingleton<IDeleteEmployeeSalaryGradeStep, DeleteEmployeeSalaryGradeStep>();
             instance.AddSingleton<IGetEmployeeSalaryGradeStepList, GetEmployeeSalaryGradeStepList>();
             instance.AddSingleton<IInsertEmployeeSalaryGradeStep, InsertEmployeeSalaryGradeStep>();
             instance.AddSingleton<IUpdateEmployeeSalaryGradeStep, UpdateEmployeeSalaryGradeStep>();
+            instance.AddSingleton<IEmployeeSalaryGradeStepManager, EmployeeSalaryGradeStepManager>();
 
-            // EmployeeType
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_EmployeeType(this IServiceCollection instance)
+        {
             instance.AddSingleton<IEmployeeTypeConverter<SqlDataReader>, EmployeeTypeConverter>();
             instance.AddSingleton<IGetEmployeeTypeById, GetEmployeeTypeById>();
             instance.AddSingleton<IGetEmployeeTypeList, GetEmployeeTypeList>();
             instance.AddSingleton<IEmployeeTypeManager, EmployeeTypeManager>();
 
-            // EmployeeWorkTimeSchedule
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_EmployeeWorkTimeSchedule(this IServiceCollection instance)
+        {
             instance.AddSingleton<IEmployeeWorkTimeScheduleConverter<SqlDataReader>, EmployeeWorkTimeScheduleConverter>();
             instance.AddSingleton<IDeleteEmployeeWorkTimeSchedule, DeleteEmployeeWorkTimeSchedule>();
-            instance.AddSingleton<IGetEmployeeWorkTimeScheduleById, GetEmployeeWorkTimeScheduleById>();
             instance.AddSingleton<IGetEmployeeWorkTimeScheduleList, GetEmployeeWorkTimeScheduleList>();
             instance.AddSingleton<IInsertEmployeeWorkTimeSchedule, InsertEmployeeWorkTimeSchedule>();
             instance.AddSingleton<IUpdateEmployeeWorkTimeSchedule, UpdateEmployeeWorkTimeSchedule>();
             instance.AddSingleton<IEmployeeWorkTimeScheduleManager, EmployeeWorkTimeScheduleManager>();
 
-            // EmploymentStatus
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_EmploymentStatus(this IServiceCollection instance)
+        {
             instance.AddSingleton<IEmploymentStatusConverter<SqlDataReader>, EmploymentStatusConverter>();
             instance.AddSingleton<IGetEmploymentStatusById, GetEmploymentStatusById>();
             instance.AddSingleton<IGetEmploymentStatusList, GetEmploymentStatusList>();
             instance.AddSingleton<IEmploymentStatusManager, EmploymentStatusManager>();
 
-            // EssayQuestion
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_EssayQuestion(this IServiceCollection instance)
+        {
             instance.AddSingleton<IEssayQuestionConverter<SqlDataReader>, EssayQuestionConverter>();
             instance.AddSingleton<IDeleteEssayQuestion, DeleteEssayQuestion>();
             instance.AddSingleton<IGetEssayQuestionById, GetEssayQuestionById>();
@@ -187,7 +313,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateEssayQuestion, UpdateEssayQuestion>();
             instance.AddSingleton<IEssayQuestionManager, EssayQuestionManager>();
 
-            // Exam
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Exam(this IServiceCollection instance)
+        {
             instance.AddSingleton<IExamConverter<SqlDataReader>, ExamConverter>();
             instance.AddSingleton<IDeleteExam, DeleteExam>();
             instance.AddSingleton<IGetExamById, GetExamById>();
@@ -196,7 +326,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateExam, UpdateExam>();
             instance.AddSingleton<IExamManager, ExamManager>();
 
-            // ExamEssayAnswer
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_ExamEssayAnswer(this IServiceCollection instance)
+        {
             instance.AddSingleton<IExamEssayAnswerConverter<SqlDataReader>, ExamEssayAnswerConverter>();
             instance.AddSingleton<IDeleteExamEssayAnswer, DeleteExamEssayAnswer>();
             instance.AddSingleton<IGetExamEssayAnswerList, GetExamEssayAnswerList>();
@@ -204,7 +338,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateExamEssayAnswer, UpdateExamEssayAnswer>();
             instance.AddSingleton<IExamEssayAnswerManager, ExamEssayAnswerManager>();
 
-            // ExamMultipleChoice
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_ExamMultipleChoiceAnswer(this IServiceCollection instance)
+        {
             instance.AddSingleton<IExamMultipleChoiceAnswerConverter<SqlDataReader>, ExamMultipleChoiceAnswerConverter>();
             instance.AddSingleton<IDeleteExamMultipleChoiceAnswer, DeleteExamMultipleChoiceAnswer>();
             instance.AddSingleton<IGetExamMultipleChoiceAnswerList, GetExamMultipleChoiceAnswerList>();
@@ -212,7 +350,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateExamMultipleChoiceAnswer, UpdateExamMultipleChoiceAnswer>();
             instance.AddSingleton<IExamMultipleChoiceAnswerManager, ExamMultipleChoiceAnswerManager>();
 
-            // ExamSet
+            return instance;
+        }
+
+        public static IServiceCollection UseSqServer_ExamSet(this IServiceCollection instance)
+        {
             instance.AddSingleton<IExamSetConverter<SqlDataReader>, ExamSetConverter>();
             instance.AddSingleton<IDeleteExamSet, DeleteExamSet>();
             instance.AddSingleton<IGetExamSetById, GetExamSetById>();
@@ -221,7 +363,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateExamSet, UpdateExamSet>();
             instance.AddSingleton<IExamSetManager, ExamSetManager>();
 
-            // Locator
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Locator(this IServiceCollection instance)
+        {
             instance.AddSingleton<ILocatorConverter<SqlDataReader>, LocatorConverter>();
             instance.AddSingleton<IDeleteLocator, DeleteLocator>();
             instance.AddSingleton<IGetLocatorById, GetLocatorById>();
@@ -230,13 +376,21 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateLocator, UpdateLocator>();
             instance.AddSingleton<ILocatorManager, LocatorManager>();
 
-            // LocatorLeaveType
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_LocatorLeaveType(this IServiceCollection instance)
+        {
             instance.AddSingleton<ILocatorLeaveTypeConverter<SqlDataReader>, LocatorLeaveTypeConverter>();
             instance.AddSingleton<IGetLocatorLeaveTypeById, GetLocatorLeaveTypeById>();
             instance.AddSingleton<IGetLocatorLeaveTypeList, GetLocatorLeaveTypeList>();
             instance.AddSingleton<ILocatorLeaveTypeManager, LocatorLeaveTypeManager>();
 
-            // MultipleChoiceCandidateAnswer
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_MultipleChoiceCandidateAnswer(this IServiceCollection instance)
+        {
             instance.AddSingleton<IMultipleChoiceCandidateAnswerConverter<SqlDataReader>, MultipleChoiceCandidateAnswerConverter>();
             instance.AddSingleton<IDeleteMultipleChoiceCandidateAnswer, DeleteMultipleChoiceCandidateAnswer>();
             instance.AddSingleton<IGetMultipleChoiceCandidateAnswerById, GetMultipleChoiceCandidateAnswerById>();
@@ -245,7 +399,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateMultipleChoiceCandidateAnswer, UpdateMultipleChoiceCandidateAnswer>();
             instance.AddSingleton<IMultipleChoiceCandidateAnswerManager, MultipleChoiceCandidateAnswerManager>();
 
-            // MultipleChoiceQuestion
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_MultipleChoiceQuestion(this IServiceCollection instance)
+        {
             instance.AddSingleton<IMultipleChoiceQuestionConverter<SqlDataReader>, MultipleChoiceQuestionConverter>();
             instance.AddSingleton<IDeleteMultipleChoiceQuestion, DeleteMultipleChoiceQuestion>();
             instance.AddSingleton<IGetMultipleChoiceQuestionById, GetMultipleChoiceQuestionById>();
@@ -254,7 +412,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateMultipleChoiceQuestion, UpdateMultipleChoiceQuestion>();
             instance.AddSingleton<IMultipleChoiceQuestionManager, MultipleChoiceQuestionManager>();
 
-            // Position
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Position(this IServiceCollection instance)
+        {
             instance.AddSingleton<IPositionConverter<SqlDataReader>, PositionConverter>();
             instance.AddSingleton<IDeletePosition, DeletePosition>();
             instance.AddSingleton<IGetPositionById, GetPositionById>();
@@ -263,7 +425,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdatePosition, UpdatePosition>();
             instance.AddSingleton<IPositionManager, PositionManager>();
 
-            // SalaryGrade
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_SalaryGrade(this IServiceCollection instance)
+        {
             instance.AddSingleton<ISalaryGradeConverter<SqlDataReader>, SalaryGradeConverter>();
             instance.AddSingleton<IDeleteSalaryGrade, DeleteSalaryGrade>();
             instance.AddSingleton<IGetSalaryGradeById, GetSalaryGradeById>();
@@ -273,7 +439,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetSalaryGradeListByBatch, GetSalaryGradeListByBatch>();
             instance.AddSingleton<ISalaryGradeManager, SalaryGradeManager>();
 
-            // SalaryGradeBatch
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_SalaryGradeBatch(this IServiceCollection instance)
+        {
             instance.AddSingleton<ISalaryGradeBatchConverter<SqlDataReader>, SalaryGradeBatchConverter>();
             instance.AddSingleton<IDeleteSalaryGradeBatch, DeleteSalaryGradeBatch>();
             instance.AddSingleton<IGetSalaryGradeBatchById, GetSalaryGradeBatchById>();
@@ -283,7 +453,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetCurrentSalaryGradeBatch, GetCurrentSalaryGradeBatch>();
             instance.AddSingleton<ISalaryGradeBatchManager, SalaryGradeBatchManager>();
 
-            // SalaryGradeStep
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_SalaryGradeStep(this IServiceCollection instance)
+        {
             instance.AddSingleton<ISalaryGradeStepConverter<SqlDataReader>, SalaryGradeStepConverter>();
             instance.AddSingleton<IDeleteSalaryGradeStep, DeleteSalaryGradeStep>();
             instance.AddSingleton<IGetSalaryGradeStepById, GetSalaryGradeStepById>();
@@ -292,9 +466,14 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateSalaryGradeStep, UpdateSalaryGradeStep>();
             instance.AddSingleton<IGetSalaryGradeStepListBySalaryGrade, GetSalaryGradeStepListBySalaryGrade>();
             instance.AddSingleton<IGetSalaryGradeStepByNumberAndStep, GetSalaryGradeStepByNumberAndStep>();
+            instance.AddSingleton<IGetCurrentSalaryGradeStepByEmployee, GetCurrentSalaryGradeStepByEmployee>();
             instance.AddSingleton<ISalaryGradeStepManager, SalaryGradeStepManager>();
 
-            // TimeLog
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_TimeLog(this IServiceCollection instance)
+        {
             instance.AddSingleton<ITimeLogConverter<SqlDataReader>, TimeLogConverter>();
             instance.AddSingleton<IDeleteTimeLog, DeleteTimeLog>();
             instance.AddSingleton<IGetTimeLogById, GetTimeLogById>();
@@ -308,12 +487,28 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetTimeLogListByEmployeeCutOff, GetTimeLogListByEmployeeCutOff>();
             instance.AddSingleton<ITimeLogManager, TimeLogManager>();
 
-            // TimeLogType
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_TimeLogType(this IServiceCollection instance)
+        {
             instance.AddSingleton<ITimeLogTypeConverter<SqlDataReader>, TimeLogTypeConverter>();
             instance.AddSingleton<IGetTimeLogTypeById, GetTimeLogTypeById>();
             instance.AddSingleton<IGetTimeLogTypeList, GetTimeLogTypeList>();
             instance.AddSingleton<ITimeLogTypeManager, TimeLogTypeManager>();
-            #endregion
+
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_WorkTimeSchedule(this IServiceCollection instance)
+        {
+            instance.AddSingleton<IWorkTimeScheduleConverter<SqlDataReader>, WorkTimeScheduleConverter>();
+            instance.AddSingleton<IDeleteWorkTimeSchedule, DeleteWorkTimeSchedule>();
+            instance.AddSingleton<IGetWorkTimeScheduleById, GetWorkTimeScheduleById>();
+            instance.AddSingleton<IGetWorkTimeScheduleList, GetWorkTimeScheduleList>();
+            instance.AddSingleton<IInsertWorkTimeSchedule, InsertWorkTimeSchedule>();
+            instance.AddSingleton<IUpdateWorkTimeSchedule, UpdateWorkTimeSchedule>();
+            instance.AddSingleton<IWorkTimeScheduleManager, WorkTimeScheduleManager>();
 
             return instance;
         }
