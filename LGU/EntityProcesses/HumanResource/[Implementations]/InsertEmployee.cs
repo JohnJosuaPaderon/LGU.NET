@@ -32,6 +32,7 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter("@_EmploymentStatusId", Employee.EmploymentStatus?.Id)
             .AddInputParameter("@_PositionId", Employee.Position?.Id)
             .AddInputParameter("@_DepartmentHeadId", Employee.DepartmentHead?.Id)
+            .AddInputParameter("@_WorkTimeScheduleId", Employee.WorkTimeSchedule?.Id)
             .AddLogByParameter();
 
         private IProcessResult<IEmployee> GetProcessResult(IEmployee data, SqlCommand command, int affectedRows)

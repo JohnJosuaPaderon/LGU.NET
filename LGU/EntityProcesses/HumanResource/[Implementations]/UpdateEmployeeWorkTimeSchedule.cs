@@ -15,25 +15,18 @@ namespace LGU.EntityProcesses.HumanResource
         {
         }
 
-        public IEmployeeWorkTimeSchedule WorkTimeSchedule { get; set; }
+        public IEmployeeWorkTimeSchedule EmployeeWorkTimeSchedule { get; set; }
 
         private SqlQueryInfo<IEmployeeWorkTimeSchedule> QueryInfo =>
-            SqlQueryInfo<IEmployeeWorkTimeSchedule>.CreateProcedureQueryInfo(WorkTimeSchedule, GetQualifiedDbObjectName(), GetProcessResult, true)
-            .AddInputParameter("@_Id", WorkTimeSchedule.Id)
-            .AddInputParameter("@_EmployeeId", WorkTimeSchedule.Employee?.Id)
-            .AddInputParameter("@_WorkTimeStart", WorkTimeSchedule.WorkTimeStart)
-            .AddInputParameter("@_WorkTimeEnd", WorkTimeSchedule.WorkTimeEnd)
-            .AddInputParameter("@_EffectivityDate", WorkTimeSchedule.EffectivityDate)
-            .AddInputParameter("@_IsEnabled", WorkTimeSchedule.IsEnabled)
-            .AddInputParameter("@_InvocationLevel", WorkTimeSchedule.InvocationLevel)
-            .AddInputParameter("@_WorkTimeLength", WorkTimeSchedule.WorkTimeLength.Ticks)
+            SqlQueryInfo<IEmployeeWorkTimeSchedule>.CreateProcedureQueryInfo(EmployeeWorkTimeSchedule, GetQualifiedDbObjectName(), GetProcessResult, true)
+            .AddInputParameter("@_EmployeeId", EmployeeWorkTimeSchedule.Employee?.Id)
+            .AddInputParameter("@_WorkTimeScheduleId", EmployeeWorkTimeSchedule.WorkTimeSchedule?.Id)
             .AddLogByParameter();
 
         private IProcessResult<IEmployeeWorkTimeSchedule> GetProcessResult(IEmployeeWorkTimeSchedule data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                data.Id = command.Parameters.GetInt64("@_Id");
                 return new ProcessResult<IEmployeeWorkTimeSchedule>(data);
             }
             else

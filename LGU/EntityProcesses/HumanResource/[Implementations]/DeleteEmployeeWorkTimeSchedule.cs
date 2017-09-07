@@ -19,7 +19,8 @@ namespace LGU.EntityProcesses.HumanResource
 
         private SqlQueryInfo<IEmployeeWorkTimeSchedule> QueryInfo =>
             SqlQueryInfo<IEmployeeWorkTimeSchedule>.CreateProcedureQueryInfo(WorkTimeSchedule, GetQualifiedDbObjectName(), GetProcessResult, true)
-            .AddInputParameter("@_Id", WorkTimeSchedule.Id)
+            .AddInputParameter("@_EmployeeId", WorkTimeSchedule.Employee?.Id)
+            .AddInputParameter("@_WorkTimeScheduleId", WorkTimeSchedule.WorkTimeSchedule?.Id)
             .AddLogByParameter();
 
         private IProcessResult<IEmployeeWorkTimeSchedule> GetProcessResult(IEmployeeWorkTimeSchedule data, SqlCommand command, int affectedRows)
