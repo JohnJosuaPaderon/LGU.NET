@@ -20,6 +20,7 @@ namespace LGU.EntityConverters.HumanResource
         private readonly IEmploymentStatusManager r_EmploymentStatusManager;
         private readonly IPositionManager r_PositionManager;
         private readonly IDepartmentHeadManager r_DepartmentHeadManager;
+        private readonly IWorkTimeScheduleManager r_WorkTimeScheduleManager;
 
         public EmployeeConverter(
             IGenderManager genderManager,
@@ -27,7 +28,8 @@ namespace LGU.EntityConverters.HumanResource
             IEmployeeTypeManager employeeTypeManager,
             IEmploymentStatusManager employmentStatusManager,
             IPositionManager positionManager,
-            IDepartmentHeadManager departmentHeadManager)
+            IDepartmentHeadManager departmentHeadManager,
+            IWorkTimeScheduleManager workTimeScheduleManager)
         {
             r_GenderManager = genderManager;
             r_DepartmentManager = departmentManager;
@@ -35,9 +37,18 @@ namespace LGU.EntityConverters.HumanResource
             r_EmploymentStatusManager = employmentStatusManager;
             r_PositionManager = positionManager;
             r_DepartmentHeadManager = departmentHeadManager;
+            r_WorkTimeScheduleManager = workTimeScheduleManager;
         }
 
-        private IEmployee GetData(IGender gender, IDepartment department, IEmployeeType type, IEmploymentStatus employmentStatus, IPosition position, IDepartmentHead departmentHead, SqlDataReader reader)
+        private IEmployee GetData(
+            IGender gender,
+            IDepartment department,
+            IEmployeeType type,
+            IEmploymentStatus employmentStatus,
+            IPosition position,
+            IDepartmentHead departmentHead,
+            IWorkTimeSchedule workTimeSchedule,
+            SqlDataReader reader)
         {
             return new Employee()
             {
@@ -53,7 +64,8 @@ namespace LGU.EntityConverters.HumanResource
                 Gender = gender,
                 Position = position,
                 Type = type,
-                DepartmentHead = departmentHead
+                DepartmentHead = departmentHead,
+                WorkTimeSchedule = workTimeSchedule
             };
         }
 
@@ -65,8 +77,17 @@ namespace LGU.EntityConverters.HumanResource
             var employmentStatusResult = r_EmploymentStatusManager.GetById(reader.GetInt16("EmploymentStatusId"));
             var positionResult = r_PositionManager.GetById(reader.GetInt16("PositionId"));
             var departmentHeadResult = r_DepartmentHeadManager.GetById(reader.GetInt64("DepartmentHeadId"));
+            var workTimeScheduleResult = r_WorkTimeScheduleManager.GetById(reader.GetInt32("WorkTimeScheduleId"));
 
-            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, departmentHeadResult.Data, reader);
+            return GetData(
+                genderResult.Data,
+                departmentResult.Data,
+                typeResult.Data,
+                employmentStatusResult.Data,
+                positionResult.Data,
+                departmentHeadResult.Data,
+                workTimeScheduleResult.Data,
+                reader);
         }
 
         private async Task<IEmployee> GetDataAsync(SqlDataReader reader)
@@ -77,8 +98,17 @@ namespace LGU.EntityConverters.HumanResource
             var employmentStatusResult = await r_EmploymentStatusManager.GetByIdAsync(reader.GetInt16("EmploymentStatusId"));
             var positionResult = await r_PositionManager.GetByIdAsync(reader.GetInt16("PositionId"));
             var departmentHeadResult = await r_DepartmentHeadManager.GetByIdAsync(reader.GetInt64("DepartmentHeadId"));
+            var workTimeScheduleResult = await r_WorkTimeScheduleManager.GetByIdAsync(reader.GetInt32("WorkTimeScheduleId"));
 
-            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, departmentHeadResult.Data, reader);
+            return GetData(
+                genderResult.Data,
+                departmentResult.Data,
+                typeResult.Data,
+                employmentStatusResult.Data,
+                positionResult.Data,
+                departmentHeadResult.Data,
+                workTimeScheduleResult.Data,
+                reader);
         }
 
         private async Task<IEmployee> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
@@ -89,8 +119,17 @@ namespace LGU.EntityConverters.HumanResource
             var employmentStatusResult = await r_EmploymentStatusManager.GetByIdAsync(reader.GetInt16("EmploymentStatusId"), cancellationToken);
             var positionResult = await r_PositionManager.GetByIdAsync(reader.GetInt16("PositionId"), cancellationToken);
             var departmentHeadResult = await r_DepartmentHeadManager.GetByIdAsync(reader.GetInt64("DepartmentHeadId"), cancellationToken);
+            var workTimeScheduleResult = await r_WorkTimeScheduleManager.GetByIdAsync(reader.GetInt32("WorkTimeScheduleId"), cancellationToken);
 
-            return GetData(genderResult.Data, departmentResult.Data, typeResult.Data, employmentStatusResult.Data, positionResult.Data, departmentHeadResult.Data, reader);
+            return GetData(
+                genderResult.Data,
+                departmentResult.Data,
+                typeResult.Data,
+                employmentStatusResult.Data,
+                positionResult.Data,
+                departmentHeadResult.Data,
+                workTimeScheduleResult.Data,
+                reader);
         }
 
         public IEnumerableProcessResult<IEmployee> EnumerableFromReader(SqlDataReader reader)

@@ -23,15 +23,9 @@ namespace LGU.EntityConverters.HumanResource
         {
             if (employee != null)
             {
-                return new EmployeeWorkTimeSchedule(employee)
+                return new EmployeeWorkTimeSchedule()
                 {
-                    Id = reader.GetInt64("Id"),
-                    WorkTimeStart = reader.GetDateTime("WorkTimeStart"),
-                    WorkTimeEnd = reader.GetDateTime("WorkTimeEnd"),
-                    EffectivityDate = reader.GetNullableDateTime("EffectivityDate"),
-                    IsEnabled = reader.GetBoolean("IsEnabled"),
-                    InvocationLevel = reader.GetInt32("InvocationLevel"),
-                    WorkTimeLength = reader.GetTimeSpan("WorkTimeLength")
+                    Employee = employee
                 };
             }
             else
