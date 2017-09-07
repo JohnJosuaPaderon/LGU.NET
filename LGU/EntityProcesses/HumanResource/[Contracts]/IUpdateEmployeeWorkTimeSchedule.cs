@@ -5,6 +5,6 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public interface IUpdateEmployeeWorkTimeSchedule : IProcess<IEmployeeWorkTimeSchedule>
     {
-        IEmployeeWorkTimeSchedule WorkTimeSchedule { get; set; }
+        IEmployeeWorkTimeSchedule EmployeeWorkTimeSchedule { get; set; }
     }
 }
