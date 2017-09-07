@@ -1,15 +1,8 @@
-﻿using System;
-
-namespace LGU.Entities.HumanResource
+﻿namespace LGU.Entities.HumanResource
 {
-    public interface IEmployeeWorkTimeSchedule : IEntity<long>
+    public interface IEmployeeWorkTimeSchedule
     {
-        IEmployee Employee { get; }
-        DateTime WorkTimeStart { get; set; }
-        DateTime WorkTimeEnd { get; set; }
-        DateTime? EffectivityDate { get; set; }
-        TimeSpan WorkTimeLength { get; set; }
-        bool IsEnabled { get; set; }
-        int InvocationLevel { get; set; }
+        IEmployee Employee { get; set; }
+        IWorkTimeSchedule WorkTimeSchedule { get; set; }
     }
 }

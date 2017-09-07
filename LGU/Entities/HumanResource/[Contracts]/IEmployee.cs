@@ -9,5 +9,6 @@ namespace LGU.Entities.HumanResource
         IEmploymentStatus EmploymentStatus { get; set; }
         IPosition Position { get; set; }
         IDepartmentHead DepartmentHead { get; set; }
+        IWorkTimeSchedule WorkTimeSchedule { get; set; }
     }
 }
