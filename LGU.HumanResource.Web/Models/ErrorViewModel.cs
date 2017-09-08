@@ -1,5 +1,3 @@
-using System;
-
 namespace LGU.HumanResource.Web.Models
 {
     public class ErrorViewModel

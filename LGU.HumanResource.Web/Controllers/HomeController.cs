@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LGU.HumanResource.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using LGU.HumanResource.Web.Models;
+using System.Diagnostics;
 
 namespace LGU.HumanResource.Web.Controllers
 {
@@ -12,6 +8,20 @@ namespace LGU.HumanResource.Web.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["MenuItems"] = new MenuItemModel[]
+            {
+                new MenuItemModel()
+                {
+                    Description = "Personal Data Sheet",
+                    Controller = "PersonalDataSheet",
+                    Action = "Index"
+                },
+                new MenuItemModel()
+                {
+                    Description = "Actual Time-Logs",
+                }
+            };
+
             return View();
         }
 
@@ -19,12 +29,32 @@ namespace LGU.HumanResource.Web.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
+            ViewData["MenuItems"] = new MenuItemModel[]
+            {
+                new MenuItemModel() {Description = "A" },
+                new MenuItemModel() {Description = "B" },
+                new MenuItemModel() {Description = "O" },
+                new MenuItemModel() {Description = "U" },
+                new MenuItemModel() {Description = "T" },
+            };
+
             return View();
         }
 
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
+
+            ViewData["MenuItems"] = new MenuItemModel[]
+            {
+                new MenuItemModel() {Description = "C" },
+                new MenuItemModel() {Description = "O" },
+                new MenuItemModel() {Description = "N" },
+                new MenuItemModel() {Description = "T" },
+                new MenuItemModel() {Description = "A" },
+                new MenuItemModel() {Description = "C" },
+                new MenuItemModel() {Description = "T" },
+            };
 
             return View();
         }

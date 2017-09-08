@@ -1,0 +1,23 @@
+﻿@{ 
+    ViewData["HeaderText"] = "Personal Data Sheet";
+}
+
+<div class="row">
+    @for (int i = 0; i < 10; i++)
+    {
+        <div class="col l4 m6 s12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-title">Hello There! I'm @((i + 1).ToString("#,##0"))</div>
+                    <div class="truncate">
+                        asd
+                    </div>
+                    <div class="card-action right-align">
+                        <a href="#" class="btn red waves-effect waves-light">Save</a>
+                        <a href="#" class="btn red waves-effect waves-light">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
