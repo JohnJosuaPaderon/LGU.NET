@@ -16,6 +16,7 @@ namespace LGU.Models.HumanResource
             Position = source.Position;
             Type = source.Type;
             EmploymentStatus = source.EmploymentStatus;
+            WorkTimeSchedule = source.WorkTimeSchedule;
         }
 
         private long _Id;
@@ -92,6 +93,13 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _EmploymentStatus, value); }
         }
 
+        private IWorkTimeSchedule _WorkTimeSchedule;
+        public IWorkTimeSchedule WorkTimeSchedule
+        {
+            get { return _WorkTimeSchedule; }
+            set { SetProperty(ref _WorkTimeSchedule, value); }
+        }
+
         private void RaiseMiddleInitials()
         {
             MiddleInitials = MiddleInitialConstructor.Construct(MiddleName);
@@ -117,7 +125,8 @@ namespace LGU.Models.HumanResource
                 Department = Department,
                 EmploymentStatus = EmploymentStatus,
                 Position = Position,
-                Type = Type
+                Type = Type,
+                WorkTimeSchedule = WorkTimeSchedule
             };
         }
     }
