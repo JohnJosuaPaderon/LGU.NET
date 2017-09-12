@@ -5,8 +5,10 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:converters="clr-namespace:LGU.Converters"
-             MinWidth="{Binding MinDialogWidth}"
-             MinHeight="{Binding MinDialogHeight}">
+             xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+             MinWidth="{DynamicResource MinDialogWidth}"
+             MinHeight="650"
+             Background="{DynamicResource MaterialDesignPaper}">
     <UserControl.Resources>
         <ResourceDictionary Source="../../../Styles/Default.xaml"/>
     </UserControl.Resources>
@@ -21,15 +23,48 @@
                 <TextBlock Text="{Binding HeaderTitle,FallbackValue='Add or Edit Employee'}" Style="{DynamicResource RegularHeaderTextBlock}"/>
             </materialDesign:ColorZone>
         </materialDesign:TransitioningContent>
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <StackPanel Grid.Row="1" Margin="{DynamicResource ContainerMargin}">
-                <TextBox Text="{Binding Employee.LastName}" materialDesign:HintAssist.Hint="Last Name"/>
-                <TextBox Text="{Binding Employee.FirstName}" materialDesign:HintAssist.Hint="First Name"/>
-                <TextBox Text="{Binding Employee.MiddleName}" materialDesign:HintAssist.Hint="Middle Name"/>
-                <TextBox Text="{Binding Employee.NameExtension}" materialDesign:HintAssist.Hint="Name Extension"/>
-                <ComboBox ItemsSource="{Binding Departments}" SelectedItem="{Binding Employee.Department}" materialDesign:HintAssist.Hint="Department"/>
-            </StackPanel>
-        </ScrollViewer>
+        <dragablz:TabablzControl Grid.Row="1">
+            <TabItem Header="Personal Details" >
+                <Grid Margin="{DynamicResource ContainerMargin}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="0" Text="{Binding Employee.LastName}" materialDesign:HintAssist.Hint="Last Name"/>
+                    <TextBox Grid.Row="2" Text="{Binding Employee.FirstName}" materialDesign:HintAssist.Hint="First Name"/>
+                    <TextBox Grid.Row="4" Text="{Binding Employee.MiddleName}" materialDesign:HintAssist.Hint="Middle Name"/>
+                    <TextBox Grid.Row="6" Text="{Binding Employee.NameExtension}" materialDesign:HintAssist.Hint="Name Extension"/>
+                    <ComboBox Grid.Row="8" ItemsSource="{Binding Departments}" SelectedItem="{Binding Employee.Department}" materialDesign:HintAssist.Hint="Department"/>
+                    <ComboBox Grid.Row="10" ItemsSource="{Binding Types}" SelectedItem="{Binding Employee.Type}" materialDesign:HintAssist.Hint="Type"/>
+                    <ComboBox Grid.Row="12" ItemsSource="{Binding WorkTimeSchedules}" SelectedItem="{Binding Employee.WorkTimeSchedule}" materialDesign:HintAssist.Hint="Work-Time Schedule"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Salary Grade">
+                <Grid Margin="{DynamicResource ContainerMargin}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBox Grid.Row="0" materialDesign:HintAssist.Hint="Salary Grade" Text="{Binding SalaryGradeNumber,UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="2" materialDesign:HintAssist.Hint="Step" Text="{Binding Step,UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Grid.Row="4" materialDesign:HintAssist.Hint="Amount" IsReadOnly="True" Text="{Binding SalaryGradeStep.Amount,StringFormat='#,##0.00'}"/>
+                </Grid>
+            </TabItem>
+        </dragablz:TabablzControl>
         <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
             <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
                 <Grid>
