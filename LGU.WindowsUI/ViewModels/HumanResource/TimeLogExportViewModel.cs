@@ -185,6 +185,7 @@ namespace LGU.ViewModels.HumanResource
             else
             {
                 EnqueueMessage("Nothing to be exported.");
+                DialogHelper.CloseDialog();
             }
         }
 
