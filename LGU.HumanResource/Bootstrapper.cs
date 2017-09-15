@@ -22,6 +22,7 @@ namespace LGU.HumanResource
             Container.RegisterTypeForNavigation<ActualTimeLogExportView>();
             Container.RegisterTypeForNavigation<SalaryGradeManagementView>();
             Container.RegisterTypeForNavigation<CreateNewSalaryGradeView>();
+            Container.RegisterTypeForNavigation<PersonalDataSheetView>();
         }
 
         protected override void InitializeServices()
