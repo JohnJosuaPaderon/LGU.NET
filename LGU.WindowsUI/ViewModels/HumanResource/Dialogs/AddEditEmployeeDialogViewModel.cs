@@ -3,6 +3,7 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Events.HumanResource;
 using LGU.Models.HumanResource;
 using LGU.Processes;
+using LGU.Views.HumanResource;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
@@ -24,6 +25,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             r_EmployeeTypeManager = ApplicationDomain.GetService<IEmployeeTypeManager>();
 
             SaveCommand = new DelegateCommand(Save);
+            OpenPdsCommand = new DelegateCommand(OpenPds);
 
             r_AddEmployeeEvent = r_EventAggregator.GetEvent<AddEmployeeEvent>();
             r_EditEmployeeEvent = r_EventAggregator.GetEvent<EditEmployeeEvent>();
@@ -45,6 +47,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
         private readonly EditEmployeeEvent r_EditEmployeeEvent;
 
         public DelegateCommand SaveCommand { get; }
+        public DelegateCommand OpenPdsCommand { get; }
         public ObservableCollection<IDepartment> Departments { get; }
         public ObservableCollection<IWorkTimeSchedule> WorkTimeSchedules { get; }
         public ObservableCollection<IEmployeeType> Types { get; }
@@ -197,6 +200,17 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             {
                     SalaryGradeStep = null;
             }
+        }
+
+        private void OpenPds()
+        {
+            var parameters = new NavigationParameters
+            {
+                { "employee", Employee }
+            };
+            DialogHelper.CloseDialog();
+
+            r_RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, nameof(PersonalDataSheetView), parameters);
         }
 
         private async void Save()
