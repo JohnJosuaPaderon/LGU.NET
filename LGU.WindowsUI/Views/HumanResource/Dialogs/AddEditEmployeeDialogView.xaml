@@ -13,74 +13,81 @@
         <ResourceDictionary Source="../../../Styles/Default.xaml"/>
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
-            <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
-                <TextBlock Text="{Binding HeaderTitle,FallbackValue='Add or Edit Employee'}" Style="{DynamicResource RegularHeaderTextBlock}"/>
-            </materialDesign:ColorZone>
-        </materialDesign:TransitioningContent>
-        <dragablz:TabablzControl Grid.Row="1">
-            <TabItem Header="Personal Details" >
-                <Grid Margin="{DynamicResource ContainerMargin}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <TextBox Grid.Row="0" Text="{Binding Employee.LastName}" materialDesign:HintAssist.Hint="Last Name"/>
-                    <TextBox Grid.Row="2" Text="{Binding Employee.FirstName}" materialDesign:HintAssist.Hint="First Name"/>
-                    <TextBox Grid.Row="4" Text="{Binding Employee.MiddleName}" materialDesign:HintAssist.Hint="Middle Name"/>
-                    <TextBox Grid.Row="6" Text="{Binding Employee.NameExtension}" materialDesign:HintAssist.Hint="Name Extension"/>
-                    <ComboBox Grid.Row="8" ItemsSource="{Binding Departments}" SelectedItem="{Binding Employee.Department}" materialDesign:HintAssist.Hint="Department"/>
-                    <ComboBox Grid.Row="10" ItemsSource="{Binding Types}" SelectedItem="{Binding Employee.Type}" materialDesign:HintAssist.Hint="Type"/>
-                    <ComboBox Grid.Row="12" ItemsSource="{Binding WorkTimeSchedules}" SelectedItem="{Binding Employee.WorkTimeSchedule}" materialDesign:HintAssist.Hint="Work-Time Schedule"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Salary Grade">
-                <Grid Margin="{DynamicResource ContainerMargin}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <TextBox Grid.Row="0" materialDesign:HintAssist.Hint="Salary Grade" Text="{Binding SalaryGradeNumber,UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Grid.Row="2" materialDesign:HintAssist.Hint="Step" Text="{Binding Step,UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Grid.Row="4" materialDesign:HintAssist.Hint="Amount" IsReadOnly="True" Text="{Binding SalaryGradeStep.Amount,StringFormat='#,##0.00'}"/>
-                </Grid>
-            </TabItem>
-        </dragablz:TabablzControl>
-        <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
-            <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
-                <Grid>
-                    <Grid.Resources>
-                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FooterActionButton}"/>
-                    </Grid.Resources>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <CheckBox Grid.Column="0" Content="Multiple" IsChecked="{Binding Multiple}" Visibility="{Binding Mode,Converter={x:Static converters:DialogModeAddToVisibilityConverter.Instance}}"/>
-                    <Button Grid.Column="1" Content="Save" Command="{Binding SaveCommand}"/>
-                    <Button Grid.Column="2" Content="Cancel" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
-                </Grid>
-            </materialDesign:ColorZone>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <materialDesign:TransitioningContent Grid.Row="0" Style="{DynamicResource RegularHeaderTransitioningContent}">
+                <materialDesign:ColorZone Style="{DynamicResource RegularHeaderColorZone}">
+                    <TextBlock Text="{Binding HeaderTitle,FallbackValue='Add or Edit Employee'}" Style="{DynamicResource RegularHeaderTextBlock}"/>
+                </materialDesign:ColorZone>
+            </materialDesign:TransitioningContent>
+            <dragablz:TabablzControl Grid.Row="1">
+                <TabItem Header="Personal Details" >
+                    <Grid Margin="{DynamicResource ContainerMargin}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBox Grid.Row="0" Text="{Binding Employee.LastName}" materialDesign:HintAssist.Hint="Last Name"/>
+                        <TextBox Grid.Row="2" Text="{Binding Employee.FirstName}" materialDesign:HintAssist.Hint="First Name"/>
+                        <TextBox Grid.Row="4" Text="{Binding Employee.MiddleName}" materialDesign:HintAssist.Hint="Middle Name"/>
+                        <TextBox Grid.Row="6" Text="{Binding Employee.NameExtension}" materialDesign:HintAssist.Hint="Name Extension"/>
+                        <ComboBox Grid.Row="8" ItemsSource="{Binding Departments}" SelectedItem="{Binding Employee.Department}" materialDesign:HintAssist.Hint="Department"/>
+                        <ComboBox Grid.Row="10" ItemsSource="{Binding Types}" SelectedItem="{Binding Employee.Type}" materialDesign:HintAssist.Hint="Type"/>
+                        <ComboBox Grid.Row="12" ItemsSource="{Binding WorkTimeSchedules}" SelectedItem="{Binding Employee.WorkTimeSchedule}" materialDesign:HintAssist.Hint="Work-Time Schedule"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Salary Grade">
+                    <Grid Margin="{DynamicResource ContainerMargin}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBox Grid.Row="0" materialDesign:HintAssist.Hint="Salary Grade" Text="{Binding SalaryGradeNumber,UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Grid.Row="2" materialDesign:HintAssist.Hint="Step" Text="{Binding Step,UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Grid.Row="4" materialDesign:HintAssist.Hint="Amount" IsReadOnly="True" Text="{Binding SalaryGradeStep.Amount,StringFormat='#,##0.00'}"/>
+                    </Grid>
+                </TabItem>
+            </dragablz:TabablzControl>
+            <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
+                <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
+                    <Grid>
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FooterActionButton}"/>
+                        </Grid.Resources>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Grid.Column="0" Content="Multiple" IsChecked="{Binding Multiple}" Visibility="{Binding Mode,Converter={x:Static converters:DialogModeAddToVisibilityConverter.Instance}}"/>
+                        <Button Grid.Column="1" Content="Save" Command="{Binding SaveCommand}"/>
+                        <Button Grid.Column="2" Content="Cancel" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"/>
+                    </Grid>
+                </materialDesign:ColorZone>
+            </materialDesign:TransitioningContent>
+        </Grid>
+        <materialDesign:TransitioningContent VerticalAlignment="Top" HorizontalAlignment="Right" Margin="18" OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn,Duration=0:0:1}">
+            <Button Style="{DynamicResource MaterialDesignFloatingActionAccentButton}" Visibility="{Binding Mode,Converter={x:Static converters:DialogModeEditToVisibilityConverter.Instance}}" Command="{Binding OpenPdsCommand}">
+                <TextBlock Text="PDS" FontWeight="Bold"/>
+            </Button>
         </materialDesign:TransitioningContent>
     </Grid>
 </UserControl>
