@@ -2,7 +2,6 @@
 using LGU.Processes;
 using System;
 using System.Data.SqlClient;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace LGU.Data.Rdbms
@@ -32,7 +31,6 @@ namespace LGU.Data.Rdbms
                     catch (Exception ex)
                     {
                         queryInfo.InvokeIfUsingTransaction(transaction.Rollback);
-                        Debug.WriteLine(ex);
                         return new ProcessResult(ex);
                     }
                     finally
@@ -70,7 +68,6 @@ namespace LGU.Data.Rdbms
                     catch (Exception ex)
                     {
                         queryInfo.InvokeInTransaction(transaction.Rollback);
-                        Debug.WriteLine(ex);
                         return new ProcessResult<T>(ex);
                     }
                 }
@@ -106,7 +103,6 @@ namespace LGU.Data.Rdbms
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex);
                         return new ProcessResult<T>(ex);
                     }
                 }
@@ -142,7 +138,6 @@ namespace LGU.Data.Rdbms
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex);
                         return new EnumerableProcessResult<T>(ex);
                     }
                 }
@@ -178,7 +173,6 @@ namespace LGU.Data.Rdbms
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex);
                         return new EnumerableProcessResult<T>(ex);
                     }
                 }
@@ -204,7 +198,6 @@ namespace LGU.Data.Rdbms
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex);
                         return new ProcessResult<T>(ex);
                     }
                 }
