@@ -139,6 +139,7 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\DateTimeRangeDisplayConverter.cs" />
     <Compile Include="Converters\DialogModeAddToVisibilityConverter.cs" />
+    <Compile Include="Converters\DialogModeEditToVisibilityConverter.cs" />
     <Compile Include="Converters\FingerPrintToDisplayConverter.cs" />
     <Compile Include="Converters\NullableToBooleanConverter.cs" />
     <Compile Include="Converters\FingerPrintToPackIconStateConverter.cs" />
@@ -170,8 +171,10 @@
     <Compile Include="Models\HumanResource\EmployeeFingerPrintSetModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeModel.cs" />
     <Compile Include="Models\HumanResource\FingerPrintModel.cs" />
+    <Compile Include="Models\HumanResource\PdsAddressModel.cs" />
     <Compile Include="Models\HumanResource\LocatorLeaveTypeModel.cs" />
     <Compile Include="Models\HumanResource\LocatorModel.cs" />
+    <Compile Include="Models\HumanResource\PersonalDataSheetModel.cs" />
     <Compile Include="Models\HumanResource\SalaryGradeBatchModel.cs" />
     <Compile Include="Models\HumanResource\SalaryGradeModel.cs" />
     <Compile Include="Models\HumanResource\SalaryGradeStepModel.cs" />
@@ -214,6 +217,7 @@
     <Compile Include="ViewModels\HumanResource\LogType.cs" />
     <Compile Include="ViewModels\HumanResource\MainKioskViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\MainViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\PersonalDataSheetViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PreviewDepartmentViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PreviewEmployeeViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\SalaryGradeManagementViewModel.cs" />
@@ -283,6 +287,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\PersonalDataSheetView.xaml.cs">
+      <DependentUpon>PersonalDataSheetView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\PreviewDepartmentView.xaml.cs">
       <DependentUpon>PreviewDepartmentView.xaml</DependentUpon>
@@ -475,6 +482,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\PersonalDataSheetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
