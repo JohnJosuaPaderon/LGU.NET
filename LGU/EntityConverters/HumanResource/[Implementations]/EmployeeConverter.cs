@@ -59,6 +59,7 @@ namespace LGU.EntityConverters.HumanResource
                 NameExtension = reader.GetString("NameExtension"),
                 BirthDate = reader.GetNullableDateTime("BirthDate"),
                 Deceased = reader.GetBoolean("Deceased"),
+                MonthlySalary = reader.GetDecimal("MonthlySalary"),
                 Department = department,
                 EmploymentStatus = employmentStatus,
                 Gender = gender,
