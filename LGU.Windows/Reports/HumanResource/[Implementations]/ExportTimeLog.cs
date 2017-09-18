@@ -148,8 +148,8 @@ namespace LGU.Reports.HumanResource
             {
                 var path = Path.Combine(r_InfoProvider.SaveDirectory, ExportDate.ToString(r_InfoProvider.PathFormat));
                 DirectoryResolver.Resolve(r_InfoProvider.SaveDirectory);
-                var excelFile = $"{path}.xls";
-                var mapFile = $"{path}.xls.txt";
+                var excelFile = $"{path}.xlsx";
+                var mapFile = $"{path}.xlsx.txt";
                 TemplateWorksheet.Delete();
                 Workbook.SaveAs(excelFile);
                 SaveMap(mapFile);
@@ -212,7 +212,7 @@ namespace LGU.Reports.HumanResource
                 try
                 {
                     DirectoryResolver.Resolve(directory);
-                    var filePath = Path.Combine(directory, $"{departmentCounter}.xls");
+                    var filePath = Path.Combine(directory, $"{departmentCounter}.xlsx");
                     TemplateWorksheet.Delete();
                     Workbook.SaveAs(filePath);
                     filePaths.Add(filePath);
@@ -283,7 +283,7 @@ namespace LGU.Reports.HumanResource
                     {
                         var directory = Path.Combine(baseDirectory, $"{departmentCounter}");
                         DirectoryResolver.Resolve(directory);
-                        var filePath = Path.Combine(directory, $"{departmentCounter}.{employeeCounter}.xls");
+                        var filePath = Path.Combine(directory, $"{departmentCounter}.{employeeCounter}.xlsx");
                         Debug.WriteLine(filePath);
                         TemplateWorksheet.Delete();
                         Workbook.SaveAs(filePath);
