@@ -30,19 +30,22 @@
 
   <ItemGroup>
     <Reference Include="DPFPDevNET">
-      <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPDevNET\1.6.1.0__696774c42ee28c57\DPFPDevNET.dll</HintPath>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\DPFPDevNET\1.6.1.0__696774c42ee28c57\DPFPDevNET.dll</HintPath>
     </Reference>
     <Reference Include="DPFPEngNET">
-      <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPEngNET\1.6.1.0__7fe76e7adf19964b\DPFPEngNET.dll</HintPath>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\DPFPEngNET\1.6.1.0__7fe76e7adf19964b\DPFPEngNET.dll</HintPath>
     </Reference>
     <Reference Include="DPFPGuiNET">
-      <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPGuiNET\1.6.1.0__d4f4a0bd9c559145\DPFPGuiNet.dll</HintPath>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\DPFPGuiNET\1.6.1.0__d4f4a0bd9c559145\DPFPGuiNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DPFPO2MNET">
+      <HintPath>C:\Windows\assembly\GAC_MSIL\DPFPO2MNET\2.2.1.0__6494fe269d4110bd\DPFPO2MNET.dll</HintPath>
     </Reference>
     <Reference Include="DPFPShrNET">
-      <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPShrNET\1.6.1.0__d902fe275a8d6cf2\DPFPShrNET.dll</HintPath>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\DPFPShrNET\1.6.1.0__d902fe275a8d6cf2\DPFPShrNET.dll</HintPath>
     </Reference>
     <Reference Include="DPFPVerNET">
-      <HintPath>..\..\Windows\assembly\GAC_MSIL\DPFPVerNET\1.6.1.0__4de0a9c4dcc83984\DPFPVerNET.dll</HintPath>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\DPFPVerNET\1.6.1.0__4de0a9c4dcc83984\DPFPVerNET.dll</HintPath>
     </Reference>
   </ItemGroup>
 
