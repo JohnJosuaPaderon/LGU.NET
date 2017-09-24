@@ -5,7 +5,7 @@ namespace LGU.Processes
 {
     public interface IProcess
     {
-        IProcessResult Execute { get; }
+        IProcessResult Execute();
         Task<IProcessResult> ExecuteAsync();
         Task<IProcessResult> ExecuteAsync(CancellationToken cancellationToken);
     }
