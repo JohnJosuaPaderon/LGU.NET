@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Entities.Core;
 using LGU.EntityManagers.Core;
+using LGU.Extensions;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
@@ -12,47 +13,69 @@ namespace LGU.EntityConverters.Core
 {
     public sealed class PersonConverter : IPersonConverter<SqlDataReader>
     {
-        private readonly IGenderManager r_GenderManager;
+        private const string FIELD_ID = "Id";
+        private const string FIELD_FIRST_NAME = "FirstName";
+        private const string FIELD_MIDDLE_NAME = "MiddleName";
+        private const string FIELD_LAST_NAME = "LastName";
+        private const string FIELD_NAME_EXTENSION = "NameExtension";
+        private const string FIELD_GENDER_ID = "GenderId";
+        private const string FIELD_BIRTH_DATE = "BirthDate";
+        private const string FIELD_DECEASED = "Deceased";
 
         public PersonConverter(IGenderManager genderManager)
         {
             r_GenderManager = genderManager;
+
+            Prop_Id = new DataConverterProperty<long>();
+            Prop_FirstName = new DataConverterProperty<string>();
+            Prop_MiddleName = new DataConverterProperty<string>();
+            Prop_LastName = new DataConverterProperty<string>();
+            Prop_NameExtension = new DataConverterProperty<string>();
         }
+
+        private readonly IGenderManager r_GenderManager;
+
+        public IDataConverterProperty<long> Prop_Id { get; }
+        public IDataConverterProperty<string> Prop_FirstName { get; }
+        public IDataConverterProperty<string> Prop_MiddleName { get; }
+        public IDataConverterProperty<string> Prop_LastName { get; }
+        public IDataConverterProperty<string> Prop_NameExtension { get; }
+        public IDataConverterProperty<string> Prop_MiddleInitials { get; }
+        public IDataConverterProperty<DateTime?> Prop_BirthDate { get; }
+        public IDataConverterProperty<IGender> Prop_Gender { get; }
+        public IDataConverterProperty<bool> Prop_Deceased { get; }
 
         private IPerson GetData(IGender gender, SqlDataReader reader)
         {
             return new Person()
             {
-                Id = reader.GetInt64("Id"),
-                FirstName = reader.GetString("FirstName"),
-                MiddleName = reader.GetString("MiddleName"),
-                LastName = reader.GetString("LastName"),
-                NameExtension = reader.GetString("NameExtension"),
+                Id = Prop_Id.TryGetValue(reader.GetInt64, FIELD_ID),
+                FirstName = Prop_FirstName.TryGetValue(reader.GetString, FIELD_FIRST_NAME),
+                MiddleName = Prop_MiddleName.TryGetValue(reader.GetString, FIELD_MIDDLE_NAME),
+                LastName = Prop_LastName.TryGetValue(reader.GetString, FIELD_LAST_NAME),
+                NameExtension = Prop_NameExtension.TryGetValue(reader.GetString, FIELD_NAME_EXTENSION),
                 Gender = gender,
-                BirthDate = reader.GetNullableDateTime("BirthDate"),
-                Deceased = reader.GetBoolean("Deceased")
+                BirthDate = Prop_BirthDate.TryGetValue(reader.GetNullableDateTime, FIELD_BIRTH_DATE),
+                Deceased = Prop_Deceased.TryGetValue(reader.GetBoolean, FIELD_DECEASED)
             };
         }
 
         private IPerson GetData(SqlDataReader reader)
         {
-            var genderResult = r_GenderManager.GetById(reader.GetInt16("GenderId"));
-
-            return GetData(genderResult.Data, reader);
+            var gender = Prop_Gender.TryGetValueFromProcess(r_GenderManager.GetById, reader.GetInt16(FIELD_GENDER_ID)) ;
+            return GetData(gender, reader);
         }
 
         private async Task<IPerson> GetDataAsync(SqlDataReader reader)
         {
-            var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"));
-
-            return GetData(genderResult.Data, reader);
+            var gender = await Prop_Gender.TryGetValueFromProcessAsync(r_GenderManager.GetByIdAsync, reader.GetInt16(FIELD_GENDER_ID));
+            return GetData(gender, reader);
         }
 
         private async Task<IPerson> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
-            var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"), cancellationToken);
-
-            return GetData(genderResult.Data, reader);
+            var gender = await Prop_Gender.TryGetValueFromProcessAsync(r_GenderManager.GetByIdAsync, reader.GetInt16(FIELD_GENDER_ID), cancellationToken);
+            return GetData(gender, reader);
         }
 
         public IProcessResult<IPerson> FromReader(SqlDataReader reader)

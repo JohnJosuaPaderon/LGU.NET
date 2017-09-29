@@ -1,5 +1,6 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Entities.Core;
+using LGU.Extensions;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,24 @@ namespace LGU.EntityConverters.Core
 {
     public sealed class GenderConverter : IGenderConverter<SqlDataReader>
     {
+        private const string FIELD_ID = "Id";
+        private const string FIELD_DESCRIPTION = "Description";
+
+        public GenderConverter()
+        {
+            Prop_Id = new DataConverterProperty<short>();
+            Prop_Description = new DataConverterProperty<string>();
+        }
+
+        public IDataConverterProperty<short> Prop_Id { get; }
+        public IDataConverterProperty<string> Prop_Description { get; }
+
         private IGender GetData(SqlDataReader reader)
         {
             return new Gender()
             {
-                Id = reader.GetInt16("Id"),
-                Description = reader.GetString("Description")
+                Id = Prop_Id.TryGetValue(reader.GetInt16, FIELD_ID),
+                Description = Prop_Description.TryGetValue(reader.GetString, FIELD_DESCRIPTION)
             };
         }
 
