@@ -45,6 +45,14 @@ namespace LGU.Data.Rdbms
             }
         }
 
+        public async Task<IProcessResult> ExecuteNonQueryAsync(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, SqlConnection connection, SqlTransaction transaction)
+        {
+            using (var command = queryInfo.CreateCommand(connection, transaction))
+            {
+                return queryInfo.GetProcessResult(command, await command.ExecuteNonQueryAsync());
+            }
+        }
+
         public async Task<IProcessResult<T>> ExecuteNonQueryAsync<T>(IDbQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
         {
             try
@@ -75,6 +83,14 @@ namespace LGU.Data.Rdbms
             catch (Exception ex)
             {
                 return new ProcessResult<T>(ex);
+            }
+        }
+
+        public async Task<IProcessResult<T>> ExecuteNonQueryAsync<T>(IDbQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, SqlConnection connection, SqlTransaction transaction)
+        {
+            using (var command = queryInfo.CreateCommand(connection, transaction))
+            {
+                return queryInfo.GetProcessResult(queryInfo.Data, command, await command.ExecuteNonQueryAsync());
             }
         }
 

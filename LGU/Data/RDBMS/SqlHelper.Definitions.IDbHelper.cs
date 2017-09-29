@@ -56,6 +56,14 @@ namespace LGU.Data.Rdbms
             }
         }
 
+        public IProcessResult ExecuteNonQuery(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, SqlConnection connection, SqlTransaction transaction)
+        {
+            using (var command = queryInfo.CreateCommand(connection, transaction))
+            {
+                return queryInfo.GetProcessResult(command, command.ExecuteNonQuery());
+            }
+        }
+
         public IProcessResult<T> ExecuteNonQuery<T>(IDbQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo)
         {
             try
@@ -94,6 +102,14 @@ namespace LGU.Data.Rdbms
             catch (Exception ex)
             {
                 return new ProcessResult<T>(ex);
+            }
+        }
+
+        public IProcessResult<T> ExecuteNonQuery<T>(IDbQueryInfo<T, SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, SqlConnection connection, SqlTransaction transaction)
+        {
+            using (var command = queryInfo.CreateCommand(connection, transaction))
+            {
+                return queryInfo.GetProcessResult(queryInfo.Data, command, command.ExecuteNonQuery());
             }
         }
 
