@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class ModuleManager : ManagerBase<IModule, short>, IModuleManager
+    public sealed class ModuleManager : EntityManagerBase<IModule, short>, IModuleManager
     {
         private readonly IGetModuleById r_GetModuleById;
         private readonly IGetModuleList r_GetModuleList;

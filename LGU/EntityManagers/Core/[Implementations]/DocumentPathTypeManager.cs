@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class DocumentPathTypeManager : ManagerBase<IDocumentPathType, short>, IDocumentPathTypeManager
+    public sealed class DocumentPathTypeManager : EntityManagerBase<IDocumentPathType, short>, IDocumentPathTypeManager
     {
         private readonly IGetDocumentPathTypeById r_GetDocumentPathTypeById;
         private readonly IGetDocumentPathTypeList r_GetDocumentPathTypeList;

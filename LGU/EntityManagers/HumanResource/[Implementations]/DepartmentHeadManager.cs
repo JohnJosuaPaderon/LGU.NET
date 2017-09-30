@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class DepartmentHeadManager : ManagerBase<IDepartmentHead, long>, IDepartmentHeadManager
+    public sealed class DepartmentHeadManager : EntityManagerBase<IDepartmentHead, long>, IDepartmentHeadManager
     {
         private readonly IDeleteDepartmentHead r_Delete;
         private readonly IGetDepartmentHeadById r_GetById;

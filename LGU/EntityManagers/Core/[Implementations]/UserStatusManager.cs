@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class UserStatusManager : ManagerBase<IUserStatus, short>, IUserStatusManager
+    public sealed class UserStatusManager : EntityManagerBase<IUserStatus, short>, IUserStatusManager
     {
         private readonly IGetUserStatusById r_GetUserStatusById;
         private readonly IGetUserStatusList r_GetUserStatusList;

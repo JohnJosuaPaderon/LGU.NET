@@ -23,6 +23,7 @@ namespace LGU.EntityProcesses.HumanResource
             .AddOutputParameter("@_Id", DbType.Int32)
             .AddInputParameter("@_WorkTimeStart", WorkTimeSchedule.WorkTimeStart)
             .AddInputParameter("@_WorkTimeEnd", WorkTimeSchedule.WorkTImeEnd)
+            .AddInputParameter("@_BreakTime", WorkTimeSchedule.BreakTime?.Ticks)
             .AddLogByParameter();
 
         private IProcessResult<IWorkTimeSchedule> GetProcessResult(IWorkTimeSchedule data, SqlCommand command, int affectedRows)
@@ -40,17 +41,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IProcessResult<IWorkTimeSchedule> Execute()
         {
-            return r_SqlHelper.ExecuteNonQuery(QueryInfo);
+            return _SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
         public Task<IProcessResult<IWorkTimeSchedule>> ExecuteAsync()
         {
-            return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
+            return _SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
         public Task<IProcessResult<IWorkTimeSchedule>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
+            return _SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }
     }
 }

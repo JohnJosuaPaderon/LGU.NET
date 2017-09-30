@@ -19,6 +19,7 @@ namespace LGU.ViewModels.HumanResource
             MenuItems.Add(new MenuItem { HeaderText = "Locator", Icon = PackIconKind.AccountLocation, ViewName = nameof(LocatorView) });
             MenuItems.Add(new MenuItem { HeaderText = "User Sign-up", Icon = PackIconKind.AccountPlus, ViewName = nameof(UserSignUpView) });
             MenuItems.Add(new MenuItem { HeaderText = "Salary Grades", Icon = PackIconKind.ChartAreaspline, ViewName = nameof(SalaryGradeManagementView) });
+            MenuItems.Add(new MenuItem { HeaderText = "Payroll", Icon = PackIconKind.AccountMultiple, ViewName = nameof(PayrollStartupView) });
 
             r_ChangeHeaderEvent.Subscribe(header => Header = header);
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class UserTypeManager : ManagerBase<IUserType, short>, IUserTypeManager
+    public sealed class UserTypeManager : EntityManagerBase<IUserType, short>, IUserTypeManager
     {
         private readonly IGetUserTypeById r_GetUserTypeById;
         private readonly IGetUserTypeList r_GetUserTypeList;

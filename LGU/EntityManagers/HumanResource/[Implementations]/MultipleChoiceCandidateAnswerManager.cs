@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class MultipleChoiceCandidateAnswerManager : ManagerBase<IMultipleChoiceCandidateAnswer, long>, IMultipleChoiceCandidateAnswerManager
+    public sealed class MultipleChoiceCandidateAnswerManager : EntityManagerBase<IMultipleChoiceCandidateAnswer, long>, IMultipleChoiceCandidateAnswerManager
     {
         private readonly IDeleteMultipleChoiceCandidateAnswer r_DeleteMultipleChoiceCandidateAnswer;
         private readonly IGetMultipleChoiceCandidateAnswerById r_GetMultipleChoiceCandidateAnswerById;

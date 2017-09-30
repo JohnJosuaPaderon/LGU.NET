@@ -1,7 +1,8 @@
 ﻿namespace LGU.Entities.HumanResource
 {
-    public interface IPayrollAddition : IEntity<int>
+    public interface IPayrollCutOff : IEntity<short>
     {
+        int Count { get; set; }
         string Description { get; set; }
     }
 }

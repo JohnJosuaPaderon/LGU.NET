@@ -171,6 +171,7 @@
     <Compile Include="Models\HumanResource\EmployeeFingerPrintSetModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeModel.cs" />
     <Compile Include="Models\HumanResource\FingerPrintModel.cs" />
+    <Compile Include="Models\HumanResource\PayrollModel.cs" />
     <Compile Include="Models\HumanResource\PdsAddressModel.cs" />
     <Compile Include="Models\HumanResource\LocatorLeaveTypeModel.cs" />
     <Compile Include="Models\HumanResource\LocatorModel.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="ViewModels\HumanResource\LogType.cs" />
     <Compile Include="ViewModels\HumanResource\MainKioskViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\MainViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\PayrollStartupViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PersonalDataSheetViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PreviewDepartmentViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PreviewEmployeeViewModel.cs" />
@@ -287,6 +289,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\PayrollStartupView.xaml.cs">
+      <DependentUpon>PayrollStartupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\PersonalDataSheetView.xaml.cs">
       <DependentUpon>PersonalDataSheetView.xaml</DependentUpon>
@@ -482,6 +487,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\PayrollStartupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

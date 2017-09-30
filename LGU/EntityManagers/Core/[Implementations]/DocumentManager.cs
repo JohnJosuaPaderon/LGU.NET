@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class DocumentManager : ManagerBase<IDocument, long>, IDocumentManager
+    public sealed class DocumentManager : EntityManagerBase<IDocument, long>, IDocumentManager
     {
         private readonly IDeleteDocument r_DeleteDocument;
         private readonly IGetDocumentById r_GetDocumentById;

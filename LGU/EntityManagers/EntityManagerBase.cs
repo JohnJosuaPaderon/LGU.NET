@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace LGU.EntityManagers
 {
-    public abstract class ManagerBase<T, TIdentifier>
+    public abstract class EntityManagerBase<T, TIdentifier>
         where T : IEntity<TIdentifier>
     {
         protected static EntityCollection<T, TIdentifier> StaticSource { get; } = new EntityCollection<T, TIdentifier>();

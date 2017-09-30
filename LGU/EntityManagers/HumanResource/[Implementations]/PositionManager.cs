@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class PositionManager : ManagerBase<IPosition, int>, IPositionManager
+    public sealed class PositionManager : EntityManagerBase<IPosition, int>, IPositionManager
     {
         private readonly IDeletePosition r_DeletePosition;
         private readonly IGetPositionById r_GetPositionById;

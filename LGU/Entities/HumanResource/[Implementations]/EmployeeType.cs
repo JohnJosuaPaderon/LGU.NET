@@ -4,6 +4,7 @@
     {
         public static EmployeeType Regular { get; }
         public static EmployeeType Contractual { get; }
+        public static EmployeeType Casual { get; }
 
         public string Description { get; set; }
 

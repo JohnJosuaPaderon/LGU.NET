@@ -11,5 +11,6 @@ namespace LGU.Entities.HumanResource
         IDepartmentHead DepartmentHead { get; set; }
         IWorkTimeSchedule WorkTimeSchedule { get; set; }
         decimal MonthlySalary { get; set; }
+        IPayrollType PayrollType { get; set; }
     }
 }

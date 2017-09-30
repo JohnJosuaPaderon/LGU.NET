@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class UserManager : ManagerBase<IUser, long>, IUserManager
+    public sealed class UserManager : EntityManagerBase<IUser, long>, IUserManager
     {
         private readonly IDeleteUser r_DeleteUser;
         private readonly IGetUserById r_GetUserById;

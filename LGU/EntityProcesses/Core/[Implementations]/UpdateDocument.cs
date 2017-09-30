@@ -41,17 +41,17 @@ namespace LGU.EntityProcesses.Core
 
         public IProcessResult<IDocument> Execute()
         {
-            return r_SqlHelper.ExecuteNonQuery(QueryInfo);
+            return _SqlHelper.ExecuteNonQuery(QueryInfo);
         }
 
         public Task<IProcessResult<IDocument>> ExecuteAsync()
         {
-            return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo);
+            return _SqlHelper.ExecuteNonQueryAsync(QueryInfo);
         }
 
         public Task<IProcessResult<IDocument>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return r_SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
+            return _SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }
     }
 }

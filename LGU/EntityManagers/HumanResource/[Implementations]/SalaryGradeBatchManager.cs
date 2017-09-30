@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class SalaryGradeBatchManager : ManagerBase<ISalaryGradeBatch, int>, ISalaryGradeBatchManager
+    public sealed class SalaryGradeBatchManager : EntityManagerBase<ISalaryGradeBatch, int>, ISalaryGradeBatchManager
     {
         private readonly IDeleteSalaryGradeBatch r_Delete;
         private readonly IGetSalaryGradeBatchById r_GetById;

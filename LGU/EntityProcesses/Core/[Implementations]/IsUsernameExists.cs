@@ -25,17 +25,17 @@ namespace LGU.EntityProcesses.Core
 
         public IProcessResult<bool> Execute()
         {
-            return r_SqlHelper.ExecuteScalar(QueryInfo, DbValueConverter.ToBoolean);
+            return _SqlHelper.ExecuteScalar(QueryInfo, DbValueConverter.ToBoolean);
         }
 
         public Task<IProcessResult<bool>> ExecuteAsync()
         {
-            return r_SqlHelper.ExecuteScalarAsync(QueryInfo, DbValueConverter.ToBoolean);
+            return _SqlHelper.ExecuteScalarAsync(QueryInfo, DbValueConverter.ToBoolean);
         }
 
         public Task<IProcessResult<bool>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return r_SqlHelper.ExecuteScalarAsync(QueryInfo, DbValueConverter.ToBoolean, cancellationToken);
+            return _SqlHelper.ExecuteScalarAsync(QueryInfo, DbValueConverter.ToBoolean, cancellationToken);
         }
     }
 }

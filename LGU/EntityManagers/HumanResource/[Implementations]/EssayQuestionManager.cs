@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class EssayQuestionManager : ManagerBase<IEssayQuestion, long>, IEssayQuestionManager
+    public sealed class EssayQuestionManager : EntityManagerBase<IEssayQuestion, long>, IEssayQuestionManager
     {
         private readonly IDeleteEssayQuestion r_DeleteEssayQuestion;
         private readonly IGetEssayQuestionById r_GetEssayQuestionById;

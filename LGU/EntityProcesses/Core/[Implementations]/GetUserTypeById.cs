@@ -23,17 +23,17 @@ namespace LGU.EntityProcesses.Core
 
         public IProcessResult<IUserType> Execute()
         {
-            return r_SqlHelper.ExecuteReader(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReader(QueryInfo, r_Converter);
         }
 
         public Task<IProcessResult<IUserType>> ExecuteAsync()
         {
-            return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
         }
 
         public Task<IProcessResult<IUserType>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return r_SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
         }
     }
 }

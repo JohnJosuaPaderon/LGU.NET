@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class ApplicationDocumentManager : ManagerBase<IApplicationDocument, long>, IApplicationDocumentManager
+    public sealed class ApplicationDocumentManager : EntityManagerBase<IApplicationDocument, long>, IApplicationDocumentManager
     {
         private readonly IDeleteApplicationDocument r_Delete;
         private readonly IGetApplicationDocumentById r_GetById;

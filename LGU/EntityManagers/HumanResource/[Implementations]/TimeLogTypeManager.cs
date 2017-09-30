@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class TimeLogTypeManager : ManagerBase<ITimeLogType, short>, ITimeLogTypeManager
+    public sealed class TimeLogTypeManager : EntityManagerBase<ITimeLogType, short>, ITimeLogTypeManager
     {
         private readonly IGetTimeLogTypeById r_GetTimeLogTypeById;
         private readonly IGetTimeLogTypeList r_GetTimeLogTypeList;

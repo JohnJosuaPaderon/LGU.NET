@@ -7,7 +7,8 @@ namespace LGU.Entities.HumanResource
         public string Description { get; set; }
         public DateTime WorkTimeStart { get; set; }
         public DateTime WorkTImeEnd { get; set; }
-        
+        public TimeSpan? BreakTime { get; set; }
+
         public override string ToString()
         {
             return Description;

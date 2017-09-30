@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="LGU.Views.HumanResource.PayrollStartupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <materialDesign:DialogHost>
+        <materialDesign:Card HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="300" MinWidth="400">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Setup Payroll" Style="{DynamicResource CardTitleTextBlock}"/>
+                <Grid Grid.Row="1" Margin="{DynamicResource DefaultMargin}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ComboBox Grid.Row="0" ItemsSource="{Binding PayrollTypes}" SelectedItem="{Binding Payroll.Type}" materialDesign:HintAssist.Hint="Payroll Type"/>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" Text="{Binding Payroll.RangeDate.Begin}" materialDesign:HintAssist.Hint="From"/>
+                        <TextBox Grid.Column="2" Text="{Binding Payroll.RangeDate.End}" materialDesign:HintAssist.Hint="To"/>
+                        <Button Grid.Column="4" Content="..." Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                            <Button.CommandParameter>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                            </Button.CommandParameter>
+                        </Button>
+                    </Grid>
+                </Grid>
+                <materialDesign:ColorZone Grid.Row="2" Style="{DynamicResource FooterColorZone}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="1" Style="{DynamicResource FooterActionButton}" Content="Create Payroll"/>
+                    </Grid>
+                </materialDesign:ColorZone>
+            </Grid>
+        </materialDesign:Card>
+    </materialDesign:DialogHost>
+</UserControl>

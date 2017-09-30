@@ -18,17 +18,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IEnumerableProcessResult<IEmploymentStatus> Execute()
         {
-            return r_SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmploymentStatus>> ExecuteAsync()
         {
-            return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmploymentStatus>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return r_SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
         }
     }
 }

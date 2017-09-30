@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class ApplicationStatusManager : ManagerBase<IApplicationStatus, short>, IApplicationStatusManager
+    public sealed class ApplicationStatusManager : EntityManagerBase<IApplicationStatus, short>, IApplicationStatusManager
     {
         private readonly IGetApplicationStatusById r_GetById;
         private readonly IGetApplicationStatusList r_GetList;

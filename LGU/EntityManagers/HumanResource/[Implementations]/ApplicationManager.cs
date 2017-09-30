@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class ApplicationManager : ManagerBase<IApplication, long>, IApplicationManager
+    public sealed class ApplicationManager : EntityManagerBase<IApplication, long>, IApplicationManager
     {
         private readonly IDeleteApplication r_Delete;
         private readonly IGetApplicationById r_GetById;

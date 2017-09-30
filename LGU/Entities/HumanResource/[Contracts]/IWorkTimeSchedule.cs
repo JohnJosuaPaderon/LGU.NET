@@ -7,5 +7,6 @@ namespace LGU.Entities.HumanResource
         string Description { get; set; }
         DateTime WorkTimeStart { get; set; }
         DateTime WorkTImeEnd { get; set; }
+        TimeSpan? BreakTime { get; set; }
     }
 }

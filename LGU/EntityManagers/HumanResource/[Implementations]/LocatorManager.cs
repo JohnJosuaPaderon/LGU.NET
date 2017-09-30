@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class LocatorManager : ManagerBase<ILocator, long>, ILocatorManager
+    public sealed class LocatorManager : EntityManagerBase<ILocator, long>, ILocatorManager
     {
         private readonly IDeleteLocator r_Delete;
         private readonly IGetLocatorById r_GetById;

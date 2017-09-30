@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class EmployeeTypeManager : ManagerBase<IEmployeeType, short>, IEmployeeTypeManager
+    public sealed class EmployeeTypeManager : EntityManagerBase<IEmployeeType, short>, IEmployeeTypeManager
     {
         private readonly IGetEmployeeTypeById r_GetEmployeeTypeById;
         private readonly IGetEmployeeTypeList r_GetEmployeeTypeList;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class PersonManager : ManagerBase<IPerson, long>, IPersonManager
+    public sealed class PersonManager : EntityManagerBase<IPerson, long>, IPersonManager
     {
         private readonly IDeletePerson r_DeletePerson;
         private readonly IGetPersonById r_GetPersonById;

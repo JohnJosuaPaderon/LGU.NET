@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class TimeLogManager : ManagerBase<ITimeLog, long>, ITimeLogManager
+    public sealed class TimeLogManager : EntityManagerBase<ITimeLog, long>, ITimeLogManager
     {
         private readonly IDeleteTimeLog r_Delete;
         private readonly IGetTimeLogById r_GetById;

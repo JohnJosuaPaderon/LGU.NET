@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.Core
 {
-    public sealed class GenderManager : ManagerBase<IGender, short>, IGenderManager
+    public sealed class GenderManager : EntityManagerBase<IGender, short>, IGenderManager
     {
 
         private readonly IGetGenderById r_GetGenderById;

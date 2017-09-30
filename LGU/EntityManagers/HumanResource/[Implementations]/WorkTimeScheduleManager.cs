@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class WorkTimeScheduleManager : ManagerBase<IWorkTimeSchedule, int>, IWorkTimeScheduleManager
+    public sealed class WorkTimeScheduleManager : EntityManagerBase<IWorkTimeSchedule, int>, IWorkTimeScheduleManager
     {
         private readonly IDeleteWorkTimeSchedule r_Delete;
         private readonly IGetWorkTimeScheduleById r_GetById;

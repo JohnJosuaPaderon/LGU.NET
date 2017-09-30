@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class EmployeeManager : ManagerBase<IEmployee, long>, IEmployeeManager
+    public sealed class EmployeeManager : EntityManagerBase<IEmployee, long>, IEmployeeManager
     {
         private readonly IDeleteEmployee r_Delete;
         private readonly IGetEmployeeById r_GetById;

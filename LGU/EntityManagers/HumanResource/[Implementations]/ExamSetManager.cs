@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class ExamSetManager : ManagerBase<IExamSet, int>, IExamSetManager
+    public sealed class ExamSetManager : EntityManagerBase<IExamSet, int>, IExamSetManager
     {
         private readonly IDeleteExamSet r_DeleteExamSet;
         private readonly IGetExamSetById r_GetExamSetById;

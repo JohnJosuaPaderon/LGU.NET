@@ -93,6 +93,18 @@
                     </Grid>
                 </Button>
             </materialDesign:TransitioningContent>
+            <materialDesign:TransitioningContent OpeningEffectsOffset="{materialDesign:IndexedItemOffsetMultiplier 0:0:0.1}">
+                <Button Command="{Binding NavigateCommand}" CommandParameter="PayrollStartupView" ToolTip="Generate Payroll.">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:PackIcon Kind="AccountMultiple" Height="135" Width="135" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Text="Payroll"/>
+                    </Grid>
+                </Button>
+            </materialDesign:TransitioningContent>
         </ItemsControl>
     </Grid>
 </UserControl>

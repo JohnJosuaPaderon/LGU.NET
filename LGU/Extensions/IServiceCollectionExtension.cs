@@ -47,12 +47,12 @@ namespace LGU.Extensions
             instance.UseSqlServer_ApplicantStatus();
             instance.UseSqlServer_Application();
             instance.UseSqlServer_ApplicationDocument();
+            instance.UseSqlServer_ContractualPayrollCluster();
             instance.UseSqlServer_Department();
             instance.UseSqlServer_DepartmentHead();
             instance.UseSqlServer_Employee();
             instance.UseSqlServer_EmployeeSalaryGradeStep();
             instance.UseSqlServer_EmployeeType();
-            instance.UseSqlServer_EmployeeWorkTimeSchedule();
             instance.UseSqlServer_EmploymentStatus();
             instance.UseSqlServer_EssayQuestion();
             instance.UseSqlServer_Exam();
@@ -62,6 +62,9 @@ namespace LGU.Extensions
             instance.UseSqlServer_LocatorLeaveType();
             instance.UseSqlServer_MultipleChoiceCandidateAnswer();
             instance.UseSqlServer_MultipleChoiceQuestion();
+            instance.UseSqlServer_Payroll();
+            instance.UseSqlServer_PayrollCutOff();
+            instance.UseSqlServer_PayrollType();
             instance.UseSqlServer_Position();
             instance.UseSqlServer_SalaryGrade();
             instance.UseSqlServer_SalaryGradeBatch();
@@ -214,6 +217,11 @@ namespace LGU.Extensions
             return instance;
         }
 
+        public static IServiceCollection UseSqlServer_ContractualPayrollCluster(this IServiceCollection instance)
+        {
+            return instance;
+        }
+
         public static IServiceCollection UseSqlServer_Department(this IServiceCollection instance)
         {
             instance.AddSingleton<IDepartmentConverter<SqlDataReader>, DepartmentConverter>();
@@ -277,18 +285,6 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetEmployeeTypeById, GetEmployeeTypeById>();
             instance.AddSingleton<IGetEmployeeTypeList, GetEmployeeTypeList>();
             instance.AddSingleton<IEmployeeTypeManager, EmployeeTypeManager>();
-
-            return instance;
-        }
-
-        public static IServiceCollection UseSqlServer_EmployeeWorkTimeSchedule(this IServiceCollection instance)
-        {
-            instance.AddSingleton<IEmployeeWorkTimeScheduleConverter<SqlDataReader>, EmployeeWorkTimeScheduleConverter>();
-            instance.AddSingleton<IDeleteEmployeeWorkTimeSchedule, DeleteEmployeeWorkTimeSchedule>();
-            instance.AddSingleton<IGetEmployeeWorkTimeScheduleList, GetEmployeeWorkTimeScheduleList>();
-            instance.AddSingleton<IInsertEmployeeWorkTimeSchedule, InsertEmployeeWorkTimeSchedule>();
-            instance.AddSingleton<IUpdateEmployeeWorkTimeSchedule, UpdateEmployeeWorkTimeSchedule>();
-            instance.AddSingleton<IEmployeeWorkTimeScheduleManager, EmployeeWorkTimeScheduleManager>();
 
             return instance;
         }
@@ -411,6 +407,35 @@ namespace LGU.Extensions
             instance.AddSingleton<IInsertMultipleChoiceQuestion, InsertMultipleChoiceQuestion>();
             instance.AddSingleton<IUpdateMultipleChoiceQuestion, UpdateMultipleChoiceQuestion>();
             instance.AddSingleton<IMultipleChoiceQuestionManager, MultipleChoiceQuestionManager>();
+
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_Payroll(this IServiceCollection instance)
+        {
+            instance.AddSingleton<IPayrollConverter<SqlDataReader>, PayrollConverter>();
+            instance.AddSingleton<IInsertPayroll<SqlConnection, SqlTransaction>, InsertPayroll>();
+            instance.AddSingleton<IPayrollManager<SqlConnection, SqlTransaction>, PayrollManager>();
+
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_PayrollCutOff(this IServiceCollection instance)
+        {
+            instance.AddSingleton<IPayrollCutOffConverter<SqlDataReader>, PayrollCutOffConverter>();
+            instance.AddSingleton<IGetPayrollCutOffById, GetPayrollCutOffById>();
+            instance.AddSingleton<IGetPayrollCutOffList, GetPayrollCutOffList>();
+            instance.AddSingleton<IPayrollCutOffManager, PayrollCutOffManager>();
+
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_PayrollType(this IServiceCollection instance)
+        {
+            instance.AddSingleton<IPayrollTypeConverter<SqlDataReader>, PayrollTypeConverter>();
+            instance.AddSingleton<IGetPayrollTypeById, GetPayrollTypeById>();
+            instance.AddSingleton<IGetPayrollTypeList, GetPayrollTypeList>();
+            instance.AddSingleton<IPayrollTypeManager, PayrollTypeManager>();
 
             return instance;
         }

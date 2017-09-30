@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class ExamManager : ManagerBase<IExam, long>, IExamManager
+    public sealed class ExamManager : EntityManagerBase<IExam, long>, IExamManager
     {
         private readonly IDeleteExam r_DeleteExam;
         private readonly IGetExamById r_GetExamById;

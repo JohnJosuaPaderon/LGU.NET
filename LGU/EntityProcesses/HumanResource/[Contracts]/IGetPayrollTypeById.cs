@@ -3,7 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetEmployeeWorkTimeScheduleList : IEnumerableProcess<IEmployeeWorkTimeSchedule>
+    public interface IGetPayrollTypeById : IProcess<IPayrollType>
     {
+        short PayrollTypeId { get; set; }
     }
 }

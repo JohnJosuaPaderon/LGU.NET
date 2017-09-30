@@ -18,7 +18,8 @@ namespace LGU.EntityConverters.HumanResource
                 Id = reader.GetInt32("Id"),
                 Description = reader.GetString("Description"),
                 WorkTimeStart = reader.GetDateTime("WorkTimeStart"),
-                WorkTImeEnd = reader.GetDateTime("WorkTimeEnd")
+                WorkTImeEnd = reader.GetDateTime("WorkTimeEnd"),
+                BreakTime = reader.GetNullableTimeSpan("BreakTime")
             };
         }
 

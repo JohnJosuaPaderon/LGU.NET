@@ -2,10 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Variables.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="_BaseTextBlock" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource DefaultFontFamily}"/>
+    </Style>
+
+    <Style x:Key="CardTitleTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignHeadlineTextBlock}">
+        <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
     </Style>
 
     <Style x:Key="ExtraLargeHeaderTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource _BaseTextBlock}">

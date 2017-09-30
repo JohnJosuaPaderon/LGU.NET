@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class LocatorLeaveTypeManager : ManagerBase<ILocatorLeaveType, short>, ILocatorLeaveTypeManager
+    public sealed class LocatorLeaveTypeManager : EntityManagerBase<ILocatorLeaveType, short>, ILocatorLeaveTypeManager
     {
         private readonly IGetLocatorLeaveTypeById r_GetById;
         private readonly IGetLocatorLeaveTypeList r_GetList;
