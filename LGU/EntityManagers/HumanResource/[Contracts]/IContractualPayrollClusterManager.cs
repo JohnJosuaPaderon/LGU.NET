@@ -7,8 +7,8 @@ namespace LGU.EntityManagers.HumanResource
 {
     public interface IContractualPayrollClusterManager
     {
-        IProcessResult<IContractualPayrollCluster> InsertPayroll(IContractualPayrollCluster payrollCluster);
-        Task<IProcessResult<IContractualPayrollCluster>> InsertPayrollAsync(IContractualPayrollCluster payrollCluster);
-        Task<IProcessResult<IContractualPayrollCluster>> InsertPayrollAsync(IContractualPayrollCluster payrollCluster, CancellationToken cancellationToken);
+        IProcessResult<IContractualPayrollCluster> Insert(IContractualPayrollCluster payrollCluster);
+        Task<IProcessResult<IContractualPayrollCluster>> InsertAsync(IContractualPayrollCluster payrollCluster);
+        Task<IProcessResult<IContractualPayrollCluster>> InsertAsync(IContractualPayrollCluster payrollCluster, CancellationToken cancellationToken);
     }
 }
