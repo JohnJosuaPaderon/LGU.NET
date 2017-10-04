@@ -21,8 +21,10 @@ namespace LGU.Extensions
         {
             serviceCollection.AddTransient<IExportLocator, ExportLocator>();
             serviceCollection.AddTransient<IExportTimeLog, ExportTimeLog>();
+            serviceCollection.AddTransient<IExportActualTimeLog, ExportActualTimeLog>();
             serviceCollection.AddSingleton<ILocatorReportInfoProvider, LocatorReportInfoProvider>();
             serviceCollection.AddSingleton<ITimeLogReportInfoProvider, TimeLogReportInfoProvider>();
+            serviceCollection.AddSingleton<IActualTimeLogReportInfoProvider, ActualTimeLogReportInfoProvider>();
             serviceCollection.AddSingleton<IHumanResourceReport, HumanResourceReport>();
 
             return serviceCollection;
