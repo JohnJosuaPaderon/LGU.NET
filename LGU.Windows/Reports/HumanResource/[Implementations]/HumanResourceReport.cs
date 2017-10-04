@@ -7,13 +7,36 @@ namespace LGU.Reports.HumanResource
 {
     public sealed class HumanResourceReport : IHumanResourceReport
     {
+        public void ExportActualTimeLog(IEmployee employee, IEnumerable<ITimeLog> timeLogs, ValueRange<DateTime> cutOff, IExportEventHandler eventHandler)
+        {
+            using (var export = ApplicationDomain.GetService<IExportActualTimeLog>())
+            {
+                export.EventHandler = eventHandler;
+                export.TimeLogs = timeLogs;
+                export.CutOff = cutOff;
+                export.Employee = employee;
+                export.Export();
+            }
+        }
+
+        public async Task ExportActualTimeLogAsync(IEmployee employee, IEnumerable<ITimeLog> timeLogs, ValueRange<DateTime> cutOff, IExportEventHandler eventHandler)
+        {
+            using (var export = ApplicationDomain.GetService<IExportActualTimeLog>())
+            {
+                export.EventHandler = eventHandler;
+                export.TimeLogs = timeLogs;
+                export.CutOff = cutOff;
+                export.Employee = employee;
+                await export.ExportAsync();
+            }
+        }
+
         public void ExportLocator(ILocator locator, IExportEventHandler eventHandler)
         {
             using (var export = ApplicationDomain.GetService<IExportLocator>())
             {
                 export.EventHandler = eventHandler;
                 export.Locator = locator;
-                export.PrintAfterSave = true;
                 export.Export();
             }
         }
@@ -24,7 +47,6 @@ namespace LGU.Reports.HumanResource
             {
                 export.EventHandler = eventHandler;
                 export.Locator = locator;
-                export.PrintAfterSave = true;
                 await export.ExportAsync();
             }
         }

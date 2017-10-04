@@ -16,16 +16,15 @@ namespace LGU.Reports.HumanResource
     {
         public ExportTimeLog(ITimeLogReportInfoProvider infoProvider)
         {
-            r_InfoProvider = infoProvider;
+            _InfoProvider = infoProvider;
         }
 
-        private readonly ITimeLogReportInfoProvider r_InfoProvider;
+        private readonly ITimeLogReportInfoProvider _InfoProvider;
 
         public IEnumerable<ITimeLog> TimeLogs { get; set; }
         public ValueRange<DateTime> CutOff { get; set; }
         public TimeLogExportOption ExportOption { get; set; }
         public TimeLogFileSegregation FileSegregration { get; set; }
-        public bool PrintAfterSave { get; set; }
 
         private Dictionary<IDepartment, List<IEmployee>> Segregated;
         private StringBuilder FileMapBuilder;
@@ -37,14 +36,7 @@ namespace LGU.Reports.HumanResource
             Initialize();
 
             ExportDate = DateTime.Now;
-
-            if (r_InfoProvider.IncludeFileMap)
-            {
-                FileMapBuilder = new StringBuilder();
-                FileMapBuilder.AppendLine($"Cut-Off: {CutOff.ToFormattedString()}");
-                FileMapBuilder.AppendLine($"Export-Date: {ExportDate.ToString("MMM dd, yyyy hh:mm:ss tt")}");
-                FileMapBuilder.AppendLine();
-            }
+            WriteHeader();
 
             switch (FileSegregration)
             {
@@ -60,9 +52,20 @@ namespace LGU.Reports.HumanResource
             }
         }
 
+        private void WriteHeader()
+        {
+            if (_InfoProvider.IncludeFileMap)
+            {
+                FileMapBuilder = new StringBuilder();
+                FileMapBuilder.AppendLine($"Cut-Off: {CutOff.ToFormattedString()}");
+                FileMapBuilder.AppendLine($"Export-Date: {ExportDate.ToString("MMM dd, yyyy hh:mm:ss tt")}");
+                FileMapBuilder.AppendLine();
+            }
+        }
+
         private void SaveMap(string path)
         {
-            if (r_InfoProvider.IncludeFileMap)
+            if (_InfoProvider.IncludeFileMap)
             {
                 var endDate = DateTime.Now;
                 FileMapBuilder.AppendLine();
@@ -76,34 +79,34 @@ namespace LGU.Reports.HumanResource
 
         private void SetTimeLog(ITimeLog timeLog)
         {
-            var loginRowIndex = (r_InfoProvider.LogRowStart - 1) + timeLog.LoginDate?.Day ?? 1;
-            var logoutRowIndex = (r_InfoProvider.LogRowStart - 1) + timeLog.LogoutDate?.Day ?? 1;
-            var loginColumnIndex = timeLog.LoginDate?.Hour <= 12 ? r_InfoProvider.AmLoginColumn : r_InfoProvider.PmLoginColumn;
-            var logoutColumnIndex = timeLog.LogoutDate?.Hour <= 12 ? r_InfoProvider.AmLogoutColumn : r_InfoProvider.PmLogoutColumn;
+            var loginRowIndex = (_InfoProvider.LogRowStart - 1) + timeLog.LoginDate?.Day ?? 1;
+            var logoutRowIndex = (_InfoProvider.LogRowStart - 1) + timeLog.LogoutDate?.Day ?? 1;
+            var loginColumnIndex = timeLog.LoginDate?.Hour <= 12 ? _InfoProvider.AmLoginColumn : _InfoProvider.PmLoginColumn;
+            var logoutColumnIndex = timeLog.LogoutDate?.Hour <= 12 ? _InfoProvider.AmLogoutColumn : _InfoProvider.PmLogoutColumn;
 
-            Excel.Range amLoginRange = ActiveWorksheet.Cells[loginRowIndex, r_InfoProvider.AmLoginColumn];
-            Excel.Range amLogoutRange = ActiveWorksheet.Cells[logoutRowIndex, r_InfoProvider.AmLogoutColumn];
-            Excel.Range pmLoginRange = ActiveWorksheet.Cells[loginRowIndex, r_InfoProvider.PmLoginColumn];
-            Excel.Range pmLogoutRange = ActiveWorksheet.Cells[logoutRowIndex, r_InfoProvider.PmLogoutColumn];
+            Excel.Range amLoginRange = ActiveWorksheet.Cells[loginRowIndex, _InfoProvider.AmLoginColumn];
+            Excel.Range amLogoutRange = ActiveWorksheet.Cells[logoutRowIndex, _InfoProvider.AmLogoutColumn];
+            Excel.Range pmLoginRange = ActiveWorksheet.Cells[loginRowIndex, _InfoProvider.PmLoginColumn];
+            Excel.Range pmLogoutRange = ActiveWorksheet.Cells[logoutRowIndex, _InfoProvider.PmLogoutColumn];
 
             if (!(IsNullOrWhiteSpace(amLoginRange) && IsNullOrWhiteSpace(pmLoginRange)))
             {
-                loginColumnIndex = r_InfoProvider.OtLoginColumn;
+                loginColumnIndex = _InfoProvider.OtLoginColumn;
             }
 
             if (!(IsNullOrWhiteSpace(amLogoutRange) && IsNullOrWhiteSpace(pmLogoutRange)))
             {
-                logoutColumnIndex = r_InfoProvider.OtLogoutColumn;
+                logoutColumnIndex = _InfoProvider.OtLogoutColumn;
             }
 
-            SetCellValue(loginRowIndex, loginColumnIndex, timeLog.LoginDate?.ToString(r_InfoProvider.TimeLogFormat));
-            SetCellValue(logoutRowIndex, logoutColumnIndex, timeLog.LogoutDate?.ToString(r_InfoProvider.TimeLogFormat));
+            SetCellValue(loginRowIndex, loginColumnIndex, timeLog.LoginDate?.ToString(_InfoProvider.TimeLogFormat));
+            SetCellValue(logoutRowIndex, logoutColumnIndex, timeLog.LogoutDate?.ToString(_InfoProvider.TimeLogFormat));
         }
 
         private void WriteCellValues(IEmployee employee, IEnumerable<ITimeLog> timeLogs)
         {
-            SetCellValue(r_InfoProvider.EmployeeCell, employee.FullName);
-            SetCellValue(r_InfoProvider.CutOffCell, CutOff.ToFormattedString());
+            SetCellValue(_InfoProvider.EmployeeCell, employee.FullName);
+            SetCellValue(_InfoProvider.CutOffCell, CutOff.ToFormattedString());
 
             foreach (var timeLog in timeLogs)
             {
@@ -113,7 +116,7 @@ namespace LGU.Reports.HumanResource
 
         private void ExportOneFile()
         {
-            OpenTemplate(r_InfoProvider.Template);
+            OpenTemplate(_InfoProvider.Template);
 
             var departmentCounter = 1;
             var employeeCounter = 0;
@@ -132,7 +135,7 @@ namespace LGU.Reports.HumanResource
                         DuplicateTemplate(sheetName);
                         WriteCellValues(employee, timeLogs);
 
-                        if (r_InfoProvider.IncludeFileMap)
+                        if (_InfoProvider.IncludeFileMap)
                         {
                             FileMapBuilder.AppendLine($"{sheetName}\t: {employee.FullName}");
                         }
@@ -146,8 +149,8 @@ namespace LGU.Reports.HumanResource
 
             try
             {
-                var path = Path.Combine(r_InfoProvider.SaveDirectory, ExportDate.ToString(r_InfoProvider.PathFormat));
-                DirectoryResolver.Resolve(r_InfoProvider.SaveDirectory);
+                var path = Path.Combine(_InfoProvider.SaveDirectory, ExportDate.ToString(_InfoProvider.PathFormat));
+                DirectoryResolver.Resolve(_InfoProvider.SaveDirectory);
                 var excelFile = $"{path}.xlsx";
                 var mapFile = $"{path}.xlsx.txt";
                 TemplateWorksheet.Delete();
@@ -160,7 +163,7 @@ namespace LGU.Reports.HumanResource
                 EventHandler?.OnException(ex);
             }
 
-            if (r_InfoProvider.PrintAfterSave)
+            if (_InfoProvider.PrintAfterSave)
             {
                 try
                 {
@@ -178,16 +181,16 @@ namespace LGU.Reports.HumanResource
             var departmentCounter = 1;
             var employeeCounter = 0;
             var filePaths = new List<string>();
-            var directory = Path.Combine(r_InfoProvider.SaveDirectory, "Per Department", ExportDate.ToString(r_InfoProvider.PathFormat));
+            var directory = Path.Combine(_InfoProvider.SaveDirectory, "Per Department", ExportDate.ToString(_InfoProvider.PathFormat));
 
             foreach (var item in Segregated)
             {
-                if (r_InfoProvider.IncludeFileMap)
+                if (_InfoProvider.IncludeFileMap)
                 {
                     FileMapBuilder.AppendLine($"{departmentCounter}\t: {item.Key.Description}");
                 }
 
-                OpenTemplate(r_InfoProvider.Template);
+                OpenTemplate(_InfoProvider.Template);
                 employeeCounter = 1;
 
                 foreach (var employee in item.Value)
@@ -200,7 +203,7 @@ namespace LGU.Reports.HumanResource
                         DuplicateTemplate(sheetName);
                         WriteCellValues(employee, timeLogs);
 
-                        if (r_InfoProvider.IncludeFileMap)
+                        if (_InfoProvider.IncludeFileMap)
                         {
                             FileMapBuilder.AppendLine($"\t{sheetName}\t: {employee.FullName}");
                         }
@@ -229,7 +232,7 @@ namespace LGU.Reports.HumanResource
             EventHandler?.OnExported(filePaths.ToArray());
             SaveMap(Path.Combine(directory, "~map.txt"));
 
-            if (r_InfoProvider.PrintAfterSave)
+            if (_InfoProvider.PrintAfterSave)
             {
                 try
                 {
@@ -250,11 +253,11 @@ namespace LGU.Reports.HumanResource
             var departmentCounter = 1;
             var employeeCounter = 0;
             var filePaths = new List<string>();
-            var baseDirectory = Path.Combine(r_InfoProvider.SaveDirectory, "Per Employee", ExportDate.ToString(r_InfoProvider.PathFormat));
+            var baseDirectory = Path.Combine(_InfoProvider.SaveDirectory, "Per Employee", ExportDate.ToString(_InfoProvider.PathFormat));
 
             foreach (var item in Segregated)
             {
-                if (r_InfoProvider.IncludeFileMap)
+                if (_InfoProvider.IncludeFileMap)
                 {
                     FileMapBuilder.AppendLine($"{departmentCounter}\t: {item.Key.Description}");
                 }
@@ -263,7 +266,7 @@ namespace LGU.Reports.HumanResource
 
                 foreach (var employee in item.Value)
                 {
-                    OpenTemplate(r_InfoProvider.Template);
+                    OpenTemplate(_InfoProvider.Template);
 
                     var timeLogs = TimeLogs.Where(arg => arg.Employee == employee);
 
@@ -273,7 +276,7 @@ namespace LGU.Reports.HumanResource
                         DuplicateTemplate(sheetName);
                         WriteCellValues(employee, timeLogs);
 
-                        if (r_InfoProvider.IncludeFileMap)
+                        if (_InfoProvider.IncludeFileMap)
                         {
                             FileMapBuilder.AppendLine($"\t{employeeCounter}\t: {employee.FullName}");
                         }
@@ -305,7 +308,7 @@ namespace LGU.Reports.HumanResource
             EventHandler?.OnExported(filePaths.ToArray());
             SaveMap(Path.Combine(baseDirectory, "~map.txt"));
 
-            if (r_InfoProvider.PrintAfterSave)
+            if (_InfoProvider.PrintAfterSave)
             {
                 try
                 {
