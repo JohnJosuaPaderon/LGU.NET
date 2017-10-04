@@ -11,7 +11,7 @@
             get { return _Value; }
             set
             {
-                UseProvidedValue = false;
+                UseProvidedValue = true;
                 _Value = value;
             }
         }
