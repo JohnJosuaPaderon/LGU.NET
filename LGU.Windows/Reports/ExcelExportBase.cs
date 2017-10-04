@@ -15,6 +15,7 @@ namespace LGU.Reports
         protected Excel.Worksheet ActiveWorksheet { get; private set; }
         protected Excel.Worksheet TemplateWorksheet { get; private set; }
         protected Excel.Range CurrentRange { get; set; }
+        protected bool Faulted { get; set; }
 
         protected void Initialize()
         {
@@ -28,6 +29,7 @@ namespace LGU.Reports
             }
             catch (Exception ex)
             {
+                Faulted = true;
                 EventHandler.OnException(ex);
             }
         }
@@ -44,11 +46,13 @@ namespace LGU.Reports
                 }
                 else
                 {
+                    Faulted = true;
                     EventHandler?.OnError($"Template not found: '{templatePath}'");
                 }
             }
             else
             {
+                Faulted = true;
                 EventHandler?.OnError("Microsoft Office Excel is not running.");
             }
         }
@@ -57,17 +61,19 @@ namespace LGU.Reports
         {
             if (worksheetIndex <= 0)
             {
+                Faulted = true;
                 EventHandler?.OnError("Worksheet index cannot be zero or any negative integer.");
             }
             else
             {
                 if (Sheets == null)
                 {
+                    Faulted = true;
                     EventHandler?.OnError("Workbook has no sheet.");
                 }
                 else if (Sheets.Count < worksheetIndex)
                 {
-
+                    Faulted = true;
                     EventHandler?.OnError("Worksheet index is out of range.");
                 }
                 else
@@ -112,6 +118,7 @@ namespace LGU.Reports
             }
             else
             {
+                Faulted = true;
                 EventHandler?.OnError("Template worksheet is null.");
                 return null;
             }
