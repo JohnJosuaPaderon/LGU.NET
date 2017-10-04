@@ -70,6 +70,8 @@
     <Compile Include="Reports\ExcelCell.cs" />
     <Compile Include="Reports\ExcelExportBase.cs" />
     <Compile Include="Reports\ExcelReportInfoProvider.cs" />
+    <Compile Include="Reports\HumanResource\[Contracts]\IActualTimeLogReportInfoProvider.cs" />
+    <Compile Include="Reports\HumanResource\[Implementations]\ActualTimeLogReportInfoProvider.cs" />
     <Compile Include="Reports\HumanResource\[Implementations]\HumanResourceReport.cs" />
     <Compile Include="Reports\HumanResource\[Contracts]\IHumanResourceReport.cs" />
     <Compile Include="Reports\HumanResource\[Contracts]\ILocatorReportInfoProvider.cs" />
