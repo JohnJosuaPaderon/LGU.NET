@@ -117,9 +117,19 @@
                                 <DataGridTextColumn Header="Time-Out" Binding="{Binding LogoutDate,StringFormat='MMM dd, yyyy hh:mm tt'}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Button Style="{DynamicResource DataManagerButton}" Command="{Binding GetTimeLogsCommand}">
-                            <materialDesign:PackIcon Kind="Refresh" Height="30" Width="30"/>
-                        </Button>
+                        <Grid Margin="{DynamicResource DefaultMargin}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Style="{DynamicResource MaterialDesignFloatingActionButton}" Command="{Binding GetTimeLogsCommand}">
+                                <materialDesign:PackIcon Kind="Refresh" Height="30" Width="30"/>
+                            </Button>
+                            <Button Grid.Column="2" Style="{DynamicResource MaterialDesignFloatingActionButton}" Command="{Binding PrintCommand}">
+                                <materialDesign:PackIcon Kind="Printer" Height="30" Width="30"/>
+                            </Button>
+                        </Grid>
                     </Grid>
                 </materialDesign:Card>
             </materialDesign:TransitioningContent>

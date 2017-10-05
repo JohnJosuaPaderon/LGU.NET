@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="LGU.Views.HumanResource.ContractualPayrollView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+             xmlns:converters="clr-namespace:LGU.Converters"
+             xmlns:lgu="clr-namespace:LGU"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Margin="{DynamicResource ContainerMargin}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="{DynamicResource ContainerGridSpace}"/>
+                <ColumnDefinition Width="2.5*"/>
+            </Grid.ColumnDefinitions>
+            <materialDesign:TransitioningContent Grid.Column="0" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromLeft,Duration=0:0:0.5}">
+                <materialDesign:Card VerticalAlignment="Stretch">
+                    <DataGrid IsReadOnly="True" ItemsSource="{Binding Departments}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Departments" Binding="{Binding Description}"/>
+                            <DataGridTextColumn Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </materialDesign:Card>
+            </materialDesign:TransitioningContent>
+            <materialDesign:TransitioningContent Grid.Column="2" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight,Duration=0:0:0.5}">
+                <materialDesign:Card VerticalAlignment="Stretch">
+                    <Grid>
+                        <Grid.Resources>
+                            <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
+                        </Grid.Resources>
+                        <ContentControl Visibility="Collapsed" Content="{StaticResource ProxyElement}"/>
+                        <DataGrid>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Employees"/>
+                                <DataGridTextColumn Header="Monthly Rate"/>
+                                <DataGridTextColumn Header="No. of days worked"/>
+                                <DataGridTextColumn Header="HDMF Premium PS" Visibility="{Binding DataContext.ContractualPayrollCluster.Inclusion.HdmfPremiumPs, Source={StaticResource ProxyElement}, Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}"/>
+                                <DataGridTextColumn Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Style="{DynamicResource DataManagerButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                            <materialDesign:PackIcon Kind="Wrench" Height="30" Width="30"/>
+                            <Button.CommandParameter>
+                                <Grid MinHeight="{DynamicResource MinDialogHeight}" MinWidth="{DynamicResource MinDialogWidth}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <dragablz:TabablzControl>
+                                        <TabItem Header="Deductions">
+                                            <Grid Margin="{DynamicResource DefaultMargin}">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <CheckBox Content="HDMF Premium PS" IsChecked="{Binding ContractualPayrollCluster.Inclusion.HdmfPremiumPs}"/>
+                                            </Grid>
+                                        </TabItem>
+                                    </dragablz:TabablzControl>
+                                    <materialDesign:ColorZone Grid.Row="1" Style="{DynamicResource FooterColorZone}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button Grid.Column="1" Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}">
+                                                <materialDesign:PackIcon Kind="Check"/>
+                                            </Button>
+                                        </Grid>
+                                    </materialDesign:ColorZone>
+                                </Grid>
+                            </Button.CommandParameter>
+                        </Button>
+                    </Grid>
+                </materialDesign:Card>
+            </materialDesign:TransitioningContent>
+        </Grid>
+        <materialDesign:ColorZone Grid.Row="1" Style="{DynamicResource FooterColorZone}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Style="{DynamicResource MaterialDesignFloatingActionButton}" Command="{Binding BackToPayrollSetupCommand}">
+                    <materialDesign:PackIcon Kind="ArrowLeft" Height="30" Width="30"/>
+                </Button>
+            </Grid>
+        </materialDesign:ColorZone>
+    </Grid>
+</UserControl>
