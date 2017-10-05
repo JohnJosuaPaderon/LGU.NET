@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="LGU.Views.HumanResource.Dialogs.EmployeeSearchDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:prism="http://prismlibrary.com/"             
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             MinHeight="{DynamicResource MinDialogHeight}"
+             MinWidth="{DynamicResource MinDialogWidth}"
+             Height="650">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Margin="{DynamicResource DefaultMargin}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding SearchKey,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource SearchTextBox}" materialDesign:HintAssist.Hint="{Binding Content.SearchHint}">
+                        <TextBox.InputBindings>
+                            <KeyBinding Command="{Binding SearchCommand}" Key="Return"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <Button Grid.Column="1" Style="{DynamicResource SearchButton}" Command="{Binding SearchCommand}"/>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
+                <DataGrid ItemsSource="{Binding Employees}" SelectedItem="{Binding Content.SelectedEmployee}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Employees" Binding="{Binding InformalFullName}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </materialDesign:Card>
+        </Grid>
+        <materialDesign:ColorZone Grid.Row="1" Style="{DynamicResource FooterColorZone}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" Command="{Binding CloseCommand}">
+                    <materialDesign:PackIcon Kind="Check"/>
+                </Button>
+            </Grid>
+        </materialDesign:ColorZone>
+    </Grid>
+</UserControl>

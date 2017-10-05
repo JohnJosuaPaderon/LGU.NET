@@ -46,9 +46,27 @@
                         <TextBox Grid.Row="2" Text="{Binding Employee.FirstName}" materialDesign:HintAssist.Hint="First Name"/>
                         <TextBox Grid.Row="4" Text="{Binding Employee.MiddleName}" materialDesign:HintAssist.Hint="Middle Name"/>
                         <TextBox Grid.Row="6" Text="{Binding Employee.NameExtension}" materialDesign:HintAssist.Hint="Name Extension"/>
-                        <ComboBox Grid.Row="8" ItemsSource="{Binding Departments}" SelectedItem="{Binding Employee.Department}" materialDesign:HintAssist.Hint="Department"/>
-                        <ComboBox Grid.Row="10" ItemsSource="{Binding Types}" SelectedItem="{Binding Employee.Type}" materialDesign:HintAssist.Hint="Type"/>
-                        <ComboBox Grid.Row="12" ItemsSource="{Binding WorkTimeSchedules}" SelectedItem="{Binding Employee.WorkTimeSchedule}" materialDesign:HintAssist.Hint="Work-Time Schedule"/>
+                        <ComboBox Grid.Row="8" ItemsSource="{Binding Departments}" SelectedItem="{Binding Employee.Department}" materialDesign:HintAssist.Hint="Department">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Description}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Grid.Row="10" ItemsSource="{Binding Types}" SelectedItem="{Binding Employee.Type}" materialDesign:HintAssist.Hint="Type">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Description}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Grid.Row="12" ItemsSource="{Binding WorkTimeSchedules}" SelectedItem="{Binding Employee.WorkTimeSchedule}" materialDesign:HintAssist.Hint="Work-Time Schedule">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Description}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Salary Grade">
