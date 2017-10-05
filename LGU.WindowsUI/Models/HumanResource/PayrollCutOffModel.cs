@@ -2,11 +2,12 @@
 
 namespace LGU.Models.HumanResource
 {
-    public sealed class LocatorLeaveTypeModel : ModelBase<ILocatorLeaveType>
+    public sealed class PayrollCutOffModel : ModelBase<IPayrollCutOff>
     {
-        public LocatorLeaveTypeModel(ILocatorLeaveType source) : base(source ?? new LocatorLeaveType())
+        public PayrollCutOffModel(IPayrollCutOff source) : base(source ?? new PayrollCutOff())
         {
             Id = source?.Id ?? default(short);
+            Count = source?.Count ?? default(int);
             Description = source?.Description;
         }
 
@@ -17,6 +18,13 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Id, value); }
         }
 
+        private int _Count;
+        public int Count
+        {
+            get { return _Count; }
+            set { SetProperty(ref _Count, value); }
+        }
+
         private string _Description;
         public string Description
         {
@@ -24,13 +32,13 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Description, value); }
         }
 
-        public override ILocatorLeaveType GetSource()
+        public override IPayrollCutOff GetSource()
         {
             Source.Id = Id;
+            Source.Count = Count;
             Source.Description = Description;
 
             return Source;
-
         }
     }
 }

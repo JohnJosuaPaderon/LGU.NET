@@ -5,11 +5,11 @@ namespace LGU.Models.HumanResource
 {
     public sealed class SalaryGradeBatchModel : ModelBase<ISalaryGradeBatch>
     {
-        public SalaryGradeBatchModel(ISalaryGradeBatch source) : base(source)
+        public SalaryGradeBatchModel(ISalaryGradeBatch source) : base(source ?? new SalaryGradeBatch())
         {
-            Id = source.Id;
-            EffectivityDate = source.EffectivityDate == default(DateTime) ? null : new DateTime?(source.EffectivityDate);
-            ExpiryDate = source.ExpiryDate;
+            Id = source?.Id ?? default(int);
+            EffectivityDate = source?.EffectivityDate == default(DateTime) ? null : new DateTime?(source.EffectivityDate);
+            ExpiryDate = source?.ExpiryDate;
             Description = source.Description;
         }
 
@@ -43,13 +43,12 @@ namespace LGU.Models.HumanResource
 
         public override ISalaryGradeBatch GetSource()
         {
-            return new SalaryGradeBatch()
-            {
-               Id = Id,
-               EffectivityDate = EffectivityDate ?? DateTime.Now,
-               ExpiryDate = ExpiryDate,
-               Description = Description
-            };
+            Source.Id = Id;
+            Source.EffectivityDate = EffectivityDate ?? DateTime.Now;
+            Source.ExpiryDate = ExpiryDate;
+            Source.Description = Description;
+
+            return Source;
         }
     }
 }

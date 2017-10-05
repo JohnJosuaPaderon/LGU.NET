@@ -2,9 +2,9 @@
 
 namespace LGU.Models.HumanResource
 {
-    public sealed class LocatorLeaveTypeModel : ModelBase<ILocatorLeaveType>
+    public sealed class PayrollTypeModel : ModelBase<IPayrollType>
     {
-        public LocatorLeaveTypeModel(ILocatorLeaveType source) : base(source ?? new LocatorLeaveType())
+        public PayrollTypeModel(IPayrollType source) : base(source ?? new PayrollType())
         {
             Id = source?.Id ?? default(short);
             Description = source?.Description;
@@ -24,13 +24,12 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Description, value); }
         }
 
-        public override ILocatorLeaveType GetSource()
+        public override IPayrollType GetSource()
         {
             Source.Id = Id;
             Source.Description = Description;
 
             return Source;
-
         }
     }
 }

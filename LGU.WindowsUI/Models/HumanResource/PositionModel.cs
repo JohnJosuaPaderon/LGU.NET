@@ -2,19 +2,27 @@
 
 namespace LGU.Models.HumanResource
 {
-    public sealed class LocatorLeaveTypeModel : ModelBase<ILocatorLeaveType>
+    public sealed class PositionModel : ModelBase<IPosition>
     {
-        public LocatorLeaveTypeModel(ILocatorLeaveType source) : base(source ?? new LocatorLeaveType())
+        public PositionModel(IPosition source) : base(source ?? new Position())
         {
-            Id = source?.Id ?? default(short);
+            Id = source?.Id ?? default(int);
+            Abbreviation = source?.Abbreviation;
             Description = source?.Description;
         }
 
-        private short _Id;
-        public short Id
+        private int _Id;
+        public int Id
         {
             get { return _Id; }
             set { SetProperty(ref _Id, value); }
+        }
+
+        private string _Abbreviation;
+        public string Abbreviation
+        {
+            get { return _Abbreviation; }
+            set { SetProperty(ref _Abbreviation, value); }
         }
 
         private string _Description;
@@ -24,13 +32,13 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Description, value); }
         }
 
-        public override ILocatorLeaveType GetSource()
+        public override IPosition GetSource()
         {
             Source.Id = Id;
+            Source.Abbreviation = Abbreviation;
             Source.Description = Description;
 
             return Source;
-
         }
     }
 }

@@ -7,14 +7,11 @@ namespace LGU.Models.HumanResource
     {
         public TimeLogModel(ITimeLog source) : base(source)
         {
-            if (source != null)
-            {
-                Id = source.Id;
-                Employee = source.Employee;
-                LoginDate = source.LoginDate;
-                LogoutDate = source.LogoutDate;
-                Type = source.Type;
-            }
+            Id = source?.Id ?? default(long);
+            Employee = source?.Employee;
+            LoginDate = source?.LoginDate;
+            LogoutDate = source?.LogoutDate;
+            Type = source?.Type;
         }
 
         private long _Id;
@@ -54,15 +51,14 @@ namespace LGU.Models.HumanResource
 
         public override ITimeLog GetSource()
         {
-            if (Employee != null)
+            if (Source != null)
             {
-                return new TimeLog(Employee)
-                {
-                    Id = Id,
-                    LoginDate = LoginDate,
-                    LogoutDate = LogoutDate,
-                    Type = Type
-                };
+                Source.Id = Id;
+                Source.LoginDate = LoginDate;
+                Source.LogoutDate = LogoutDate;
+                Source.Type = Type;
+
+                return Source;
             }
             else
             {

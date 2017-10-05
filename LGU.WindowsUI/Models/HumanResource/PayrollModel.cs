@@ -5,21 +5,18 @@ namespace LGU.Models.HumanResource
 {
     public sealed class PayrollModel : ModelBase<IPayroll>
     {
-        public PayrollModel(IPayroll source) : base(source)
+        public PayrollModel(IPayroll source) : base(source ?? new Payroll())
         {
-            if (source != null)
-            {
-                Id = source.Id;
-                Type = source.Type;
-                CutOff = source.CutOff;
-                RangeDate = new ValueRangeModel<DateTime>(source.RangeDate);
-                RunDate = source.RunDate;
-                HumanResourceHead = source.HumanResourceHead;
-                Mayor = source.Mayor;
-                Treasurer = source.Treasurer;
-                CityAccountant = source.CityAccountant;
-                CityBudgetOfficer = source.CityBudgetOfficer;
-            }
+            Id = source?.Id ?? default(long);
+            Type = new PayrollTypeModel(source?.Type);
+            CutOff = new PayrollCutOffModel(source?.CutOff);
+            RangeDate = new ValueRangeModel<DateTime>(source?.RangeDate ?? new ValueRange<DateTime>());
+            RunDate = source?.RunDate ?? default(DateTime);
+            HumanResourceHead = new EmployeeModel(source?.HumanResourceHead);
+            Mayor = new EmployeeModel(source?.Mayor);
+            Treasurer = new EmployeeModel(source?.Treasurer);
+            CityAccountant = new EmployeeModel(source?.CityAccountant);
+            CityBudgetOfficer = new EmployeeModel(source?.CityBudgetOfficer);
         }
 
         private long _Id;
@@ -29,15 +26,15 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Id, value); }
         }
 
-        private IPayrollType _Type;
-        public IPayrollType Type
+        private PayrollTypeModel _Type;
+        public PayrollTypeModel Type
         {
             get { return _Type; }
             set { SetProperty(ref _Type, value); }
         }
 
-        private IPayrollCutOff _CutOff;
-        public IPayrollCutOff CutOff
+        private PayrollCutOffModel _CutOff;
+        public PayrollCutOffModel CutOff
         {
             get { return _CutOff; }
             set { SetProperty(ref _CutOff, value); }
@@ -57,36 +54,36 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _RunDate, value); }
         }
 
-        private IEmployee _HumanResourceHead;
-        public IEmployee HumanResourceHead
+        private EmployeeModel _HumanResourceHead;
+        public EmployeeModel HumanResourceHead
         {
             get { return _HumanResourceHead; }
             set { SetProperty(ref _HumanResourceHead, value); }
         }
 
-        private IEmployee _Mayor;
-        public IEmployee Mayor
+        private EmployeeModel _Mayor;
+        public EmployeeModel Mayor
         {
             get { return _Mayor; }
             set { SetProperty(ref _Mayor, value); }
         }
 
-        private IEmployee _Treasurer;
-        public IEmployee Treasurer
+        private EmployeeModel _Treasurer;
+        public EmployeeModel Treasurer
         {
             get { return _Treasurer; }
             set { SetProperty(ref _Treasurer, value); }
         }
 
-        private IEmployee _CityAccountant;
-        public IEmployee CityAccountant
+        private EmployeeModel _CityAccountant;
+        public EmployeeModel CityAccountant
         {
             get { return _CityAccountant; }
             set { SetProperty(ref _CityAccountant, value); }
         }
 
-        private IEmployee _CityBudgetOfficer;
-        public IEmployee CityBudgetOfficer
+        private EmployeeModel _CityBudgetOfficer;
+        public EmployeeModel CityBudgetOfficer
         {
             get { return _CityBudgetOfficer; }
             set { SetProperty(ref _CityBudgetOfficer, value); }
@@ -94,19 +91,18 @@ namespace LGU.Models.HumanResource
 
         public override IPayroll GetSource()
         {
-            return new Payroll()
-            {
-                Id = Id,
-                Type = Type,
-                RangeDate = RangeDate.GetSource(),
-                CityAccountant = CityAccountant,
-                CityBudgetOfficer = CityBudgetOfficer,
-                CutOff = CutOff,
-                HumanResourceHead = HumanResourceHead,
-                Mayor = Mayor,
-                RunDate = RunDate,
-                Treasurer = Treasurer
-            };
+            Source.Id = Id;
+            Source.Type = Type.GetSource();
+            Source.CutOff = CutOff.GetSource();
+            Source.RangeDate = RangeDate.GetSource();
+            Source.RunDate = RunDate;
+            Source.HumanResourceHead = HumanResourceHead.GetSource();
+            Source.Mayor = Mayor.GetSource();
+            Source.Treasurer = Treasurer.GetSource();
+            Source.CityAccountant = CityAccountant.GetSource();
+            Source.CityBudgetOfficer = CityBudgetOfficer.GetSource();
+
+            return Source;
         }
     }
 }

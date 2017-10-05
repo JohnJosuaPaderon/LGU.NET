@@ -4,11 +4,11 @@ namespace LGU.Models.HumanResource
 {
     public sealed class DepartmentModel : ModelBase<IDepartment>
     {
-        public DepartmentModel(IDepartment source) : base(source)
+        public DepartmentModel(IDepartment source) : base(source ?? new Department())
         {
-            Id = source.Id;
-            Description = source.Description;
-            Abbreviation = source.Abbreviation;
+            Id = source?.Id ?? default(int);
+            Description = source?.Description;
+            Abbreviation = source?.Abbreviation;
         }
 
         private int _Id;
@@ -34,12 +34,11 @@ namespace LGU.Models.HumanResource
 
         public override IDepartment GetSource()
         {
-            return new Department()
-            {
-                Id = Id,
-                Description = Description,
-                Abbreviation = Abbreviation
-            };
+            Source.Id = Id;
+            Source.Abbreviation = Abbreviation;
+            Source.Description = Description;
+
+            return Source;
         }
     }
 }

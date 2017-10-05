@@ -7,14 +7,14 @@ namespace LGU.Models.HumanResource
     {
         public LocatorModel(ILocator source) : base(source)
         {
-            Id = source.Id;
-            Requestor = source.Requestor;
-            Date = source.Date;
-            OfficeOutTime = source.OfficeOutTime;
-            ExpectedReturnTime = source.ExpectedReturnTime;
-            LeaveType = source.LeaveType;
-            Purpose = source.Purpose;
-            DepartmentHead = source.DepartmentHead;
+            Id = source?.Id ?? default(long);
+            Requestor = source?.Requestor;
+            Date = source?.Date ?? default(DateTime);
+            OfficeOutTime = source?.OfficeOutTime ?? default(DateTime);
+            ExpectedReturnTime = source?.ExpectedReturnTime ?? default(DateTime);
+            LeaveType = source?.LeaveType;
+            Purpose = source?.Purpose;
+            DepartmentHead = source?.DepartmentHead;
         }
 
         private long _Id;
@@ -75,18 +75,17 @@ namespace LGU.Models.HumanResource
 
         public override ILocator GetSource()
         {
-            if (Requestor != null)
+            if (Source != null)
             {
-                return new Locator(Requestor)
-                {
-                     Id = Id,
-                     Date = Date,
-                     OfficeOutTime = OfficeOutTime,
-                     ExpectedReturnTime = ExpectedReturnTime,
-                     LeaveType = LeaveType,
-                     Purpose = Purpose,
-                     DepartmentHead = DepartmentHead
-                };
+                Source.Id = Id;
+                Source.Date = Date;
+                Source.OfficeOutTime = OfficeOutTime;
+                Source.ExpectedReturnTime = ExpectedReturnTime;
+                Source.LeaveType = LeaveType;
+                Source.Purpose = Purpose;
+                Source.DepartmentHead = DepartmentHead;
+
+                return Source;
             }
             else
             {

@@ -5,18 +5,18 @@ namespace LGU.Models.HumanResource
 {
     public class EmployeeModel : ModelBase<IEmployee>
     {
-        public EmployeeModel(IEmployee source) : base(source)
+        public EmployeeModel(IEmployee source) : base(source ?? new Employee())
         {
-            Id = source.Id;
-            FirstName = source.FirstName;
-            MiddleName = source.MiddleName;
-            LastName = source.LastName;
-            NameExtension = source.NameExtension;
-            Department = source.Department;
-            Position = source.Position;
-            Type = source.Type;
-            EmploymentStatus = source.EmploymentStatus;
-            WorkTimeSchedule = source.WorkTimeSchedule;
+            Id = source?.Id ?? default(long);
+            FirstName = source?.FirstName;
+            MiddleName = source?.MiddleName;
+            LastName = source?.LastName;
+            NameExtension = source?.NameExtension;
+            Department = new DepartmentModel(source?.Department);
+            Position = new PositionModel(source?.Position);
+            Type = new EmployeeTypeModel(source?.Type);
+            EmploymentStatus = new EmploymentStatusModel(source?.EmploymentStatus);
+            WorkTimeSchedule = new WorkTimeScheduleModel(source?.WorkTimeSchedule);
         }
 
         private long _Id;
@@ -65,36 +65,36 @@ namespace LGU.Models.HumanResource
         public string FullName { get; private set; }
         public string InformalFullName { get; private set; }
 
-        private IDepartment _Department;
-        public IDepartment Department
+        private DepartmentModel _Department;
+        public DepartmentModel Department
         {
             get { return _Department; }
             set { SetProperty(ref _Department, value); }
         }
 
-        private IPosition _Position;
-        public IPosition Position
+        private PositionModel _Position;
+        public PositionModel Position
         {
             get { return _Position; }
             set { SetProperty(ref _Position, value); }
         }
 
-        private IEmployeeType _Type;
-        public IEmployeeType Type
+        private EmployeeTypeModel _Type;
+        public EmployeeTypeModel Type
         {
             get { return _Type; }
             set { SetProperty(ref _Type, value); }
         }
 
-        private IEmploymentStatus _EmploymentStatus;
-        public IEmploymentStatus EmploymentStatus
+        private EmploymentStatusModel _EmploymentStatus;
+        public EmploymentStatusModel EmploymentStatus
         {
             get { return _EmploymentStatus; }
             set { SetProperty(ref _EmploymentStatus, value); }
         }
 
-        private IWorkTimeSchedule _WorkTimeSchedule;
-        public IWorkTimeSchedule WorkTimeSchedule
+        private WorkTimeScheduleModel _WorkTimeSchedule;
+        public WorkTimeScheduleModel WorkTimeSchedule
         {
             get { return _WorkTimeSchedule; }
             set { SetProperty(ref _WorkTimeSchedule, value); }
@@ -115,19 +115,18 @@ namespace LGU.Models.HumanResource
 
         public override IEmployee GetSource()
         {
-            return new Employee()
-            {
-                Id = Id,
-                FirstName = FirstName,
-                MiddleName = MiddleName,
-                LastName = LastName,
-                NameExtension = NameExtension,
-                Department = Department,
-                EmploymentStatus = EmploymentStatus,
-                Position = Position,
-                Type = Type,
-                WorkTimeSchedule = WorkTimeSchedule
-            };
+            Source.Id = Id;
+            Source.FirstName = FirstName;
+            Source.MiddleName = MiddleName;
+            Source.LastName = LastName;
+            Source.NameExtension = NameExtension;
+            Source.Department = Department?.GetSource();
+            Source.EmploymentStatus = EmploymentStatus?.GetSource();
+            Source.Position = Position?.GetSource();
+            Source.Type = Type?.GetSource();
+            Source.WorkTimeSchedule = WorkTimeSchedule?.GetSource();
+
+            return Source;
         }
     }
 }

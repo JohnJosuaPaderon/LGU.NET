@@ -6,10 +6,10 @@ namespace LGU.Models.HumanResource
     {
         public SalaryGradeStepModel(ISalaryGradeStep source) : base(source)
         {
-            Id = source.Id;
-            SalaryGrade = source.SalaryGrade;
-            Step = source.Step;
-            Amount = source.Amount;
+            Id = source?.Id ?? default(long);
+            SalaryGrade = source?.SalaryGrade;
+            Step = source?.Step ?? default(int);
+            Amount = source?.Amount ?? default(decimal);
         }
 
         private long _Id;
@@ -42,11 +42,17 @@ namespace LGU.Models.HumanResource
 
         public override ISalaryGradeStep GetSource()
         {
-            return new SalaryGradeStep(SalaryGrade, Step)
+            if (Source != null)
             {
-                Id = Id,
-                Amount = Amount
-            };
+                Source.Id = Id;
+                Source.Amount = Amount;
+
+                return Source;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -8,9 +8,9 @@ namespace LGU.Models.HumanResource
     {
         public SalaryGradeModel(ISalaryGrade source) : base(source)
         {
-            Id = source.Id;
-            Number = source.Number;
-            Batch = source.Batch;
+            Id = source?.Id ?? default(long);
+            Number = source?.Number ?? default(int);
+            Batch = source?.Batch;
             Steps = new ObservableCollection<SalaryGradeStepModel>
             {
                 new SalaryGradeStepModel(new SalaryGradeStep(source, 1)),
@@ -57,10 +57,16 @@ namespace LGU.Models.HumanResource
 
         public override ISalaryGrade GetSource()
         {
-            return new SalaryGrade(Batch, Number)
+            if (Source != null)
             {
-                Id = Id
-            };
+                Source.Id = Id;
+
+                return Source;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
