@@ -16,5 +16,11 @@ namespace LGU.EntityManagers.HumanResource
         IProcessResult<IPayroll> Insert(IPayroll payroll, TConnection connection, TTransaction transaction);
         Task<IProcessResult<IPayroll>> InsertAsync(IPayroll payroll, TConnection connection, TTransaction transaction);
         Task<IProcessResult<IPayroll>> InsertAsync(IPayroll payroll, TConnection connection, TTransaction transaction, CancellationToken cancellationToken);
+        IProcessResult<IPayroll> GetDefaultFromFile(string filePath);
+        Task<IProcessResult<IPayroll>> GetDefaultFromFileAsync(string filePath);
+        Task<IProcessResult<IPayroll>> GetDefaultFromFileAsync(string filePath, CancellationToken cancellationToken);
+        IProcessResult SaveDefaultToFile(IPayroll payroll, string filePath);
+        Task<IProcessResult> SaveDefaultToFileAsync(IPayroll payroll, string filePath);
+        Task<IProcessResult> SaveDefaultToFileAsync(IPayroll payroll, string filePath, CancellationToken cancellationToken);
     }
 }

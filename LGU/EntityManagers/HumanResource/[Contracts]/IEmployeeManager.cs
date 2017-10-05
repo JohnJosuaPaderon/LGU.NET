@@ -21,5 +21,8 @@ namespace LGU.EntityManagers.HumanResource
         IEnumerableProcessResult<IEmployee> GetListWithTimeLogByDepartment(ValueRange<DateTime> cutOff, IDepartment department);
         Task<IEnumerableProcessResult<IEmployee>> GetListWithTimeLogByDepartmentAsync(ValueRange<DateTime> cutOff, IDepartment department);
         Task<IEnumerableProcessResult<IEmployee>> GetListWithTimeLogByDepartmentAsync(ValueRange<DateTime> cutOff, IDepartment department, CancellationToken cancellationToken);
+        IEnumerableProcessResult<IEmployee> GetListByPayrollType(IPayrollType payrollType);
+        Task<IEnumerableProcessResult<IEmployee>> GetListByPayrollTypeAsync(IPayrollType payrollType);
+        Task<IEnumerableProcessResult<IEmployee>> GetListByPayrollTypeAsync(IPayrollType payrollType, CancellationToken cancellationToken);
     }
 }
