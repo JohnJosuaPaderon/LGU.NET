@@ -6,7 +6,7 @@
         public IPayroll Payroll { get; set; }
         public decimal MonthlyRate { get; set; }
         public decimal? WithholdingTax { get; set; }
-        public string Remarks { get; set; }
+        public double TotalMinutesWorked { get; set; }
 
         public static bool operator ==(PayrollEmployee left, PayrollEmployee right)
         {
