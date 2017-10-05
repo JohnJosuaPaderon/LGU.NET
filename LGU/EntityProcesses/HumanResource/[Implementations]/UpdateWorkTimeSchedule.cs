@@ -11,6 +11,13 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class UpdateWorkTimeSchedule : WorkTimeScheduleProcess, IUpdateWorkTimeSchedule
     {
+        private const string MESSAGE_FAILED = "Failed to update work-time schedule.";
+        private const string PARAMETER_ID = "@_Id";
+        private const string PARAMETER_WORK_TIME_START = "@_WorkTimeStart";
+        private const string PARAMETER_WORK_TIME_END = "@_WorkTimeEnd";
+        private const string PARAMETER_BREAK_TIME = "@_BreakTime";
+        private const string PARAMETER_WORKING_MONTH_DAYS = "@_WorkingMonthDays";
+
         public UpdateWorkTimeSchedule(IConnectionStringSource connectionStringSource, IWorkTimeScheduleConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
@@ -19,10 +26,11 @@ namespace LGU.EntityProcesses.HumanResource
 
         public SqlQueryInfo<IWorkTimeSchedule> QueryInfo =>
             SqlQueryInfo<IWorkTimeSchedule>.CreateProcedureQueryInfo(WorkTimeSchedule, GetQualifiedDbObjectName(), GetProcessResult, true)
-            .AddInputParameter("@_Id", WorkTimeSchedule.Id)
-            .AddInputParameter("@_WorkTimeStart", WorkTimeSchedule.WorkTimeStart)
-            .AddInputParameter("@_WorkTimeEnd", WorkTimeSchedule.WorkTImeEnd)
-            .AddInputParameter("@_BreakTime", WorkTimeSchedule.BreakTime?.Ticks)
+            .AddInputParameter(PARAMETER_ID, WorkTimeSchedule.Id)
+            .AddInputParameter(PARAMETER_WORK_TIME_START, WorkTimeSchedule.WorkTimeStart)
+            .AddInputParameter(PARAMETER_WORK_TIME_END, WorkTimeSchedule.WorkTimeEnd)
+            .AddInputParameter(PARAMETER_BREAK_TIME, WorkTimeSchedule.BreakTime?.Ticks)
+            .AddInputParameter(PARAMETER_WORKING_MONTH_DAYS, WorkTimeSchedule.WorkingMonthDays)
             .AddLogByParameter();
 
         private IProcessResult<IWorkTimeSchedule> GetProcessResult(IWorkTimeSchedule data, SqlCommand command, int affectedRows)
@@ -33,7 +41,7 @@ namespace LGU.EntityProcesses.HumanResource
             }
             else
             {
-                return new ProcessResult<IWorkTimeSchedule>(ProcessResultStatus.Failed, "Failed to update work-time schedule.");
+                return new ProcessResult<IWorkTimeSchedule>(ProcessResultStatus.Failed, MESSAGE_FAILED);
             }
         }
 

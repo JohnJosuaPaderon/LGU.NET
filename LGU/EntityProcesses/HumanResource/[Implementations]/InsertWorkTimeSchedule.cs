@@ -12,6 +12,13 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class InsertWorkTimeSchedule : WorkTimeScheduleProcess, IInsertWorkTimeSchedule
     {
+        private const string MESSAGE_FAILED = "Failed to insert work-time schedule.";
+        private const string PARAMETER_ID = "@_Id";
+        private const string PARAMETER_WORK_TIME_START = "@_WorkTimeStart";
+        private const string PARAMETER_WORK_TIME_END = "@_WorkTimeEnd";
+        private const string PARAMETER_BREAK_TIME = "@_BreakTime";
+        private const string PARAMETER_WORKING_MONTH_DAYS = "@_WorkingMonthDays";
+
         public InsertWorkTimeSchedule(IConnectionStringSource connectionStringSource, IWorkTimeScheduleConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
@@ -20,22 +27,23 @@ namespace LGU.EntityProcesses.HumanResource
 
         private SqlQueryInfo<IWorkTimeSchedule> QueryInfo =>
             SqlQueryInfo<IWorkTimeSchedule>.CreateProcedureQueryInfo(WorkTimeSchedule, GetQualifiedDbObjectName(), GetProcessResult, true)
-            .AddOutputParameter("@_Id", DbType.Int32)
-            .AddInputParameter("@_WorkTimeStart", WorkTimeSchedule.WorkTimeStart)
-            .AddInputParameter("@_WorkTimeEnd", WorkTimeSchedule.WorkTImeEnd)
-            .AddInputParameter("@_BreakTime", WorkTimeSchedule.BreakTime?.Ticks)
+            .AddOutputParameter(PARAMETER_ID, DbType.Int32)
+            .AddInputParameter(PARAMETER_WORK_TIME_START, WorkTimeSchedule.WorkTimeStart)
+            .AddInputParameter(PARAMETER_WORK_TIME_END, WorkTimeSchedule.WorkTimeEnd)
+            .AddInputParameter(PARAMETER_BREAK_TIME, WorkTimeSchedule.BreakTime?.Ticks)
+            .AddInputParameter(PARAMETER_WORKING_MONTH_DAYS, WorkTimeSchedule.WorkingMonthDays)
             .AddLogByParameter();
 
         private IProcessResult<IWorkTimeSchedule> GetProcessResult(IWorkTimeSchedule data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                data.Id = command.Parameters.GetInt32("@_Id");
+                data.Id = command.Parameters.GetInt32(PARAMETER_ID);
                 return new ProcessResult<IWorkTimeSchedule>(WorkTimeSchedule);
             }
             else
             {
-                return new ProcessResult<IWorkTimeSchedule>(ProcessResultStatus.Failed, "Failed to insert work-time schedule.");
+                return new ProcessResult<IWorkTimeSchedule>(ProcessResultStatus.Failed, MESSAGE_FAILED);
             }
         }
 

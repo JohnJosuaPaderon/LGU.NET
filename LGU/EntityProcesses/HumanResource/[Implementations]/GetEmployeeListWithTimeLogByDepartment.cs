@@ -27,16 +27,19 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IEnumerableProcessResult<IEmployee> Execute()
         {
+            r_Converter.Prop_Department.Value = Department;
             return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmployee>> ExecuteAsync()
         {
+            r_Converter.Prop_Department.Value = Department;
             return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmployee>> ExecuteAsync(CancellationToken cancellationToken)
         {
+            r_Converter.Prop_Department.Value = Department;
             return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
         }
     }

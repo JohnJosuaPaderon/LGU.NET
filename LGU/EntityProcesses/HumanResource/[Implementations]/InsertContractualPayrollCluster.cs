@@ -24,6 +24,24 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IContractualPayrollCluster PayrollCluster { get; set; }
 
+        private IProcessResult<IContractualPayrollCluster> RollbackTransaction(SqlTransaction transaction, IProcessResult baseResult)
+        {
+            transaction.Rollback();
+            return new ProcessResult<IContractualPayrollCluster>(baseResult.Status, baseResult.Message);
+        }
+
+        private IProcessResult<IContractualPayrollCluster> RollbackTransaction(SqlTransaction transaction, Exception exception)
+        {
+            transaction.Rollback();
+            return new ProcessResult<IContractualPayrollCluster>(exception);
+        }
+
+        private IProcessResult<IContractualPayrollCluster> CommitTransaction(SqlTransaction transaction)
+        {
+            transaction.Commit();
+            return new ProcessResult<IContractualPayrollCluster>(PayrollCluster);
+        }
+
         public IProcessResult<IContractualPayrollCluster> Execute()
         {
             try
@@ -34,43 +52,30 @@ namespace LGU.EntityProcesses.HumanResource
                     {
                         try
                         {
-                            ProcessResultStatus status = ProcessResultStatus.Undefined;
-                            string message = null;
-
                             var payrollResult = _PayrollManager.Insert(PayrollCluster.Payroll, connection, transaction);
 
                             if (payrollResult.Status == ProcessResultStatus.Success)
                             {
-                                for (int i = 0; i < PayrollCluster.Employees.Count; i++)
+                                foreach (var employee in PayrollCluster.Employees)
                                 {
-                                    var employeeResult = _PayrollContractualEmployeeManager.Insert(PayrollCluster.Employees[i], connection, transaction);
+                                    var employeeResult = _PayrollContractualEmployeeManager.Insert(employee, connection, transaction);
 
                                     if (employeeResult.Status != ProcessResultStatus.Success)
                                     {
-                                        transaction.Rollback();
-                                        status = employeeResult.Status;
-                                        message = employeeResult.Message;
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        PayrollCluster.Employees[i] = employeeResult.Data;
+                                        return RollbackTransaction(transaction, employeeResult);
                                     }
                                 }
                             }
                             else
                             {
-                                transaction.Rollback();
-                                status = payrollResult.Status;
-                                message = payrollResult.Message;
+                                return RollbackTransaction(transaction, payrollResult);
                             }
 
-                            return new ProcessResult<IContractualPayrollCluster>(PayrollCluster, status, message);
+                            return CommitTransaction(transaction);
                         }
                         catch (Exception ex)
                         {
-                            transaction.Rollback();
-                            return new ProcessResult<IContractualPayrollCluster>(ex);
+                            return RollbackTransaction(transaction, ex);
                         }
                     }
                 }
@@ -91,43 +96,30 @@ namespace LGU.EntityProcesses.HumanResource
                     {
                         try
                         {
-                            ProcessResultStatus status = ProcessResultStatus.Undefined;
-                            string message = null;
-
                             var payrollResult = await _PayrollManager.InsertAsync(PayrollCluster.Payroll, connection, transaction);
 
                             if (payrollResult.Status == ProcessResultStatus.Success)
                             {
-                                for (int i = 0; i < PayrollCluster.Employees.Count; i++)
+                                foreach (var employee in PayrollCluster.Employees)
                                 {
-                                    var employeeResult = await _PayrollContractualEmployeeManager.InsertAsync(PayrollCluster.Employees[i], connection, transaction);
+                                    var employeeResult = await _PayrollContractualEmployeeManager.InsertAsync(employee, connection, transaction);
 
                                     if (employeeResult.Status != ProcessResultStatus.Success)
                                     {
-                                        transaction.Rollback();
-                                        status = employeeResult.Status;
-                                        message = employeeResult.Message;
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        PayrollCluster.Employees[i] = employeeResult.Data;
+                                        RollbackTransaction(transaction, employeeResult);
                                     }
                                 }
                             }
                             else
                             {
-                                transaction.Rollback();
-                                status = payrollResult.Status;
-                                message = payrollResult.Message;
+                                RollbackTransaction(transaction, payrollResult);
                             }
 
-                            return new ProcessResult<IContractualPayrollCluster>(PayrollCluster, status, message);
+                            return CommitTransaction(transaction);
                         }
                         catch (Exception ex)
                         {
-                            transaction.Rollback();
-                            return new ProcessResult<IContractualPayrollCluster>(ex);
+                            return RollbackTransaction(transaction, ex);
                         }
                     }
                 }
@@ -148,43 +140,30 @@ namespace LGU.EntityProcesses.HumanResource
                     {
                         try
                         {
-                            ProcessResultStatus status = ProcessResultStatus.Undefined;
-                            string message = null;
-
                             var payrollResult = await _PayrollManager.InsertAsync(PayrollCluster.Payroll, connection, transaction, cancellationToken);
 
                             if (payrollResult.Status == ProcessResultStatus.Success)
                             {
-                                for (int i = 0; i < PayrollCluster.Employees.Count; i++)
+                                foreach (var employee in PayrollCluster.Employees)
                                 {
-                                    var employeeResult = await _PayrollContractualEmployeeManager.InsertAsync(PayrollCluster.Employees[i], connection, transaction, cancellationToken);
+                                    var employeeResult = await _PayrollContractualEmployeeManager.InsertAsync(employee, connection, transaction, cancellationToken);
 
                                     if (employeeResult.Status != ProcessResultStatus.Success)
                                     {
-                                        transaction.Rollback();
-                                        status = employeeResult.Status;
-                                        message = employeeResult.Message;
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        PayrollCluster.Employees[i] = employeeResult.Data;
+                                        return RollbackTransaction(transaction, employeeResult);
                                     }
                                 }
                             }
                             else
                             {
-                                transaction.Rollback();
-                                status = payrollResult.Status;
-                                message = payrollResult.Message;
+                                return RollbackTransaction(transaction, payrollResult);
                             }
 
-                            return new ProcessResult<IContractualPayrollCluster>(PayrollCluster, status, message);
+                            return CommitTransaction(transaction);
                         }
                         catch (Exception ex)
                         {
-                            transaction.Rollback();
-                            return new ProcessResult<IContractualPayrollCluster>(ex);
+                            return RollbackTransaction(transaction, ex);
                         }
                     }
                 }
