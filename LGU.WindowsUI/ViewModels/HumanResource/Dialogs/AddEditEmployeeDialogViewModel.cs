@@ -30,9 +30,9 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             r_AddEmployeeEvent = r_EventAggregator.GetEvent<AddEmployeeEvent>();
             r_EditEmployeeEvent = r_EventAggregator.GetEvent<EditEmployeeEvent>();
 
-            Departments = new ObservableCollection<IDepartment>();
-            WorkTimeSchedules = new ObservableCollection<IWorkTimeSchedule>();
-            Types = new ObservableCollection<IEmployeeType>();
+            Departments = new ObservableCollection<DepartmentModel>();
+            WorkTimeSchedules = new ObservableCollection<WorkTimeScheduleModel>();
+            Types = new ObservableCollection<EmployeeTypeModel>();
 
             Initialize();
         }
@@ -48,9 +48,9 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         public DelegateCommand SaveCommand { get; }
         public DelegateCommand OpenPdsCommand { get; }
-        public ObservableCollection<IDepartment> Departments { get; }
-        public ObservableCollection<IWorkTimeSchedule> WorkTimeSchedules { get; }
-        public ObservableCollection<IEmployeeType> Types { get; }
+        public ObservableCollection<DepartmentModel> Departments { get; }
+        public ObservableCollection<WorkTimeScheduleModel> WorkTimeSchedules { get; }
+        public ObservableCollection<EmployeeTypeModel> Types { get; }
 
         private EmployeeModel _Employee;
         public EmployeeModel Employee
@@ -106,7 +106,10 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
             if (result.Status == ProcessResultStatus.Success && result.DataList != null)
             {
-                Types.AddRange(result.DataList);
+                foreach (var type in result.DataList)
+                {
+                    Types.Add(new EmployeeTypeModel(type));
+                }
             }
             else
             {
@@ -121,7 +124,10 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
             if (result.Status == ProcessResultStatus.Success && result.DataList != null)
             {
-                Departments.AddRange(result.DataList);
+                foreach (var department in result.DataList)
+                {
+                    Departments.Add(new DepartmentModel(department));
+                }
             }
             else
             {
@@ -136,7 +142,10 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
             if (result.Status == ProcessResultStatus.Success && result.DataList != null)
             {
-                WorkTimeSchedules.AddRange(result.DataList);
+                foreach (var workTimeSchedule in result.DataList)
+                {
+                    WorkTimeSchedules.Add(new WorkTimeScheduleModel(workTimeSchedule));
+                }
             }
             else
             {
@@ -247,7 +256,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             }
             else if (employeeResult.Status == ProcessResultStatus.Failed)
             {
-                EnqueueMessage($"Failed to add new employee.\n{employeeResult.Message}");
+                EnqueueMessage($"Failed to add new employee. {employeeResult.Message}");
             }
         }
                         
@@ -264,7 +273,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             }
             else if (result.Status == ProcessResultStatus.Failed)
             {
-                EnqueueMessage($"Failed to update employee.\n{result.Message}");
+                EnqueueMessage($"Failed to update employee. {result.Message}");
             }
         }
 
