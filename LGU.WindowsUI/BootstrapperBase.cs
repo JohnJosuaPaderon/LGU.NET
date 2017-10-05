@@ -38,7 +38,6 @@ namespace LGU
             ServiceCollection.SetConnectionStringSource();
             ServiceCollection.UseSqlServer();
             ServiceCollection.EnableReporting();
-            ServiceCollection.UseBuiltInEntityResolver();
         }
     }
 }

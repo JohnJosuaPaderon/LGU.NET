@@ -165,22 +165,32 @@
     <Compile Include="Events\ShowTitleBarEvent.cs" />
     <Compile Include="Events\TitleEvent.cs" />
     <Compile Include="Events\WindowStateEvent.cs" />
+    <Compile Include="Extensions\ObservableCollectionExtension.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="Models\Core\UserSignUpModel.cs" />
+    <Compile Include="Models\HumanResource\ContractualPayrollClusterInclusionModel.cs" />
+    <Compile Include="Models\HumanResource\ContractualPayrollClusterModel.cs" />
     <Compile Include="Models\HumanResource\DepartmentModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeFingerPrintSetModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeModel.cs" />
+    <Compile Include="Models\HumanResource\EmployeeTypeModel.cs" />
+    <Compile Include="Models\HumanResource\EmploymentStatusModel.cs" />
     <Compile Include="Models\HumanResource\FingerPrintModel.cs" />
+    <Compile Include="Models\HumanResource\PayrollContractualEmployeeModel.cs" />
+    <Compile Include="Models\HumanResource\PayrollCutOffModel.cs" />
     <Compile Include="Models\HumanResource\PayrollModel.cs" />
+    <Compile Include="Models\HumanResource\PayrollTypeModel.cs" />
     <Compile Include="Models\HumanResource\PdsAddressModel.cs" />
     <Compile Include="Models\HumanResource\LocatorLeaveTypeModel.cs" />
     <Compile Include="Models\HumanResource\LocatorModel.cs" />
     <Compile Include="Models\HumanResource\PersonalDataSheetModel.cs" />
+    <Compile Include="Models\HumanResource\PositionModel.cs" />
     <Compile Include="Models\HumanResource\SalaryGradeBatchModel.cs" />
     <Compile Include="Models\HumanResource\SalaryGradeModel.cs" />
     <Compile Include="Models\HumanResource\SalaryGradeStepModel.cs" />
     <Compile Include="Models\HumanResource\SelectableEmployeeModel.cs" />
     <Compile Include="Models\HumanResource\TimeLogModel.cs" />
+    <Compile Include="Models\HumanResource\WorkTimeScheduleModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\SystemAdministration\ConnectionStringModel.cs" />
     <Compile Include="Models\ValueRangeModel.cs" />
@@ -199,16 +209,20 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\Core\UserSignUpViewModel.cs" />
+    <Compile Include="ViewModels\DateTimeRangeSelectionViewModel.cs" />
     <Compile Include="ViewModels\DialogHelper.cs" />
     <Compile Include="ViewModels\DialogMode.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\HumanResource\ActualTimeLogExportViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\ApplicationMainViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\ContractualPayrollViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\CreateNewSalaryGradeViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\DepartmentManagementViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditDepartmentDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditEmployeeDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditLocatorDialogViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\EmployeeSearchDialogContent.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\EmployeeSearchDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\EmployeeFingerPrintEnrollmentViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\KioskActualTimeLogViewModel.cs" />
@@ -229,12 +243,16 @@
     <Compile Include="ViewModels\HumanResource\KioskServiceSelectionViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\NavigationalViewModelBase.cs" />
+    <Compile Include="ViewModels\PopupViewModelBase.cs" />
     <Compile Include="ViewModels\SystemAdministration\ConnectionStringSourceViewModel.cs" />
     <Compile Include="ViewModels\SystemAdministration\LauncherViewModel.cs" />
     <Compile Include="ViewModels\TimeKeepingResultType.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Core\UserSignUpView.xaml.cs">
       <DependentUpon>UserSignUpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DateTimeRangeSelectionView.xaml.cs">
+      <DependentUpon>DateTimeRangeSelectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\ActualTimeLogExportView.xaml.cs">
       <DependentUpon>ActualTimeLogExportView.xaml</DependentUpon>
@@ -248,9 +266,13 @@
     <Compile Include="Views\HumanResource\ApplicationMainView.xaml.cs">
       <DependentUpon>ApplicationMainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HumanResource\ContractualPayrollView.xaml.cs">
+      <DependentUpon>ContractualPayrollView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HumanResource\CreateNewSalaryGradeView.xaml.cs">
       <DependentUpon>CreateNewSalaryGradeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interactivity\CustomPopupWindowAction.cs" />
     <Compile Include="Views\HumanResource\DepartmentManagementView.xaml.cs">
       <DependentUpon>DepartmentManagementView.xaml</DependentUpon>
     </Compile>
@@ -262,6 +284,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\Dialogs\AddEditLocatorDialogView.xaml.cs">
       <DependentUpon>AddEditLocatorDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\Dialogs\EmployeeSearchDialogView.xaml.cs">
+      <DependentUpon>EmployeeSearchDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogView.xaml.cs">
       <DependentUpon>ManageEmployeeFingerPrintSetDialogView.xaml</DependentUpon>
@@ -418,6 +443,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DateTimeRangeSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HumanResource\ActualTimeLogExportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -431,6 +460,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\ApplicationMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\ContractualPayrollView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -451,6 +484,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\Dialogs\AddEditLocatorDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\Dialogs\EmployeeSearchDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -555,6 +592,7 @@
   <ItemGroup>
     <Resource Include="Images\kiosk_background.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets" Condition="Exists('..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
