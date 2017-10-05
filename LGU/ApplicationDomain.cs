@@ -1,6 +1,7 @@
 ﻿using LGU.Entities.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Configuration;
 using System.IO;
 
 namespace LGU
