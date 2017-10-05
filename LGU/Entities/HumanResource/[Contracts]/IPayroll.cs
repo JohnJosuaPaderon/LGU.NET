@@ -4,7 +4,7 @@ namespace LGU.Entities.HumanResource
 {
     public interface IPayroll : IEntity<long>
     {
-        IPayrollType Type { get; }
+        IPayrollType Type { get; set; }
         IPayrollCutOff CutOff { get; set; }
         ValueRange<DateTime> RangeDate { get; set; }
         DateTime RunDate { get; set; }

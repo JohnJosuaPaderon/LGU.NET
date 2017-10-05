@@ -6,6 +6,6 @@ namespace LGU.Entities.HumanResource
         where TPayrollEmployee : IPayrollEmployee
     {
         IPayroll Payroll { get; set; }
-        List<TPayrollEmployee> Employees { get; }
+        IEnumerable<TPayrollEmployee> Employees { get; set; }
     }
 }

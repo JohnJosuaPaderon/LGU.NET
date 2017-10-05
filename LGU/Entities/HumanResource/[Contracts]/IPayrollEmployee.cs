@@ -6,6 +6,5 @@
         IPayroll Payroll { get; set; }
         decimal MonthlyRate { get; set; }
         decimal? WithholdingTax { get; set; }
-        string Remarks { get; set; }
     }
 }

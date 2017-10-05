@@ -2,5 +2,6 @@
 {
     public interface IContractualPayrollCluster : IPayrollCluster<IPayrollContractualEmployee>
     {
+        IContractualPayrollClusterInclusion Inclusion { get; set; }
     }
 }
