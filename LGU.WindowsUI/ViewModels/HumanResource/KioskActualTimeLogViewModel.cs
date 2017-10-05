@@ -3,16 +3,20 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Events.HumanResource;
 using LGU.Models;
 using LGU.Models.HumanResource;
+using LGU.Reports;
+using LGU.Reports.HumanResource;
+using LGU.Views.HumanResource;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace LGU.ViewModels.HumanResource
 {
-    public sealed class KioskActualTimeLogViewModel : ViewModelBase
+    public sealed class KioskActualTimeLogViewModel : ViewModelBase, IExportEventHandler
     {
         public KioskActualTimeLogViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
@@ -21,21 +25,27 @@ namespace LGU.ViewModels.HumanResource
                 Employee = MainKioskViewModel.SelectedKioskEmployee;
             }
 
-            r_TimeLogManager = ApplicationDomain.GetService<ITimeLogManager>();
-            r_KioskEmployeeChangedEvent = r_EventAggregator.GetEvent<KioskEmployeeChangedEvent>();
+            _TimeLogManager = ApplicationDomain.GetService<ITimeLogManager>();
+            _KioskEmployeeChangedEvent = r_EventAggregator.GetEvent<KioskEmployeeChangedEvent>();
+            _HumanResourceReport = ApplicationDomain.GetService<IHumanResourceReport>();
 
             TimeLogs = new ObservableCollection<ITimeLog>();
             GetTimeLogsCommand = new DelegateCommand(GetTimeLogs);
+            PrintCommand = new DelegateCommand(Print);
 
             CutOff = new ValueRangeModel<DateTime>(new ValueRange<DateTime>(DateTime.Now));
-            r_KioskEmployeeChangedEvent.Subscribe(OnKioskEmployeeChanged);
+            _KioskEmployeeChangedEvent.Subscribe(OnKioskEmployeeChanged);
         }
 
-        private readonly ITimeLogManager r_TimeLogManager;
-        private readonly KioskEmployeeChangedEvent r_KioskEmployeeChangedEvent;
+        private readonly ITimeLogManager _TimeLogManager;
+        private readonly KioskEmployeeChangedEvent _KioskEmployeeChangedEvent;
+        private readonly IHumanResourceReport _HumanResourceReport;
+
+        private IEnumerable<ITimeLog> RawTimeLogs { get; set; }
 
         public ObservableCollection<ITimeLog> TimeLogs { get; }
         public DelegateCommand GetTimeLogsCommand { get; }
+        public DelegateCommand PrintCommand { get; }
 
         private ValueRangeModel<DateTime> _CutOff;
         public ValueRangeModel<DateTime> CutOff
@@ -56,9 +66,11 @@ namespace LGU.ViewModels.HumanResource
             if (Employee != null)
             {
                 TimeLogs.Clear();
-                var result = await r_TimeLogManager.GetActualListByEmployeeCutOffAsync(Employee.GetSource(), CutOff.GetSource());
+                var result = await _TimeLogManager.GetActualListByEmployeeCutOffAsync(Employee.GetSource(), CutOff.GetSource());
 
-                if (result.DataList != null && result.DataList.Any())
+                RawTimeLogs = result.DataList;
+
+                if (RawTimeLogs != null && RawTimeLogs.Any())
                 {
                     foreach (var item in result.DataList)
                     {
@@ -76,10 +88,43 @@ namespace LGU.ViewModels.HumanResource
             }
         }
 
+        private async void Print()
+        {
+            if (Employee != null && RawTimeLogs != null && RawTimeLogs.Any())
+            {
+                await _HumanResourceReport.ExportActualTimeLogAsync(Employee.GetSource(), RawTimeLogs, CutOff.GetSource(), this);
+                r_RegionManager.RequestNavigate(MainKioskViewModel.KioskContentRegion, nameof(KioskServiceSelectionView));
+            }
+            else
+            {
+                EnqueueMessage("Cannot be printed.");
+            }
+        }
+
         private void OnKioskEmployeeChanged(EmployeeModel employee)
         {
             Employee = employee;
             GetTimeLogs();
+        }
+
+        public void OnException(Exception exception)
+        {
+            EnqueueMessage(exception.Message);
+        }
+
+        public void OnError(string message)
+        {
+            EnqueueMessage(message);
+        }
+
+        public void OnExported(string[] filePaths)
+        {
+            EnqueueMessage("Exported.");
+        }
+
+        public void OnExported(string filePath)
+        {
+            EnqueueMessage("Exported.");
         }
     }
 }
