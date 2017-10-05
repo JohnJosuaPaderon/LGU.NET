@@ -9,15 +9,11 @@ namespace LGU.EntityManagers.HumanResource
 {
     public sealed class EmployeeManager : EntityManagerBase<IEmployee, long>, IEmployeeManager
     {
-        private readonly IDeleteEmployee r_Delete;
-        private readonly IGetEmployeeById r_GetById;
-        private readonly IGetEmployeeList r_GetList;
-        private readonly IInsertEmployee r_Insert;
-        private readonly IUpdateEmployee r_Update;
-        private readonly ISearchEmployee r_Search;
-        private readonly IGetEmployeeListWithTimeLog r_GetListWithTimeLog;
-        private readonly ISearchEmployeeWithTimeLog r_SearchWithTimeLog;
-        private readonly IGetEmployeeListWithTimeLogByDepartment r_GetListWithTimeLogByDepartment;
+        private const string MESSAGE_INVALID = "Invalid employee.";
+        private const string MESSAGE_INVALID_IDENTIFIER = "Invalid employee identifier.";
+        private const string MESSAGE_INVALID_SEARCH_KEY = "Invalid search key.";
+        private const string MESSAGE_INVALID_DEPARTMENT = "Invalid department.";
+        private const string MESSAGE_INVALID_PAYROLL_TYPE = "Invalid payroll type.";
 
         public EmployeeManager(
             IDeleteEmployee delete,
@@ -28,29 +24,53 @@ namespace LGU.EntityManagers.HumanResource
             ISearchEmployee search,
             IGetEmployeeListWithTimeLog getListWithTimeLog,
             ISearchEmployeeWithTimeLog searchWithTimeLog,
-            IGetEmployeeListWithTimeLogByDepartment getListWithTimeLogByDepartment)
+            IGetEmployeeListWithTimeLogByDepartment getListWithTimeLogByDepartment,
+            IGetEmployeeListByPayrollType getEmployeeListByPayrollType)
         {
-            r_Delete = delete;
-            r_GetById = getById;
-            r_GetList = getList;
-            r_Insert = insert;
-            r_Update = update;
-            r_Search = search;
-            r_GetListWithTimeLog = getListWithTimeLog;
-            r_SearchWithTimeLog = searchWithTimeLog;
-            r_GetListWithTimeLogByDepartment = getListWithTimeLogByDepartment;
+            _Delete = delete;
+            _GetById = getById;
+            _GetList = getList;
+            _Insert = insert;
+            _Update = update;
+            _Search = search;
+            _GetListWithTimeLog = getListWithTimeLog;
+            _SearchWithTimeLog = searchWithTimeLog;
+            _GetListWithTimeLogByDepartment = getListWithTimeLogByDepartment;
+            _GetListByPayrollType = getEmployeeListByPayrollType;
+
+            _InvalidResult = new ProcessResult<IEmployee>(ProcessResultStatus.Failed, MESSAGE_INVALID);
+            _InvalidIdentifierResult = new ProcessResult<IEmployee>(ProcessResultStatus.Failed, MESSAGE_INVALID_IDENTIFIER);
+            _InvalidSearchKeyResult = new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, MESSAGE_INVALID_SEARCH_KEY);
+            _InvalidDepartmentResult = new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, MESSAGE_INVALID_DEPARTMENT);
+            _InvalidPayrollTypeResult = new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, MESSAGE_INVALID_PAYROLL_TYPE);
         }
+
+        private readonly IDeleteEmployee _Delete;
+        private readonly IGetEmployeeById _GetById;
+        private readonly IGetEmployeeList _GetList;
+        private readonly IInsertEmployee _Insert;
+        private readonly IUpdateEmployee _Update;
+        private readonly ISearchEmployee _Search;
+        private readonly IGetEmployeeListWithTimeLog _GetListWithTimeLog;
+        private readonly ISearchEmployeeWithTimeLog _SearchWithTimeLog;
+        private readonly IGetEmployeeListWithTimeLogByDepartment _GetListWithTimeLogByDepartment;
+        private readonly IGetEmployeeListByPayrollType _GetListByPayrollType;
+        private readonly IProcessResult<IEmployee> _InvalidResult;
+        private readonly IProcessResult<IEmployee> _InvalidIdentifierResult;
+        private readonly IEnumerableProcessResult<IEmployee> _InvalidSearchKeyResult;
+        private readonly IEnumerableProcessResult<IEmployee> _InvalidDepartmentResult;
+        private readonly IEnumerableProcessResult<IEmployee> _InvalidPayrollTypeResult;
 
         public IProcessResult<IEmployee> Delete(IEmployee data)
         {
             if (data != null)
             {
-                r_Delete.Employee = data;
-                return RemoveIfSuccess(r_Delete.Execute());
+                _Delete.Employee = data;
+                return RemoveIfSuccess(_Delete.Execute());
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return _InvalidResult;
             }
         }
 
@@ -58,12 +78,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Delete.Employee = data;
-                return RemoveIfSuccess(await r_Delete.ExecuteAsync());
+                _Delete.Employee = data;
+                return RemoveIfSuccess(await _Delete.ExecuteAsync());
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return _InvalidResult;
             }
         }
 
@@ -71,12 +91,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Delete.Employee = data;
-                return RemoveIfSuccess(await r_Delete.ExecuteAsync(cancellationToken));
+                _Delete.Employee = data;
+                return RemoveIfSuccess(await _Delete.ExecuteAsync(cancellationToken));
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return _InvalidResult;
             }
         }
 
@@ -90,13 +110,13 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetById.EmployeeId = id;
-                    return AddUpdateIfSuccess(r_GetById.Execute());
+                    _GetById.EmployeeId = id;
+                    return AddUpdateIfSuccess(_GetById.Execute());
                 }
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee identifier.");
+                return _InvalidIdentifierResult;
             }
         }
 
@@ -110,13 +130,13 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetById.EmployeeId = id;
-                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync());
+                    _GetById.EmployeeId = id;
+                    return AddUpdateIfSuccess(await _GetById.ExecuteAsync());
                 }
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee identifier.");
+                return _InvalidIdentifierResult;
             }
         }
 
@@ -130,41 +150,41 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetById.EmployeeId = id;
-                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync());
+                    _GetById.EmployeeId = id;
+                    return AddUpdateIfSuccess(await _GetById.ExecuteAsync());
                 }
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee identifier.");
+                return _InvalidIdentifierResult;
             }
         }
 
         public IEnumerableProcessResult<IEmployee> GetList()
         {
-            return AddUpdateIfSuccess(r_GetList.Execute());
+            return AddUpdateIfSuccess(_GetList.Execute());
         }
 
         public async Task<IEnumerableProcessResult<IEmployee>> GetListAsync()
         {
-            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
+            return AddUpdateIfSuccess(await _GetList.ExecuteAsync());
         }
 
         public async Task<IEnumerableProcessResult<IEmployee>> GetListAsync(CancellationToken cancellationToken)
         {
-            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
+            return AddUpdateIfSuccess(await _GetList.ExecuteAsync(cancellationToken));
         }
 
         public IProcessResult<IEmployee> Insert(IEmployee data)
         {
             if (data != null)
             {
-                r_Insert.Employee = data;
-                return AddIfSuccess(r_Insert.Execute());
+                _Insert.Employee = data;
+                return AddIfSuccess(_Insert.Execute());
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return _InvalidResult;
             }
         }
 
@@ -172,12 +192,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Insert.Employee = data;
-                return AddIfSuccess(await r_Insert.ExecuteAsync());
+                _Insert.Employee = data;
+                return AddIfSuccess(await _Insert.ExecuteAsync());
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return _InvalidResult;
             }
         }
 
@@ -185,12 +205,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Insert.Employee = data;
-                return AddIfSuccess(await r_Insert.ExecuteAsync());
+                _Insert.Employee = data;
+                return AddIfSuccess(await _Insert.ExecuteAsync());
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return _InvalidResult;
             }
         }
 
@@ -198,12 +218,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Update.Employee = data;
-                return UpdateIfSuccess(r_Update.Execute());
+                _Update.Employee = data;
+                return UpdateIfSuccess(_Update.Execute());
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return _InvalidResult;
             }
         }
 
@@ -211,12 +231,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Update.Employee = data;
-                return UpdateIfSuccess(await r_Update.ExecuteAsync());
+                _Update.Employee = data;
+                return UpdateIfSuccess(await _Update.ExecuteAsync());
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return _InvalidResult;
             }
         }
 
@@ -224,12 +244,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Update.Employee = data;
-                return UpdateIfSuccess(await r_Update.ExecuteAsync(cancellationToken));
+                _Update.Employee = data;
+                return UpdateIfSuccess(await _Update.ExecuteAsync(cancellationToken));
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid employee.");
+                return _InvalidResult;
             }
         }
 
@@ -237,12 +257,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
-                r_Search.SearchKey = searchKey;
-                return AddUpdateIfSuccess(r_Search.Execute());
+                _Search.SearchKey = searchKey;
+                return AddUpdateIfSuccess(_Search.Execute());
             }
             else
             {
-                return new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid search key.");
+                return _InvalidSearchKeyResult;
             }
         }
 
@@ -250,12 +270,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
-                r_Search.SearchKey = searchKey;
-                return AddUpdateIfSuccess(await r_Search.ExecuteAsync());
+                _Search.SearchKey = searchKey;
+                return AddUpdateIfSuccess(await _Search.ExecuteAsync());
             }
             else
             {
-                return new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid search key.");
+                return _InvalidSearchKeyResult;
             }
         }
 
@@ -263,44 +283,44 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
-                r_Search.SearchKey = searchKey;
-                return AddUpdateIfSuccess(await r_Search.ExecuteAsync(cancellationToken));
+                _Search.SearchKey = searchKey;
+                return AddUpdateIfSuccess(await _Search.ExecuteAsync(cancellationToken));
             }
             else
             {
-                return new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid search key.");
+                return _InvalidSearchKeyResult;
             }
         }
 
         public IEnumerableProcessResult<IEmployee> GetListWithTimeLog(ValueRange<DateTime> cutOff)
         {
-            r_GetListWithTimeLog.CutOff = cutOff;
-            return AddUpdateIfSuccess(r_GetListWithTimeLog.Execute());
+            _GetListWithTimeLog.CutOff = cutOff;
+            return AddUpdateIfSuccess(_GetListWithTimeLog.Execute());
         }
 
         public async Task<IEnumerableProcessResult<IEmployee>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff)
         {
-            r_GetListWithTimeLog.CutOff = cutOff;
-            return AddUpdateIfSuccess(await r_GetListWithTimeLog.ExecuteAsync());
+            _GetListWithTimeLog.CutOff = cutOff;
+            return AddUpdateIfSuccess(await _GetListWithTimeLog.ExecuteAsync());
         }
 
         public async Task<IEnumerableProcessResult<IEmployee>> GetListWithTimeLogAsync(ValueRange<DateTime> cutOff, CancellationToken cancellationToken)
         {
-            r_GetListWithTimeLog.CutOff = cutOff;
-            return AddUpdateIfSuccess(await r_GetListWithTimeLog.ExecuteAsync(cancellationToken));
+            _GetListWithTimeLog.CutOff = cutOff;
+            return AddUpdateIfSuccess(await _GetListWithTimeLog.ExecuteAsync(cancellationToken));
         }
 
         public IEnumerableProcessResult<IEmployee> SearchWithTimeLog(string searchKey, ValueRange<DateTime> cutOff)
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
-                r_SearchWithTimeLog.SearchKey = searchKey;
-                r_SearchWithTimeLog.CutOff = cutOff;
-                return AddUpdateIfSuccess(r_SearchWithTimeLog.Execute());
+                _SearchWithTimeLog.SearchKey = searchKey;
+                _SearchWithTimeLog.CutOff = cutOff;
+                return AddUpdateIfSuccess(_SearchWithTimeLog.Execute());
             }
             else
             {
-                return new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid search key.");
+                return _InvalidSearchKeyResult;
             }
         }
 
@@ -308,13 +328,13 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
-                r_SearchWithTimeLog.SearchKey = searchKey;
-                r_SearchWithTimeLog.CutOff = cutOff;
-                return AddUpdateIfSuccess(await r_SearchWithTimeLog.ExecuteAsync());
+                _SearchWithTimeLog.SearchKey = searchKey;
+                _SearchWithTimeLog.CutOff = cutOff;
+                return AddUpdateIfSuccess(await _SearchWithTimeLog.ExecuteAsync());
             }
             else
             {
-                return new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid search key.");
+                return _InvalidSearchKeyResult;
             }
         }
 
@@ -322,13 +342,13 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (!string.IsNullOrWhiteSpace(searchKey))
             {
-                r_SearchWithTimeLog.SearchKey = searchKey;
-                r_SearchWithTimeLog.CutOff = cutOff;
-                return AddUpdateIfSuccess(await r_SearchWithTimeLog.ExecuteAsync(cancellationToken));
+                _SearchWithTimeLog.SearchKey = searchKey;
+                _SearchWithTimeLog.CutOff = cutOff;
+                return AddUpdateIfSuccess(await _SearchWithTimeLog.ExecuteAsync(cancellationToken));
             }
             else
             {
-                return new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid search key.");
+                return _InvalidSearchKeyResult;
             }
         }
 
@@ -336,13 +356,13 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (department != null)
             {
-                r_GetListWithTimeLogByDepartment.CutOff = cutOff;
-                r_GetListWithTimeLogByDepartment.Department = department;
-                return AddUpdateIfSuccess(r_GetListWithTimeLogByDepartment.Execute());
+                _GetListWithTimeLogByDepartment.CutOff = cutOff;
+                _GetListWithTimeLogByDepartment.Department = department;
+                return AddUpdateIfSuccess(_GetListWithTimeLogByDepartment.Execute());
             }
             else
             {
-                return new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid department.");
+                return _InvalidDepartmentResult;
             }
         }
 
@@ -350,13 +370,13 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (department != null)
             {
-                r_GetListWithTimeLogByDepartment.CutOff = cutOff;
-                r_GetListWithTimeLogByDepartment.Department = department;
-                return AddUpdateIfSuccess(await r_GetListWithTimeLogByDepartment.ExecuteAsync());
+                _GetListWithTimeLogByDepartment.CutOff = cutOff;
+                _GetListWithTimeLogByDepartment.Department = department;
+                return AddUpdateIfSuccess(await _GetListWithTimeLogByDepartment.ExecuteAsync());
             }
             else
             {
-                return new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid department.");
+                return _InvalidDepartmentResult;
             }
         }
 
@@ -364,13 +384,52 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (department != null)
             {
-                r_GetListWithTimeLogByDepartment.CutOff = cutOff;
-                r_GetListWithTimeLogByDepartment.Department = department;
-                return AddUpdateIfSuccess(await r_GetListWithTimeLogByDepartment.ExecuteAsync(cancellationToken));
+                _GetListWithTimeLogByDepartment.CutOff = cutOff;
+                _GetListWithTimeLogByDepartment.Department = department;
+                return AddUpdateIfSuccess(await _GetListWithTimeLogByDepartment.ExecuteAsync(cancellationToken));
             }
             else
             {
-                return new EnumerableProcessResult<IEmployee>(ProcessResultStatus.Failed, "Invalid department.");
+                return _InvalidDepartmentResult;
+            }
+        }
+
+        public IEnumerableProcessResult<IEmployee> GetListByPayrollType(IPayrollType payrollType)
+        {
+            if (payrollType != null)
+            {
+                _GetListByPayrollType.PayrollType = payrollType;
+                return AddUpdateIfSuccess(_GetListByPayrollType.Execute());
+            }
+            else
+            {
+                return _InvalidPayrollTypeResult;
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<IEmployee>> GetListByPayrollTypeAsync(IPayrollType payrollType)
+        {
+            if (payrollType != null)
+            {
+                _GetListByPayrollType.PayrollType = payrollType;
+                return AddUpdateIfSuccess(await _GetListByPayrollType.ExecuteAsync());
+            }
+            else
+            {
+                return _InvalidPayrollTypeResult;
+            }
+        }
+
+        public async Task<IEnumerableProcessResult<IEmployee>> GetListByPayrollTypeAsync(IPayrollType payrollType, CancellationToken cancellationToken)
+        {
+            if (payrollType != null)
+            {
+                _GetListByPayrollType.PayrollType = payrollType;
+                return AddUpdateIfSuccess(await _GetListByPayrollType.ExecuteAsync(cancellationToken));
+            }
+            else
+            {
+                return _InvalidPayrollTypeResult;
             }
         }
     }
