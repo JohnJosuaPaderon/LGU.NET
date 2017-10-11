@@ -8,5 +8,6 @@ namespace LGU.EntityProcesses.HumanResource
         where TConnection : DbConnection
         where TTransaction : DbTransaction
     {
+        IPayrollContractualEmployee PayrollContractualEmployee { get; set; }
     }
 }
