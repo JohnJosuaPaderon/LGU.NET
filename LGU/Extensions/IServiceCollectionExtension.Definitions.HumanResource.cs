@@ -21,6 +21,7 @@ namespace LGU.Extensions
             instance.UseSqlServer_Employee();
             instance.UseSqlServer_EmployeeSalaryGradeStep();
             instance.UseSqlServer_EmployeeType();
+            instance.UseSqlServer_EmployeeWorkdaySchedule();
             instance.UseSqlServer_EmploymentStatus();
             instance.UseSqlServer_EssayQuestion();
             instance.UseSqlServer_Exam();
@@ -116,6 +117,8 @@ namespace LGU.Extensions
         public static IServiceCollection UseSqlServer_Department(this IServiceCollection instance)
         {
             instance.AddTransient<IDepartmentConverter<SqlDataReader>, DepartmentConverter>();
+            instance.AddSingleton<IDepartmentParameters, DepartmentParameters>();
+            instance.AddSingleton<IDepartmentFields, DepartmentFields>();
             instance.AddSingleton<IDeleteDepartment, DeleteDepartment>();
             instance.AddSingleton<IGetDepartmentById, GetDepartmentById>();
             instance.AddSingleton<IGetDepartmentList, GetDepartmentList>();
@@ -189,6 +192,7 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetEmployeeWorkdayScheduleById, GetEmployeeWorkdayScheduleById>();
             instance.AddSingleton<IInsertEmployeeWorkdaySchedule, InsertEmployeeWorkdaySchedule>();
             instance.AddSingleton<IUpdateEmployeeWorkdaySchedule, UpdateEmployeeWorkdaySchedule>();
+            instance.AddSingleton<IGetEmployeeWorkdayScheduleByEmployee, GetEmployeeWorkdayScheduleByEmployee>();
             instance.AddSingleton<IEmployeeWorkdayScheduleManager, EmployeeWorkdayScheduleManager>();
 
             return instance;
@@ -319,11 +323,24 @@ namespace LGU.Extensions
         public static IServiceCollection UseSqlServer_Payroll(this IServiceCollection instance)
         {
             instance.AddTransient<IPayrollConverter<SqlDataReader>, PayrollConverter>();
+            instance.AddSingleton<IPayrollFields, PayrollFields>();
+            instance.AddSingleton<IPayrollParameters, PayrollParameters>();
             instance.AddSingleton<IInsertPayroll<SqlConnection, SqlTransaction>, InsertPayroll>();
             instance.AddSingleton<IGetDefaultPayrollFromFile, GetDefaultPayrollFromFile>();
             instance.AddSingleton<ISaveDefaultPayrollToFile, SaveDefaultPayrollToFile>();
+            instance.AddSingleton<IGetPayrollById, GetPayrollById>();
             instance.AddSingleton<IPayrollConfigurationProvider, PayrollConfigurationProvider>();
             instance.AddSingleton<IPayrollManager<SqlConnection, SqlTransaction>, PayrollManager>();
+
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_PayrollContractualEmployee(this IServiceCollection instance)
+        {
+            instance.AddTransient<IPayrollContractualEmployeeConverter<SqlDataReader>, PayrollContractualEmployeeConverter>();
+            instance.AddSingleton<IInsertPayrollContractualEmployee<SqlConnection, SqlTransaction>, InsertPayrollContractualEmployee>();
+            instance.AddSingleton<IGeneratePayrollContractualEmployeeList, GeneratePayrollContractualEmployeeList>();
+            instance.AddSingleton<IPayrollContractualEmployeeManager<SqlConnection, SqlTransaction>, PayrollContractualEmployeeManager>();
 
             return instance;
         }
