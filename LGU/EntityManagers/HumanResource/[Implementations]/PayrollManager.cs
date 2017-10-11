@@ -12,20 +12,33 @@ namespace LGU.EntityManagers.HumanResource
     {
         private const string MESSAGE_INVALID = "Invalid payroll.";
         private const string MESSAGE_FILE_NOT_EXISTS = "File doesn't exists.";
+        private const string MESSAGE_INVALID_IDENTIFIER = "Invalid payroll identifier.";
 
         public PayrollManager(
             IInsertPayroll<SqlConnection, SqlTransaction> insert,
             IGetDefaultPayrollFromFile getDefaultFromFile,
-            ISaveDefaultPayrollToFile saveDefaultPayrollToFile)
+            ISaveDefaultPayrollToFile saveDefaultPayrollToFile,
+            IGetPayrollById getById)
         {
             _Insert = insert;
             _GetDefaultFromFile = getDefaultFromFile;
             _SaveDefaultPayrollToFile = saveDefaultPayrollToFile;
+            _GetById = getById;
+
+            _InvalidIdentifierResult = new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_INVALID_IDENTIFIER);
+            _InvalidResult = new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_INVALID);
+            _FileNotExistsResult = new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_FILE_NOT_EXISTS);
+            _FailedResult = new ProcessResult<IPayroll>(ProcessResultStatus.Failed);
         }
 
         private readonly IInsertPayroll<SqlConnection, SqlTransaction> _Insert;
         private readonly IGetDefaultPayrollFromFile _GetDefaultFromFile;
         private readonly ISaveDefaultPayrollToFile _SaveDefaultPayrollToFile;
+        private readonly IGetPayrollById _GetById;
+        private readonly IProcessResult<IPayroll> _InvalidResult;
+        private readonly IProcessResult<IPayroll> _FileNotExistsResult;
+        private readonly IProcessResult<IPayroll> _InvalidIdentifierResult;
+        private readonly IProcessResult<IPayroll> _FailedResult;
 
         public IProcessResult<IPayroll> Insert(IPayroll payroll)
         {
@@ -36,7 +49,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_INVALID);
+                return _InvalidResult;
             }
         }
 
@@ -49,7 +62,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_INVALID);
+                return _InvalidResult;
             }
         }
 
@@ -62,7 +75,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_INVALID);
+                return _InvalidResult;
             }
         }
 
@@ -75,7 +88,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_INVALID);
+                return _InvalidResult;
             }
         }
 
@@ -88,7 +101,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_INVALID);
+                return _InvalidResult;
             }
         }
 
@@ -101,7 +114,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_INVALID);
+                return _InvalidResult;
             }
         }
 
@@ -114,7 +127,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_FILE_NOT_EXISTS);
+                return _FileNotExistsResult;
             }
         }
 
@@ -127,7 +140,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_FILE_NOT_EXISTS);
+                return _FileNotExistsResult;
             }
         }
 
@@ -140,7 +153,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult<IPayroll>(ProcessResultStatus.Failed, MESSAGE_FILE_NOT_EXISTS);
+                return _FileNotExistsResult;
             }
         }
 
@@ -155,7 +168,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult(ProcessResultStatus.Failed);
+                return _FailedResult;
             }
         }
 
@@ -170,7 +183,7 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult(ProcessResultStatus.Failed);
+                return _FailedResult;
             }
         }
 
@@ -185,7 +198,67 @@ namespace LGU.EntityManagers.HumanResource
             }
             else
             {
-                return new ProcessResult(ProcessResultStatus.Failed);
+                return _FailedResult;
+            }
+        }
+
+        public IProcessResult<IPayroll> GetById(long payrollId)
+        {
+            if (payrollId > 0)
+            {
+                if (StaticSource.ContainsId(payrollId))
+                {
+                    return new ProcessResult<IPayroll>(StaticSource[payrollId]);
+                }
+                else
+                {
+                    _GetById.PayrollId = payrollId;
+                    return AddUpdateIfSuccess(_GetById.Execute());
+                }
+            }
+            else
+            {
+                return _InvalidIdentifierResult;
+            }
+        }
+
+        public async Task<IProcessResult<IPayroll>> GetByIdAsync(long payrollId)
+        {
+            if (payrollId > 0)
+            {
+                if (StaticSource.ContainsId(payrollId))
+                {
+                    return new ProcessResult<IPayroll>(StaticSource[payrollId]);
+                }
+                else
+                {
+                    _GetById.PayrollId = payrollId;
+                    return AddUpdateIfSuccess(await _GetById.ExecuteAsync());
+                }
+            }
+            else
+            {
+                return _InvalidIdentifierResult;
+            }
+        }
+
+        public async Task<IProcessResult<IPayroll>> GetByIdAsync(long payrollId, CancellationToken cancellationToken)
+        {
+            if (payrollId > 0)
+            {
+                if (StaticSource.ContainsId(payrollId))
+                {
+                    return new ProcessResult<IPayroll>(StaticSource[payrollId]);
+                }
+                else
+                {
+                    _GetById.PayrollId = payrollId;
+                    return AddUpdateIfSuccess(await _GetById.ExecuteAsync(cancellationToken));
+                }
+            }
+            else
+            {
+                return _InvalidIdentifierResult;
             }
         }
     }

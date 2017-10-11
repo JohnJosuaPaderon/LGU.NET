@@ -1,7 +1,6 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
 using LGU.Processes;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,28 +10,34 @@ namespace LGU.EntityManagers.HumanResource
     {
         private const string MESSAGE_INVALID = "Invalid employee workday schedule.";
         private const string MESSAGE_INVALID_IDENTIFIER = "Invalid employee workday schedule identifier.";
+        private const string MESSAGE_INVALID_EMPLOYEE = "Invalid employee.";
 
         public EmployeeWorkdayScheduleManager(
             IDeleteEmployeeWorkdaySchedule delete,
             IGetEmployeeWorkdayScheduleById getById,
             IInsertEmployeeWorkdaySchedule insert,
-            IUpdateEmployeeWorkdaySchedule update)
+            IUpdateEmployeeWorkdaySchedule update,
+            IGetEmployeeWorkdayScheduleByEmployee getByEmployee)
         {
             _Delete = delete;
             _GetById = getById;
             _Insert = insert;
             _Update = update;
+            _GetByEmployee = getByEmployee;
 
             _InvalidResult = new ProcessResult<IEmployeeWorkdaySchedule>(ProcessResultStatus.Failed, MESSAGE_INVALID);
             _InvalidIdentifierResult = new ProcessResult<IEmployeeWorkdaySchedule>(ProcessResultStatus.Failed, MESSAGE_INVALID_IDENTIFIER);
+            _InvalidEmployeeResult = new ProcessResult<IEmployeeWorkdaySchedule>(ProcessResultStatus.Failed, MESSAGE_INVALID_EMPLOYEE);
         }
 
         private readonly IDeleteEmployeeWorkdaySchedule _Delete;
         private readonly IGetEmployeeWorkdayScheduleById _GetById;
         private readonly IInsertEmployeeWorkdaySchedule _Insert;
         private readonly IUpdateEmployeeWorkdaySchedule _Update;
+        private readonly IGetEmployeeWorkdayScheduleByEmployee _GetByEmployee;
         private readonly IProcessResult<IEmployeeWorkdaySchedule> _InvalidResult;
         private readonly IProcessResult<IEmployeeWorkdaySchedule> _InvalidIdentifierResult;
+        private readonly IProcessResult<IEmployeeWorkdaySchedule> _InvalidEmployeeResult;
 
         public IProcessResult<IEmployeeWorkdaySchedule> Delete(IEmployeeWorkdaySchedule employeeWorkdaySchedule)
         {
@@ -208,6 +213,45 @@ namespace LGU.EntityManagers.HumanResource
             else
             {
                 return _InvalidResult;
+            }
+        }
+
+        public IProcessResult<IEmployeeWorkdaySchedule> GetByEmployee(IEmployee employee)
+        {
+            if (employee != null)
+            {
+                _GetByEmployee.Employee = employee;
+                return AddUpdateIfSuccess(_GetByEmployee.Execute());
+            }
+            else
+            {
+                return _InvalidEmployeeResult;
+            }
+        }
+
+        public async Task<IProcessResult<IEmployeeWorkdaySchedule>> GetByEmployeeAsync(IEmployee employee)
+        {
+            if (employee != null)
+            {
+                _GetByEmployee.Employee = employee;
+                return AddUpdateIfSuccess(await _GetByEmployee.ExecuteAsync());
+            }
+            else
+            {
+                return _InvalidEmployeeResult;
+            }
+        }
+
+        public async Task<IProcessResult<IEmployeeWorkdaySchedule>> GetByEmployeeAsync(IEmployee employee, CancellationToken cancellationToken)
+        {
+            if (employee != null)
+            {
+                _GetByEmployee.Employee = employee;
+                return AddUpdateIfSuccess(await _GetByEmployee.ExecuteAsync(cancellationToken));
+            }
+            else
+            {
+                return _InvalidEmployeeResult;
             }
         }
     }
