@@ -23,7 +23,7 @@ namespace LGU.EntityProcesses.HumanResource
         private readonly IProcessResult<IEmployeeWorkdaySchedule> _FailedResult;
 
         private SqlQueryInfo<IEmployeeWorkdaySchedule> QueryInfo =>
-            SqlQueryInfo<IEmployeeWorkdaySchedule>.CreateProcedureQueryInfo(EmployeeWorkdaySchedule, nameof(DeleteEmployeeWorkdaySchedule), GetProcessResult, true)
+            SqlQueryInfo<IEmployeeWorkdaySchedule>.CreateProcedureQueryInfo(EmployeeWorkdaySchedule, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter(PARAM_ID, EmployeeWorkdaySchedule.Id)
             .AddLogByParameter();
 

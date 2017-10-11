@@ -9,38 +9,41 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class GetEmployeeWorkdayScheduleById : HumanResourceProcessBaseV2, IGetEmployeeWorkdayScheduleById
+    public sealed class GetEmployeeWorkdayScheduleByEmployee : HumanResourceProcessBaseV2, IGetEmployeeWorkdayScheduleByEmployee
     {
-        private const string PARAM_ID = "@_Id";
-
-        public GetEmployeeWorkdayScheduleById(IConnectionStringSource connectionStringSource, IEmployeeWorkdayScheduleConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public GetEmployeeWorkdayScheduleByEmployee(
+            IConnectionStringSource connectionStringSource,
+            IEmployeeWorkdayScheduleConverter<SqlDataReader> converter,
+            IEmployeeWorkdayScheduleParameters parameters) : base(connectionStringSource)
         {
             _Converter = converter;
+            _Parameters = parameters;
         }
 
-        public long EmployeeWorkdayScheduleId { get; set; }
-
         private readonly IEmployeeWorkdayScheduleConverter<SqlDataReader> _Converter;
+        private readonly IEmployeeWorkdayScheduleParameters _Parameters;
+
+        public IEmployee Employee { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
-            .AddInputParameter(PARAM_ID, EmployeeWorkdayScheduleId);
+            .AddInputParameter(_Parameters.EmployeeId, Employee?.Id);
 
         public IProcessResult<IEmployeeWorkdaySchedule> Execute()
         {
-            _Converter.Prop_Id.Value = EmployeeWorkdayScheduleId;
+            _Converter.Prop_Employee.Value = Employee;
             return _SqlHelper.ExecuteReader(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IEmployeeWorkdaySchedule>> ExecuteAsync()
         {
-            _Converter.Prop_Id.Value = EmployeeWorkdayScheduleId;
+            _Converter.Prop_Employee.Value = Employee;
             return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IEmployeeWorkdaySchedule>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            _Converter.Prop_Id.Value = EmployeeWorkdayScheduleId;
+            _Converter.Prop_Employee.Value = Employee;
             return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter, cancellationToken);
         }
     }

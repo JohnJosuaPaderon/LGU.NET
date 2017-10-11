@@ -22,7 +22,7 @@ namespace LGU.EntityProcesses.HumanResource
         private readonly IEmployeeWorkdayScheduleParameters _Parameters;
 
         private SqlQueryInfo<IEmployeeWorkdaySchedule> QueryInfo =>
-            SqlQueryInfo<IEmployeeWorkdaySchedule>.CreateProcedureQueryInfo(EmployeeWorkdaySchedule, nameof(UpdateEmployeeWorkdaySchedule), GetProcessResult, true)
+            SqlQueryInfo<IEmployeeWorkdaySchedule>.CreateProcedureQueryInfo(EmployeeWorkdaySchedule, GetQualifiedDbObjectName(), GetProcessResult, true)
             .AddInputParameter(_Parameters.Id, EmployeeWorkdaySchedule.Id)
             .AddInputParameter(_Parameters.EmployeeId, EmployeeWorkdaySchedule.Employee?.Id)
             .AddInputParameter(_Parameters.Sunday, EmployeeWorkdaySchedule.Sunday)
