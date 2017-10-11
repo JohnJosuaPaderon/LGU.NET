@@ -10,6 +10,9 @@ namespace LGU.EntityManagers.HumanResource
         IProcessResult<IEmployeeWorkdaySchedule> Delete(IEmployeeWorkdaySchedule employeeWorkdaySchedule);
         Task<IProcessResult<IEmployeeWorkdaySchedule>> DeleteAsync(IEmployeeWorkdaySchedule employeeWorkdaySchedule);
         Task<IProcessResult<IEmployeeWorkdaySchedule>> DeleteAsync(IEmployeeWorkdaySchedule employeeWorkdaySchedule, CancellationToken cancellationToken);
+        IProcessResult<IEmployeeWorkdaySchedule> GetByEmployee(IEmployee employee);
+        Task<IProcessResult<IEmployeeWorkdaySchedule>> GetByEmployeeAsync(IEmployee employee);
+        Task<IProcessResult<IEmployeeWorkdaySchedule>> GetByEmployeeAsync(IEmployee employee, CancellationToken cancellationToken);
         IProcessResult<IEmployeeWorkdaySchedule> GetById(long employeeWorkdayScheduleId);
         Task<IProcessResult<IEmployeeWorkdaySchedule>> GetByIdAsync(long employeeWorkdayScheduleId);
         Task<IProcessResult<IEmployeeWorkdaySchedule>> GetByIdAsync(long employeeWorkdayScheduleId, CancellationToken cancellationToken);

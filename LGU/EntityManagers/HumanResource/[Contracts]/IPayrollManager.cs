@@ -10,6 +10,9 @@ namespace LGU.EntityManagers.HumanResource
         where TConnection : DbConnection
         where TTransaction : DbTransaction
     {
+        IProcessResult<IPayroll> GetById(long payrollId);
+        Task<IProcessResult<IPayroll>> GetByIdAsync(long payrollId);
+        Task<IProcessResult<IPayroll>> GetByIdAsync(long payrollId, CancellationToken cancellationToken);
         IProcessResult<IPayroll> Insert(IPayroll payroll);
         Task<IProcessResult<IPayroll>> InsertAsync(IPayroll payroll);
         Task<IProcessResult<IPayroll>> InsertAsync(IPayroll payroll, CancellationToken cancellationToken);
