@@ -7,10 +7,11 @@ namespace LGU.EntityConverters.HumanResource
     public interface IPayrollContractualEmployeeConverter<TDataReader> : IDataConverter<IPayrollContractualEmployee, TDataReader>
         where TDataReader : DbDataReader
     {
-        IDataConverterProperty<IEmployee> Employee { get; }
-        IDataConverterProperty<IPayroll> Payroll { get; }
-        IDataConverterProperty<decimal> MonthlyRate { get; }
-        IDataConverterProperty<decimal?> WithholdingTax { get; }
-        IDataConverterProperty<string> Remarks { get; }
+        IDataConverterProperty<IEmployee> PEmployee { get; }
+        IDataConverterProperty<IPayroll> PPayroll { get; }
+        IDataConverterProperty<decimal> PMonthlyRate { get; }
+        IDataConverterProperty<decimal?> PWithholdingTax { get; }
+        IDataConverterProperty<decimal?> PHdmfPremiumPs { get; }
+        IDataConverterProperty<decimal> PTimeLogDeduction { get; }
     }
 }
