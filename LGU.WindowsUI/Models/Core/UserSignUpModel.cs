@@ -100,5 +100,36 @@ namespace LGU.Models.Core
                 };
             }
         }
+
+        public static bool operator ==(UserSignUpModel left, UserSignUpModel right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(UserSignUpModel left, UserSignUpModel right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (GetType() != obj.GetType()) return false;
+
+            if (obj is UserSignUpModel value)
+            {
+                return (Id == 0 || value.Id == 0) ? false : Id == value.Id;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
 }
