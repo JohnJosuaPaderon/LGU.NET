@@ -68,7 +68,7 @@ namespace LGU.EntityConverters.HumanResource
         
         private IEmployeeWorkdaySchedule Get(SqlDataReader reader)
         {
-            var employee = Prop_Employee.TryGetValueFromProcess2(_EmployeeManager.GetById, reader.GetInt64, FIELD_EMPLOYEE_ID);
+            var employee = Prop_Employee.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, FIELD_EMPLOYEE_ID);
             return Get(employee, reader);
         }
 

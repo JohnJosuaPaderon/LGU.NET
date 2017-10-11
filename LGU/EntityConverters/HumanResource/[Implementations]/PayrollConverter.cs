@@ -13,65 +13,56 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class PayrollConverter : IPayrollConverter<SqlDataReader>
     {
-        private const string FIELD_ID = "Id";
-        private const string FIELD_TYPE_ID = "TypeId";
-        private const string FIELD_CUT_OFF_ID = "CutOffId";
-        private const string FIELD_RANGE_DATE_BEGIN = "RangeDateBegin";
-        private const string FIELD_RANGE_DATE_END = "RangeDateEnd";
-        private const string FIELD_RUN_DATE = "RunDate";
-        private const string FIELD_HUMAN_RESOURCE_HEAD_ID = "HumanResourceHeadId";
-        private const string FIELD_MAYOR_ID = "MayorId";
-        private const string FIELD_TREASURER_ID = "TreasurerId";
-        private const string FIELD_CITY_ACCOUNTANT_ID = "CityAccountantId";
-        private const string FIELD_CITY_BUDGET_OFFICER_ID = "CityBudgetOfficerId";
-
         public PayrollConverter(
+            IPayrollFields fields,
             IPayrollTypeManager payrollTypeManager,
             IPayrollCutOffManager payrollCutOffManager,
             IEmployeeManager employeeManager)
         {
+            _Fields = fields;
             _PayrollTypeManager = payrollTypeManager;
             _PayrollCutOffManager = payrollCutOffManager;
             _EmployeeManager = employeeManager;
 
-            Prop_Id = new DataConverterProperty<long>();
-            Prop_Type = new DataConverterProperty<IPayrollType>();
-            Prop_CutOff = new DataConverterProperty<IPayrollCutOff>();
-            Prop_RangeDate = new DataConverterProperty<ValueRange<DateTime>>();
-            Prop_RunDate = new DataConverterProperty<DateTime>();
-            Prop_HumanResourceHead = new DataConverterProperty<IEmployee>();
-            Prop_Mayor = new DataConverterProperty<IEmployee>();
-            Prop_Treasurer = new DataConverterProperty<IEmployee>();
-            Prop_CityAccountant = new DataConverterProperty<IEmployee>();
-            Prop_CityBudgetOfficer = new DataConverterProperty<IEmployee>();
+            PId = new DataConverterProperty<long>();
+            PType = new DataConverterProperty<IPayrollType>();
+            PCutOff = new DataConverterProperty<IPayrollCutOff>();
+            PRangeDate = new DataConverterProperty<ValueRange<DateTime>>();
+            PRunDate = new DataConverterProperty<DateTime>();
+            PHumanResourceHead = new DataConverterProperty<IEmployee>();
+            PMayor = new DataConverterProperty<IEmployee>();
+            PTreasurer = new DataConverterProperty<IEmployee>();
+            PCityAccountant = new DataConverterProperty<IEmployee>();
+            PCityBudgetOfficer = new DataConverterProperty<IEmployee>();
         }
 
+        private readonly IPayrollFields _Fields;
         private readonly IPayrollTypeManager _PayrollTypeManager;
         private readonly IPayrollCutOffManager _PayrollCutOffManager;
         private readonly IEmployeeManager _EmployeeManager;
 
-        public IDataConverterProperty<long> Prop_Id { get; }
-        public IDataConverterProperty<IPayrollType> Prop_Type { get; }
-        public IDataConverterProperty<IPayrollCutOff> Prop_CutOff { get; }
-        public IDataConverterProperty<ValueRange<DateTime>> Prop_RangeDate { get; }
-        public IDataConverterProperty<DateTime> Prop_RunDate { get; }
-        public IDataConverterProperty<IEmployee> Prop_HumanResourceHead { get; }
-        public IDataConverterProperty<IEmployee> Prop_Mayor { get; }
-        public IDataConverterProperty<IEmployee> Prop_Treasurer { get; }
-        public IDataConverterProperty<IEmployee> Prop_CityAccountant { get; }
-        public IDataConverterProperty<IEmployee> Prop_CityBudgetOfficer { get; }
+        public IDataConverterProperty<long> PId { get; }
+        public IDataConverterProperty<IPayrollType> PType { get; }
+        public IDataConverterProperty<IPayrollCutOff> PCutOff { get; }
+        public IDataConverterProperty<ValueRange<DateTime>> PRangeDate { get; }
+        public IDataConverterProperty<DateTime> PRunDate { get; }
+        public IDataConverterProperty<IEmployee> PHumanResourceHead { get; }
+        public IDataConverterProperty<IEmployee> PMayor { get; }
+        public IDataConverterProperty<IEmployee> PTreasurer { get; }
+        public IDataConverterProperty<IEmployee> PCityAccountant { get; }
+        public IDataConverterProperty<IEmployee> PCityBudgetOfficer { get; }
 
         private IPayroll Get(IPayrollType type, IPayrollCutOff cutOff, IEmployee humanResourceHead, IEmployee mayor, IEmployee treasurer, IEmployee cityAccountant, IEmployee cityBudgetOfficer, SqlDataReader reader)
         {
             return new Payroll
             {
-                Id = reader.GetInt64(FIELD_ID),
+                Id = reader.GetInt64(_Fields.Id),
                 Type = type,
                 CutOff = cutOff,
                 RangeDate = new ValueRange<DateTime>(
-                    reader.GetDateTime(FIELD_RANGE_DATE_BEGIN),
-                    reader.GetDateTime(FIELD_RANGE_DATE_END)),
-                RunDate = reader.GetDateTime(FIELD_RUN_DATE),
+                    reader.GetDateTime(_Fields.RangeDateBegin),
+                    reader.GetDateTime(_Fields.RangeDateEnd)),
+                RunDate = reader.GetDateTime(_Fields.RunDate),
                 HumanResourceHead = humanResourceHead,
                 Mayor = mayor,
                 Treasurer = treasurer,
@@ -82,39 +73,39 @@ namespace LGU.EntityConverters.HumanResource
 
         private IPayroll Get(SqlDataReader reader)
         {
-            var type = Prop_Type.TryGetValueFromProcess(_PayrollTypeManager.GetById, reader.GetInt16(FIELD_TYPE_ID));
-            var cutOff = Prop_CutOff.TryGetValueFromProcess(_PayrollCutOffManager.GetById, reader.GetInt16(FIELD_CUT_OFF_ID));
-            var humanResourceHead = Prop_HumanResourceHead.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64(FIELD_HUMAN_RESOURCE_HEAD_ID));
-            var mayor = Prop_Mayor.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64(FIELD_MAYOR_ID));
-            var treasurer = Prop_Treasurer.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64(FIELD_TREASURER_ID));
-            var cityAccountant = Prop_CityAccountant.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64(FIELD_CITY_ACCOUNTANT_ID));
-            var cityBudgetOfficer = Prop_CityBudgetOfficer.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64(FIELD_CITY_BUDGET_OFFICER_ID));
+            var type = PType.TryGetValueFromProcess(_PayrollTypeManager.GetById, reader.GetInt16, _Fields.TypeId);
+            var cutOff = PCutOff.TryGetValueFromProcess(_PayrollCutOffManager.GetById, reader.GetInt16, _Fields.CutOffId);
+            var humanResourceHead = PHumanResourceHead.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.HumanResourceHeadId);
+            var mayor = PMayor.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.MayorId);
+            var treasurer = PTreasurer.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.TreasurerId);
+            var cityAccountant = PCityAccountant.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.CityAccountantId);
+            var cityBudgetOfficer = PCityBudgetOfficer.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.CityBudgetOfficerId);
 
             return Get(type, cutOff, humanResourceHead, mayor, treasurer, cityAccountant, cityBudgetOfficer, reader);
         }
 
         private async Task<IPayroll> GetAsync(SqlDataReader reader)
         {
-            var type = await Prop_Type.TryGetValueFromProcessAsync(_PayrollTypeManager.GetByIdAsync, reader.GetInt16(FIELD_TYPE_ID));
-            var cutOff = await Prop_CutOff.TryGetValueFromProcessAsync(_PayrollCutOffManager.GetByIdAsync, reader.GetInt16(FIELD_CUT_OFF_ID));
-            var humanResourceHead = await Prop_HumanResourceHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64(FIELD_HUMAN_RESOURCE_HEAD_ID));
-            var mayor = await Prop_Mayor.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64(FIELD_MAYOR_ID));
-            var treasurer = await Prop_Treasurer.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64(FIELD_TREASURER_ID));
-            var cityAccountant = await Prop_CityAccountant.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64(FIELD_CITY_ACCOUNTANT_ID));
-            var cityBudgetOfficer = await Prop_CityBudgetOfficer.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64(FIELD_CITY_BUDGET_OFFICER_ID));
+            var type = await PType.TryGetValueFromProcessAsync(_PayrollTypeManager.GetByIdAsync, reader.GetInt16, _Fields.TypeId);
+            var cutOff = await PCutOff.TryGetValueFromProcessAsync(_PayrollCutOffManager.GetByIdAsync, reader.GetInt16, _Fields.CutOffId);
+            var humanResourceHead = await PHumanResourceHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HumanResourceHeadId);
+            var mayor = await PMayor.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.MayorId);
+            var treasurer = await PTreasurer.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.TreasurerId);
+            var cityAccountant = await PCityAccountant.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.CityAccountantId);
+            var cityBudgetOfficer = await PCityBudgetOfficer.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.CityBudgetOfficerId);
 
             return Get(type, cutOff, humanResourceHead, mayor, treasurer, cityAccountant, cityBudgetOfficer, reader);
         }
 
         private async Task<IPayroll> GetAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
-            var type = await Prop_Type.TryGetValueFromProcessAsync(_PayrollTypeManager.GetByIdAsync, reader.GetInt16(FIELD_TYPE_ID), cancellationToken);
-            var cutOff = await Prop_CutOff.TryGetValueFromProcessAsync(_PayrollCutOffManager.GetByIdAsync, reader.GetInt16(FIELD_CUT_OFF_ID), cancellationToken);
-            var humanResourceHead = await Prop_HumanResourceHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64(FIELD_HUMAN_RESOURCE_HEAD_ID), cancellationToken);
-            var mayor = await Prop_Mayor.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64(FIELD_MAYOR_ID), cancellationToken);
-            var treasurer = await Prop_Treasurer.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64(FIELD_TREASURER_ID), cancellationToken);
-            var cityAccountant = await Prop_CityAccountant.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64(FIELD_CITY_ACCOUNTANT_ID), cancellationToken);
-            var cityBudgetOfficer = await Prop_CityBudgetOfficer.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64(FIELD_CITY_BUDGET_OFFICER_ID), cancellationToken);
+            var type = await PType.TryGetValueFromProcessAsync(_PayrollTypeManager.GetByIdAsync, reader.GetInt16, _Fields.TypeId, cancellationToken);
+            var cutOff = await PCutOff.TryGetValueFromProcessAsync(_PayrollCutOffManager.GetByIdAsync, reader.GetInt16, _Fields.CutOffId, cancellationToken);
+            var humanResourceHead = await PHumanResourceHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HumanResourceHeadId, cancellationToken);
+            var mayor = await PMayor.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.MayorId, cancellationToken);
+            var treasurer = await PTreasurer.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.TreasurerId, cancellationToken);
+            var cityAccountant = await PCityAccountant.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.CityAccountantId, cancellationToken);
+            var cityBudgetOfficer = await PCityBudgetOfficer.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.CityBudgetOfficerId, cancellationToken);
 
             return Get(type, cutOff, humanResourceHead, mayor, treasurer, cityAccountant, cityBudgetOfficer, reader);
         }

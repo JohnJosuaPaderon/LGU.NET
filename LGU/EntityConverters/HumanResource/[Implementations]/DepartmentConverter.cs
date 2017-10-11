@@ -13,43 +13,52 @@ namespace LGU.EntityConverters.HumanResource
 {
     public class DepartmentConverter : IDepartmentConverter<SqlDataReader>
     {
-        private const string FIELD_ID = "Id";
-        private const string FIELD_DESCRIPTION = "Description";
-        private const string FIELD_ABBREVIATION = "Abbreviation";
-        private const string FIELD_HEAD_ID = "HeadId";
-
-        public DepartmentConverter(IDepartmentHeadManager departmentHeadManager)
+        public DepartmentConverter(IDepartmentFields fields, IDepartmentHeadManager departmentHeadManager)
         {
-            r_DepartmentHeadManager = departmentHeadManager;
+            _Fields = fields;
+            _DepartmentHeadManager = departmentHeadManager;
 
-            Prop_Id = new DataConverterProperty<int>();
-            Prop_Description = new DataConverterProperty<string>();
-            Prop_Abbreviation = new DataConverterProperty<string>();
-            Prop_Head = new DataConverterProperty<IDepartmentHead>();
+            PId = new DataConverterProperty<int>();
+            PDescription = new DataConverterProperty<string>();
+            PAbbreviation = new DataConverterProperty<string>();
+            PHead = new DataConverterProperty<IDepartmentHead>();
         }
 
-        private readonly IDepartmentHeadManager r_DepartmentHeadManager;
+        private readonly IDepartmentFields _Fields;
+        private readonly IDepartmentHeadManager _DepartmentHeadManager;
 
-        public IDataConverterProperty<int> Prop_Id { get; }
-        public IDataConverterProperty<string> Prop_Description { get; }
-        public IDataConverterProperty<string> Prop_Abbreviation { get; }
-        public IDataConverterProperty<IDepartmentHead> Prop_Head { get; }
+        public IDataConverterProperty<int> PId { get; }
+        public IDataConverterProperty<string> PDescription { get; }
+        public IDataConverterProperty<string> PAbbreviation { get; }
+        public IDataConverterProperty<IDepartmentHead> PHead { get; }
 
-        private IDepartment GetData(IDepartmentHead head, SqlDataReader reader)
+        private IDepartment Get(IDepartmentHead head, SqlDataReader reader)
         {
             return new Department()
             {
-                Id = Prop_Id.TryGetValue(reader.GetInt32, FIELD_ID),
-                Description = Prop_Description.TryGetValue(reader.GetString, FIELD_DESCRIPTION),
-                Abbreviation = Prop_Abbreviation.TryGetValue(reader.GetString, FIELD_ABBREVIATION),
+                Id = PId.TryGetValue(reader.GetInt32, _Fields.Id),
+                Description = PDescription.TryGetValue(reader.GetString, _Fields.Description),
+                Abbreviation = PAbbreviation.TryGetValue(reader.GetString, _Fields.Abbreviation),
                 Head = head
             };
         }
 
-        private IDepartment GetData(SqlDataReader reader)
+        private IDepartment Get(SqlDataReader reader)
         {
-            var head = Prop_Head.TryGetValueFromProcess(r_DepartmentHeadManager.GetById, reader.GetInt64(FIELD_HEAD_ID));
-            return GetData(head, reader);
+            var head = PHead.TryGetValueFromProcess(_DepartmentHeadManager.GetById, reader.GetInt64, _Fields.HeadId);
+            return Get(head, reader);
+        }
+
+        private async Task<IDepartment> GetAsync(SqlDataReader reader)
+        {
+            var head = await PHead.TryGetValueFromProcessAsync(_DepartmentHeadManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId);
+            return Get(head, reader);
+        }
+
+        private async Task<IDepartment> GetAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        {
+            var head = await PHead.TryGetValueFromProcessAsync(_DepartmentHeadManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId, cancellationToken);
+            return Get(head, reader);
         }
 
         public IEnumerableProcessResult<IDepartment> EnumerableFromReader(SqlDataReader reader)
@@ -60,7 +69,7 @@ namespace LGU.EntityConverters.HumanResource
 
                 while (reader.Read())
                 {
-                    list.Add(GetData(reader));
+                    list.Add(Get(reader));
                 }
 
                 return new EnumerableProcessResult<IDepartment>(list);
@@ -79,7 +88,7 @@ namespace LGU.EntityConverters.HumanResource
 
                 while (await reader.ReadAsync())
                 {
-                    list.Add(GetData(reader));
+                    list.Add(await GetAsync(reader));
                 }
 
                 return new EnumerableProcessResult<IDepartment>(list);
@@ -98,7 +107,7 @@ namespace LGU.EntityConverters.HumanResource
 
                 while (await reader.ReadAsync(cancellationToken))
                 {
-                    list.Add(GetData(reader));
+                    list.Add(await GetAsync(reader, cancellationToken));
                 }
 
                 return new EnumerableProcessResult<IDepartment>(list);
@@ -115,7 +124,7 @@ namespace LGU.EntityConverters.HumanResource
             try
             {
                 reader.Read();
-                return new ProcessResult<IDepartment>(GetData(reader));
+                return new ProcessResult<IDepartment>(Get(reader));
             }
             catch (Exception ex)
             {
@@ -128,7 +137,7 @@ namespace LGU.EntityConverters.HumanResource
             try
             {
                 await reader.ReadAsync();
-                return new ProcessResult<IDepartment>(GetData(reader));
+                return new ProcessResult<IDepartment>(await GetAsync(reader));
             }
             catch (Exception ex)
             {
@@ -141,7 +150,7 @@ namespace LGU.EntityConverters.HumanResource
             try
             {
                 await reader.ReadAsync(cancellationToken);
-                return new ProcessResult<IDepartment>(GetData(reader));
+                return new ProcessResult<IDepartment>(await GetAsync(reader, cancellationToken));
             }
             catch (Exception ex)
             {

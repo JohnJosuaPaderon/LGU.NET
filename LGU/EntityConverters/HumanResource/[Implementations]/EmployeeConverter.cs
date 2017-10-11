@@ -129,14 +129,14 @@ namespace LGU.EntityConverters.HumanResource
 
         private IEmployee GetData(SqlDataReader reader)
         {
-            var gender = Prop_Gender.TryGetValueFromProcess2(_GenderManager.GetById, reader.GetInt16, FIELD_GENDER_ID);
-            var department = Prop_Department.TryGetValueFromProcess2(_DepartmentManager.GetById, reader.GetInt32, FIELD_DEPARTMENT_ID);
-            var type = Prop_Type.TryGetValueFromProcess2(_EmployeeTypeManager.GetById, reader.GetInt16, FIELD_TYPE_ID);
-            var employmentStatus = Prop_EmploymentStatus.TryGetValueFromProcess2(_EmploymentStatusManager.GetById, reader.GetInt16, FIELD_EMPLOYMENT_STATUS_ID);
-            var position = Prop_Position.TryGetValueFromProcess2(_PositionManager.GetById, reader.GetInt32, FIELD_POSITION_ID);
-            var departmentHead = Prop_DepartmentHead.TryGetValueFromProcess2(_DepartmentHeadManager.GetById, reader.GetInt64, FIELD_DEPARTMENT_HEAD_ID);
-            var workTimeSchedule = Prop_WorkTimeSchedule.TryGetValueFromProcess2(_WorkTimeScheduleManager.GetById, reader.GetInt32, FIELD_WORK_TIME_SCHEDULE_ID);
-            var payrollType = Prop_PayrollType.TryGetValueFromProcess2(_PayrollTypeManager.GetById, reader.GetInt16, FIELD_PAYROLL_TYPE_ID);
+            var gender = Prop_Gender.TryGetValueFromProcess(_GenderManager.GetById, reader.GetInt16, FIELD_GENDER_ID);
+            var department = Prop_Department.TryGetValueFromProcess(_DepartmentManager.GetById, reader.GetInt32, FIELD_DEPARTMENT_ID);
+            var type = Prop_Type.TryGetValueFromProcess(_EmployeeTypeManager.GetById, reader.GetInt16, FIELD_TYPE_ID);
+            var employmentStatus = Prop_EmploymentStatus.TryGetValueFromProcess(_EmploymentStatusManager.GetById, reader.GetInt16, FIELD_EMPLOYMENT_STATUS_ID);
+            var position = Prop_Position.TryGetValueFromProcess(_PositionManager.GetById, reader.GetInt32, FIELD_POSITION_ID);
+            var departmentHead = Prop_DepartmentHead.TryGetValueFromProcess(_DepartmentHeadManager.GetById, reader.GetInt64, FIELD_DEPARTMENT_HEAD_ID);
+            var workTimeSchedule = Prop_WorkTimeSchedule.TryGetValueFromProcess(_WorkTimeScheduleManager.GetById, reader.GetInt32, FIELD_WORK_TIME_SCHEDULE_ID);
+            var payrollType = Prop_PayrollType.TryGetValueFromProcess(_PayrollTypeManager.GetById, reader.GetInt16, FIELD_PAYROLL_TYPE_ID);
 
             return Get(
                 gender,
