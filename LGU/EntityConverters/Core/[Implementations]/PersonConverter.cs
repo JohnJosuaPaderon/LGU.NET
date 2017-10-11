@@ -62,19 +62,19 @@ namespace LGU.EntityConverters.Core
 
         private IPerson GetData(SqlDataReader reader)
         {
-            var gender = Prop_Gender.TryGetValueFromProcess(r_GenderManager.GetById, reader.GetInt16(FIELD_GENDER_ID)) ;
+            var gender = Prop_Gender.TryGetValueFromProcess(r_GenderManager.GetById, reader.GetInt16, FIELD_GENDER_ID) ;
             return GetData(gender, reader);
         }
 
         private async Task<IPerson> GetDataAsync(SqlDataReader reader)
         {
-            var gender = await Prop_Gender.TryGetValueFromProcessAsync(r_GenderManager.GetByIdAsync, reader.GetInt16(FIELD_GENDER_ID));
+            var gender = await Prop_Gender.TryGetValueFromProcessAsync(r_GenderManager.GetByIdAsync, reader.GetInt16, FIELD_GENDER_ID);
             return GetData(gender, reader);
         }
 
         private async Task<IPerson> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
         {
-            var gender = await Prop_Gender.TryGetValueFromProcessAsync(r_GenderManager.GetByIdAsync, reader.GetInt16(FIELD_GENDER_ID), cancellationToken);
+            var gender = await Prop_Gender.TryGetValueFromProcessAsync(r_GenderManager.GetByIdAsync, reader.GetInt16, FIELD_GENDER_ID, cancellationToken);
             return GetData(gender, reader);
         }
 
