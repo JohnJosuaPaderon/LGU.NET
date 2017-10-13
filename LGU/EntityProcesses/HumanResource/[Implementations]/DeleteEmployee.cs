@@ -9,29 +9,33 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class DeleteEmployee : EmployeeProcess, IDeleteEmployee
+    public sealed class DeleteEmployee : HumanResourceProcessBaseV2, IDeleteEmployee
     {
-        public DeleteEmployee(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        private const string MESSAGE_FAILED = "Failed to delete employee.";
+
+        public DeleteEmployee(IConnectionStringSource connectionStringSource, IEmployeeParameters parameters) : base(connectionStringSource)
         {
+            _Parameters = parameters;
         }
+
+        private readonly IEmployeeParameters _Parameters;
 
         public IEmployee Employee { get; set; }
 
         private SqlQueryInfo<IEmployee> QueryInfo =>
             SqlQueryInfo<IEmployee>.CreateProcedureQueryInfo(Employee, GetQualifiedDbObjectName(), GetProcessResult, true)
-            .AddInputParameter("@_Id", Employee.Id)
+            .AddInputParameter(_Parameters.Id, Employee.Id)
             .AddLogByParameter();
 
         private IProcessResult<IEmployee> GetProcessResult(IEmployee data, SqlCommand command, int affectedRows)
         {
             if (affectedRows > 0)
             {
-                data.Id = command.Parameters.GetInt64("@_Id");
                 return new ProcessResult<IEmployee>(data, ProcessResultStatus.Success);
             }
             else
             {
-                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, "Failed to delete employee.");
+                return new ProcessResult<IEmployee>(ProcessResultStatus.Failed, MESSAGE_FAILED);
             }
         }
 

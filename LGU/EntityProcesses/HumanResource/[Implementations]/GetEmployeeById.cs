@@ -11,29 +11,35 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetEmployeeById : EmployeeProcess, IGetEmployeeById
     {
-        public GetEmployeeById(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetEmployeeById(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter, IEmployeeParameters parameters) : base(connectionStringSource, converter)
         {
+            _Parameters = parameters;
         }
+
+        private readonly IEmployeeParameters _Parameters;
 
         public long EmployeeId { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
-            .AddInputParameter("@_Id", EmployeeId);
+            .AddInputParameter(_Parameters.Id, EmployeeId);
 
         public IProcessResult<IEmployee> Execute()
         {
-            return _SqlHelper.ExecuteReader(QueryInfo, r_Converter);
+            _Converter.PId.Value = EmployeeId;
+            return _SqlHelper.ExecuteReader(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IEmployee>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
+            _Converter.PId.Value = EmployeeId;
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IEmployee>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
+            _Converter.PId.Value = EmployeeId;
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

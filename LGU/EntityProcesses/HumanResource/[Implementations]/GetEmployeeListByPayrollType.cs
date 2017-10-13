@@ -11,36 +11,36 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetEmployeeListByPayrollType : HumanResourceProcessBaseV2, IGetEmployeeListByPayrollType
     {
-        private const string PARAM_PAYROLL_TYPE_ID = "@_PayrollTypeId";
-
-        public GetEmployeeListByPayrollType(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public GetEmployeeListByPayrollType(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter, IEmployeeParameters parameters) : base(connectionStringSource)
         {
+            _Parameters = parameters;
             _Converter = converter;
         }
 
         private readonly IEmployeeConverter<SqlDataReader> _Converter;
+        private readonly IEmployeeParameters _Parameters;
 
         public IPayrollType PayrollType { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(nameof(GetEmployeeListByPayrollType))
-            .AddInputParameter(PARAM_PAYROLL_TYPE_ID, PayrollType.Id);
+            .AddInputParameter(_Parameters.PayrollTypeId, PayrollType.Id);
 
         public IEnumerableProcessResult<IEmployee> Execute()
         {
-            _Converter.Prop_PayrollType.Value = PayrollType;
+            _Converter.PPayrollType.Value = PayrollType;
             return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmployee>> ExecuteAsync()
         {
-            _Converter.Prop_PayrollType.Value = PayrollType;
+            _Converter.PPayrollType.Value = PayrollType;
             return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmployee>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            _Converter.Prop_PayrollType.Value = PayrollType;
+            _Converter.PPayrollType.Value = PayrollType;
             return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter, cancellationToken);
         }
     }

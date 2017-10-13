@@ -11,6 +11,8 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class SearchEmployee : EmployeeProcess, ISearchEmployee
     {
+        private const string PARAM_SEARCH_KEY = "@_SearchKey";
+
         public SearchEmployee(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
@@ -19,21 +21,21 @@ namespace LGU.EntityProcesses.HumanResource
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
-            .AddInputParameter("@_SearchKey", SearchKey);
+            .AddInputParameter(PARAM_SEARCH_KEY, SearchKey);
 
         public IEnumerableProcessResult<IEmployee> Execute()
         {
-            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmployee>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmployee>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

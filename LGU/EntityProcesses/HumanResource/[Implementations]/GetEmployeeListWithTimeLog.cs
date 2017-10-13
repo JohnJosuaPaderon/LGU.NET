@@ -12,6 +12,9 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetEmployeeListWithTimeLog : EmployeeProcess, IGetEmployeeListWithTimeLog
     {
+        private const string PARAM_CUT_OFF_BEGIN = "@_CutOffBegin";
+        private const string PARAM_CUT_OFF_END = "@_CutOffEnd";
+
         public GetEmployeeListWithTimeLog(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
         {
         }
@@ -20,22 +23,22 @@ namespace LGU.EntityProcesses.HumanResource
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())
-            .AddInputParameter("@_CutOffBegin", CutOff.Begin)
-            .AddInputParameter("@_CutOffEnd", CutOff.End);
+            .AddInputParameter(PARAM_CUT_OFF_BEGIN, CutOff.Begin)
+            .AddInputParameter(PARAM_CUT_OFF_END, CutOff.End);
 
         public IEnumerableProcessResult<IEmployee> Execute()
         {
-            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmployee>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmployee>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }
