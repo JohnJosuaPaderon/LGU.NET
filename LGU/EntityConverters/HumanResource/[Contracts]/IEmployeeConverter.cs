@@ -9,21 +9,22 @@ namespace LGU.EntityConverters.HumanResource
     public interface IEmployeeConverter<TDataReader> : IDataConverter<IEmployee, TDataReader>
         where TDataReader : DbDataReader
     {
-        IDataConverterProperty<long> Prop_Id { get; }
-        IDataConverterProperty<string> Prop_FirstName { get; }
-        IDataConverterProperty<string> Prop_MiddleName { get; }
-        IDataConverterProperty<string> Prop_LastName { get; }
-        IDataConverterProperty<string> Prop_NameExtension { get; }
-        IDataConverterProperty<DateTime?> Prop_BirthDate { get; }
-        IDataConverterProperty<bool> Prop_Deceased { get; }
-        IDataConverterProperty<decimal> Prop_MonthlySalary { get; }
-        IDataConverterProperty<IDepartment> Prop_Department { get; }
-        IDataConverterProperty<IEmploymentStatus> Prop_EmploymentStatus { get; }
-        IDataConverterProperty<IGender> Prop_Gender { get; }
-        IDataConverterProperty<IPosition> Prop_Position { get; }
-        IDataConverterProperty<IEmployeeType> Prop_Type { get; }
-        IDataConverterProperty<IDepartmentHead> Prop_DepartmentHead { get; }
-        IDataConverterProperty<IWorkTimeSchedule> Prop_WorkTimeSchedule { get; }
-        IDataConverterProperty<IPayrollType> Prop_PayrollType { get; }
+        IDataConverterProperty<long> PId { get; }
+        IDataConverterProperty<string> PFirstName { get; }
+        IDataConverterProperty<string> PMiddleName { get; }
+        IDataConverterProperty<string> PLastName { get; }
+        IDataConverterProperty<string> PNameExtension { get; }
+        IDataConverterProperty<DateTime?> PBirthDate { get; }
+        IDataConverterProperty<bool> PDeceased { get; }
+        IDataConverterProperty<decimal> PMonthlySalary { get; }
+        IDataConverterProperty<IDepartment> PDepartment { get; }
+        IDataConverterProperty<IEmploymentStatus> PEmploymentStatus { get; }
+        IDataConverterProperty<IGender> PGender { get; }
+        IDataConverterProperty<IPosition> PPosition { get; }
+        IDataConverterProperty<IEmployeeType> PType { get; }
+        IDataConverterProperty<IDepartmentHead> PDepartmentHead { get; }
+        IDataConverterProperty<IWorkTimeSchedule> PWorkTimeSchedule { get; }
+        IDataConverterProperty<IPayrollType> PPayrollType { get; }
+        IDataConverterProperty<bool> PIsFlexWorkSchedule { get; }
     }
 }
