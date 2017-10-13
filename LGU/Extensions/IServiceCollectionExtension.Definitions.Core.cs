@@ -1,4 +1,5 @@
-﻿using LGU.EntityConverters.Core;
+﻿using LGU.Entities.Core;
+using LGU.EntityConverters.Core;
 using LGU.EntityManagers.Core;
 using LGU.EntityProcesses.Core;
 using Microsoft.Extensions.DependencyInjection;
@@ -69,6 +70,8 @@ namespace LGU.Extensions
         public static IServiceCollection UseSqlServer_Person(this IServiceCollection instance)
         {
             instance.AddSingleton<IPersonConverter<SqlDataReader>, PersonConverter>();
+            instance.AddSingleton<IPersonFields, PersonFields>();
+            instance.AddSingleton<IPersonParameters, PersonParameters>();
             instance.AddSingleton<IDeletePerson, DeletePerson>();
             instance.AddSingleton<IGetPersonById, GetPersonById>();
             instance.AddSingleton<IGetPersonList, GetPersonList>();

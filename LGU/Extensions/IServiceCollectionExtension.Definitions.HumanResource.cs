@@ -32,6 +32,7 @@ namespace LGU.Extensions
             instance.UseSqlServer_MultipleChoiceCandidateAnswer();
             instance.UseSqlServer_MultipleChoiceQuestion(); 
             instance.UseSqlServer_Payroll();
+            instance.UseSqlServer_PayrollContractualEmployee();
             instance.UseSqlServer_PayrollCutOff();
             instance.UseSqlServer_PayrollType();
             instance.UseSqlServer_Position();
@@ -147,6 +148,8 @@ namespace LGU.Extensions
         public static IServiceCollection UseSqlServer_Employee(this IServiceCollection instance)
         {
             instance.AddTransient<IEmployeeConverter<SqlDataReader>, EmployeeConverter>();
+            instance.AddSingleton<IEmployeeParameters, EmployeeParameters>();
+            instance.AddSingleton<IEmployeeFields, EmployeeFields>();
             instance.AddSingleton<IDeleteEmployee, DeleteEmployee>();
             instance.AddSingleton<IGetEmployeeById, GetEmployeeById>();
             instance.AddSingleton<IGetEmployeeList, GetEmployeeList>();
@@ -338,6 +341,8 @@ namespace LGU.Extensions
         public static IServiceCollection UseSqlServer_PayrollContractualEmployee(this IServiceCollection instance)
         {
             instance.AddTransient<IPayrollContractualEmployeeConverter<SqlDataReader>, PayrollContractualEmployeeConverter>();
+            instance.AddSingleton<IPayrollContractualEmployeeFields, PayrollContractualEmployeeFields>();
+            instance.AddSingleton<IPayrollContractualEmployeeParameters, PayrollContractualEmployeeParameters>();
             instance.AddSingleton<IInsertPayrollContractualEmployee<SqlConnection, SqlTransaction>, InsertPayrollContractualEmployee>();
             instance.AddSingleton<IGeneratePayrollContractualEmployeeList, GeneratePayrollContractualEmployeeList>();
             instance.AddSingleton<IPayrollContractualEmployeeManager<SqlConnection, SqlTransaction>, PayrollContractualEmployeeManager>();
