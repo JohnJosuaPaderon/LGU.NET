@@ -12,5 +12,6 @@ namespace LGU.Entities.HumanResource
         IWorkTimeSchedule WorkTimeSchedule { get; set; }
         decimal MonthlySalary { get; set; }
         IPayrollType PayrollType { get; set; }
+        bool IsFlexWorkSchedule { get; set; }
     }
 }
