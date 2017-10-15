@@ -1,8 +1,7 @@
 ﻿namespace LGU.Entities.Core
 {
-    public interface IPersonFields
+    public interface IPersonFields : IEntityFields
     {
-        string Id { get; }
         string FirstName { get; }
         string MiddleName { get; }
         string LastName { get; }
