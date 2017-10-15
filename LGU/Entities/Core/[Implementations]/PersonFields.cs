@@ -1,10 +1,9 @@
 ﻿namespace LGU.Entities.Core
 {
-    public class PersonFields : IPersonFields
+    public class PersonFields : EntityFields, IPersonFields
     {
         public PersonFields()
         {
-            Id = "Id";
             FirstName = "FirstName";
             MiddleName = "MiddleName";
             LastName = "LastName";
@@ -13,8 +12,7 @@
             Deceased = "Deceased";
             GenderId = "GenderId";
         }
-
-        public string Id { get; }
+        
         public string FirstName { get; }
         public string MiddleName { get; }
         public string LastName { get; }
