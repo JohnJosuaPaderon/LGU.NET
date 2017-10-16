@@ -13,6 +13,7 @@ namespace LGU.Entities.HumanResource
             TypeId = "TypeId";
             DepartmentHeadId = "DepartmentHeadId";
             WorkTimeScheduleId = "WorkTimeScheduleId";
+            PayrollTypeId = "PayrollTypeId";
             IsFlexWorkSchedule = "IsFlexWorkSchedule";
         }
         

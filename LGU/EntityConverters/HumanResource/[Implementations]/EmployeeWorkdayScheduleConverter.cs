@@ -5,13 +5,13 @@ using LGU.Extensions;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class EmployeeWorkdayScheduleConverter : IEmployeeWorkdayScheduleConverter<SqlDataReader>
+    public sealed class EmployeeWorkdayScheduleConverter : IEmployeeWorkdayScheduleConverter
     {
         private const string FIELD_ID = "Id";
         private const string FIELD_EMPLOYEE_ID = "EmployeeId";
@@ -50,7 +50,7 @@ namespace LGU.EntityConverters.HumanResource
         public IDataConverterProperty<bool> Prop_Friday { get; }
         public IDataConverterProperty<bool> Prop_Saturday { get; }
 
-        private IEmployeeWorkdaySchedule Get(IEmployee employee, SqlDataReader reader)
+        private IEmployeeWorkdaySchedule Get(IEmployee employee, DbDataReader reader)
         {
             return new EmployeeWorkdaySchedule
             {
@@ -66,25 +66,25 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
         
-        private IEmployeeWorkdaySchedule Get(SqlDataReader reader)
+        private IEmployeeWorkdaySchedule Get(DbDataReader reader)
         {
             var employee = Prop_Employee.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, FIELD_EMPLOYEE_ID);
             return Get(employee, reader);
         }
 
-        private async Task<IEmployeeWorkdaySchedule> GetAsync(SqlDataReader reader)
+        private async Task<IEmployeeWorkdaySchedule> GetAsync(DbDataReader reader)
         {
             var employee = await Prop_Employee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, FIELD_EMPLOYEE_ID);
             return Get(employee, reader);
         }
 
-        private async Task<IEmployeeWorkdaySchedule> GetAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IEmployeeWorkdaySchedule> GetAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var employee = await Prop_Employee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, FIELD_EMPLOYEE_ID, cancellationToken);
             return Get(employee, reader);
         }
 
-        public IEnumerableProcessResult<IEmployeeWorkdaySchedule> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IEmployeeWorkdaySchedule> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IEmployeeWorkdaySchedule>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IEmployeeWorkdaySchedule>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IEmployeeWorkdaySchedule>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEmployeeWorkdaySchedule>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -141,7 +141,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IEmployeeWorkdaySchedule> FromReader(SqlDataReader reader)
+        public IProcessResult<IEmployeeWorkdaySchedule> FromReader(DbDataReader reader)
         {
             try
             {
@@ -154,7 +154,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IEmployeeWorkdaySchedule>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IEmployeeWorkdaySchedule>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -167,7 +167,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IEmployeeWorkdaySchedule>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployeeWorkdaySchedule>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

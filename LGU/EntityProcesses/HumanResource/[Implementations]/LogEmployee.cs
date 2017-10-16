@@ -15,7 +15,7 @@ namespace LGU.EntityProcesses.HumanResource
     {
         private readonly ITimeLogTypeManager r_TimeLogTypeManager;
 
-        public LogEmployee(IConnectionStringSource connectionStringSource, ITimeLogConverter<SqlDataReader> converter, ITimeLogTypeManager timeLogTypeManager) : base(connectionStringSource, converter)
+        public LogEmployee(IConnectionStringSource connectionStringSource, ITimeLogConverter converter, ITimeLogTypeManager timeLogTypeManager) : base(connectionStringSource, converter)
         {
             r_TimeLogTypeManager = timeLogTypeManager;
         }

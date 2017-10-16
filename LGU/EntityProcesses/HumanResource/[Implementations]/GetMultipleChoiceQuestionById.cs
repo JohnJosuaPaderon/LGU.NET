@@ -3,7 +3,6 @@ using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +10,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetMultipleChoiceQuestionById : MultipleChoiceQuestionProcess, IGetMultipleChoiceQuestionById
     {
-        public GetMultipleChoiceQuestionById(IConnectionStringSource connectionStringSource, IMultipleChoiceQuestionConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetMultipleChoiceQuestionById(IConnectionStringSource connectionStringSource, IMultipleChoiceQuestionConverter converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -23,17 +22,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IProcessResult<IMultipleChoiceQuestion> Execute()
         {
-            return _SqlHelper.ExecuteReader(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReader(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IMultipleChoiceQuestion>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IMultipleChoiceQuestion>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

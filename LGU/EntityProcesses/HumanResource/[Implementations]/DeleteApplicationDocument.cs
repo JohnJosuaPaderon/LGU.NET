@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class DeleteApplicationDocument : ApplicationDocumentProcess, IDeleteApplicationDocument
     {
-        public DeleteApplicationDocument(IConnectionStringSource connectionStringSource, IApplicationDocumentConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public DeleteApplicationDocument(IConnectionStringSource connectionStringSource, IApplicationDocumentConverter converter) : base(connectionStringSource, converter)
         {
         }
 

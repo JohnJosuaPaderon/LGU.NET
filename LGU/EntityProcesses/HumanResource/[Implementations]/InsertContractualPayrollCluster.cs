@@ -56,15 +56,7 @@ namespace LGU.EntityProcesses.HumanResource
 
                             if (payrollResult.Status == ProcessResultStatus.Success)
                             {
-                                foreach (var employee in PayrollCluster.Employees)
-                                {
-                                    var employeeResult = _PayrollContractualEmployeeManager.Insert(employee, connection, transaction);
-
-                                    if (employeeResult.Status != ProcessResultStatus.Success)
-                                    {
-                                        return RollbackTransaction(transaction, employeeResult);
-                                    }
-                                }
+                                
                             }
                             else
                             {
@@ -100,15 +92,7 @@ namespace LGU.EntityProcesses.HumanResource
 
                             if (payrollResult.Status == ProcessResultStatus.Success)
                             {
-                                foreach (var employee in PayrollCluster.Employees)
-                                {
-                                    var employeeResult = await _PayrollContractualEmployeeManager.InsertAsync(employee, connection, transaction);
-
-                                    if (employeeResult.Status != ProcessResultStatus.Success)
-                                    {
-                                        RollbackTransaction(transaction, employeeResult);
-                                    }
-                                }
+                                
                             }
                             else
                             {
@@ -144,15 +128,7 @@ namespace LGU.EntityProcesses.HumanResource
 
                             if (payrollResult.Status == ProcessResultStatus.Success)
                             {
-                                foreach (var employee in PayrollCluster.Employees)
-                                {
-                                    var employeeResult = await _PayrollContractualEmployeeManager.InsertAsync(employee, connection, transaction, cancellationToken);
-
-                                    if (employeeResult.Status != ProcessResultStatus.Success)
-                                    {
-                                        return RollbackTransaction(transaction, employeeResult);
-                                    }
-                                }
+                                
                             }
                             else
                             {

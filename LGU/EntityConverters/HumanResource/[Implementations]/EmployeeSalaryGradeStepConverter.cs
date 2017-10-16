@@ -4,26 +4,26 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class EmployeeSalaryGradeStepConverter : IEmployeeSalaryGradeStepConverter<SqlDataReader>
+    public sealed class EmployeeSalaryGradeStepConverter : IEmployeeSalaryGradeStepConverter
     {
         public EmployeeSalaryGradeStepConverter(
             IEmployeeManager employeeManager,
             ISalaryGradeStepManager salaryGradeStepManager)
         {
-            r_EmployeeManager = employeeManager;
-            r_SalaryGradeStepManager = salaryGradeStepManager;
+            _EmployeeManager = employeeManager;
+            _SalaryGradeStepManager = salaryGradeStepManager;
         }
 
-        private readonly IEmployeeManager r_EmployeeManager;
-        private readonly ISalaryGradeStepManager r_SalaryGradeStepManager;
+        private readonly IEmployeeManager _EmployeeManager;
+        private readonly ISalaryGradeStepManager _SalaryGradeStepManager;
 
-        private IEmployeeSalaryGradeStep GetData(IEmployee employee, ISalaryGradeStep salaryGradeStep, SqlDataReader reader)
+        private IEmployeeSalaryGradeStep GetData(IEmployee employee, ISalaryGradeStep salaryGradeStep, DbDataReader reader)
         {
             return new EmployeeSalaryGradeStep()
             {
@@ -33,31 +33,31 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        private IEmployeeSalaryGradeStep GetData(SqlDataReader reader)
+        private IEmployeeSalaryGradeStep GetData(DbDataReader reader)
         {
-            var employeeResult = r_EmployeeManager.GetById(reader.GetInt64("EmployeeId"));
-            var salaryGradeStepResult = r_SalaryGradeStepManager.GetById(reader.GetInt64("SalaryGradeStepId"));
+            var employeeResult = _EmployeeManager.GetById(reader.GetInt64("EmployeeId"));
+            var salaryGradeStepResult = _SalaryGradeStepManager.GetById(reader.GetInt64("SalaryGradeStepId"));
 
             return GetData(employeeResult.Data, salaryGradeStepResult.Data, reader);
         }
 
-        private async Task<IEmployeeSalaryGradeStep> GetDataAsync(SqlDataReader reader)
+        private async Task<IEmployeeSalaryGradeStep> GetDataAsync(DbDataReader reader)
         {
-            var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"));
-            var salaryGradeStepResult = await r_SalaryGradeStepManager.GetByIdAsync(reader.GetInt64("SalaryGradeStepId"));
+            var employeeResult = await _EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"));
+            var salaryGradeStepResult = await _SalaryGradeStepManager.GetByIdAsync(reader.GetInt64("SalaryGradeStepId"));
 
             return GetData(employeeResult.Data, salaryGradeStepResult.Data, reader);
         }
 
-        private async Task<IEmployeeSalaryGradeStep> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IEmployeeSalaryGradeStep> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"), cancellationToken);
-            var salaryGradeStepResult = await r_SalaryGradeStepManager.GetByIdAsync(reader.GetInt64("SalaryGradeStepId"), cancellationToken);
+            var employeeResult = await _EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"), cancellationToken);
+            var salaryGradeStepResult = await _SalaryGradeStepManager.GetByIdAsync(reader.GetInt64("SalaryGradeStepId"), cancellationToken);
 
             return GetData(employeeResult.Data, salaryGradeStepResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<IEmployeeSalaryGradeStep> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IEmployeeSalaryGradeStep> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IEmployeeSalaryGradeStep>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IEmployeeSalaryGradeStep>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IEmployeeSalaryGradeStep>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEmployeeSalaryGradeStep>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -117,7 +117,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IEmployeeSalaryGradeStep> FromReader(SqlDataReader reader)
+        public IProcessResult<IEmployeeSalaryGradeStep> FromReader(DbDataReader reader)
         {
             try
             {
@@ -130,7 +130,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IEmployeeSalaryGradeStep>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IEmployeeSalaryGradeStep>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -143,7 +143,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IEmployeeSalaryGradeStep>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployeeSalaryGradeStep>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

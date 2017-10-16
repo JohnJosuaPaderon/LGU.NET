@@ -4,13 +4,13 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class EmployeeFingerPrintSetConverter : IEmployeeFingerPrintSetConverter<SqlDataReader>
+    public sealed class EmployeeFingerPrintSetConverter : IEmployeeFingerPrintSetConverter
     {
         private readonly IEmployeeManager r_EmployeeManager;
 
@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.HumanResource
             r_EmployeeManager = employeeManager;
         }
 
-        private IEmployeeFingerPrintSet GetData(IEmployee employee, SqlDataReader reader)
+        private IEmployeeFingerPrintSet GetData(IEmployee employee, DbDataReader reader)
         {
             var leftThumb = reader.GetByteArray("LeftThumb");
             var leftIndexFinger = reader.GetByteArray("LeftIndexFinger");
@@ -58,7 +58,7 @@ namespace LGU.EntityConverters.HumanResource
             return result;
         }
 
-        private IEmployeeFingerPrintSet GetData(SqlDataReader reader)
+        private IEmployeeFingerPrintSet GetData(DbDataReader reader)
         {
             var employeeResult = r_EmployeeManager.GetById(reader.GetInt64("Id"));
 
@@ -72,7 +72,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private async Task<IEmployeeFingerPrintSet> GetDataAsync(SqlDataReader reader)
+        private async Task<IEmployeeFingerPrintSet> GetDataAsync(DbDataReader reader)
         {
             var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("Id"));
 
@@ -86,7 +86,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private async Task<IEmployeeFingerPrintSet> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IEmployeeFingerPrintSet> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("Id"), cancellationToken);
 
@@ -100,7 +100,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IEnumerableProcessResult<IEmployeeFingerPrintSet> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IEmployeeFingerPrintSet> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IEmployeeFingerPrintSet>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IEmployeeFingerPrintSet>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IEmployeeFingerPrintSet>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEmployeeFingerPrintSet>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -157,7 +157,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IEmployeeFingerPrintSet> FromReader(SqlDataReader reader)
+        public IProcessResult<IEmployeeFingerPrintSet> FromReader(DbDataReader reader)
         {
             try
             {
@@ -170,7 +170,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IEmployeeFingerPrintSet>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IEmployeeFingerPrintSet>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -183,7 +183,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IEmployeeFingerPrintSet>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployeeFingerPrintSet>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

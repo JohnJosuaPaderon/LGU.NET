@@ -4,56 +4,52 @@ using LGU.Extensions;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class CalendarEventConverter : ICalendarEventConverter<SqlDataReader>
+    public sealed class CalendarEventConverter : ICalendarEventConverter
     {
-        private const string FIELD_ID = "Id";
-        private const string FIELD_DESCRIPTION = "Description";
-        private const string FIELD_DATE_OCCUR = "DateOccur";
-        private const string FIELD_DATE_OCCUR_END = "DateOccurEnd";
-        private const string FIELD_IS_HOLIDAY = "IsHoliday";
-        private const string FIELD_IS_NON_WORKING = "IsNonWorking";
-        private const string FIELD_IS_ANNUAL = "IsAnnual";
-
-        public CalendarEventConverter()
+        public CalendarEventConverter(ICalendarEventFields fields)
         {
-            Prop_Id = new DataConverterProperty<long>();
-            Prop_Description = new DataConverterProperty<string>();
-            Prop_DateOccur = new DataConverterProperty<DateTime>();
-            Prop_DateOccurEnd = new DataConverterProperty<DateTime?>();
-            Prop_IsHoliday = new DataConverterProperty<bool>();
-            Prop_IsNonWorking = new DataConverterProperty<bool>();
-            Prop_IsAnnual = new DataConverterProperty<bool>();
+            _Fields = fields;
+
+            PId = new DataConverterProperty<long>();
+            PDescription = new DataConverterProperty<string>();
+            PDateOccur = new DataConverterProperty<DateTime>();
+            PDateOccurEnd = new DataConverterProperty<DateTime?>();
+            PIsHoliday = new DataConverterProperty<bool>();
+            PIsNonWorking = new DataConverterProperty<bool>();
+            PIsAnnual = new DataConverterProperty<bool>();
         }
 
-        public IDataConverterProperty<long> Prop_Id { get; }
-        public IDataConverterProperty<string> Prop_Description { get; }
-        public IDataConverterProperty<DateTime> Prop_DateOccur { get; }
-        public IDataConverterProperty<DateTime?> Prop_DateOccurEnd { get; }
-        public IDataConverterProperty<bool> Prop_IsHoliday { get; }
-        public IDataConverterProperty<bool> Prop_IsNonWorking { get; }
-        public IDataConverterProperty<bool> Prop_IsAnnual { get; }
+        private readonly ICalendarEventFields _Fields;
 
-        private ICalendarEvent Get(SqlDataReader reader)
+        public IDataConverterProperty<long> PId { get; }
+        public IDataConverterProperty<string> PDescription { get; }
+        public IDataConverterProperty<DateTime> PDateOccur { get; }
+        public IDataConverterProperty<DateTime?> PDateOccurEnd { get; }
+        public IDataConverterProperty<bool> PIsHoliday { get; }
+        public IDataConverterProperty<bool> PIsNonWorking { get; }
+        public IDataConverterProperty<bool> PIsAnnual { get; }
+
+        private ICalendarEvent Get(DbDataReader reader)
         {
             return new CalendarEvent
             {
-                Id = Prop_Id.TryGetValue(reader.GetInt64, FIELD_ID),
-                Description = Prop_Description.TryGetValue(reader.GetString, FIELD_DESCRIPTION),
-                DateOccur = Prop_DateOccur.TryGetValue(reader.GetDateTime, FIELD_DATE_OCCUR),
-                 DateOccurEnd = Prop_DateOccurEnd.TryGetValue(reader.GetNullableDateTime, FIELD_DATE_OCCUR_END),
-                 IsHoliday = Prop_IsHoliday.TryGetValue(reader.GetBoolean, FIELD_IS_HOLIDAY),
-                 IsNonWorking = Prop_IsNonWorking.TryGetValue(reader.GetBoolean, FIELD_IS_NON_WORKING),
-                 IsAnnual = Prop_IsAnnual.TryGetValue(reader.GetBoolean, FIELD_IS_ANNUAL)
+                Id = PId.TryGetValue(reader.GetInt64, _Fields.Id),
+                Description = PDescription.TryGetValue(reader.GetString, _Fields.Description),
+                DateOccur = PDateOccur.TryGetValue(reader.GetDateTime, _Fields.DateOccur),
+                DateOccurEnd = PDateOccurEnd.TryGetValue(reader.GetNullableDateTime, _Fields.DateOccurEnd),
+                IsHoliday = PIsHoliday.TryGetValue(reader.GetBoolean, _Fields.IsHoliday),
+                IsNonWorking = PIsNonWorking.TryGetValue(reader.GetBoolean, _Fields.IsNonWorking),
+                IsAnnual = PIsAnnual.TryGetValue(reader.GetBoolean, _Fields.IsAnnual)
             };
         }
 
-        public IEnumerableProcessResult<ICalendarEvent> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<ICalendarEvent> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -72,7 +68,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<ICalendarEvent>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<ICalendarEvent>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -91,7 +87,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<ICalendarEvent>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ICalendarEvent>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -110,7 +106,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<ICalendarEvent> FromReader(SqlDataReader reader)
+        public IProcessResult<ICalendarEvent> FromReader(DbDataReader reader)
         {
             try
             {
@@ -123,7 +119,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<ICalendarEvent>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<ICalendarEvent>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -136,7 +132,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<ICalendarEvent>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ICalendarEvent>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

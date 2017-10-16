@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class InsertMultipleChoiceQuestion : MultipleChoiceQuestionProcess, IInsertMultipleChoiceQuestion
     {
-        public InsertMultipleChoiceQuestion(IConnectionStringSource connectionStringSource, IMultipleChoiceQuestionConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertMultipleChoiceQuestion(IConnectionStringSource connectionStringSource, IMultipleChoiceQuestionConverter converter) : base(connectionStringSource, converter)
         {
         }
 

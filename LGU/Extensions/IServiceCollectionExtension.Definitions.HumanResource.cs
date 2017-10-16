@@ -19,6 +19,7 @@ namespace LGU.Extensions
             instance.UseSqlServer_Department();
             instance.UseSqlServer_DepartmentHead();
             instance.UseSqlServer_Employee();
+            instance.UseSqlServer_EmployeeFlexWorkSchedule();
             instance.UseSqlServer_EmployeeSalaryGradeStep();
             instance.UseSqlServer_EmployeeType();
             instance.UseSqlServer_EmployeeWorkdaySchedule();
@@ -48,7 +49,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Applicant(this IServiceCollection instance)
         {
-            instance.AddTransient<IApplicantConverter<SqlDataReader>, ApplicantConverter>();
+            instance.AddTransient<IApplicantConverter, ApplicantConverter>();
             instance.AddSingleton<IDeleteApplicant, DeleteApplicant>();
             instance.AddSingleton<IGetApplicantById, GetApplicantById>();
             instance.AddSingleton<IGetApplicantList, GetApplicantList>();
@@ -61,7 +62,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_ApplicantStatus(this IServiceCollection instance)
         {
-            instance.AddTransient<IApplicantStatusConverter<SqlDataReader>, ApplicantStatusConverter>();
+            instance.AddTransient<IApplicantStatusConverter, ApplicantStatusConverter>();
             instance.AddSingleton<IGetApplicantStatusById, GetApplicantStatusById>();
             instance.AddSingleton<IGetApplicantStatusList, GetApplicantStatusList>();
             instance.AddSingleton<IApplicantStatusManager, ApplicantStatusManager>();
@@ -71,7 +72,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Application(this IServiceCollection instance)
         {
-            instance.AddTransient<IApplicationConverter<SqlDataReader>, ApplicationConverter>();
+            instance.AddTransient<IApplicationConverter, ApplicationConverter>();
             instance.AddSingleton<IDeleteApplication, DeleteApplication>();
             instance.AddSingleton<IGetApplicationById, GetApplicationById>();
             instance.AddSingleton<IGetApplicationList, GetApplicationList>();
@@ -84,7 +85,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_ApplicationDocument(this IServiceCollection instance)
         {
-            instance.AddTransient<IApplicationDocumentConverter<SqlDataReader>, ApplicationDocumentConverter>();
+            instance.AddTransient<IApplicationDocumentConverter, ApplicationDocumentConverter>();
             instance.AddSingleton<IDeleteApplicationDocument, DeleteApplicationDocument>();
             instance.AddSingleton<IGetApplicationDocumentById, GetApplicationDocumentById>();
             instance.AddSingleton<IGetApplicationDocumentList, GetApplicationDocumentList>();
@@ -97,7 +98,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_CalendarEvent(this IServiceCollection instance)
         {
-            instance.AddTransient<ICalendarEventConverter<SqlDataReader>, CalendarEventConverter>();
+            instance.AddTransient<ICalendarEventConverter, CalendarEventConverter>();
             instance.AddSingleton<IDeleteCalendarEvent, DeleteCalendarEvent>();
             instance.AddSingleton<IGetCalendarEventById, GetCalendarEventById>();
             instance.AddSingleton<IInsertCalendarEvent, InsertCalendarEvent>();
@@ -117,7 +118,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Department(this IServiceCollection instance)
         {
-            instance.AddTransient<IDepartmentConverter<SqlDataReader>, DepartmentConverter>();
+            instance.AddTransient<IDepartmentConverter, DepartmentConverter>();
             instance.AddSingleton<IDepartmentParameters, DepartmentParameters>();
             instance.AddSingleton<IDepartmentFields, DepartmentFields>();
             instance.AddSingleton<IDeleteDepartment, DeleteDepartment>();
@@ -134,7 +135,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_DepartmentHead(this IServiceCollection instance)
         {
-            instance.AddTransient<IDepartmentHeadConverter<SqlDataReader>, DepartmentHeadConverter>();
+            instance.AddTransient<IDepartmentHeadConverter, DepartmentHeadConverter>();
             instance.AddSingleton<IDeleteDepartmentHead, DeleteDepartmentHead>();
             instance.AddSingleton<IGetDepartmentHeadById, GetDepartmentHeadById>();
             instance.AddSingleton<IGetDepartmentHeadList, GetDepartmentHeadList>();
@@ -147,7 +148,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Employee(this IServiceCollection instance)
         {
-            instance.AddTransient<IEmployeeConverter<SqlDataReader>, EmployeeConverter>();
+            instance.AddTransient<IEmployeeConverter, EmployeeConverter>();
             instance.AddSingleton<IEmployeeParameters, EmployeeParameters>();
             instance.AddSingleton<IEmployeeFields, EmployeeFields>();
             instance.AddSingleton<IDeleteEmployee, DeleteEmployee>();
@@ -165,9 +166,18 @@ namespace LGU.Extensions
             return instance;
         }
 
+        public static IServiceCollection UseSqlServer_EmployeeFlexWorkSchedule(this IServiceCollection instance)
+        {
+            instance.AddSingleton<IEmployeeFlexWorkScheduleFields, EmployeeFlexWorkScheduleFields>();
+            instance.AddSingleton<IEmployeeFlexWorkScheduleParameters, EmployeeFlexWorkScheduleParameters>();
+            instance.AddSingleton<IEmployeeFlexWorkScheduleConverter, EmployeeFlexWorkScheduleConverter>();
+
+            return instance;
+        }
+
         public static IServiceCollection UseSqlServer_EmployeeSalaryGradeStep(this IServiceCollection instance)
         {
-            instance.AddTransient<IEmployeeSalaryGradeStepConverter<SqlDataReader>, EmployeeSalaryGradeStepConverter>();
+            instance.AddTransient<IEmployeeSalaryGradeStepConverter, EmployeeSalaryGradeStepConverter>();
             instance.AddSingleton<IDeleteEmployeeSalaryGradeStep, DeleteEmployeeSalaryGradeStep>();
             instance.AddSingleton<IGetEmployeeSalaryGradeStepList, GetEmployeeSalaryGradeStepList>();
             instance.AddSingleton<IInsertEmployeeSalaryGradeStep, InsertEmployeeSalaryGradeStep>();
@@ -179,7 +189,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_EmployeeType(this IServiceCollection instance)
         {
-            instance.AddTransient<IEmployeeTypeConverter<SqlDataReader>, EmployeeTypeConverter>();
+            instance.AddTransient<IEmployeeTypeConverter, EmployeeTypeConverter>();
             instance.AddSingleton<IGetEmployeeTypeById, GetEmployeeTypeById>();
             instance.AddSingleton<IGetEmployeeTypeList, GetEmployeeTypeList>();
             instance.AddSingleton<IEmployeeTypeManager, EmployeeTypeManager>();
@@ -189,7 +199,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_EmployeeWorkdaySchedule(this IServiceCollection instance)
         {
-            instance.AddTransient<IEmployeeWorkdayScheduleConverter<SqlDataReader>, EmployeeWorkdayScheduleConverter>();
+            instance.AddTransient<IEmployeeWorkdayScheduleConverter, EmployeeWorkdayScheduleConverter>();
             instance.AddSingleton<IEmployeeWorkdayScheduleParameters, EmployeeWorkdayScheduleParameters>();
             instance.AddSingleton<IDeleteEmployeeWorkdaySchedule, DeleteEmployeeWorkdaySchedule>();
             instance.AddSingleton<IGetEmployeeWorkdayScheduleById, GetEmployeeWorkdayScheduleById>();
@@ -203,7 +213,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_EmploymentStatus(this IServiceCollection instance)
         {
-            instance.AddTransient<IEmploymentStatusConverter<SqlDataReader>, EmploymentStatusConverter>();
+            instance.AddTransient<IEmploymentStatusConverter, EmploymentStatusConverter>();
             instance.AddSingleton<IGetEmploymentStatusById, GetEmploymentStatusById>();
             instance.AddSingleton<IGetEmploymentStatusList, GetEmploymentStatusList>();
             instance.AddSingleton<IEmploymentStatusManager, EmploymentStatusManager>();
@@ -213,7 +223,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_EssayQuestion(this IServiceCollection instance)
         {
-            instance.AddTransient<IEssayQuestionConverter<SqlDataReader>, EssayQuestionConverter>();
+            instance.AddTransient<IEssayQuestionConverter, EssayQuestionConverter>();
             instance.AddSingleton<IDeleteEssayQuestion, DeleteEssayQuestion>();
             instance.AddSingleton<IGetEssayQuestionById, GetEssayQuestionById>();
             instance.AddSingleton<IGetEssayQuestionList, GetEssayQuestionList>();
@@ -226,7 +236,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Exam(this IServiceCollection instance)
         {
-            instance.AddTransient<IExamConverter<SqlDataReader>, ExamConverter>();
+            instance.AddTransient<IExamConverter, ExamConverter>();
             instance.AddSingleton<IDeleteExam, DeleteExam>();
             instance.AddSingleton<IGetExamById, GetExamById>();
             instance.AddSingleton<IGetExamList, GetExamList>();
@@ -239,7 +249,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_ExamEssayAnswer(this IServiceCollection instance)
         {
-            instance.AddTransient<IExamEssayAnswerConverter<SqlDataReader>, ExamEssayAnswerConverter>();
+            instance.AddTransient<IExamEssayAnswerConverter, ExamEssayAnswerConverter>();
             instance.AddSingleton<IDeleteExamEssayAnswer, DeleteExamEssayAnswer>();
             instance.AddSingleton<IGetExamEssayAnswerList, GetExamEssayAnswerList>();
             instance.AddSingleton<IInsertExamEssayAnswer, InsertExamEssayAnswer>();
@@ -251,7 +261,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_ExamMultipleChoiceAnswer(this IServiceCollection instance)
         {
-            instance.AddTransient<IExamMultipleChoiceAnswerConverter<SqlDataReader>, ExamMultipleChoiceAnswerConverter>();
+            instance.AddTransient<IExamMultipleChoiceAnswerConverter, ExamMultipleChoiceAnswerConverter>();
             instance.AddSingleton<IDeleteExamMultipleChoiceAnswer, DeleteExamMultipleChoiceAnswer>();
             instance.AddSingleton<IGetExamMultipleChoiceAnswerList, GetExamMultipleChoiceAnswerList>();
             instance.AddSingleton<IInsertExamMultipleChoiceAnswer, InsertExamMultipleChoiceAnswer>();
@@ -263,7 +273,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqServer_ExamSet(this IServiceCollection instance)
         {
-            instance.AddTransient<IExamSetConverter<SqlDataReader>, ExamSetConverter>();
+            instance.AddTransient<IExamSetConverter, ExamSetConverter>();
             instance.AddSingleton<IDeleteExamSet, DeleteExamSet>();
             instance.AddSingleton<IGetExamSetById, GetExamSetById>();
             instance.AddSingleton<IGetExamSetList, GetExamSetList>();
@@ -276,7 +286,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Locator(this IServiceCollection instance)
         {
-            instance.AddTransient<ILocatorConverter<SqlDataReader>, LocatorConverter>();
+            instance.AddTransient<ILocatorConverter, LocatorConverter>();
             instance.AddSingleton<IDeleteLocator, DeleteLocator>();
             instance.AddSingleton<IGetLocatorById, GetLocatorById>();
             instance.AddSingleton<IGetLocatorList, GetLocatorList>();
@@ -289,7 +299,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_LocatorLeaveType(this IServiceCollection instance)
         {
-            instance.AddTransient<ILocatorLeaveTypeConverter<SqlDataReader>, LocatorLeaveTypeConverter>();
+            instance.AddTransient<ILocatorLeaveTypeConverter, LocatorLeaveTypeConverter>();
             instance.AddSingleton<IGetLocatorLeaveTypeById, GetLocatorLeaveTypeById>();
             instance.AddSingleton<IGetLocatorLeaveTypeList, GetLocatorLeaveTypeList>();
             instance.AddSingleton<ILocatorLeaveTypeManager, LocatorLeaveTypeManager>();
@@ -299,7 +309,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_MultipleChoiceCandidateAnswer(this IServiceCollection instance)
         {
-            instance.AddTransient<IMultipleChoiceCandidateAnswerConverter<SqlDataReader>, MultipleChoiceCandidateAnswerConverter>();
+            instance.AddTransient<IMultipleChoiceCandidateAnswerConverter, MultipleChoiceCandidateAnswerConverter>();
             instance.AddSingleton<IDeleteMultipleChoiceCandidateAnswer, DeleteMultipleChoiceCandidateAnswer>();
             instance.AddSingleton<IGetMultipleChoiceCandidateAnswerById, GetMultipleChoiceCandidateAnswerById>();
             instance.AddSingleton<IGetMultipleChoiceCandidateAnswerList, GetMultipleChoiceCandidateAnswerList>();
@@ -312,7 +322,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_MultipleChoiceQuestion(this IServiceCollection instance)
         {
-            instance.AddTransient<IMultipleChoiceQuestionConverter<SqlDataReader>, MultipleChoiceQuestionConverter>();
+            instance.AddTransient<IMultipleChoiceQuestionConverter, MultipleChoiceQuestionConverter>();
             instance.AddSingleton<IDeleteMultipleChoiceQuestion, DeleteMultipleChoiceQuestion>();
             instance.AddSingleton<IGetMultipleChoiceQuestionById, GetMultipleChoiceQuestionById>();
             instance.AddSingleton<IGetMultipleChoiceQuestionList, GetMultipleChoiceQuestionList>();
@@ -325,7 +335,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Payroll(this IServiceCollection instance)
         {
-            instance.AddTransient<IPayrollConverter<SqlDataReader>, PayrollConverter>();
+            instance.AddTransient<IPayrollConverter, PayrollConverter>();
             instance.AddSingleton<IPayrollFields, PayrollFields>();
             instance.AddSingleton<IPayrollParameters, PayrollParameters>();
             instance.AddSingleton<IInsertPayroll<SqlConnection, SqlTransaction>, InsertPayroll>();
@@ -340,7 +350,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_PayrollContractualEmployee(this IServiceCollection instance)
         {
-            instance.AddTransient<IPayrollContractualEmployeeConverter<SqlDataReader>, PayrollContractualEmployeeConverter>();
+            instance.AddTransient<IPayrollContractualEmployeeConverter, PayrollContractualEmployeeConverter>();
             instance.AddSingleton<IPayrollContractualEmployeeFields, PayrollContractualEmployeeFields>();
             instance.AddSingleton<IPayrollContractualEmployeeParameters, PayrollContractualEmployeeParameters>();
             instance.AddSingleton<IInsertPayrollContractualEmployee<SqlConnection, SqlTransaction>, InsertPayrollContractualEmployee>();
@@ -352,7 +362,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_PayrollCutOff(this IServiceCollection instance)
         {
-            instance.AddTransient<IPayrollCutOffConverter<SqlDataReader>, PayrollCutOffConverter>();
+            instance.AddTransient<IPayrollCutOffConverter, PayrollCutOffConverter>();
             instance.AddSingleton<IGetPayrollCutOffById, GetPayrollCutOffById>();
             instance.AddSingleton<IGetPayrollCutOffList, GetPayrollCutOffList>();
             instance.AddSingleton<IPayrollCutOffManager, PayrollCutOffManager>();
@@ -362,7 +372,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_PayrollType(this IServiceCollection instance)
         {
-            instance.AddTransient<IPayrollTypeConverter<SqlDataReader>, PayrollTypeConverter>();
+            instance.AddTransient<IPayrollTypeConverter, PayrollTypeConverter>();
             instance.AddSingleton<IGetPayrollTypeById, GetPayrollTypeById>();
             instance.AddSingleton<IGetPayrollTypeList, GetPayrollTypeList>();
             instance.AddSingleton<IPayrollTypeManager, PayrollTypeManager>();
@@ -372,7 +382,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Position(this IServiceCollection instance)
         {
-            instance.AddTransient<IPositionConverter<SqlDataReader>, PositionConverter>();
+            instance.AddTransient<IPositionConverter, PositionConverter>();
             instance.AddSingleton<IDeletePosition, DeletePosition>();
             instance.AddSingleton<IGetPositionById, GetPositionById>();
             instance.AddSingleton<IGetPositionList, GetPositionList>();
@@ -385,7 +395,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_SalaryGrade(this IServiceCollection instance)
         {
-            instance.AddTransient<ISalaryGradeConverter<SqlDataReader>, SalaryGradeConverter>();
+            instance.AddTransient<ISalaryGradeConverter, SalaryGradeConverter>();
             instance.AddSingleton<IDeleteSalaryGrade, DeleteSalaryGrade>();
             instance.AddSingleton<IGetSalaryGradeById, GetSalaryGradeById>();
             instance.AddSingleton<IGetSalaryGradeList, GetSalaryGradeList>();
@@ -399,7 +409,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_SalaryGradeBatch(this IServiceCollection instance)
         {
-            instance.AddTransient<ISalaryGradeBatchConverter<SqlDataReader>, SalaryGradeBatchConverter>();
+            instance.AddTransient<ISalaryGradeBatchConverter, SalaryGradeBatchConverter>();
             instance.AddSingleton<IDeleteSalaryGradeBatch, DeleteSalaryGradeBatch>();
             instance.AddSingleton<IGetSalaryGradeBatchById, GetSalaryGradeBatchById>();
             instance.AddSingleton<IGetSalaryGradeBatchList, GetSalaryGradeBatchList>();
@@ -413,7 +423,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_SalaryGradeStep(this IServiceCollection instance)
         {
-            instance.AddTransient<ISalaryGradeStepConverter<SqlDataReader>, SalaryGradeStepConverter>();
+            instance.AddTransient<ISalaryGradeStepConverter, SalaryGradeStepConverter>();
             instance.AddSingleton<IDeleteSalaryGradeStep, DeleteSalaryGradeStep>();
             instance.AddSingleton<IGetSalaryGradeStepById, GetSalaryGradeStepById>();
             instance.AddSingleton<IGetSalaryGradeStepList, GetSalaryGradeStepList>();
@@ -429,7 +439,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_TimeLog(this IServiceCollection instance)
         {
-            instance.AddTransient<ITimeLogConverter<SqlDataReader>, TimeLogConverter>();
+            instance.AddTransient<ITimeLogConverter, TimeLogConverter>();
             instance.AddSingleton<IDeleteTimeLog, DeleteTimeLog>();
             instance.AddSingleton<IGetTimeLogById, GetTimeLogById>();
             instance.AddSingleton<IGetTimeLogList, GetTimeLogList>();
@@ -447,7 +457,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_TimeLogType(this IServiceCollection instance)
         {
-            instance.AddTransient<ITimeLogTypeConverter<SqlDataReader>, TimeLogTypeConverter>();
+            instance.AddTransient<ITimeLogTypeConverter, TimeLogTypeConverter>();
             instance.AddSingleton<IGetTimeLogTypeById, GetTimeLogTypeById>();
             instance.AddSingleton<IGetTimeLogTypeList, GetTimeLogTypeList>();
             instance.AddSingleton<ITimeLogTypeManager, TimeLogTypeManager>();
@@ -457,7 +467,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_WorkTimeSchedule(this IServiceCollection instance)
         {
-            instance.AddTransient<IWorkTimeScheduleConverter<SqlDataReader>, WorkTimeScheduleConverter>();
+            instance.AddTransient<IWorkTimeScheduleConverter, WorkTimeScheduleConverter>();
             instance.AddSingleton<IDeleteWorkTimeSchedule, DeleteWorkTimeSchedule>();
             instance.AddSingleton<IGetWorkTimeScheduleById, GetWorkTimeScheduleById>();
             instance.AddSingleton<IGetWorkTimeScheduleList, GetWorkTimeScheduleList>();

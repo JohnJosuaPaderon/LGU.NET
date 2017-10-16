@@ -3,7 +3,6 @@ using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +10,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetApplicationStatusById : ApplicationStatusProcess, IGetApplicationStatusById
     {
-        public GetApplicationStatusById(IConnectionStringSource connectionStringSource, IApplicationStatusConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetApplicationStatusById(IConnectionStringSource connectionStringSource, IApplicationStatusConverter converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -23,17 +22,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IProcessResult<IApplicationStatus> Execute()
         {
-            return _SqlHelper.ExecuteReader(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReader(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IApplicationStatus>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IApplicationStatus>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

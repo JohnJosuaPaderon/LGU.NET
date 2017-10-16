@@ -4,7 +4,6 @@ using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
 using System;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,7 +14,7 @@ namespace LGU.EntityProcesses.HumanResource
         private const string PARAM_CUT_OFF_BEGIN = "@_CutOffBegin";
         private const string PARAM_CUT_OFF_END = "@_CutOffEnd";
 
-        public GetEmployeeListWithTimeLogByDepartment(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter, IEmployeeParameters parameters) : base(connectionStringSource, converter)
+        public GetEmployeeListWithTimeLogByDepartment(IConnectionStringSource connectionStringSource, IEmployeeConverter converter, IEmployeeParameters parameters) : base(connectionStringSource, converter)
         {
             _Parameters = parameters;
         }

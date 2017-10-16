@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class DeletePerson : PersonProcess, IDeletePerson
     {
-        public DeletePerson(IConnectionStringSource connectionStringSource, IPersonConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public DeletePerson(IConnectionStringSource connectionStringSource, IPersonConverter converter) : base(connectionStringSource, converter)
         {
         }
 

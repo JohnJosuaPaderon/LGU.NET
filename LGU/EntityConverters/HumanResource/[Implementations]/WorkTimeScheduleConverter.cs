@@ -4,13 +4,13 @@ using LGU.Extensions;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class WorkTimeScheduleConverter : IWorkTimeScheduleConverter<SqlDataReader>
+    public sealed class WorkTimeScheduleConverter : IWorkTimeScheduleConverter
     {
         private const string FIELD_ID = "Id";
         private const string FIELD_DESCRIPTION = "Description";
@@ -36,7 +36,7 @@ namespace LGU.EntityConverters.HumanResource
         public IDataConverterProperty<TimeSpan?> Prop_BreakTime { get; }
         public IDataConverterProperty<int> Prop_WorkingMonthDays { get; }
 
-        private IWorkTimeSchedule GetData(SqlDataReader reader)
+        private IWorkTimeSchedule GetData(DbDataReader reader)
         {
             return new WorkTimeSchedule()
             {
@@ -49,7 +49,7 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        public IEnumerableProcessResult<IWorkTimeSchedule> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IWorkTimeSchedule> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IWorkTimeSchedule>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IWorkTimeSchedule>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IWorkTimeSchedule>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IWorkTimeSchedule>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IWorkTimeSchedule> FromReader(SqlDataReader reader)
+        public IProcessResult<IWorkTimeSchedule> FromReader(DbDataReader reader)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IWorkTimeSchedule>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IWorkTimeSchedule>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -132,7 +132,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IWorkTimeSchedule>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IWorkTimeSchedule>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

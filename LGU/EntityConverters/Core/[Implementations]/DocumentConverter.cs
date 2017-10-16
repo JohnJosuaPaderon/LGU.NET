@@ -4,13 +4,13 @@ using LGU.EntityManagers.Core;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.Core
 {
-    public sealed class DocumentConverter : IDocumentConverter<SqlDataReader>
+    public sealed class DocumentConverter : IDocumentConverter
     {
         private readonly IDocumentPathTypeManager r_DocumentPathTypeManager;
 
@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.Core
             r_DocumentPathTypeManager = documentPathTypeManager;
         }
 
-        private IDocument GetData(IDocumentPathType pathType, SqlDataReader reader)
+        private IDocument GetData(IDocumentPathType pathType, DbDataReader reader)
         {
             return new Document()
             {
@@ -32,28 +32,28 @@ namespace LGU.EntityConverters.Core
             };
         }
 
-        private IDocument GetData(SqlDataReader reader)
+        private IDocument GetData(DbDataReader reader)
         {
             var pathTypeResult = r_DocumentPathTypeManager.GetById(reader.GetInt16("PathTypeId"));
 
             return GetData(pathTypeResult.Data, reader);
         }
 
-        private async Task<IDocument> GetDataAsync(SqlDataReader reader)
+        private async Task<IDocument> GetDataAsync(DbDataReader reader)
         {
             var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"));
 
             return GetData(pathTypeResult.Data, reader);
         }
 
-        private async Task<IDocument> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IDocument> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"), cancellationToken);
 
             return GetData(pathTypeResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<IDocument> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IDocument> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IEnumerableProcessResult<IDocument>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IDocument>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IEnumerableProcessResult<IDocument>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IDocument>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public IProcessResult<IDocument> FromReader(SqlDataReader reader)
+        public IProcessResult<IDocument> FromReader(DbDataReader reader)
         {
             try
             {
@@ -123,12 +123,12 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public Task<IProcessResult<IDocument>> FromReaderAsync(SqlDataReader reader)
+        public Task<IProcessResult<IDocument>> FromReaderAsync(DbDataReader reader)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IProcessResult<IDocument>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public Task<IProcessResult<IDocument>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

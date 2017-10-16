@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class DeleteTimeLog : TimeLogProcess, IDeleteTimeLog
     {
-        public DeleteTimeLog(IConnectionStringSource connectionStringSource, ITimeLogConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public DeleteTimeLog(IConnectionStringSource connectionStringSource, ITimeLogConverter converter) : base(connectionStringSource, converter)
         {
         }
 

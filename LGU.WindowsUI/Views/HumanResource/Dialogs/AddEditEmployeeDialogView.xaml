@@ -83,6 +83,32 @@
                         <TextBox Grid.Row="4" materialDesign:HintAssist.Hint="Amount" IsReadOnly="True" Text="{Binding SalaryGradeStep.Amount,StringFormat='#,##0.00'}"/>
                     </Grid>
                 </TabItem>
+                <TabItem Header="Working Days">
+                    <Grid Margin="{DynamicResource ContainerMargin}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <CheckBox Grid.Row="0" Content="Sunday" IsChecked="{Binding WorkdaySchedule.Sunday}"/>
+                        <CheckBox Grid.Row="2" Content="Monday" IsChecked="{Binding WorkdaySchedule.Monday}"/>
+                        <CheckBox Grid.Row="4" Content="Tuesday" IsChecked="{Binding WorkdaySchedule.Tuesday}"/>
+                        <CheckBox Grid.Row="6" Content="Wednesday" IsChecked="{Binding WorkdaySchedule.Wednesday}"/>
+                        <CheckBox Grid.Row="8" Content="Thursday" IsChecked="{Binding WorkdaySchedule.Thursday}"/>
+                        <CheckBox Grid.Row="10" Content="Friday" IsChecked="{Binding WorkdaySchedule.Friday}"/>
+                        <CheckBox Grid.Row="12" Content="Saturday" IsChecked="{Binding WorkdaySchedule.Saturday}"/>
+                    </Grid>
+                </TabItem>
             </dragablz:TabablzControl>
             <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
                 <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">

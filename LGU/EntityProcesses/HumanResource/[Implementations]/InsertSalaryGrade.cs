@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class InsertSalaryGrade : SalaryGradeProcess, IInsertSalaryGrade
     {
-        public InsertSalaryGrade(IConnectionStringSource connectionStringSource, ISalaryGradeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertSalaryGrade(IConnectionStringSource connectionStringSource, ISalaryGradeConverter converter) : base(connectionStringSource, converter)
         {
         }
 

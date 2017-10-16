@@ -2,7 +2,6 @@
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,12 +9,12 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetPayrollCutOffList : HumanResourceProcessBase, IGetPayrollCutOffList
     {
-        public GetPayrollCutOffList(IConnectionStringSource connectionStringSource, IPayrollCutOffConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public GetPayrollCutOffList(IConnectionStringSource connectionStringSource, IPayrollCutOffConverter converter) : base(connectionStringSource)
         {
             _Converter = converter;
         }
 
-        private readonly IPayrollCutOffConverter<SqlDataReader> _Converter;
+        private readonly IPayrollCutOffConverter _Converter;
 
         private SqlQueryInfo QueryInfo => SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName());
 

@@ -1,15 +1,14 @@
 ﻿using LGU.EntityConverters.HumanResource;
-using System.Data.SqlClient;
 
 namespace LGU.EntityProcesses.HumanResource
 {
     public abstract class ExamEssayAnswerProcess : HumanResourceProcessBase
     {
-        protected readonly IExamEssayAnswerConverter<SqlDataReader> r_Converter;
+        protected readonly IExamEssayAnswerConverter _Converter;
 
-        public ExamEssayAnswerProcess(IConnectionStringSource connectionStringSource, IExamEssayAnswerConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public ExamEssayAnswerProcess(IConnectionStringSource connectionStringSource, IExamEssayAnswerConverter converter) : base(connectionStringSource)
         {
-            r_Converter = converter;
+            _Converter = converter;
         }
     }
 }

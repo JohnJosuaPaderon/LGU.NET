@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public class InsertTimeLog : TimeLogProcess, IInsertTimeLog
     {
-        public InsertTimeLog(IConnectionStringSource connectionStringSource, ITimeLogConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertTimeLog(IConnectionStringSource connectionStringSource, ITimeLogConverter converter) : base(connectionStringSource, converter)
         {
         }
 

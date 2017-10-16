@@ -13,7 +13,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class InsertUser : UserProcess, IInsertUser
     {
-        public InsertUser(IConnectionStringSource connectionStringSource, IUserConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertUser(IConnectionStringSource connectionStringSource, IUserConverter converter) : base(connectionStringSource, converter)
         {
         }
 

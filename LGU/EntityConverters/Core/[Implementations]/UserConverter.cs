@@ -4,29 +4,29 @@ using LGU.EntityManagers.Core;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.Core
 {
-    public sealed class UserConverter : IUserConverter<SqlDataReader>
+    public sealed class UserConverter : IUserConverter
     {
-        private readonly IPersonManager r_PersonManager;
-        private readonly IUserStatusManager r_UserStatusManager;
-        private readonly IUserTypeManager r_UserTypeManager;
-
         public UserConverter(
             IPersonManager personManager,
             IUserStatusManager userStatusManager,
             IUserTypeManager userTypeManager)
         {
-            r_PersonManager = personManager;
-            r_UserStatusManager = userStatusManager;
-            r_UserTypeManager = userTypeManager;
+            _PersonManager = personManager;
+            _UserStatusManager = userStatusManager;
+            _UserTypeManager = userTypeManager;
         }
 
-        private IUser GetData(IPerson owner, IUserStatus status, IUserType type, SqlDataReader reader)
+        private readonly IPersonManager _PersonManager;
+        private readonly IUserStatusManager _UserStatusManager;
+        private readonly IUserTypeManager _UserTypeManager;
+
+        private IUser GetData(IPerson owner, IUserStatus status, IUserType type, DbDataReader reader)
         {
             if (owner != null)
             {
@@ -54,34 +54,34 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        private IUser GetData(SqlDataReader reader)
+        private IUser GetData(DbDataReader reader)
         {
-            var ownerResult = r_PersonManager.GetById(reader.GetInt64("OwnerId"));
-            var statusResult = r_UserStatusManager.GetById(reader.GetInt16("StatusId"));
-            var typeResult = r_UserTypeManager.GetById(reader.GetInt16("TypeId"));
+            var ownerResult = _PersonManager.GetById(reader.GetInt64("OwnerId"));
+            var statusResult = _UserStatusManager.GetById(reader.GetInt16("StatusId"));
+            var typeResult = _UserTypeManager.GetById(reader.GetInt16("TypeId"));
 
             return GetData(ownerResult.Data, statusResult.Data, typeResult.Data, reader);
         }
 
-        private async Task<IUser> GetDataAsync(SqlDataReader reader)
+        private async Task<IUser> GetDataAsync(DbDataReader reader)
         {
-            var ownerResult = await r_PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"));
-            var statusResult = await r_UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"));
-            var typeResult = await r_UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
+            var ownerResult = await _PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"));
+            var statusResult = await _UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"));
+            var typeResult = await _UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
 
             return GetData(ownerResult.Data, statusResult.Data, typeResult.Data, reader);
         }
 
-        private async Task<IUser> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IUser> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var ownerResult = await r_PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"), cancellationToken);
-            var statusResult = await r_UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"), cancellationToken);
-            var typeResult = await r_UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
+            var ownerResult = await _PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"), cancellationToken);
+            var statusResult = await _UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"), cancellationToken);
+            var typeResult = await _UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
 
             return GetData(ownerResult.Data, statusResult.Data, typeResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<IUser> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IUser> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IEnumerableProcessResult<IUser>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IUser>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IEnumerableProcessResult<IUser>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IUser>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public IProcessResult<IUser> FromReader(SqlDataReader reader)
+        public IProcessResult<IUser> FromReader(DbDataReader reader)
         {
             try
             {
@@ -151,7 +151,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IProcessResult<IUser>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IUser>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -164,7 +164,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IProcessResult<IUser>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IUser>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

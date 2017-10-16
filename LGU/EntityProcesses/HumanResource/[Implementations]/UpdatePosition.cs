@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class UpdatePosition : PositionProcess, IUpdatePosition
     {
-        public UpdatePosition(IConnectionStringSource connectionStringSource, IPositionConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdatePosition(IConnectionStringSource connectionStringSource, IPositionConverter converter) : base(connectionStringSource, converter)
         {
         }
 

@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class DeleteEmployeeFingerPrintSet : EmployeeFingerPrintSetProcess, IDeleteEmployeeFingerPrintSet
     {
-        public DeleteEmployeeFingerPrintSet(IConnectionStringSource connectionStringSource, IEmployeeFingerPrintSetConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public DeleteEmployeeFingerPrintSet(IConnectionStringSource connectionStringSource, IEmployeeFingerPrintSetConverter converter) : base(connectionStringSource, converter)
         {
         }
 

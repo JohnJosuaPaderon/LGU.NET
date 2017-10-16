@@ -2,7 +2,6 @@
 using LGU.EntityManagers.HumanResource;
 using LGU.EntityProcesses.HumanResource;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data.SqlClient;
 
 namespace LGU.Extensions
 {
@@ -11,7 +10,7 @@ namespace LGU.Extensions
         public static IServiceCollection UseDigitalPersona(this IServiceCollection serviceCollection)
         {
             #region EmployeeFingerPrintSetManager
-            serviceCollection.AddSingleton<IEmployeeFingerPrintSetConverter<SqlDataReader>, EmployeeFingerPrintSetConverter>();
+            serviceCollection.AddSingleton<IEmployeeFingerPrintSetConverter, EmployeeFingerPrintSetConverter>();
             serviceCollection.AddSingleton<IDeleteEmployeeFingerPrintSet, DeleteEmployeeFingerPrintSet>();
             serviceCollection.AddSingleton<IGetEmployeeFingerPrintSetList, GetEmployeeFingerPrintSetList>();
             serviceCollection.AddSingleton<IInsertEmployeeFingerPrintSet, InsertEmployeeFingerPrintSet>();

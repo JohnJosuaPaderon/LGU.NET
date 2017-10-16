@@ -4,7 +4,7 @@ namespace LGU.Models.HumanResource
 {
     public sealed class PayrollTypeModel : ModelBase<IPayrollType>
     {
-        public PayrollTypeModel(IPayrollType source) : base(source ?? new PayrollType())
+        public PayrollTypeModel(IPayrollType source) : base(source)
         {
             Id = source?.Id ?? default(short);
             Description = source?.Description;
@@ -26,8 +26,11 @@ namespace LGU.Models.HumanResource
 
         public override IPayrollType GetSource()
         {
-            Source.Id = Id;
-            Source.Description = Description;
+            if (Source != null)
+            {
+                Source.Id = Id;
+                Source.Description = Description;
+            }
 
             return Source;
         }

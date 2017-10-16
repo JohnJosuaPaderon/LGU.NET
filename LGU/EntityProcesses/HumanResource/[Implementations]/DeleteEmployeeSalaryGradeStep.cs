@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class DeleteEmployeeSalaryGradeStep : EmployeeSalaryGradeStepProcess, IDeleteEmployeeSalaryGradeStep
     {
-        public DeleteEmployeeSalaryGradeStep(IConnectionStringSource connectionStringSource, IEmployeeSalaryGradeStepConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public DeleteEmployeeSalaryGradeStep(IConnectionStringSource connectionStringSource, IEmployeeSalaryGradeStepConverter converter) : base(connectionStringSource, converter)
         {
         }
 

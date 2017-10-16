@@ -168,12 +168,14 @@
     <Compile Include="Extensions\ObservableCollectionExtension.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="Models\Core\UserSignUpModel.cs" />
+    <Compile Include="Models\HumanResource\CalendarEventModel.cs" />
     <Compile Include="Models\HumanResource\ContractualPayrollClusterInclusionModel.cs" />
     <Compile Include="Models\HumanResource\ContractualPayrollClusterModel.cs" />
     <Compile Include="Models\HumanResource\DepartmentModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeFingerPrintSetModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeTypeModel.cs" />
+    <Compile Include="Models\HumanResource\EmployeeWorkdayScheduleModel.cs" />
     <Compile Include="Models\HumanResource\EmploymentStatusModel.cs" />
     <Compile Include="Models\HumanResource\FingerPrintModel.cs" />
     <Compile Include="Models\HumanResource\PayrollContractualEmployeeModel.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
     <Compile Include="ViewModels\HumanResource\ActualTimeLogExportViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\ApplicationMainViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\CalendarEventMaintenanceViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\ContractualPayrollViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\CreateNewSalaryGradeViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\DepartmentManagementViewModel.cs" />
@@ -231,6 +234,7 @@
     <Compile Include="ViewModels\HumanResource\LocatorViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\LogType.cs" />
     <Compile Include="ViewModels\HumanResource\MainKioskViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\MaintenanceViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\MainViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PayrollStartupViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\PersonalDataSheetViewModel.cs" />
@@ -265,6 +269,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\ApplicationMainView.xaml.cs">
       <DependentUpon>ApplicationMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\CalendarEventMaintenanceView.xaml.cs">
+      <DependentUpon>CalendarEventMaintenanceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\ContractualPayrollView.xaml.cs">
       <DependentUpon>ContractualPayrollView.xaml</DependentUpon>
@@ -311,6 +318,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\MainKioskView.xaml.cs">
       <DependentUpon>MainKioskView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\MaintenanceView.xaml.cs">
+      <DependentUpon>MaintenanceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -463,6 +473,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\HumanResource\CalendarEventMaintenanceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HumanResource\ContractualPayrollView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -520,6 +534,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\MainKioskView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\MaintenanceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

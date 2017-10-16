@@ -4,7 +4,6 @@ using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
 using System;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,12 +14,12 @@ namespace LGU.EntityProcesses.HumanResource
         private const string PARAM_CUT_OFF_BEGIN = "@_CutOffBegin";
         private const string PARAM_CUT_OFF_END = "@_CutOffEnd";
 
-        public GeneratePayrollContractualEmployeeList(IConnectionStringSource connectionStringSource, IPayrollContractualEmployeeConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public GeneratePayrollContractualEmployeeList(IConnectionStringSource connectionStringSource, IPayrollContractualEmployeeConverter converter) : base(connectionStringSource)
         {
             _Converter = converter;
         }
 
-        private readonly IPayrollContractualEmployeeConverter<SqlDataReader> _Converter;
+        private readonly IPayrollContractualEmployeeConverter _Converter;
 
         public ValueRange<DateTime> CutOff { get; set; }
 

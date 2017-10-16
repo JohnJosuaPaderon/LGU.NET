@@ -1,19 +1,18 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System;
-using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public interface ICalendarEventConverter<TDataReader> : IDataConverter<ICalendarEvent, TDataReader>
-        where TDataReader : DbDataReader
+    public interface ICalendarEventConverter : IDataConverter<ICalendarEvent>
     {
-        IDataConverterProperty<long> Prop_Id { get; }
-        IDataConverterProperty<string> Prop_Description { get; }
-        IDataConverterProperty<DateTime> Prop_DateOccur { get; }
-        IDataConverterProperty<DateTime?> Prop_DateOccurEnd { get; }
-        IDataConverterProperty<bool> Prop_IsHoliday { get; }
-        IDataConverterProperty<bool> Prop_IsNonWorking { get; }
-        IDataConverterProperty<bool> Prop_IsAnnual { get; }
+
+        IDataConverterProperty<long> PId { get; }
+        IDataConverterProperty<string> PDescription { get; }
+        IDataConverterProperty<DateTime> PDateOccur { get; }
+        IDataConverterProperty<DateTime?> PDateOccurEnd { get; }
+        IDataConverterProperty<bool> PIsHoliday { get; }
+        IDataConverterProperty<bool> PIsNonWorking { get; }
+        IDataConverterProperty<bool> PIsAnnual { get; }
     }
 }

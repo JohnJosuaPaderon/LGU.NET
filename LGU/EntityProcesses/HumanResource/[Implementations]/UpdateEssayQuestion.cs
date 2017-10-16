@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class UpdateEssayQuestion : EssayQuestionProcess, IUpdateEssayQuestion
     {
-        public UpdateEssayQuestion(IConnectionStringSource connectionStringSource, IEssayQuestionConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdateEssayQuestion(IConnectionStringSource connectionStringSource, IEssayQuestionConverter converter) : base(connectionStringSource, converter)
         {
         }
 

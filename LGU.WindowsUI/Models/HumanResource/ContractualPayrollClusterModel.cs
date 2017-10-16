@@ -1,25 +1,14 @@
-﻿using LGU.Extensions;
-using LGU.Entities.HumanResource;
+﻿using LGU.Entities.HumanResource;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace LGU.Models.HumanResource
 {
     public sealed class ContractualPayrollClusterModel : ModelBase<IContractualPayrollCluster>
     {
-        public ContractualPayrollClusterModel(IContractualPayrollCluster source) : base(source ?? new ContractualPayrollCluster())
+        public ContractualPayrollClusterModel(IContractualPayrollCluster source) : base(source)
         {
-            Payroll = new PayrollModel(source?.Payroll);
-            Inclusion = new ContractualPayrollClusterInclusionModel(source?.Inclusion);
-            Employees = new ObservableCollection<PayrollContractualEmployeeModel>();
-
-            if (source?.Employees != null && source.Employees.Any())
-            {
-                foreach (var item in source.Employees)
-                {
-                    Employees.Add(new PayrollContractualEmployeeModel(item));
-                }
-            }
+            Payroll = source?.Payroll != null ? new PayrollModel(source.Payroll) : null;
+            Inclusion = source?.Inclusion != null ? new ContractualPayrollClusterInclusionModel(source.Inclusion) : null;
         }
 
         private PayrollModel _Payroll;
@@ -40,11 +29,38 @@ namespace LGU.Models.HumanResource
 
         public override IContractualPayrollCluster GetSource()
         {
-            Source.Payroll = Payroll.GetSource();
-            Source.Inclusion = Inclusion.GetSource();
-            Source.Employees = Employees.GetSource<IPayrollContractualEmployee, PayrollContractualEmployeeModel>();
+            if (Source != null)
+            {
+                Source.Payroll = Payroll.GetSource();
+                Source.Inclusion = Inclusion.GetSource();
+            }
 
             return Source;
+        }
+
+        public static bool operator ==(ContractualPayrollClusterModel left, ContractualPayrollClusterModel right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(ContractualPayrollClusterModel left, ContractualPayrollClusterModel right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (GetType() != obj.GetType()) return false;
+
+            var value = obj as ContractualPayrollClusterModel;
+            return Payroll.Equals(value.Payroll);
+        }
+
+        public override int GetHashCode()
+        {
+            return Payroll.GetHashCode();
         }
     }
 }

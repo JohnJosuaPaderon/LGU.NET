@@ -4,13 +4,13 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class MultipleChoiceQuestionConverter : IMultipleChoiceQuestionConverter<SqlDataReader>
+    public sealed class MultipleChoiceQuestionConverter : IMultipleChoiceQuestionConverter
     {
         private readonly IExamSetManager r_ExamSetManager;
 
@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.HumanResource
             r_ExamSetManager = examSetManager;
         }
 
-        private IMultipleChoiceQuestion GetData(IExamSet set, SqlDataReader reader)
+        private IMultipleChoiceQuestion GetData(IExamSet set, DbDataReader reader)
         {
             if (set != null)
             {
@@ -36,28 +36,28 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private IMultipleChoiceQuestion GetData(SqlDataReader reader)
+        private IMultipleChoiceQuestion GetData(DbDataReader reader)
         {
             var setResult = r_ExamSetManager.GetById(reader.GetInt32("SetId"));
 
             return GetData(setResult.Data, reader);
         }
 
-        private async Task<IMultipleChoiceQuestion> GetDataAsync(SqlDataReader reader)
+        private async Task<IMultipleChoiceQuestion> GetDataAsync(DbDataReader reader)
         {
             var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"));
 
             return GetData(setResult.Data, reader);
         }
 
-        private async Task<IMultipleChoiceQuestion> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IMultipleChoiceQuestion> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"), cancellationToken);
 
             return GetData(setResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<IMultipleChoiceQuestion> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IMultipleChoiceQuestion> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IMultipleChoiceQuestion>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IMultipleChoiceQuestion>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IMultipleChoiceQuestion>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IMultipleChoiceQuestion>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IMultipleChoiceQuestion> FromReader(SqlDataReader reader)
+        public IProcessResult<IMultipleChoiceQuestion> FromReader(DbDataReader reader)
         {
             try
             {
@@ -127,7 +127,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IMultipleChoiceQuestion>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -140,7 +140,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IMultipleChoiceQuestion>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IMultipleChoiceQuestion>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

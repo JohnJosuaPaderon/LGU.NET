@@ -1,15 +1,14 @@
 ﻿using LGU.EntityConverters.HumanResource;
-using System.Data.SqlClient;
 
 namespace LGU.EntityProcesses.HumanResource
 {
     public abstract class MultipleChoiceQuestionProcess : HumanResourceProcessBase
     {
-        protected readonly IMultipleChoiceQuestionConverter<SqlDataReader> r_Converter;
+        protected readonly IMultipleChoiceQuestionConverter _Converter;
 
-        public MultipleChoiceQuestionProcess(IConnectionStringSource connectionStringSource, IMultipleChoiceQuestionConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public MultipleChoiceQuestionProcess(IConnectionStringSource connectionStringSource, IMultipleChoiceQuestionConverter converter) : base(connectionStringSource)
         {
-            r_Converter = converter;
+            _Converter = converter;
         }
     }
 }

@@ -2,7 +2,6 @@
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,7 +9,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetCurrentSalaryGradeBatch : SalaryGradeBatchProcess, IGetCurrentSalaryGradeBatch
     {
-        public GetCurrentSalaryGradeBatch(IConnectionStringSource connectionStringSource, ISalaryGradeBatchConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetCurrentSalaryGradeBatch(IConnectionStringSource connectionStringSource, ISalaryGradeBatchConverter converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -18,17 +17,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IProcessResult<ISalaryGradeBatch> Execute()
         {
-            return _SqlHelper.ExecuteReader(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReader(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<ISalaryGradeBatch>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<ISalaryGradeBatch>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

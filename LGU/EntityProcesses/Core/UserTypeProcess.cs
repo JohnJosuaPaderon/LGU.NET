@@ -1,15 +1,14 @@
 ﻿using LGU.EntityConverters.Core;
-using System.Data.SqlClient;
 
 namespace LGU.EntityProcesses.Core
 {
     public abstract class UserTypeProcess : CoreProcessBase
     {
-        protected readonly IUserTypeConverter<SqlDataReader> r_Converter;
+        protected readonly IUserTypeConverter _Converter;
 
-        public UserTypeProcess(IConnectionStringSource connectionStringSource, IUserTypeConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public UserTypeProcess(IConnectionStringSource connectionStringSource, IUserTypeConverter converter) : base(connectionStringSource)
         {
-            r_Converter = converter;
+            _Converter = converter;
         }
     }
 }

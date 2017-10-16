@@ -3,7 +3,6 @@ using LGU.Data.Rdbms;
 using LGU.Entities.Core;
 using LGU.EntityConverters.Core;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +10,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class GetModuleById : ModuleProcess, IGetModuleById
     {
-        public GetModuleById(IConnectionStringSource connectionStringSource, IModuleConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetModuleById(IConnectionStringSource connectionStringSource, IModuleConverter converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -23,17 +22,17 @@ namespace LGU.EntityProcesses.Core
 
         public IProcessResult<IModule> Execute()
         {
-            return _SqlHelper.ExecuteReader(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReader(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IModule>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IModule>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

@@ -4,26 +4,28 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class ExamEssayAnswerConverter : IExamEssayAnswerConverter<SqlDataReader>
+    public sealed class ExamEssayAnswerConverter : IExamEssayAnswerConverter
     {
-        private readonly IExamManager r_ExamManager;
-        private readonly IEssayQuestionManager r_EssayQuestionManager;
+        
 
         public ExamEssayAnswerConverter(
             IExamManager examManager,
             IEssayQuestionManager essayQuestionManager)
         {
-            r_ExamManager = examManager;
-            r_EssayQuestionManager = essayQuestionManager;
+            _ExamManager = examManager;
+            _EssayQuestionManager = essayQuestionManager;
         }
 
-        private IExamEssayAnswer GetData(IExam exam, IEssayQuestion question, SqlDataReader reader)
+        private readonly IExamManager _ExamManager;
+        private readonly IEssayQuestionManager _EssayQuestionManager;
+
+        private IExamEssayAnswer GetData(IExam exam, IEssayQuestion question, DbDataReader reader)
         {
             if (exam != null && question != null)
             {
@@ -39,31 +41,31 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private IExamEssayAnswer GetData(SqlDataReader reader)
+        private IExamEssayAnswer GetData(DbDataReader reader)
         {
-            var examResult = r_ExamManager.GetById(reader.GetInt64("ExamId"));
-            var questionResult = r_EssayQuestionManager.GetById(reader.GetInt64("QuestionId"));
+            var examResult = _ExamManager.GetById(reader.GetInt64("ExamId"));
+            var questionResult = _EssayQuestionManager.GetById(reader.GetInt64("QuestionId"));
 
             return GetData(examResult.Data, questionResult.Data, reader);
         }
 
-        private async Task<IExamEssayAnswer> GetDataAsync(SqlDataReader reader)
+        private async Task<IExamEssayAnswer> GetDataAsync(DbDataReader reader)
         {
-            var examResult = await r_ExamManager.GetByIdAsync(reader.GetInt64("ExamId"));
-            var questionResult = await r_EssayQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"));
+            var examResult = await _ExamManager.GetByIdAsync(reader.GetInt64("ExamId"));
+            var questionResult = await _EssayQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"));
 
             return GetData(examResult.Data, questionResult.Data, reader);
         }
 
-        private async Task<IExamEssayAnswer> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IExamEssayAnswer> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var examResult = await r_ExamManager.GetByIdAsync(reader.GetInt64("ExamId"), cancellationToken);
-            var questionResult = await r_EssayQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"), cancellationToken);
+            var examResult = await _ExamManager.GetByIdAsync(reader.GetInt64("ExamId"), cancellationToken);
+            var questionResult = await _EssayQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"), cancellationToken);
 
             return GetData(examResult.Data, questionResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<IExamEssayAnswer> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IExamEssayAnswer> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -82,7 +84,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IExamEssayAnswer>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IExamEssayAnswer>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -101,7 +103,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IExamEssayAnswer>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IExamEssayAnswer>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -120,7 +122,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IExamEssayAnswer> FromReader(SqlDataReader reader)
+        public IProcessResult<IExamEssayAnswer> FromReader(DbDataReader reader)
         {
             try
             {
@@ -133,7 +135,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IExamEssayAnswer>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IExamEssayAnswer>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -146,7 +148,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IExamEssayAnswer>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExamEssayAnswer>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class InsertExam : ExamProcess, IInsertExam
     {
-        public InsertExam(IConnectionStringSource connectionStringSource, IExamConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertExam(IConnectionStringSource connectionStringSource, IExamConverter converter) : base(connectionStringSource, converter)
         {
         }
 

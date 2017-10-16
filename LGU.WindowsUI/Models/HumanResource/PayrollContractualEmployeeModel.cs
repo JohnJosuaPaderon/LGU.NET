@@ -11,6 +11,7 @@ namespace LGU.Models.HumanResource
             MonthlyRate = source?.MonthlyRate ?? default(decimal);
             WithholdingTax = source?.WithholdingTax ?? default(decimal);
             HdmfPremiumPs = source?.HdmfPremiumPs;
+            TimeLogDeduction = source?.TimeLogDeduction ?? 0;
         }
 
         private EmployeeModel _Employee;
@@ -48,13 +49,24 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _HdmfPremiumPs, value); }
         }
 
+        private decimal _TimeLogDeduction;
+        public decimal TimeLogDeduction
+        {
+            get { return _TimeLogDeduction; }
+            set { SetProperty(ref _TimeLogDeduction, value); }
+        }
+
         public override IPayrollContractualEmployee GetSource()
         {
-            Source.Employee = Employee.GetSource();
-            Source.HdmfPremiumPs = HdmfPremiumPs;
-            Source.MonthlyRate = MonthlyRate;
-            Source.Payroll = Payroll.GetSource();
-            Source.WithholdingTax = WithholdingTax;
+            if (Source != null)
+            {
+                Source.Employee = Employee.GetSource();
+                Source.HdmfPremiumPs = HdmfPremiumPs;
+                Source.MonthlyRate = MonthlyRate;
+                Source.Payroll = Payroll.GetSource();
+                Source.WithholdingTax = WithholdingTax;
+                Source.TimeLogDeduction = TimeLogDeduction;
+            }
 
             return Source;
         }

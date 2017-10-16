@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class UpdateApplicant : ApplicantProcess, IUpdateApplicant
     {
-        public UpdateApplicant(IConnectionStringSource connectionStringSource, IApplicantConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdateApplicant(IConnectionStringSource connectionStringSource, IApplicantConverter converter) : base(connectionStringSource, converter)
         {
         }
 

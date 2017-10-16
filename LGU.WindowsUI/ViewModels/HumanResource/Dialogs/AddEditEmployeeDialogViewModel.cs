@@ -17,34 +17,38 @@ namespace LGU.ViewModels.HumanResource.Dialogs
     {
         public AddEditEmployeeDialogViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
-            r_DepartmentManager = ApplicationDomain.GetService<IDepartmentManager>();
-            r_SalaryGradeStepManager = ApplicationDomain.GetService<ISalaryGradeStepManager>();
-            r_EmployeeSalaryGradeStepManager = ApplicationDomain.GetService<IEmployeeSalaryGradeStepManager>();
-            r_WorkTimeScheduleManager = ApplicationDomain.GetService<IWorkTimeScheduleManager>();
-            r_EmployeeTypeManager = ApplicationDomain.GetService<IEmployeeTypeManager>();
+            _EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
+            _DepartmentManager = ApplicationDomain.GetService<IDepartmentManager>();
+            _SalaryGradeStepManager = ApplicationDomain.GetService<ISalaryGradeStepManager>();
+            _EmployeeSalaryGradeStepManager = ApplicationDomain.GetService<IEmployeeSalaryGradeStepManager>();
+            _WorkTimeScheduleManager = ApplicationDomain.GetService<IWorkTimeScheduleManager>();
+            _EmployeeTypeManager = ApplicationDomain.GetService<IEmployeeTypeManager>();
+            _EmployeeWorkdayScheduleManager = ApplicationDomain.GetService<IEmployeeWorkdayScheduleManager>();
+
+            _AddEmployeeEvent = r_EventAggregator.GetEvent<AddEmployeeEvent>();
+            _EditEmployeeEvent = r_EventAggregator.GetEvent<EditEmployeeEvent>();
 
             SaveCommand = new DelegateCommand(Save);
             OpenPdsCommand = new DelegateCommand(OpenPds);
-
-            r_AddEmployeeEvent = r_EventAggregator.GetEvent<AddEmployeeEvent>();
-            r_EditEmployeeEvent = r_EventAggregator.GetEvent<EditEmployeeEvent>();
-
             Departments = new ObservableCollection<DepartmentModel>();
             WorkTimeSchedules = new ObservableCollection<WorkTimeScheduleModel>();
             Types = new ObservableCollection<EmployeeTypeModel>();
 
+            _AddEmployeeEvent.Subscribe(e => SetData(e, "Add new Employee", DialogMode.Add));
+            _EditEmployeeEvent.Subscribe(e => SetData(e, "Edit Employee", DialogMode.Edit));
+
             Initialize();
         }
 
-        private readonly IEmployeeManager r_EmployeeManager;
-        private readonly IDepartmentManager r_DepartmentManager;
-        private readonly ISalaryGradeStepManager r_SalaryGradeStepManager;
-        private readonly IEmployeeSalaryGradeStepManager r_EmployeeSalaryGradeStepManager;
-        private readonly IEmployeeTypeManager r_EmployeeTypeManager;
-        private readonly IWorkTimeScheduleManager r_WorkTimeScheduleManager;
-        private readonly AddEmployeeEvent r_AddEmployeeEvent;
-        private readonly EditEmployeeEvent r_EditEmployeeEvent;
+        private readonly IEmployeeManager _EmployeeManager;
+        private readonly IDepartmentManager _DepartmentManager;
+        private readonly ISalaryGradeStepManager _SalaryGradeStepManager;
+        private readonly IEmployeeSalaryGradeStepManager _EmployeeSalaryGradeStepManager;
+        private readonly IEmployeeTypeManager _EmployeeTypeManager;
+        private readonly IWorkTimeScheduleManager _WorkTimeScheduleManager;
+        private readonly IEmployeeWorkdayScheduleManager _EmployeeWorkdayScheduleManager;
+        private readonly AddEmployeeEvent _AddEmployeeEvent;
+        private readonly EditEmployeeEvent _EditEmployeeEvent;
 
         public DelegateCommand SaveCommand { get; }
         public DelegateCommand OpenPdsCommand { get; }
@@ -57,6 +61,13 @@ namespace LGU.ViewModels.HumanResource.Dialogs
         {
             get { return _Employee; }
             set { SetProperty(ref _Employee, value, OnEmployeeChanged); }
+        }
+
+        private EmployeeWorkdayScheduleModel _WorkdaySchedule;
+        public EmployeeWorkdayScheduleModel WorkdaySchedule
+        {
+            get { return _WorkdaySchedule; }
+            set { SetProperty(ref _WorkdaySchedule, value); }
         }
 
         private bool _Multiple;
@@ -91,17 +102,38 @@ namespace LGU.ViewModels.HumanResource.Dialogs
         {
             base.Initialize();
 
-            r_AddEmployeeEvent.Subscribe(e => SetData(e, "Add new Employee", DialogMode.Add));
-            r_EditEmployeeEvent.Subscribe(e => SetData(e, "Edit Employee", DialogMode.Edit));
+            await TryGetDepartmentListAsync();
+            await TryGetEmployeeTypeListAsync();
+            await TryGetWorkTimeScheduleListAsync();
+        }
 
-            await GetDepartmentListAsync();
-            await GetEmployeeTypeListAsync();
-            await GetWorkTimeScheduleListAsync();
+        private async Task TryGetDepartmentListAsync()
+        {
+            if (Departments.Count <= 0)
+            {
+                await GetDepartmentListAsync();
+            }
+        }
+
+        private async Task TryGetEmployeeTypeListAsync()
+        {
+            if (Types.Count <= 0)
+            {
+                await GetEmployeeTypeListAsync();
+            }
+        }
+
+        private async Task TryGetWorkTimeScheduleListAsync()
+        {
+            if (WorkTimeSchedules.Count <= 0)
+            {
+                await GetWorkTimeScheduleListAsync();
+            }
         }
 
         private async Task GetEmployeeTypeListAsync()
         {
-            var result = await r_EmployeeTypeManager.GetListAsync();
+            var result = await _EmployeeTypeManager.GetListAsync();
             Types.Clear();
 
             if (result.Status == ProcessResultStatus.Success && result.DataList != null)
@@ -119,7 +151,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         private async Task GetDepartmentListAsync()
         {
-            var result = await r_DepartmentManager.GetListAsync();
+            var result = await _DepartmentManager.GetListAsync();
             Departments.Clear();
 
             if (result.Status == ProcessResultStatus.Success && result.DataList != null)
@@ -137,7 +169,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         private async Task GetWorkTimeScheduleListAsync()
         {
-            var result = await r_WorkTimeScheduleManager.GetListAsync();
+            var result = await _WorkTimeScheduleManager.GetListAsync();
             WorkTimeSchedules.Clear();
 
             if (result.Status == ProcessResultStatus.Success && result.DataList != null)
@@ -164,17 +196,10 @@ namespace LGU.ViewModels.HumanResource.Dialogs
         {
             if (Employee != null)
             {
-                var salaryGradeStepResult = await r_SalaryGradeStepManager.GetCurrentByEmployeeAsync(Employee.GetSource());
+                var employee = Employee.GetSource();
 
-                if (salaryGradeStepResult.Status == ProcessResultStatus.Success)
-                {
-                    SalaryGradeNumber = salaryGradeStepResult.Data?.SalaryGrade?.Number;
-                    Step = salaryGradeStepResult.Data?.Step;
-                }
-                else
-                {
-                    EnqueueMessage(salaryGradeStepResult.Message);
-                }
+                await GetCurrentSalaryGradeStepByEmployeeAsync(employee);
+                await GetWorkdayScheduleByEmployeeAsync(employee);
             }
             else
             {
@@ -183,13 +208,52 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             }
         }
 
+        private async Task GetCurrentSalaryGradeStepByEmployeeAsync(IEmployee employee)
+        {
+            var salaryGradeStepResult = await _SalaryGradeStepManager.GetCurrentByEmployeeAsync(employee);
+
+            if (salaryGradeStepResult.Status == ProcessResultStatus.Success)
+            {
+                SalaryGradeNumber = salaryGradeStepResult.Data?.SalaryGrade?.Number;
+                Step = salaryGradeStepResult.Data?.Step;
+            }
+            else
+            {
+                EnqueueMessage(salaryGradeStepResult.Message);
+            }
+        }
+
+        private async Task GetWorkdayScheduleByEmployeeAsync(IEmployee employee)
+        {
+            var result = await _EmployeeWorkdayScheduleManager.GetByEmployeeAsync(employee);
+
+            if (result.Status == ProcessResultStatus.Success && result.Data != null)
+            {
+                WorkdaySchedule = new EmployeeWorkdayScheduleModel(result.Data);
+            }
+            else
+            {
+                WorkdaySchedule = new EmployeeWorkdayScheduleModel(new EmployeeWorkdaySchedule
+                {
+                    Employee = employee,
+                    Sunday = true,
+                    Monday = true,
+                    Tuesday = true,
+                    Wednesday = true,
+                    Thursday = true,
+                    Friday = true,
+                    Saturday = true
+                });
+            }
+        }
+
         private async void GetSalaryGradeStep()
         {
             if (SalaryGradeNumber != null && SalaryGradeNumber > 0 && Step != null && Step > 0)
             {
-                var result = await r_SalaryGradeStepManager.GetByNumberAndStepAsync(SalaryGradeNumber ?? 0, Step ?? 0);
+                var result = await _SalaryGradeStepManager.GetByNumberAndStepAsync(SalaryGradeNumber ?? 0, Step ?? 0);
 
-                if (result.Status == ProcessResultStatus.Success)
+                if (result.Status == ProcessResultStatus.Success && result.Data != null)
                 {
                     if (result.Data != null)
                     {
@@ -237,11 +301,12 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         private async Task InsertAsync()
         {
-            var employeeResult = await r_EmployeeManager.InsertAsync(Employee.GetSource());
+            var result = await _EmployeeManager.InsertAsync(Employee.GetSource());
 
-            if (employeeResult.Status == ProcessResultStatus.Success)
+            if (result.Status == ProcessResultStatus.Success)
             {
-                await InsertEmployeeSalaryGradeStepAsync(employeeResult.Data);
+                await InsertEmployeeSalaryGradeStepAsync(result.Data);
+                await InsertEmployeeWorkdayScheduleAsync(result.Data);
 
                 if (Multiple)
                 {
@@ -254,19 +319,20 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
                 EnqueueMessage("Employee has been added successfully.");
             }
-            else if (employeeResult.Status == ProcessResultStatus.Failed)
+            else if (result.Status == ProcessResultStatus.Failed)
             {
-                EnqueueMessage($"Failed to add new employee. {employeeResult.Message}");
+                EnqueueMessage($"Failed to add new employee. {result.Message}");
             }
         }
                         
         private async Task UpdateAsync()
         {
-            var result = await r_EmployeeManager.UpdateAsync(Employee.GetSource());
+            var result = await _EmployeeManager.UpdateAsync(Employee.GetSource());
 
             if (result.Status == ProcessResultStatus.Success)
             {
                 await InsertEmployeeSalaryGradeStepAsync(result.Data);
+                await InsertEmployeeWorkdayScheduleAsync(result.Data);
 
                 DialogHelper.CloseDialog();
                 EnqueueMessage("Employee details has been updated successfully.");
@@ -288,7 +354,22 @@ namespace LGU.ViewModels.HumanResource.Dialogs
                     EffectivityDate = DateTime.Now
                 };
 
-                var result = await r_EmployeeSalaryGradeStepManager.InsertAsync(employeeSalaryGradeStep);
+                var result = await _EmployeeSalaryGradeStepManager.InsertAsync(employeeSalaryGradeStep);
+
+                if (result.Status == ProcessResultStatus.Failed)
+                {
+                    EnqueueMessage(result.Message);
+                }
+            }
+        }
+
+        private async Task InsertEmployeeWorkdayScheduleAsync(IEmployee employee)
+        {
+            if (employee != null && WorkdaySchedule != null)
+            {
+                var employeeWorkdaySchedule = WorkdaySchedule.GetSource() ?? new EmployeeWorkdaySchedule();
+                employeeWorkdaySchedule.Employee = employee;
+                var result = await _EmployeeWorkdayScheduleManager.InsertAsync(employeeWorkdaySchedule);
 
                 if (result.Status == ProcessResultStatus.Failed)
                 {

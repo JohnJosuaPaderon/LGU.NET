@@ -3,19 +3,19 @@ using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class PayrollCutOffConverter : IPayrollCutOffConverter<SqlDataReader>
+    public sealed class PayrollCutOffConverter : IPayrollCutOffConverter
     {
         private const string FIELD_ID = "Id";
         private const string FIELD_COUNT = "Count";
         private const string FIELD_DESCRIPTION = "Description";
 
-        private IPayrollCutOff Get(SqlDataReader reader)
+        private IPayrollCutOff Get(DbDataReader reader)
         {
             return new PayrollCutOff()
             {
@@ -25,7 +25,7 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        public IEnumerableProcessResult<IPayrollCutOff> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IPayrollCutOff> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IPayrollCutOff>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IPayrollCutOff>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IPayrollCutOff>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IPayrollCutOff>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IPayrollCutOff> FromReader(SqlDataReader reader)
+        public IProcessResult<IPayrollCutOff> FromReader(DbDataReader reader)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IPayrollCutOff>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IPayrollCutOff>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IPayrollCutOff>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPayrollCutOff>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

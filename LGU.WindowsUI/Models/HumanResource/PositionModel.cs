@@ -4,7 +4,7 @@ namespace LGU.Models.HumanResource
 {
     public sealed class PositionModel : ModelBase<IPosition>
     {
-        public PositionModel(IPosition source) : base(source ?? new Position())
+        public PositionModel(IPosition source) : base(source)
         {
             Id = source?.Id ?? default(int);
             Abbreviation = source?.Abbreviation;
@@ -34,11 +34,45 @@ namespace LGU.Models.HumanResource
 
         public override IPosition GetSource()
         {
-            Source.Id = Id;
-            Source.Abbreviation = Abbreviation;
-            Source.Description = Description;
+            if (Source != null)
+            {
+                Source.Id = Id;
+                Source.Abbreviation = Abbreviation;
+                Source.Description = Description;
+            }
 
             return Source;
+        }
+
+        public static bool operator ==(PositionModel left, PositionModel right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(PositionModel left, PositionModel right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (GetType() != obj.GetType()) return false;
+
+            if (obj is PositionModel value)
+            {
+                return (Id == 0 || value.Id == 0) ? false : Id == value.Id;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }

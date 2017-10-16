@@ -4,13 +4,13 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class ExamConverter : IExamConverter<SqlDataReader>
+    public sealed class ExamConverter : IExamConverter
     {
         private readonly IApplicationManager r_ApplicationManager;
         private readonly IExamSetManager r_ExamSetManager;
@@ -23,7 +23,7 @@ namespace LGU.EntityConverters.HumanResource
             r_ExamSetManager = examSetManager;
         }
 
-        private IExam GetData(IApplication application, IExamSet set, SqlDataReader reader)
+        private IExam GetData(IApplication application, IExamSet set, DbDataReader reader)
         {
             if (application != null)
             {
@@ -41,7 +41,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private IExam GetData(SqlDataReader reader)
+        private IExam GetData(DbDataReader reader)
         {
             var applicationResult = r_ApplicationManager.GetById(reader.GetInt64("ApplicationId"));
             var setResult = r_ExamSetManager.GetById(reader.GetInt32("SetId"));
@@ -49,7 +49,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, setResult.Data, reader);
         }
 
-        private async Task<IExam> GetDataAsync(SqlDataReader reader)
+        private async Task<IExam> GetDataAsync(DbDataReader reader)
         {
             var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"));
             var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"));
@@ -57,7 +57,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, setResult.Data, reader);
         }
 
-        private async Task<IExam> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IExam> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"), cancellationToken);
             var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"), cancellationToken);
@@ -65,7 +65,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, setResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<IExam> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IExam> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IExam>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IExam>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IExam>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IExam>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IExam> FromReader(SqlDataReader reader)
+        public IProcessResult<IExam> FromReader(DbDataReader reader)
         {
             try
             {
@@ -135,7 +135,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IExam>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IExam>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IExam>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IExam>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

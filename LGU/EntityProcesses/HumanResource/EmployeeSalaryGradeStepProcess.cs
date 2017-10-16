@@ -1,15 +1,14 @@
 ﻿using LGU.EntityConverters.HumanResource;
-using System.Data.SqlClient;
 
 namespace LGU.EntityProcesses.HumanResource
 {
     public abstract class EmployeeSalaryGradeStepProcess : HumanResourceProcessBase
     {
-        public EmployeeSalaryGradeStepProcess(IConnectionStringSource connectionStringSource, IEmployeeSalaryGradeStepConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public EmployeeSalaryGradeStepProcess(IConnectionStringSource connectionStringSource, IEmployeeSalaryGradeStepConverter converter) : base(connectionStringSource)
         {
-            r_Converter = converter;
+            _Converter = converter;
         }
 
-        protected readonly IEmployeeSalaryGradeStepConverter<SqlDataReader> r_Converter;
+        protected readonly IEmployeeSalaryGradeStepConverter _Converter;
     }
 }

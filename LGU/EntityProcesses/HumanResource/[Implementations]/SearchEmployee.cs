@@ -3,7 +3,6 @@ using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,7 +12,7 @@ namespace LGU.EntityProcesses.HumanResource
     {
         private const string PARAM_SEARCH_KEY = "@_SearchKey";
 
-        public SearchEmployee(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public SearchEmployee(IConnectionStringSource connectionStringSource, IEmployeeConverter converter) : base(connectionStringSource, converter)
         {
         }
 

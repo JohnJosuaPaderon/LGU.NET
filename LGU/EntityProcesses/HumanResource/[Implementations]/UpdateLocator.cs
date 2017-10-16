@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class UpdateLocator : LocatorProcess, IUpdateLocator
     {
-        public UpdateLocator(IConnectionStringSource connectionStringSource, ILocatorConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdateLocator(IConnectionStringSource connectionStringSource, ILocatorConverter converter) : base(connectionStringSource, converter)
         {
         }
 

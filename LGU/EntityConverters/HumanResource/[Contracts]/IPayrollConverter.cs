@@ -1,12 +1,10 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System;
-using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public interface IPayrollConverter<TDataReader> : IDataConverter<IPayroll, TDataReader>
-        where TDataReader : DbDataReader
+    public interface IPayrollConverter : IDataConverter<IPayroll>
     {
         IDataConverterProperty<long> PId { get; }
         IDataConverterProperty<IPayrollType> PType { get; }

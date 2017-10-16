@@ -1,15 +1,14 @@
 ﻿using LGU.EntityConverters.HumanResource;
-using System.Data.SqlClient;
 
 namespace LGU.EntityProcesses.HumanResource
 {
     public abstract class LocatorProcess : HumanResourceProcessBase
     {
-        protected readonly ILocatorConverter<SqlDataReader> r_Converter;
+        protected readonly ILocatorConverter _Converter;
 
-        public LocatorProcess(IConnectionStringSource connectionStringSource, ILocatorConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public LocatorProcess(IConnectionStringSource connectionStringSource, ILocatorConverter converter) : base(connectionStringSource)
         {
-            r_Converter = converter;
+            _Converter = converter;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class InsertApplicant : ApplicantProcess, IInsertApplicant
     {
-        public InsertApplicant(IConnectionStringSource connectionStringSource, IApplicantConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertApplicant(IConnectionStringSource connectionStringSource, IApplicantConverter converter) : base(connectionStringSource, converter)
         {
         }
 

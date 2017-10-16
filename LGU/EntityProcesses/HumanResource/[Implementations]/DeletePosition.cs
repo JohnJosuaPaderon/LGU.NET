@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class DeletePosition : PositionProcess, IDeletePosition
     {
-        public DeletePosition(IConnectionStringSource connectionStringSource, IPositionConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public DeletePosition(IConnectionStringSource connectionStringSource, IPositionConverter converter) : base(connectionStringSource, converter)
         {
         }
 

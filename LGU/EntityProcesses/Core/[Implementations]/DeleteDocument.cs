@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class DeleteDocument : DocumentProcess, IDeleteDocument
     {
-        public DeleteDocument(IConnectionStringSource connectionStringSource, IDocumentConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public DeleteDocument(IConnectionStringSource connectionStringSource, IDocumentConverter converter) : base(connectionStringSource, converter)
         {
         }
 

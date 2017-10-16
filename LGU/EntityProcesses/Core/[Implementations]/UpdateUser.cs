@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class UpdateUser : UserProcess, IUpdateUser
     {
-        public UpdateUser(IConnectionStringSource connectionStringSource, IUserConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdateUser(IConnectionStringSource connectionStringSource, IUserConverter converter) : base(connectionStringSource, converter)
         {
         }
 

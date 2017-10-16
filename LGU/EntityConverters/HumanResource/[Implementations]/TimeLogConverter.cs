@@ -4,13 +4,13 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class TimeLogConverter : ITimeLogConverter<SqlDataReader>
+    public sealed class TimeLogConverter : ITimeLogConverter
     {
         private readonly IEmployeeManager r_EmployeeManager;
         private readonly ITimeLogTypeManager r_TimeLogTypeManager;
@@ -23,7 +23,7 @@ namespace LGU.EntityConverters.HumanResource
             r_TimeLogTypeManager = timeLogTypeManager;
         }
 
-        private ITimeLog GetData(IEmployee employee, ITimeLogType type, SqlDataReader reader)
+        private ITimeLog GetData(IEmployee employee, ITimeLogType type, DbDataReader reader)
         {
             if (employee != null)
             {
@@ -41,7 +41,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private ITimeLog GetData(SqlDataReader reader)
+        private ITimeLog GetData(DbDataReader reader)
         {
             var employeeResult = r_EmployeeManager.GetById(reader.GetInt64("EmployeeId"));
             var typeResult = r_TimeLogTypeManager.GetById(reader.GetInt16("TypeId"));
@@ -49,7 +49,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(employeeResult.Data, typeResult.Data, reader);
         }
 
-        private async Task<ITimeLog> GetDataAsync(SqlDataReader reader)
+        private async Task<ITimeLog> GetDataAsync(DbDataReader reader)
         {
             var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"));
             var typeResult = await r_TimeLogTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
@@ -57,7 +57,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(employeeResult.Data, typeResult.Data, reader);
         }
 
-        private async Task<ITimeLog> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<ITimeLog> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"), cancellationToken);
             var typeResult = await r_TimeLogTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
@@ -65,7 +65,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(employeeResult.Data, typeResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<ITimeLog> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<ITimeLog> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<ITimeLog>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<ITimeLog>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<ITimeLog>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ITimeLog>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<ITimeLog> FromReader(SqlDataReader reader)
+        public IProcessResult<ITimeLog> FromReader(DbDataReader reader)
         {
             try
             {
@@ -135,7 +135,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<ITimeLog>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<ITimeLog>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<ITimeLog>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ITimeLog>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

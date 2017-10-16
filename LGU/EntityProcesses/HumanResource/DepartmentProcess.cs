@@ -1,15 +1,14 @@
 ﻿using LGU.EntityConverters.HumanResource;
-using System.Data.SqlClient;
 
 namespace LGU.EntityProcesses.HumanResource
 {
     public abstract class DepartmentProcess : HumanResourceProcessBase
     {
-        protected readonly IDepartmentConverter<SqlDataReader> r_Converter;
+        protected readonly IDepartmentConverter _Converter;
 
-        public DepartmentProcess(IConnectionStringSource connectionStringSource, IDepartmentConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public DepartmentProcess(IConnectionStringSource connectionStringSource, IDepartmentConverter converter) : base(connectionStringSource)
         {
-            r_Converter = converter;
+            _Converter = converter;
         }
     }
 }

@@ -7,13 +7,13 @@ using LGU.Extensions;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class EmployeeConverter : IEmployeeConverter<SqlDataReader>
+    public sealed class EmployeeConverter : IEmployeeConverter
     {
         public EmployeeConverter(
             IEmployeeFields fields,
@@ -92,7 +92,7 @@ namespace LGU.EntityConverters.HumanResource
             IDepartmentHead departmentHead,
             IWorkTimeSchedule workTimeSchedule,
             IPayrollType payrollType,
-            SqlDataReader reader)
+            DbDataReader reader)
         {
             return new Employee()
             {
@@ -112,11 +112,11 @@ namespace LGU.EntityConverters.HumanResource
                 DepartmentHead = departmentHead,
                 WorkTimeSchedule = workTimeSchedule,
                 PayrollType = payrollType,
-                IsFlexWorkSchedule = PIsFlexWorkSchedule.TryGetValue(reader.GetBoolean, _Fields.IsFlexWorkSchedule)
+                //IsFlexWorkSchedule = PIsFlexWorkSchedule.TryGetValue(reader.GetBoolean, _Fields.IsFlexWorkSchedule)
             };
         }
 
-        private IEmployee GetData(SqlDataReader reader)
+        private IEmployee GetData(DbDataReader reader)
         {
             var gender = PGender.TryGetValueFromProcess(_GenderManager.GetById, reader.GetInt16, _Fields.GenderId);
             var department = PDepartment.TryGetValueFromProcess(_DepartmentManager.GetById, reader.GetInt32, _Fields.DepartmentId);
@@ -139,7 +139,7 @@ namespace LGU.EntityConverters.HumanResource
                 reader);
         }
 
-        private async Task<IEmployee> GetDataAsync(SqlDataReader reader)
+        private async Task<IEmployee> GetDataAsync(DbDataReader reader)
         {
             var gender = await PGender.TryGetValueFromProcessAsync(_GenderManager.GetByIdAsync, reader.GetInt16, _Fields.GenderId);
             var department = await PDepartment.TryGetValueFromProcessAsync(_DepartmentManager.GetByIdAsync, reader.GetInt32, _Fields.DepartmentId);
@@ -162,7 +162,7 @@ namespace LGU.EntityConverters.HumanResource
                 reader);
         }
 
-        private async Task<IEmployee> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IEmployee> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var gender = await PGender.TryGetValueFromProcessAsync(_GenderManager.GetByIdAsync, reader.GetInt16, _Fields.GenderId, cancellationToken);
             var department = await PDepartment.TryGetValueFromProcessAsync(_DepartmentManager.GetByIdAsync, reader.GetInt32, _Fields.DepartmentId, cancellationToken);
@@ -185,7 +185,7 @@ namespace LGU.EntityConverters.HumanResource
                 reader);
         }
 
-        public IEnumerableProcessResult<IEmployee> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IEmployee> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -204,7 +204,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IEmployee>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IEmployee>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -223,7 +223,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IEmployee>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IEmployee>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -242,7 +242,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IEmployee> FromReader(SqlDataReader reader)
+        public IProcessResult<IEmployee> FromReader(DbDataReader reader)
         {
             try
             {
@@ -255,7 +255,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IEmployee>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IEmployee>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -268,7 +268,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IEmployee>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IEmployee>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

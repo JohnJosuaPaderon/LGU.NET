@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class InsertDocument : DocumentProcess, IInsertDocument
     {
-        public InsertDocument(IConnectionStringSource connectionStringSource, IDocumentConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertDocument(IConnectionStringSource connectionStringSource, IDocumentConverter converter) : base(connectionStringSource, converter)
         {
         }
 

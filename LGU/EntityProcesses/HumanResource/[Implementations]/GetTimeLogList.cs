@@ -10,7 +10,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetTimeLogList : TimeLogProcess, IGetTimeLogList
     {
-        public GetTimeLogList(IConnectionStringSource connectionStringSource, ITimeLogConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetTimeLogList(IConnectionStringSource connectionStringSource, ITimeLogConverter converter) : base(connectionStringSource, converter)
         {
         }
 

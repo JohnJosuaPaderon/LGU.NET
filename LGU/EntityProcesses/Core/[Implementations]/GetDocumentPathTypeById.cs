@@ -3,7 +3,6 @@ using LGU.Data.Rdbms;
 using LGU.Entities.Core;
 using LGU.EntityConverters.Core;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,7 +10,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class GetDocumentPathTypeById : DocumentPathTypeProcess, IGetDocumentPathTypeById
     {
-        public GetDocumentPathTypeById(IConnectionStringSource connectionStringSource, IDocumentPathTypeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetDocumentPathTypeById(IConnectionStringSource connectionStringSource, IDocumentPathTypeConverter converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -23,17 +22,17 @@ namespace LGU.EntityProcesses.Core
 
         public IProcessResult<IDocumentPathType> Execute()
         {
-            return _SqlHelper.ExecuteReader(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReader(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IDocumentPathType>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<IDocumentPathType>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

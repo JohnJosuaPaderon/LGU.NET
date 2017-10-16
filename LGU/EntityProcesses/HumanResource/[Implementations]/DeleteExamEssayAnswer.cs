@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class DeleteExamEssayAnswer : ExamEssayAnswerProcess, IDeleteExamEssayAnswer
     {
-        public DeleteExamEssayAnswer(IConnectionStringSource connectionStringSource, IExamEssayAnswerConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public DeleteExamEssayAnswer(IConnectionStringSource connectionStringSource, IExamEssayAnswerConverter converter) : base(connectionStringSource, converter)
         {
         }
 

@@ -10,7 +10,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class GetDocumentPathTypeList : DocumentPathTypeProcess, IGetDocumentPathTypeList
     {
-        public GetDocumentPathTypeList(IConnectionStringSource connectionStringSource, IDocumentPathTypeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetDocumentPathTypeList(IConnectionStringSource connectionStringSource, IDocumentPathTypeConverter converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -18,17 +18,17 @@ namespace LGU.EntityProcesses.Core
 
         public IEnumerableProcessResult<IDocumentPathType> Execute()
         {
-            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IDocumentPathType>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IDocumentPathType>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

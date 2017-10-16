@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class UpdatePerson : PersonProcess, IUpdatePerson
     {
-        public UpdatePerson(IConnectionStringSource connectionStringSource, IPersonConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdatePerson(IConnectionStringSource connectionStringSource, IPersonConverter converter) : base(connectionStringSource, converter)
         {
         }
 

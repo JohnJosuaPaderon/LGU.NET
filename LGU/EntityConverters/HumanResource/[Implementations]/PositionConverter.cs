@@ -3,15 +3,15 @@ using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class PositionConverter : IPositionConverter<SqlDataReader>
+    public sealed class PositionConverter : IPositionConverter
     {
-        private IPosition GetData(SqlDataReader reader)
+        private IPosition GetData(DbDataReader reader)
         {
             return new Position()
             {
@@ -21,7 +21,7 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        public IEnumerableProcessResult<IPosition> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IPosition> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IPosition>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IPosition>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IPosition>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IPosition>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IPosition> FromReader(SqlDataReader reader)
+        public IProcessResult<IPosition> FromReader(DbDataReader reader)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IPosition>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IPosition>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IPosition>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPosition>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class InsertLocator : LocatorProcess, IInsertLocator
     {
-        public InsertLocator(IConnectionStringSource connectionStringSource, ILocatorConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertLocator(IConnectionStringSource connectionStringSource, ILocatorConverter converter) : base(connectionStringSource, converter)
         {
         }
 

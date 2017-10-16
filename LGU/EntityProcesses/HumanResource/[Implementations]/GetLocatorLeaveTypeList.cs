@@ -2,7 +2,6 @@
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,7 +9,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetLocatorLeaveTypeList : LocatorLeaveTypeProcess, IGetLocatorLeaveTypeList
     {
-        public GetLocatorLeaveTypeList(IConnectionStringSource connectionStringSource, ILocatorLeaveTypeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetLocatorLeaveTypeList(IConnectionStringSource connectionStringSource, ILocatorLeaveTypeConverter converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -18,17 +17,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IEnumerableProcessResult<ILocatorLeaveType> Execute()
         {
-            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<ILocatorLeaveType>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<ILocatorLeaveType>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

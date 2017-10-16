@@ -5,13 +5,13 @@ using LGU.Extensions;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public class DepartmentConverter : IDepartmentConverter<SqlDataReader>
+    public class DepartmentConverter : IDepartmentConverter
     {
         public DepartmentConverter(IDepartmentFields fields, IDepartmentHeadManager departmentHeadManager)
         {
@@ -32,7 +32,7 @@ namespace LGU.EntityConverters.HumanResource
         public IDataConverterProperty<string> PAbbreviation { get; }
         public IDataConverterProperty<IDepartmentHead> PHead { get; }
 
-        private IDepartment Get(IDepartmentHead head, SqlDataReader reader)
+        private IDepartment Get(IDepartmentHead head, DbDataReader reader)
         {
             return new Department()
             {
@@ -43,25 +43,25 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        private IDepartment Get(SqlDataReader reader)
+        private IDepartment Get(DbDataReader reader)
         {
             var head = PHead.TryGetValueFromProcess(_DepartmentHeadManager.GetById, reader.GetInt64, _Fields.HeadId);
             return Get(head, reader);
         }
 
-        private async Task<IDepartment> GetAsync(SqlDataReader reader)
+        private async Task<IDepartment> GetAsync(DbDataReader reader)
         {
             var head = await PHead.TryGetValueFromProcessAsync(_DepartmentHeadManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId);
             return Get(head, reader);
         }
 
-        private async Task<IDepartment> GetAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IDepartment> GetAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var head = await PHead.TryGetValueFromProcessAsync(_DepartmentHeadManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId, cancellationToken);
             return Get(head, reader);
         }
 
-        public IEnumerableProcessResult<IDepartment> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IDepartment> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IDepartment>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IDepartment>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IDepartment>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IDepartment>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace LGU.EntityConverters.HumanResource
 
         }
 
-        public IProcessResult<IDepartment> FromReader(SqlDataReader reader)
+        public IProcessResult<IDepartment> FromReader(DbDataReader reader)
         {
             try
             {
@@ -132,7 +132,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IDepartment>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IDepartment>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IDepartment>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDepartment>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

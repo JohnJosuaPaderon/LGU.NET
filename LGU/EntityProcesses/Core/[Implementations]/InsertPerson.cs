@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class InsertPerson : PersonProcess, IInsertPerson
     {
-        public InsertPerson(IConnectionStringSource connectionStringSource, IPersonConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertPerson(IConnectionStringSource connectionStringSource, IPersonConverter converter) : base(connectionStringSource, converter)
         {
         }
 

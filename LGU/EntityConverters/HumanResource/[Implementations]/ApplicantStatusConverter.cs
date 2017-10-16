@@ -3,15 +3,15 @@ using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class ApplicantStatusConverter : IApplicantStatusConverter<SqlDataReader>
+    public sealed class ApplicantStatusConverter : IApplicantStatusConverter
     {
-        private IApplicantStatus GetData(SqlDataReader reader)
+        private IApplicantStatus GetData(DbDataReader reader)
         {
             return new ApplicantStatus()
             {
@@ -20,7 +20,7 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        public IEnumerableProcessResult<IApplicantStatus> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IApplicantStatus> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IApplicantStatus>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IApplicantStatus>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IApplicantStatus>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IApplicantStatus>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IApplicantStatus> FromReader(SqlDataReader reader)
+        public IProcessResult<IApplicantStatus> FromReader(DbDataReader reader)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IApplicantStatus>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IApplicantStatus>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IApplicantStatus>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicantStatus>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

@@ -22,19 +22,19 @@ namespace LGU.ViewModels.HumanResource
 {
     public class TimeKeepingViewModel : ViewModelBase, DPFP.Capture.EventHandler, DPFP.ID.EventHandler
     {
-        private readonly IEmployeeFingerPrintSetManager r_EmployeeFingerPrintSetManager;
-        private readonly ITimeLogManager r_TimeLogManager;
-        private readonly ISystemManager r_SystemManager;
-        private readonly Capture r_Capture;
-        private readonly IConnectionStringSource r_ConnectionStringSource;
+        private readonly IEmployeeFingerPrintSetManager _EmployeeFingerPrintSetManager;
+        private readonly ITimeLogManager _TimeLogManager;
+        private readonly ISystemManager _SystemManager;
+        private readonly Capture _Capture;
+        private readonly IConnectionStringSource _ConnectionStringSource;
 
         public TimeKeepingViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_EmployeeFingerPrintSetManager = ApplicationDomain.GetService<IEmployeeFingerPrintSetManager>();
-            r_TimeLogManager = ApplicationDomain.GetService<ITimeLogManager>();
-            r_SystemManager = ApplicationDomain.GetService<ISystemManager>();
-            r_ConnectionStringSource = ApplicationDomain.GetService<IConnectionStringSource>();
-            r_Capture = new Capture();
+            _EmployeeFingerPrintSetManager = ApplicationDomain.GetService<IEmployeeFingerPrintSetManager>();
+            _TimeLogManager = ApplicationDomain.GetService<ITimeLogManager>();
+            _SystemManager = ApplicationDomain.GetService<ISystemManager>();
+            _ConnectionStringSource = ApplicationDomain.GetService<IConnectionStringSource>();
+            _Capture = new Capture();
             Users = new UserCollection(1000000);
             Identification = new Identification(ref Users)
             {
@@ -217,7 +217,7 @@ namespace LGU.ViewModels.HumanResource
 
         private async Task GetFingerPrintSetListAsync()
         {
-            var result = await r_EmployeeFingerPrintSetManager.GetListAsync();
+            var result = await _EmployeeFingerPrintSetManager.GetListAsync();
             LastDataUpdate = DateTime.Now;
             if (result.Status == ProcessResultStatus.Success)
             {
@@ -286,7 +286,7 @@ namespace LGU.ViewModels.HumanResource
 
         private async Task GetUpdatedFingerPrintSetListAsync()
         {
-            var result = await r_EmployeeFingerPrintSetManager.GetUpdatedListAsync(LastDataUpdate);
+            var result = await _EmployeeFingerPrintSetManager.GetUpdatedListAsync(LastDataUpdate);
 
             if (result.Status == ProcessResultStatus.Success)
             {
@@ -305,7 +305,7 @@ namespace LGU.ViewModels.HumanResource
         protected async override void Initialize()
         {
             r_EventAggregator.GetEvent<TitleEvent>().Publish("Time-Keeping");
-            r_Capture.EventHandler = this;
+            _Capture.EventHandler = this;
             SelectedLogResult = NotYetReadyResult;
 
             await GetSystemDateAsync();
@@ -324,7 +324,7 @@ namespace LGU.ViewModels.HumanResource
 
         private async Task GetSystemDateAsync()
         {
-            var result = await r_SystemManager.GetSystemDateAsync();
+            var result = await _SystemManager.GetSystemDateAsync();
 
             if (result.Status == ProcessResultStatus.Success)
             {
@@ -346,9 +346,9 @@ namespace LGU.ViewModels.HumanResource
         {
             StopScanner();
             
-            if (r_Capture != null)
+            if (_Capture != null)
             {
-                r_Capture.StartCapture();
+                _Capture.StartCapture();
                 Invoke(() => ScannerLog = "Using the fingerprint reader, scan your fingerprint.");
             }
             else
@@ -359,11 +359,11 @@ namespace LGU.ViewModels.HumanResource
 
         private void StopScanner()
         {
-            if (r_Capture != null)
+            if (_Capture != null)
             {
                 try
                 {
-                    r_Capture.StopCapture();
+                    _Capture.StopCapture();
                 }
                 catch (Exception)
                 {
@@ -372,7 +372,7 @@ namespace LGU.ViewModels.HumanResource
             }
         }
 
-        public void IdentifyFeatureSet(ref FeatureSet FeatureSet)
+        private void IdentifyFeatureSet(ref FeatureSet FeatureSet)
         {
             try
             {
@@ -450,7 +450,7 @@ namespace LGU.ViewModels.HumanResource
             try
             {
                 var result = LogResults.FirstOrDefault(r => r.Key == Candidate.ID.ToString());
-                var logResult = r_TimeLogManager.Log(result.Employee.GetSource());
+                var logResult = _TimeLogManager.Log(result.Employee.GetSource());
 
                 if (logResult.Data != null)
                 {

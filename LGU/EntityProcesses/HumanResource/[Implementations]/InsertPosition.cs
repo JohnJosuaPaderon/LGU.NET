@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class InsertPosition : PositionProcess, IInsertPosition
     {
-        public InsertPosition(IConnectionStringSource connectionStringSource, IPositionConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertPosition(IConnectionStringSource connectionStringSource, IPositionConverter converter) : base(connectionStringSource, converter)
         {
         }
 

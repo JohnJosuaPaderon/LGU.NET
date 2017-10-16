@@ -5,11 +5,11 @@ namespace LGU.EntityProcesses.Core
 {
     public abstract class ModuleProcess : CoreProcessBase
     {
-        protected readonly IModuleConverter<SqlDataReader> r_Converter;
+        protected readonly IModuleConverter _Converter;
 
-        public ModuleProcess(IConnectionStringSource connectionStringSource, IModuleConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public ModuleProcess(IConnectionStringSource connectionStringSource, IModuleConverter converter) : base(connectionStringSource)
         {
-            r_Converter = converter;
+            _Converter = converter;
         }
     }
 }

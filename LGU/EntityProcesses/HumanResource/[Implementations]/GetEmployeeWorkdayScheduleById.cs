@@ -3,7 +3,6 @@ using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,14 +12,14 @@ namespace LGU.EntityProcesses.HumanResource
     {
         private const string PARAM_ID = "@_Id";
 
-        public GetEmployeeWorkdayScheduleById(IConnectionStringSource connectionStringSource, IEmployeeWorkdayScheduleConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public GetEmployeeWorkdayScheduleById(IConnectionStringSource connectionStringSource, IEmployeeWorkdayScheduleConverter converter) : base(connectionStringSource)
         {
             _Converter = converter;
         }
 
         public long EmployeeWorkdayScheduleId { get; set; }
 
-        private readonly IEmployeeWorkdayScheduleConverter<SqlDataReader> _Converter;
+        private readonly IEmployeeWorkdayScheduleConverter _Converter;
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName())

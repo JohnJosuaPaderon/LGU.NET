@@ -4,13 +4,13 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class LocatorConverter : ILocatorConverter<SqlDataReader>
+    public sealed class LocatorConverter : ILocatorConverter
     {
         private readonly IEmployeeManager r_EmployeeManager;
         private readonly ILocatorLeaveTypeManager r_LocatorLeaveTypeManager;
@@ -23,7 +23,7 @@ namespace LGU.EntityConverters.HumanResource
             r_LocatorLeaveTypeManager = locatorLeaveTypeManager;
         }
 
-        private ILocator GetData(IEmployee requestor, ILocatorLeaveType leaveType, SqlDataReader reader)
+        private ILocator GetData(IEmployee requestor, ILocatorLeaveType leaveType, DbDataReader reader)
         {
             return new Locator(requestor)
             {
@@ -37,7 +37,7 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        private ILocator GetData(SqlDataReader reader)
+        private ILocator GetData(DbDataReader reader)
         {
             var requestorResult = r_EmployeeManager.GetById(reader.GetInt64("RequestorId"));
             var leaveTypeResult = r_LocatorLeaveTypeManager.GetById(reader.GetInt16("LeaveTypeId"));
@@ -45,7 +45,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(requestorResult.Data, leaveTypeResult.Data, reader);
         }
 
-        private async Task<ILocator> GetDataAsync(SqlDataReader reader)
+        private async Task<ILocator> GetDataAsync(DbDataReader reader)
         {
             var requestorResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("RequestorId"));
             var leaveTypeResult = await r_LocatorLeaveTypeManager.GetByIdAsync(reader.GetInt16("LeaveTypeId"));
@@ -53,7 +53,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(requestorResult.Data, leaveTypeResult.Data, reader);
         }
 
-        private async Task<ILocator> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<ILocator> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var requestorResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("RequestorId"), cancellationToken);
             var leaveTypeResult = await r_LocatorLeaveTypeManager.GetByIdAsync(reader.GetInt16("LeaveTypeId"), cancellationToken);
@@ -61,7 +61,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(requestorResult.Data, leaveTypeResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<ILocator> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<ILocator> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<ILocator>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<ILocator>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<ILocator>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ILocator>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -118,7 +118,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<ILocator> FromReader(SqlDataReader reader)
+        public IProcessResult<ILocator> FromReader(DbDataReader reader)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<ILocator>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<ILocator>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<ILocator>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ILocator>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

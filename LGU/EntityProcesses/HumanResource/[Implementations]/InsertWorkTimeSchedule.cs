@@ -19,7 +19,7 @@ namespace LGU.EntityProcesses.HumanResource
         private const string PARAMETER_BREAK_TIME = "@_BreakTime";
         private const string PARAMETER_WORKING_MONTH_DAYS = "@_WorkingMonthDays";
 
-        public InsertWorkTimeSchedule(IConnectionStringSource connectionStringSource, IWorkTimeScheduleConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertWorkTimeSchedule(IConnectionStringSource connectionStringSource, IWorkTimeScheduleConverter converter) : base(connectionStringSource, converter)
         {
         }
 

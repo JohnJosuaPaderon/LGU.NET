@@ -5,11 +5,11 @@ namespace LGU.EntityProcesses.Core
 {
     public abstract class DocumentProcess : CoreProcessBase
     {
-        protected readonly IDocumentConverter<SqlDataReader> r_Converter;
+        protected readonly IDocumentConverter _Converter;
 
-        public DocumentProcess(IConnectionStringSource connectionStringSource, IDocumentConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public DocumentProcess(IConnectionStringSource connectionStringSource, IDocumentConverter converter) : base(connectionStringSource)
         {
-            r_Converter = converter;
+            _Converter = converter;
         }
     }
 }

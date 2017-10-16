@@ -4,13 +4,13 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class MultipleChoiceCandidateAnswerConverter : IMultipleChoiceCandidateAnswerConverter<SqlDataReader>
+    public sealed class MultipleChoiceCandidateAnswerConverter : IMultipleChoiceCandidateAnswerConverter
     {
         private readonly IMultipleChoiceQuestionManager r_MultipleChoiceQuestionManager;
 
@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.HumanResource
             r_MultipleChoiceQuestionManager = multipleChoiceQuestionManager;
         }
 
-        private IMultipleChoiceCandidateAnswer GetData(IMultipleChoiceQuestion question, SqlDataReader reader)
+        private IMultipleChoiceCandidateAnswer GetData(IMultipleChoiceQuestion question, DbDataReader reader)
         {
             if (question != null)
             {
@@ -36,28 +36,28 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private IMultipleChoiceCandidateAnswer GetData(SqlDataReader reader)
+        private IMultipleChoiceCandidateAnswer GetData(DbDataReader reader)
         {
             var questionResult = r_MultipleChoiceQuestionManager.GetById(reader.GetInt64("QuestionId"));
 
             return GetData(questionResult.Data, reader);
         }
 
-        private async Task<IMultipleChoiceCandidateAnswer> GetDataAsync(SqlDataReader reader)
+        private async Task<IMultipleChoiceCandidateAnswer> GetDataAsync(DbDataReader reader)
         {
             var questionResult = await r_MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"));
 
             return GetData(questionResult.Data, reader);
         }
 
-        private async Task<IMultipleChoiceCandidateAnswer> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IMultipleChoiceCandidateAnswer> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var questionResult = await r_MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"), cancellationToken);
 
             return GetData(questionResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<IMultipleChoiceCandidateAnswer> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IMultipleChoiceCandidateAnswer> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IMultipleChoiceCandidateAnswer>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IMultipleChoiceCandidateAnswer>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IMultipleChoiceCandidateAnswer>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IMultipleChoiceCandidateAnswer>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IMultipleChoiceCandidateAnswer> FromReader(SqlDataReader reader)
+        public IProcessResult<IMultipleChoiceCandidateAnswer> FromReader(DbDataReader reader)
         {
             try
             {
@@ -127,7 +127,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IMultipleChoiceCandidateAnswer>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IMultipleChoiceCandidateAnswer>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -140,7 +140,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IMultipleChoiceCandidateAnswer>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IMultipleChoiceCandidateAnswer>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

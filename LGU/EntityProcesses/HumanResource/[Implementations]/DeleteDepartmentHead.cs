@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class DeleteDepartmentHead : DepartmentHeadProcess, IDeleteDepartmentHead
     {
-        public DeleteDepartmentHead(IConnectionStringSource connectionStringSource, IDepartmentHeadConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public DeleteDepartmentHead(IConnectionStringSource connectionStringSource, IDepartmentHeadConverter converter) : base(connectionStringSource, converter)
         {
         }
 

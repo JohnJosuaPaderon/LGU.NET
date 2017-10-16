@@ -2,7 +2,6 @@
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,7 +9,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetEmployeeList : EmployeeProcess, IGetEmployeeList
     {
-        public GetEmployeeList(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetEmployeeList(IConnectionStringSource connectionStringSource, IEmployeeConverter converter) : base(connectionStringSource, converter)
         {
         }
 

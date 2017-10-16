@@ -2,7 +2,6 @@
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,7 +9,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetExamEssayAnswerList : ExamEssayAnswerProcess, IGetExamEssayAnswerList
     {
-        public GetExamEssayAnswerList(IConnectionStringSource connectionStringSource, IExamEssayAnswerConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetExamEssayAnswerList(IConnectionStringSource connectionStringSource, IExamEssayAnswerConverter converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -18,17 +17,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IEnumerableProcessResult<IExamEssayAnswer> Execute()
         {
-            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IExamEssayAnswer>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IExamEssayAnswer>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

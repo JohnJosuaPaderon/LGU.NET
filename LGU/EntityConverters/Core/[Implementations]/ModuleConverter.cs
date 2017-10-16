@@ -3,15 +3,15 @@ using LGU.Entities.Core;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.Core
 {
-    public sealed class ModuleConverter : IModuleConverter<SqlDataReader>
+    public sealed class ModuleConverter : IModuleConverter
     {
-        private IModule GetData(SqlDataReader reader)
+        private IModule GetData(DbDataReader reader)
         {
             return new Module()
             {
@@ -20,7 +20,7 @@ namespace LGU.EntityConverters.Core
             };
         }
 
-        public IEnumerableProcessResult<IModule> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IModule> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IEnumerableProcessResult<IModule>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IModule>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IEnumerableProcessResult<IModule>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IModule>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public IProcessResult<IModule> FromReader(SqlDataReader reader)
+        public IProcessResult<IModule> FromReader(DbDataReader reader)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IProcessResult<IModule>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IModule>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IProcessResult<IModule>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IModule>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

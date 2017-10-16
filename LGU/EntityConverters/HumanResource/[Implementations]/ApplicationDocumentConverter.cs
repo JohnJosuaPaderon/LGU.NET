@@ -6,13 +6,13 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class ApplicationDocumentConverter : IApplicationDocumentConverter<SqlDataReader>
+    public sealed class ApplicationDocumentConverter : IApplicationDocumentConverter
     {
         private readonly IDocumentPathTypeManager r_DocumentPathTypeManager;
         private readonly IApplicationManager r_ApplicationManager;
@@ -25,7 +25,7 @@ namespace LGU.EntityConverters.HumanResource
             r_ApplicationManager = applicationManager;
         }
 
-        private IApplicationDocument GetData(IApplication application, IDocumentPathType pathType, SqlDataReader reader)
+        private IApplicationDocument GetData(IApplication application, IDocumentPathType pathType, DbDataReader reader)
         {
             if (application != null)
             {
@@ -45,7 +45,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        private IApplicationDocument GetData(SqlDataReader reader)
+        private IApplicationDocument GetData(DbDataReader reader)
         {
             var applicationResult = r_ApplicationManager.GetById(reader.GetInt64("ApplicationId"));
             var pathTypeResult = r_DocumentPathTypeManager.GetById(reader.GetInt16("PathTypeId"));
@@ -53,7 +53,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, pathTypeResult.Data, reader);
         }
 
-        private async Task<IApplicationDocument> GetDataAsync(SqlDataReader reader)
+        private async Task<IApplicationDocument> GetDataAsync(DbDataReader reader)
         {
             var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"));
             var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"));
@@ -61,7 +61,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, pathTypeResult.Data, reader);
         }
 
-        private async Task<IApplicationDocument> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IApplicationDocument> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"), cancellationToken);
             var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"), cancellationToken);
@@ -69,7 +69,7 @@ namespace LGU.EntityConverters.HumanResource
             return GetData(applicationResult.Data, pathTypeResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<IApplicationDocument> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IApplicationDocument> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -88,7 +88,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IApplicationDocument>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IApplicationDocument>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IApplicationDocument>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IApplicationDocument>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IApplicationDocument> FromReader(SqlDataReader reader)
+        public IProcessResult<IApplicationDocument> FromReader(DbDataReader reader)
         {
             try
             {
@@ -139,7 +139,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IApplicationDocument>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IApplicationDocument>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -152,7 +152,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IApplicationDocument>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IApplicationDocument>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class DeleteWorkTimeSchedule : WorkTimeScheduleProcess, IDeleteWorkTimeSchedule
     {
-        public DeleteWorkTimeSchedule(IConnectionStringSource connectionStringSource, IWorkTimeScheduleConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public DeleteWorkTimeSchedule(IConnectionStringSource connectionStringSource, IWorkTimeScheduleConverter converter) : base(connectionStringSource, converter)
         {
         }
 

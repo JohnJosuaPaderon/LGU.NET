@@ -1,15 +1,14 @@
 ﻿using LGU.EntityConverters.HumanResource;
-using System.Data.SqlClient;
 
 namespace LGU.EntityProcesses.HumanResource
 {
     public abstract class WorkTimeScheduleProcess : HumanResourceProcessBase
     {
-        public WorkTimeScheduleProcess(IConnectionStringSource connectionStringSource, IWorkTimeScheduleConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public WorkTimeScheduleProcess(IConnectionStringSource connectionStringSource, IWorkTimeScheduleConverter converter) : base(connectionStringSource)
         {
-            r_Converter = converter;
+            _Converter = converter;
         }
 
-        protected readonly IWorkTimeScheduleConverter<SqlDataReader> r_Converter;
+        protected readonly IWorkTimeScheduleConverter _Converter;
     }
 }

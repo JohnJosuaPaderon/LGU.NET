@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class UpdateSalaryGradeStep : SalaryGradeStepProcess, IUpdateSalaryGradeStep
     {
-        public UpdateSalaryGradeStep(IConnectionStringSource connectionStringSource, ISalaryGradeStepConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdateSalaryGradeStep(IConnectionStringSource connectionStringSource, ISalaryGradeStepConverter converter) : base(connectionStringSource, converter)
         {
         }
 

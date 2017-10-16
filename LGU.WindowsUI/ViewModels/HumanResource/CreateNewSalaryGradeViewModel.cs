@@ -91,7 +91,7 @@ namespace LGU.ViewModels.HumanResource
         private async void Save()
         {
             var batchResult = await r_SalaryGradeBatchManager.InsertAsync(Batch.GetSource());
-            var failureMessage = $"Failed to create salary grades.{Environment.NewLine}";
+            var failureMessage = "Failed to create salary grades. ";
             var faulted = false;
 
             if (batchResult.Status == ProcessResultStatus.Success)

@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace LGU.Data.Rdbms
 {
-    public partial class SqlHelper : IDbHelper<SqlConnection, SqlTransaction, SqlCommand, SqlParameter, SqlDataReader>
+    public partial class SqlHelper : IDbHelper<SqlConnection, SqlTransaction, SqlCommand, SqlParameter>
     {
         public SqlHelper(SqlConnectionEstablisher connectionEstablisher)
         {
@@ -113,7 +113,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public IProcessResult<T> ExecuteReader<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter)
+        public IProcessResult<T> ExecuteReader<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T> converter)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public IEnumerableProcessResult<T> ExecuteReaderEnumerable<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter)
+        public IEnumerableProcessResult<T> ExecuteReaderEnumerable<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T> converter)
         {
             try
             {

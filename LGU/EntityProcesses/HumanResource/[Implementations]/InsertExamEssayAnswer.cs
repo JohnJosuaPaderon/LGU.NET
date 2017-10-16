@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class InsertExamEssayAnswer : ExamEssayAnswerProcess, IInsertExamEssayAnswer
     {
-        public InsertExamEssayAnswer(IConnectionStringSource connectionStringSource, IExamEssayAnswerConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertExamEssayAnswer(IConnectionStringSource connectionStringSource, IExamEssayAnswerConverter converter) : base(connectionStringSource, converter)
         {
         }
 

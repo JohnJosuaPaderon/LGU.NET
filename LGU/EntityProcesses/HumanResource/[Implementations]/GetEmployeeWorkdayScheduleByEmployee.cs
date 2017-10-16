@@ -3,7 +3,6 @@ using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,14 +12,14 @@ namespace LGU.EntityProcesses.HumanResource
     {
         public GetEmployeeWorkdayScheduleByEmployee(
             IConnectionStringSource connectionStringSource,
-            IEmployeeWorkdayScheduleConverter<SqlDataReader> converter,
+            IEmployeeWorkdayScheduleConverter converter,
             IEmployeeWorkdayScheduleParameters parameters) : base(connectionStringSource)
         {
             _Converter = converter;
             _Parameters = parameters;
         }
 
-        private readonly IEmployeeWorkdayScheduleConverter<SqlDataReader> _Converter;
+        private readonly IEmployeeWorkdayScheduleConverter _Converter;
         private readonly IEmployeeWorkdayScheduleParameters _Parameters;
 
         public IEmployee Employee { get; set; }

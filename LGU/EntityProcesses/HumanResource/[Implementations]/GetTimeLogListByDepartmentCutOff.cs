@@ -4,7 +4,6 @@ using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
 using System;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetTimeLogListByDepartmentCutOff : TimeLogProcess, IGetTimeLogListByDepartmentCutOff
     {
-        public GetTimeLogListByDepartmentCutOff(IConnectionStringSource connectionStringSource, ITimeLogConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetTimeLogListByDepartmentCutOff(IConnectionStringSource connectionStringSource, ITimeLogConverter converter) : base(connectionStringSource, converter)
         {
         }
 

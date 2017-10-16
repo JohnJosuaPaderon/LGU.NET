@@ -4,8 +4,7 @@ using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public interface IPayrollContractualEmployeeConverter<TDataReader> : IDataConverter<IPayrollContractualEmployee, TDataReader>
-        where TDataReader : DbDataReader
+    public interface IPayrollContractualEmployeeConverter : IDataConverter<IPayrollContractualEmployee>
     {
         IDataConverterProperty<IEmployee> PEmployee { get; }
         IDataConverterProperty<IPayroll> PPayroll { get; }

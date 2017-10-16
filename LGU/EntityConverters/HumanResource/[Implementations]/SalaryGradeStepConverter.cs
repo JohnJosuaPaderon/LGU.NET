@@ -4,13 +4,13 @@ using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class SalaryGradeStepConverter : ISalaryGradeStepConverter<SqlDataReader>
+    public sealed class SalaryGradeStepConverter : ISalaryGradeStepConverter
     {
         private readonly ISalaryGradeManager r_SalaryGradeManager;
 
@@ -19,7 +19,7 @@ namespace LGU.EntityConverters.HumanResource
             r_SalaryGradeManager = salaryGradeManager;
         }
 
-        private ISalaryGradeStep GetData(ISalaryGrade salaryGrade, SqlDataReader reader)
+        private ISalaryGradeStep GetData(ISalaryGrade salaryGrade, DbDataReader reader)
         {
             return new SalaryGradeStep(salaryGrade, reader.GetInt32("Step"))
             {
@@ -28,28 +28,28 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        private ISalaryGradeStep GetData(SqlDataReader reader)
+        private ISalaryGradeStep GetData(DbDataReader reader)
         {
             var salaryGradeResult = r_SalaryGradeManager.GetById(reader.GetInt64("SalaryGradeId"));
 
             return GetData(salaryGradeResult.Data, reader);
         }
 
-        private async Task<ISalaryGradeStep> GetDataAsync(SqlDataReader reader)
+        private async Task<ISalaryGradeStep> GetDataAsync(DbDataReader reader)
         {
             var salaryGradeResult = await r_SalaryGradeManager.GetByIdAsync(reader.GetInt64("SalaryGradeId"));
 
             return GetData(salaryGradeResult.Data, reader);
         }
 
-        private async Task<ISalaryGradeStep> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<ISalaryGradeStep> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var salaryGradeResult = await r_SalaryGradeManager.GetByIdAsync(reader.GetInt64("SalaryGradeId"), cancellationToken);
 
             return GetData(salaryGradeResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<ISalaryGradeStep> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<ISalaryGradeStep> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<ISalaryGradeStep>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<ISalaryGradeStep>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<ISalaryGradeStep>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ISalaryGradeStep>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<ISalaryGradeStep> FromReader(SqlDataReader reader)
+        public IProcessResult<ISalaryGradeStep> FromReader(DbDataReader reader)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<ISalaryGradeStep>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<ISalaryGradeStep>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -132,7 +132,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<ISalaryGradeStep>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ISalaryGradeStep>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

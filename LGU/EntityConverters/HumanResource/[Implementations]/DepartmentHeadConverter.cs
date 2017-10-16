@@ -5,13 +5,13 @@ using LGU.EntityManagers.Core;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class DepartmentHeadConverter : IDepartmentHeadConverter<SqlDataReader>
+    public sealed class DepartmentHeadConverter : IDepartmentHeadConverter
     {
         private readonly IGenderManager r_GenderManager;
 
@@ -20,7 +20,7 @@ namespace LGU.EntityConverters.HumanResource
             r_GenderManager = genderManager;
         }
 
-        private IDepartmentHead GetData(IGender gender, SqlDataReader reader)
+        private IDepartmentHead GetData(IGender gender, DbDataReader reader)
         {
             return new DepartmentHead()
             {
@@ -36,25 +36,25 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        private IDepartmentHead GetData(SqlDataReader reader)
+        private IDepartmentHead GetData(DbDataReader reader)
         {
             var genderResult = r_GenderManager.GetById(reader.GetInt16("GenderId"));
             return GetData(genderResult.Data, reader);
         }
 
-        private async Task<IDepartmentHead> GetDataAsync(SqlDataReader reader)
+        private async Task<IDepartmentHead> GetDataAsync(DbDataReader reader)
         {
             var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"));
             return GetData(genderResult.Data, reader);
         }
 
-        private async Task<IDepartmentHead> GetDataAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IDepartmentHead> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"), cancellationToken);
             return GetData(genderResult.Data, reader);
         }
 
-        public IEnumerableProcessResult<IDepartmentHead> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IDepartmentHead> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IDepartmentHead>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IDepartmentHead>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IDepartmentHead>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IDepartmentHead>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IDepartmentHead> FromReader(SqlDataReader reader)
+        public IProcessResult<IDepartmentHead> FromReader(DbDataReader reader)
         {
             try
             {
@@ -124,7 +124,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IDepartmentHead>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IDepartmentHead>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IDepartmentHead>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IDepartmentHead>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

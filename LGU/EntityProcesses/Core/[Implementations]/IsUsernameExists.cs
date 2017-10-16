@@ -13,7 +13,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class IsUsernameExists : UserProcess, IIsUsernameExists
     {
-        public IsUsernameExists(IConnectionStringSource connectionStringSource, IUserConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public IsUsernameExists(IConnectionStringSource connectionStringSource, IUserConverter converter) : base(connectionStringSource, converter)
         {
         }
 

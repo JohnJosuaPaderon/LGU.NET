@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class UpdateSalaryGradeBatch : SalaryGradeBatchProcess, IUpdateSalaryGradeBatch
     {
-        public UpdateSalaryGradeBatch(IConnectionStringSource connectionStringSource, ISalaryGradeBatchConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdateSalaryGradeBatch(IConnectionStringSource connectionStringSource, ISalaryGradeBatchConverter converter) : base(connectionStringSource, converter)
         {
         }
 

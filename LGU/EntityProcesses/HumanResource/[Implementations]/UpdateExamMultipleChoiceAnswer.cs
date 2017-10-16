@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class UpdateExamMultipleChoiceAnswer : ExamMultipleChoiceAnswerProcess, IUpdateExamMultipleChoiceAnswer
     {
-        public UpdateExamMultipleChoiceAnswer(IConnectionStringSource connectionStringSource, IExamMultipleChoiceAnswerConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdateExamMultipleChoiceAnswer(IConnectionStringSource connectionStringSource, IExamMultipleChoiceAnswerConverter converter) : base(connectionStringSource, converter)
         {
         }
 

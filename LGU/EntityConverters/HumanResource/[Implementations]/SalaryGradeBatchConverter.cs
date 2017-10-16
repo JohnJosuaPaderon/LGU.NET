@@ -3,15 +3,15 @@ using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class SalaryGradeBatchConverter : ISalaryGradeBatchConverter<SqlDataReader>
+    public sealed class SalaryGradeBatchConverter : ISalaryGradeBatchConverter
     {
-        private ISalaryGradeBatch GetData(SqlDataReader reader)
+        private ISalaryGradeBatch GetData(DbDataReader reader)
         {
             return new SalaryGradeBatch()
             {
@@ -23,7 +23,7 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        public IEnumerableProcessResult<ISalaryGradeBatch> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<ISalaryGradeBatch> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<ISalaryGradeBatch>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<ISalaryGradeBatch>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<ISalaryGradeBatch>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<ISalaryGradeBatch>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<ISalaryGradeBatch> FromReader(SqlDataReader reader)
+        public IProcessResult<ISalaryGradeBatch> FromReader(DbDataReader reader)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<ISalaryGradeBatch>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<ISalaryGradeBatch>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<ISalaryGradeBatch>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<ISalaryGradeBatch>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

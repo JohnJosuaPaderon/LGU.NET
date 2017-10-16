@@ -11,36 +11,36 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetCalendarEventById : HumanResourceProcessBaseV2, IGetCalendarEventById
     {
-        private const string PARAM_ID = "@_Id";
-
-        public GetCalendarEventById(IConnectionStringSource connectionStringSource, ICalendarEventConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public GetCalendarEventById(IConnectionStringSource connectionStringSource, ICalendarEventConverter converter, ICalendarEventParameters parameters) : base(connectionStringSource)
         {
             _Converter = converter;
+            _Parameters = parameters;
         }
 
-        private readonly ICalendarEventConverter<SqlDataReader> _Converter;
+        private readonly ICalendarEventConverter _Converter;
+        private readonly ICalendarEventParameters _Parameters;
 
         public long CalendarEventId { get; set; }
 
         private SqlQueryInfo QueryInfo =>
             SqlQueryInfo.CreateProcedureQueryInfo(nameof(GetCalendarEventById))
-            .AddInputParameter(PARAM_ID, CalendarEventId);
+            .AddInputParameter(_Parameters.Id, CalendarEventId);
 
         public IProcessResult<ICalendarEvent> Execute()
         {
-            _Converter.Prop_Id.Value = CalendarEventId;
+            _Converter.PId.Value = CalendarEventId;
             return _SqlHelper.ExecuteReader(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<ICalendarEvent>> ExecuteAsync()
         {
-            _Converter.Prop_Id.Value = CalendarEventId;
+            _Converter.PId.Value = CalendarEventId;
             return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter);
         }
 
         public Task<IProcessResult<ICalendarEvent>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            _Converter.Prop_Id.Value = CalendarEventId;
+            _Converter.PId.Value = CalendarEventId;
             return _SqlHelper.ExecuteReaderAsync(QueryInfo, _Converter, cancellationToken);
         }
     }

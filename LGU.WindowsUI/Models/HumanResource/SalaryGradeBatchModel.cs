@@ -10,7 +10,7 @@ namespace LGU.Models.HumanResource
             Id = source?.Id ?? default(int);
             EffectivityDate = source?.EffectivityDate == default(DateTime) ? null : new DateTime?(source.EffectivityDate);
             ExpiryDate = source?.ExpiryDate;
-            Description = source.Description;
+            Description = source?.Description;
         }
 
         private int _Id;

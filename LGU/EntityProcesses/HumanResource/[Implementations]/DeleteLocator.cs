@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class DeleteLocator : LocatorProcess, IDeleteLocator
     {
-        public DeleteLocator(IConnectionStringSource connectionStringSource, ILocatorConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public DeleteLocator(IConnectionStringSource connectionStringSource, ILocatorConverter converter) : base(connectionStringSource, converter)
         {
         }
 

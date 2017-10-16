@@ -1,11 +1,9 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.Processes;
-using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public interface IEmployeeFingerPrintSetConverter<TDataReader> : IDataConverter<IEmployeeFingerPrintSet, TDataReader>
-        where TDataReader : DbDataReader
+    public interface IEmployeeFingerPrintSetConverter : IDataConverter<IEmployeeFingerPrintSet>
     {
     }
 }

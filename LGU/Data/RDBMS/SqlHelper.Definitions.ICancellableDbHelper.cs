@@ -98,7 +98,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public async Task<IProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter, CancellationToken cancellationToken)
+        public async Task<IProcessResult<T>> ExecuteReaderAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T> converter, CancellationToken cancellationToken)
         {
             try
             {
@@ -134,7 +134,7 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public async Task<IEnumerableProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T, SqlDataReader> converter, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T> converter, CancellationToken cancellationToken)
         {
             try
             {

@@ -3,7 +3,6 @@ using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,13 +10,13 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetEmployeeListByPayrollType : HumanResourceProcessBaseV2, IGetEmployeeListByPayrollType
     {
-        public GetEmployeeListByPayrollType(IConnectionStringSource connectionStringSource, IEmployeeConverter<SqlDataReader> converter, IEmployeeParameters parameters) : base(connectionStringSource)
+        public GetEmployeeListByPayrollType(IConnectionStringSource connectionStringSource, IEmployeeConverter converter, IEmployeeParameters parameters) : base(connectionStringSource)
         {
             _Parameters = parameters;
             _Converter = converter;
         }
 
-        private readonly IEmployeeConverter<SqlDataReader> _Converter;
+        private readonly IEmployeeConverter _Converter;
         private readonly IEmployeeParameters _Parameters;
 
         public IPayrollType PayrollType { get; set; }

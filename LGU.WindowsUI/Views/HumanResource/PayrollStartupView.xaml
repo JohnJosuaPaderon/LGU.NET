@@ -71,8 +71,8 @@
                             <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="{Binding Payroll.RangeDate.Begin,StringFormat='MMMM d, yyyy'}" materialDesign:HintAssist.Hint="From"/>
-                        <TextBox Grid.Column="2" Text="{Binding Payroll.RangeDate.End,StringFormat='MMMM d, yyyy'}" materialDesign:HintAssist.Hint="To"/>
+                        <TextBox Grid.Column="0" Text="{Binding Payroll.RangeDate.Begin,StringFormat='MMMM d, yyyy'}" materialDesign:HintAssist.Hint="From" IsReadOnly="True"/>
+                        <TextBox Grid.Column="2" Text="{Binding Payroll.RangeDate.End,StringFormat='MMMM d, yyyy'}" materialDesign:HintAssist.Hint="To" IsReadOnly="True"/>
                         <Button Grid.Column="4" Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" Command="{Binding SelectRangeDateCommand}">
                             <materialDesign:PackIcon Kind="Pencil"/>
                         </Button>

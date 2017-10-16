@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetUpdatedEmployeeFingerPrintSetList : EmployeeFingerPrintSetProcess, IGetUpdatedEmployeeFingerPrintSetList
     {
-        public GetUpdatedEmployeeFingerPrintSetList(IConnectionStringSource connectionStringSource, IEmployeeFingerPrintSetConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetUpdatedEmployeeFingerPrintSetList(IConnectionStringSource connectionStringSource, IEmployeeFingerPrintSetConverter converter) : base(connectionStringSource, converter)
         {
         }
 
@@ -24,17 +24,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IEnumerableProcessResult<IEmployeeFingerPrintSet> Execute()
         {
-            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmployeeFingerPrintSet>> ExecuteAsync()
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IEmployeeFingerPrintSet>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, r_Converter, cancellationToken);
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

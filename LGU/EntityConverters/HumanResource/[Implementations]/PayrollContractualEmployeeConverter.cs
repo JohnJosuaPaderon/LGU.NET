@@ -5,13 +5,14 @@ using LGU.Extensions;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class PayrollContractualEmployeeConverter : IPayrollContractualEmployeeConverter<SqlDataReader>
+    public sealed class PayrollContractualEmployeeConverter : IPayrollContractualEmployeeConverter
     {
         public PayrollContractualEmployeeConverter(IPayrollContractualEmployeeFields fields, IEmployeeManager employeeManager, IPayrollManager<SqlConnection, SqlTransaction> payrollManager)
         {
@@ -38,7 +39,7 @@ namespace LGU.EntityConverters.HumanResource
         public IDataConverterProperty<decimal?> PHdmfPremiumPs { get; }
         public IDataConverterProperty<decimal> PTimeLogDeduction { get; }
 
-        private IPayrollContractualEmployee Get(IEmployee employee, IPayroll payroll, SqlDataReader reader)
+        private IPayrollContractualEmployee Get(IEmployee employee, IPayroll payroll, DbDataReader reader)
         {
             return new PayrollContractualEmployee()
             {
@@ -51,7 +52,7 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        private IPayrollContractualEmployee Get(SqlDataReader reader)
+        private IPayrollContractualEmployee Get(DbDataReader reader)
         {
             var employee = PEmployee.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.EmployeeId);
             var payroll = PPayroll.TryGetValueFromProcess(_PayrollManager.GetById, reader.GetInt64, _Fields.PayrollId);
@@ -59,7 +60,7 @@ namespace LGU.EntityConverters.HumanResource
             return Get(employee, payroll, reader);
         }
 
-        private async Task<IPayrollContractualEmployee> GetAsync(SqlDataReader reader)
+        private async Task<IPayrollContractualEmployee> GetAsync(DbDataReader reader)
         {
             var employee = await PEmployee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId);
             var payroll = await PPayroll.TryGetValueFromProcessAsync(_PayrollManager.GetByIdAsync, reader.GetInt64, _Fields.PayrollId);
@@ -67,7 +68,7 @@ namespace LGU.EntityConverters.HumanResource
             return Get(employee, payroll, reader);
         }
 
-        private async Task<IPayrollContractualEmployee> GetAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        private async Task<IPayrollContractualEmployee> GetAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var employee = await PEmployee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId, cancellationToken);
             var payroll = await PPayroll.TryGetValueFromProcessAsync(_PayrollManager.GetByIdAsync, reader.GetInt64, _Fields.PayrollId, cancellationToken);
@@ -75,7 +76,7 @@ namespace LGU.EntityConverters.HumanResource
             return Get(employee, payroll, reader);
         }
 
-        public IEnumerableProcessResult<IPayrollContractualEmployee> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IPayrollContractualEmployee> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -94,7 +95,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IPayrollContractualEmployee>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IPayrollContractualEmployee>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -113,7 +114,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IPayrollContractualEmployee>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IPayrollContractualEmployee>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -132,7 +133,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IPayrollContractualEmployee> FromReader(SqlDataReader reader)
+        public IProcessResult<IPayrollContractualEmployee> FromReader(DbDataReader reader)
         {
             try
             {
@@ -145,7 +146,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IPayrollContractualEmployee>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IPayrollContractualEmployee>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -158,7 +159,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IPayrollContractualEmployee>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPayrollContractualEmployee>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

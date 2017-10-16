@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class UpdateDepartmentHead : DepartmentHeadProcess, IUpdateDepartmentHead
     {
-        public UpdateDepartmentHead(IConnectionStringSource connectionStringSource, IDepartmentHeadConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdateDepartmentHead(IConnectionStringSource connectionStringSource, IDepartmentHeadConverter converter) : base(connectionStringSource, converter)
         {
         }
 

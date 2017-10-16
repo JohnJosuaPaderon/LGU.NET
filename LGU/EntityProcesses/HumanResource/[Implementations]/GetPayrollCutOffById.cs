@@ -3,7 +3,6 @@ using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,12 +12,12 @@ namespace LGU.EntityProcesses.HumanResource
     {
         private const string FIELD_ID = "@_Id";
 
-        public GetPayrollCutOffById(IConnectionStringSource connectionStringSource, IPayrollCutOffConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public GetPayrollCutOffById(IConnectionStringSource connectionStringSource, IPayrollCutOffConverter converter) : base(connectionStringSource)
         {
             _Converter = converter;
         }
 
-        private readonly IPayrollCutOffConverter<SqlDataReader> _Converter;
+        private readonly IPayrollCutOffConverter _Converter;
 
         public short PayrollCutOffId { get; set; }
 

@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetActualTimeLogListByEmployeeCutOff : TimeLogProcess, IGetActualTimeLogListByEmployeeCutOff
     {
-        public GetActualTimeLogListByEmployeeCutOff(IConnectionStringSource connectionStringSource, ITimeLogConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public GetActualTimeLogListByEmployeeCutOff(IConnectionStringSource connectionStringSource, ITimeLogConverter converter) : base(connectionStringSource, converter)
         {
         }
 

@@ -11,7 +11,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class UpdateExamSet : ExamSetProcess, IUpdateExamSet
     {
-        public UpdateExamSet(IConnectionStringSource connectionStringSource, IExamSetConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdateExamSet(IConnectionStringSource connectionStringSource, IExamSetConverter converter) : base(connectionStringSource, converter)
         {
         }
 

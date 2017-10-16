@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.Core
 {
     public sealed class UpdateDocument : DocumentProcess, IUpdateDocument
     {
-        public UpdateDocument(IConnectionStringSource connectionStringSource, IDocumentConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public UpdateDocument(IConnectionStringSource connectionStringSource, IDocumentConverter converter) : base(connectionStringSource, converter)
         {
         }
 

@@ -3,7 +3,6 @@ using LGU.EntityConverters.Core;
 using LGU.EntityManagers.Core;
 using LGU.EntityProcesses.Core;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data.SqlClient;
 
 namespace LGU.Extensions
 {
@@ -26,7 +25,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Document(this IServiceCollection instance)
         {
-            instance.AddSingleton<IDocumentConverter<SqlDataReader>, DocumentConverter>();
+            instance.AddSingleton<IDocumentConverter, DocumentConverter>();
             instance.AddSingleton<IDeleteDocument, DeleteDocument>();
             instance.AddSingleton<IGetDocumentById, GetDocumentById>();
             instance.AddSingleton<IGetDocumentList, GetDocumentList>();
@@ -39,7 +38,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_DocumentPathType(this IServiceCollection instance)
         {
-            instance.AddSingleton<IDocumentPathTypeConverter<SqlDataReader>, DocumentPathTypeConverter>();
+            instance.AddSingleton<IDocumentPathTypeConverter, DocumentPathTypeConverter>();
             instance.AddSingleton<IGetDocumentPathTypeById, GetDocumentPathTypeById>();
             instance.AddSingleton<IGetDocumentPathTypeList, GetDocumentPathTypeList>();
             instance.AddSingleton<IDocumentPathTypeManager, DocumentPathTypeManager>();
@@ -49,7 +48,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Gender(this IServiceCollection instance)
         {
-            instance.AddSingleton<IGenderConverter<SqlDataReader>, GenderConverter>();
+            instance.AddSingleton<IGenderConverter, GenderConverter>();
             instance.AddSingleton<IGetGenderById, GetGenderById>();
             instance.AddSingleton<IGetGenderList, GetGenderList>();
             instance.AddSingleton<IGenderManager, GenderManager>();
@@ -59,7 +58,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Module(this IServiceCollection instance)
         {
-            instance.AddSingleton<IModuleConverter<SqlDataReader>, ModuleConverter>();
+            instance.AddSingleton<IModuleConverter, ModuleConverter>();
             instance.AddSingleton<IGetModuleById, GetModuleById>();
             instance.AddSingleton<IGetModuleList, GetModuleList>();
             instance.AddSingleton<IModuleManager, ModuleManager>();
@@ -69,7 +68,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_Person(this IServiceCollection instance)
         {
-            instance.AddSingleton<IPersonConverter<SqlDataReader>, PersonConverter>();
+            instance.AddSingleton<IPersonConverter, PersonConverter>();
             instance.AddSingleton<IPersonFields, PersonFields>();
             instance.AddSingleton<IPersonParameters, PersonParameters>();
             instance.AddSingleton<IDeletePerson, DeletePerson>();
@@ -85,7 +84,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_User(this IServiceCollection instance)
         {
-            instance.AddSingleton<IUserConverter<SqlDataReader>, UserConverter>();
+            instance.AddSingleton<IUserConverter, UserConverter>();
             instance.AddSingleton<IDeleteUser, DeleteUser>();
             instance.AddSingleton<IGetUserById, GetUserById>();
             instance.AddSingleton<IGetUserList, GetUserList>();
@@ -100,7 +99,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_UserStatus(this IServiceCollection instance)
         {
-            instance.AddSingleton<IUserStatusConverter<SqlDataReader>, UserStatusConverter>();
+            instance.AddSingleton<IUserStatusConverter, UserStatusConverter>();
             instance.AddSingleton<IGetUserStatusById, GetUserStatusById>();
             instance.AddSingleton<IGetUserStatusList, GetUserStatusList>();
             instance.AddSingleton<IUserStatusManager, UserStatusManager>();
@@ -110,7 +109,7 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_UserType(this IServiceCollection instance)
         {
-            instance.AddSingleton<IUserTypeConverter<SqlDataReader>, UserTypeConverter>();
+            instance.AddSingleton<IUserTypeConverter, UserTypeConverter>();
             instance.AddSingleton<IGetUserTypeById, GetUserTypeById>();
             instance.AddSingleton<IGetUserTypeList, GetUserTypeList>();
             instance.AddSingleton<IUserTypeManager, UserTypeManager>();

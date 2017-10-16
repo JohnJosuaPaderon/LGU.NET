@@ -3,15 +3,15 @@ using LGU.Entities.Core;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.Core
 {
-    public sealed class UserStatusConverter : IUserStatusConverter<SqlDataReader>
+    public sealed class UserStatusConverter : IUserStatusConverter
     {
-        private IUserStatus GetData(SqlDataReader reader)
+        private IUserStatus GetData(DbDataReader reader)
         {
             return new UserStatus()
             {
@@ -20,7 +20,7 @@ namespace LGU.EntityConverters.Core
             };
         }
 
-        public IEnumerableProcessResult<IUserStatus> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IUserStatus> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IEnumerableProcessResult<IUserStatus>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IUserStatus>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -58,7 +58,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IEnumerableProcessResult<IUserStatus>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IUserStatus>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public IProcessResult<IUserStatus> FromReader(SqlDataReader reader)
+        public IProcessResult<IUserStatus> FromReader(DbDataReader reader)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IProcessResult<IUserStatus>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IUserStatus>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace LGU.EntityConverters.Core
             }
         }
 
-        public async Task<IProcessResult<IUserStatus>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IUserStatus>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

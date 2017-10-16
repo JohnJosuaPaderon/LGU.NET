@@ -1,15 +1,14 @@
 ﻿using LGU.EntityConverters.HumanResource;
-using System.Data.SqlClient;
 
 namespace LGU.EntityProcesses.HumanResource
 {
     public abstract class TimeLogTypeProcess : HumanResourceProcessBase
     {
-        protected readonly ITimeLogTypeConverter<SqlDataReader> r_Converter;
+        protected readonly ITimeLogTypeConverter _Converter;
 
-        public TimeLogTypeProcess(IConnectionStringSource connectionStringSource, ITimeLogTypeConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public TimeLogTypeProcess(IConnectionStringSource connectionStringSource, ITimeLogTypeConverter converter) : base(connectionStringSource)
         {
-            r_Converter = converter;
+            _Converter = converter;
         }
     }
 }

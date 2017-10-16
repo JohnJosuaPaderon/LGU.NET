@@ -1,11 +1,9 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.Processes;
-using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public interface IEmployeeWorkdayScheduleConverter<TDataReader> : IDataConverter<IEmployeeWorkdaySchedule, TDataReader>
-        where TDataReader : DbDataReader
+    public interface IEmployeeWorkdayScheduleConverter : IDataConverter<IEmployeeWorkdaySchedule>
     {
         IDataConverterProperty<long> Prop_Id { get; }
         IDataConverterProperty<IEmployee> Prop_Employee { get; }

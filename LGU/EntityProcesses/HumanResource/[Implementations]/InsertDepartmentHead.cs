@@ -12,7 +12,7 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class InsertDepartmentHead : DepartmentHeadProcess, IInsertDepartmentHead
     {
-        public InsertDepartmentHead(IConnectionStringSource connectionStringSource, IDepartmentHeadConverter<SqlDataReader> converter) : base(connectionStringSource, converter)
+        public InsertDepartmentHead(IConnectionStringSource connectionStringSource, IDepartmentHeadConverter converter) : base(connectionStringSource, converter)
         {
         }
 

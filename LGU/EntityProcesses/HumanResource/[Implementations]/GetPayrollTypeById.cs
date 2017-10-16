@@ -3,7 +3,6 @@ using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -13,12 +12,12 @@ namespace LGU.EntityProcesses.HumanResource
     {
         private const string PARAMETER_ID = "@_Id";
 
-        public GetPayrollTypeById(IConnectionStringSource connectionStringSource, IPayrollTypeConverter<SqlDataReader> converter) : base(connectionStringSource)
+        public GetPayrollTypeById(IConnectionStringSource connectionStringSource, IPayrollTypeConverter converter) : base(connectionStringSource)
         {
             _Converter = converter;
         }
 
-        private readonly IPayrollTypeConverter<SqlDataReader> _Converter;
+        private readonly IPayrollTypeConverter _Converter;
 
         public short PayrollTypeId { get; set; }
 

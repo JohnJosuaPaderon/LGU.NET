@@ -3,18 +3,18 @@ using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class PayrollTypeConverter : IPayrollTypeConverter<SqlDataReader>
+    public sealed class PayrollTypeConverter : IPayrollTypeConverter
     {
         private const string FIELD_ID = "Id";
         private const string FIELD_DESCRIPTION = "Description";
 
-        private IPayrollType Get(SqlDataReader reader)
+        private IPayrollType Get(DbDataReader reader)
         {
             return new PayrollType
             {
@@ -23,7 +23,7 @@ namespace LGU.EntityConverters.HumanResource
             };
         }
 
-        public IEnumerableProcessResult<IPayrollType> EnumerableFromReader(SqlDataReader reader)
+        public IEnumerableProcessResult<IPayrollType> EnumerableFromReader(DbDataReader reader)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IPayrollType>> EnumerableFromReaderAsync(SqlDataReader reader)
+        public async Task<IEnumerableProcessResult<IPayrollType>> EnumerableFromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IEnumerableProcessResult<IPayrollType>> EnumerableFromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IPayrollType>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public IProcessResult<IPayrollType> FromReader(SqlDataReader reader)
+        public IProcessResult<IPayrollType> FromReader(DbDataReader reader)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IPayrollType>> FromReaderAsync(SqlDataReader reader)
+        public async Task<IProcessResult<IPayrollType>> FromReaderAsync(DbDataReader reader)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace LGU.EntityConverters.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IPayrollType>> FromReaderAsync(SqlDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPayrollType>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             try
             {

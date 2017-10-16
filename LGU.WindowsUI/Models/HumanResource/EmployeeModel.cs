@@ -5,18 +5,18 @@ namespace LGU.Models.HumanResource
 {
     public class EmployeeModel : ModelBase<IEmployee>
     {
-        public EmployeeModel(IEmployee source) : base(source ?? new Employee())
+        public EmployeeModel(IEmployee source) : base(source)
         {
             Id = source?.Id ?? default(long);
             FirstName = source?.FirstName;
             MiddleName = source?.MiddleName;
             LastName = source?.LastName;
             NameExtension = source?.NameExtension;
-            Department = new DepartmentModel(source?.Department);
-            Position = new PositionModel(source?.Position);
-            Type = new EmployeeTypeModel(source?.Type);
-            EmploymentStatus = new EmploymentStatusModel(source?.EmploymentStatus);
-            WorkTimeSchedule = new WorkTimeScheduleModel(source?.WorkTimeSchedule);
+            Department = source?.Department != null ? new DepartmentModel(source?.Department) : null;
+            Position = source?.Position != null ? new PositionModel(source?.Position) : null;
+            Type = source?.Type != null ? new EmployeeTypeModel(source?.Type) : null;
+            EmploymentStatus = source?.EmploymentStatus != null ? new EmploymentStatusModel(source?.EmploymentStatus) : null;
+            WorkTimeSchedule = source?.WorkTimeSchedule != null ? new WorkTimeScheduleModel(source?.WorkTimeSchedule) : null;
         }
 
         private long _Id;
@@ -115,18 +115,52 @@ namespace LGU.Models.HumanResource
 
         public override IEmployee GetSource()
         {
-            Source.Id = Id;
-            Source.FirstName = FirstName;
-            Source.MiddleName = MiddleName;
-            Source.LastName = LastName;
-            Source.NameExtension = NameExtension;
-            Source.Department = Department?.GetSource();
-            Source.EmploymentStatus = EmploymentStatus?.GetSource();
-            Source.Position = Position?.GetSource();
-            Source.Type = Type?.GetSource();
-            Source.WorkTimeSchedule = WorkTimeSchedule?.GetSource();
+            if (Source != null)
+            {
+                Source.Id = Id;
+                Source.FirstName = FirstName;
+                Source.MiddleName = MiddleName;
+                Source.LastName = LastName;
+                Source.NameExtension = NameExtension;
+                Source.Department = Department?.GetSource();
+                Source.EmploymentStatus = EmploymentStatus?.GetSource();
+                Source.Position = Position?.GetSource();
+                Source.Type = Type?.GetSource();
+                Source.WorkTimeSchedule = WorkTimeSchedule?.GetSource();
+            }
 
             return Source;
+        }
+
+        public static bool operator ==(EmployeeModel left, EmployeeModel right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(EmployeeModel left, EmployeeModel right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (GetType() != obj.GetType()) return false;
+
+            if (obj is EmployeeModel value)
+            {
+                return (Id == 0 || value.Id == 0) ? false : Id == value.Id;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }

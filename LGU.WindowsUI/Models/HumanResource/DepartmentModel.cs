@@ -4,7 +4,7 @@ namespace LGU.Models.HumanResource
 {
     public sealed class DepartmentModel : ModelBase<IDepartment>
     {
-        public DepartmentModel(IDepartment source) : base(source ?? new Department())
+        public DepartmentModel(IDepartment source) : base(source)
         {
             Id = source?.Id ?? default(int);
             Description = source?.Description;
@@ -34,11 +34,45 @@ namespace LGU.Models.HumanResource
 
         public override IDepartment GetSource()
         {
-            Source.Id = Id;
-            Source.Abbreviation = Abbreviation;
-            Source.Description = Description;
+            if (Source != null)
+            {
+                Source.Id = Id;
+                Source.Abbreviation = Abbreviation;
+                Source.Description = Description;
+            }
 
             return Source;
+        }
+
+        public static bool operator ==(DepartmentModel left, DepartmentModel right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(DepartmentModel left, DepartmentModel right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (GetType() != obj.GetType()) return false;
+
+            if (obj is DepartmentModel value)
+            {
+                return (Id == 0 || value.Id == 0) ? false : Id == value.Id;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }
