@@ -15,12 +15,14 @@ namespace LGU.EntityManagers.HumanResource
             IDeleteCalendarEvent delete,
             IGetCalendarEventById getById,
             IInsertCalendarEvent insert,
-            IUpdateCalendarEvent update)
+            IUpdateCalendarEvent update,
+            IGetCalendarEventList getList)
         {
             _Delete = delete;
             _GetById = getById;
             _Insert = insert;
             _Update = update;
+            _GetList = getList;
 
             _InvalidResult = new ProcessResult<ICalendarEvent>(ProcessResultStatus.Failed, MESSAGE_INVALID);
             _InvalidIdentifierResult = new ProcessResult<ICalendarEvent>(ProcessResultStatus.Failed, MESSAGE_INVALID_IDENTIFIER);
@@ -30,6 +32,7 @@ namespace LGU.EntityManagers.HumanResource
         private readonly IGetCalendarEventById _GetById;
         private readonly IInsertCalendarEvent _Insert;
         private readonly IUpdateCalendarEvent _Update;
+        private readonly IGetCalendarEventList _GetList;
         private readonly IProcessResult<ICalendarEvent> _InvalidResult;
         private readonly IProcessResult<ICalendarEvent> _InvalidIdentifierResult;
 
@@ -208,6 +211,21 @@ namespace LGU.EntityManagers.HumanResource
             {
                 return _InvalidResult;
             }
+        }
+
+        public IEnumerableProcessResult<ICalendarEvent> GetList()
+        {
+            return AddUpdateIfSuccess(_GetList.Execute());
+        }
+
+        public async Task<IEnumerableProcessResult<ICalendarEvent>> GetListAsync()
+        {
+            return AddUpdateIfSuccess(await _GetList.ExecuteAsync());
+        }
+
+        public async Task<IEnumerableProcessResult<ICalendarEvent>> GetListAsync(CancellationToken cancellationToken)
+        {
+            return AddUpdateIfSuccess(await _GetList.ExecuteAsync(cancellationToken));
         }
     }
 }
