@@ -211,7 +211,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\Core\UserSignUpViewModel.cs" />
+    <Compile Include="ViewModels\DataDialogContent.cs" />
     <Compile Include="ViewModels\DateTimeRangeSelectionViewModel.cs" />
+    <Compile Include="ViewModels\DateTimeSelectionContent.cs" />
+    <Compile Include="ViewModels\DateTimeSelectionViewModel.cs" />
     <Compile Include="ViewModels\DialogHelper.cs" />
     <Compile Include="ViewModels\DialogMode.cs" />
     <Compile Include="ViewModels\DialogViewModelBase.cs" />
@@ -221,6 +224,8 @@
     <Compile Include="ViewModels\HumanResource\ContractualPayrollViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\CreateNewSalaryGradeViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\DepartmentManagementViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\AddEditCalendarEventDialogContent.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\AddEditCalendarEventDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditDepartmentDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditEmployeeDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditLocatorDialogViewModel.cs" />
@@ -258,6 +263,9 @@
     <Compile Include="Views\DateTimeRangeSelectionView.xaml.cs">
       <DependentUpon>DateTimeRangeSelectionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DateTimeSelectionView.xaml.cs">
+      <DependentUpon>DateTimeSelectionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HumanResource\ActualTimeLogExportView.xaml.cs">
       <DependentUpon>ActualTimeLogExportView.xaml</DependentUpon>
     </Compile>
@@ -282,6 +290,9 @@
     <Compile Include="Interactivity\CustomPopupWindowAction.cs" />
     <Compile Include="Views\HumanResource\DepartmentManagementView.xaml.cs">
       <DependentUpon>DepartmentManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\Dialogs\AddEditCalendarEventDialogView.xaml.cs">
+      <DependentUpon>AddEditCalendarEventDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\Dialogs\AddEditDepartmentDialogView.xaml.cs">
       <DependentUpon>AddEditDepartmentDialogView.xaml</DependentUpon>
@@ -457,6 +468,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\DateTimeSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\HumanResource\ActualTimeLogExportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -486,6 +501,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\DepartmentManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\Dialogs\AddEditCalendarEventDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
