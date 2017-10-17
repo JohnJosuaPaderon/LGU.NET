@@ -7,6 +7,13 @@ namespace LGU.Models.HumanResource
     {
         public CalendarEventModel(ICalendarEvent source) : base(source)
         {
+            Id = source?.Id ?? default(long);
+            Description = source?.Description;
+            DateOccur = source?.DateOccur ?? default(DateTime);
+            DateOccurEnd = source?.DateOccurEnd;
+            IsHoliday = source?.IsHoliday ?? default(bool);
+            IsNonWorking = source?.IsNonWorking ?? default(bool);
+            IsAnnual = source?.IsAnnual ?? default(bool);
         }
 
         private long _Id;
