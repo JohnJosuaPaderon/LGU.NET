@@ -20,7 +20,7 @@ namespace LGU.EntityProcesses.HumanResource
         public ICalendarEvent CalendarEvent { get; set; }
 
         private SqlQueryInfo<ICalendarEvent> QueryInfo =>
-            SqlQueryInfo<ICalendarEvent>.CreateProcedureQueryInfo(CalendarEvent, nameof(DeleteCalendarEvent), GetProcessResult)
+            SqlQueryInfo<ICalendarEvent>.CreateProcedureQueryInfo(CalendarEvent, GetQualifiedDbObjectName(), GetProcessResult)
             .AddInputParameter(PARAM_ID, CalendarEvent.Id)
             .AddLogByParameter();
 

@@ -2,7 +2,6 @@
 using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,8 +9,9 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class GetCalendarEventList : HumanResourceProcessBaseV2, IGetCalendarEventList
     {
-        public GetCalendarEventList(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public GetCalendarEventList(IConnectionStringSource connectionStringSource, ICalendarEventConverter converter) : base(connectionStringSource)
         {
+            _Converter = converter;
         }
 
         private readonly ICalendarEventConverter _Converter;
@@ -20,17 +20,17 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IEnumerableProcessResult<ICalendarEvent> Execute()
         {
-            throw new NotImplementedException();
+            return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<ICalendarEvent>> ExecuteAsync()
         {
-            throw new NotImplementedException();
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<ICalendarEvent>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
 }

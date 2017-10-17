@@ -10,30 +10,27 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public sealed class UpdateCalendarEvent : HumanResourceProcessBaseV2, IUpdateCalendarEvent
     {
-        private const string MESSAGE_FAILED = "Failed to update calendar event.";
-        private const string PARAM_ID = "@_Id";
-        private const string PARAM_DESCRIPTION = "@_Description";
-        private const string PARAM_DATE_OCCUR = "@_DateOccur";
-        private const string PARAM_DATE_OCCUR_END = "@_DateOccurEnd";
-        private const string PARAM_IS_HOLIDAY = "@_IsHoliday";
-        private const string PARAM_IS_NON_WORKING = "@_IsNonWorking";
-        private const string PARAM_IS_ANNUAL = "@_IsAnnual";
+        private const string MESSAGE_FAILED = "Failed to update calendar event";
 
-        public UpdateCalendarEvent(IConnectionStringSource connectionStringSource) : base(connectionStringSource)
+        public UpdateCalendarEvent(IConnectionStringSource connectionStringSource, ICalendarEventParameters parameters) : base(connectionStringSource)
         {
+            _Parameters = parameters;
         }
+
+        private readonly ICalendarEventParameters _Parameters;
 
         public ICalendarEvent CalendarEvent { get; set; }
 
         private SqlQueryInfo<ICalendarEvent> QueryInfo =>
-           SqlQueryInfo<ICalendarEvent>.CreateProcedureQueryInfo(CalendarEvent, nameof(InsertCalendarEvent), GetProcessResult, true)
-           .AddInputParameter(PARAM_ID, CalendarEvent.Id)
-           .AddInputParameter(PARAM_DESCRIPTION, CalendarEvent.Description)
-           .AddInputParameter(PARAM_DATE_OCCUR, CalendarEvent.DateOccur)
-           .AddInputParameter(PARAM_DATE_OCCUR_END, CalendarEvent.DateOccurEnd)
-           .AddInputParameter(PARAM_IS_HOLIDAY, CalendarEvent.IsHoliday)
-           .AddInputParameter(PARAM_IS_NON_WORKING, CalendarEvent.IsNonWorking)
-           .AddInputParameter(PARAM_IS_ANNUAL, CalendarEvent.IsAnnual);
+            SqlQueryInfo<ICalendarEvent>.CreateProcedureQueryInfo(CalendarEvent, GetQualifiedDbObjectName(), GetProcessResult, true)
+            .AddInputParameter(_Parameters.Id, CalendarEvent.Id)
+            .AddInputParameter(_Parameters.Description, CalendarEvent.Description)
+            .AddInputParameter(_Parameters.DateOccur, CalendarEvent.DateOccur)
+            .AddInputParameter(_Parameters.DateOccurEnd, CalendarEvent.DateOccurEnd)
+            .AddInputParameter(_Parameters.IsHoliday, CalendarEvent.IsHoliday)
+            .AddInputParameter(_Parameters.IsNonWorking, CalendarEvent.IsNonWorking)
+            .AddInputParameter(_Parameters.IsAnnual, CalendarEvent.IsAnnual)
+            .AddLogByParameter();
 
         private IProcessResult<ICalendarEvent> GetProcessResult(ICalendarEvent data, SqlCommand command, int affectedRows)
         {
