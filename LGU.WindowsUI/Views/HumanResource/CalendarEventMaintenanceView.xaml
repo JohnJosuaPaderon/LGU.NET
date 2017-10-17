@@ -4,11 +4,20 @@
              xmlns:prism="http://prismlibrary.com/"  
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:interactivity="clr-namespace:LGU.Interactivity"
+             xmlns:dialogs="clr-namespace:LGU.Views.HumanResource.Dialogs"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding InitializeCommand}"/>
         </i:EventTrigger>
+        <prism:InteractionRequestTrigger SourceObject="{Binding AddEditRequest}">
+            <interactivity:CustomPopupWindowAction IsModal="True">
+                <interactivity:CustomPopupWindowAction.WindowContent>
+                    <dialogs:AddEditCalendarEventDialogView/>
+                </interactivity:CustomPopupWindowAction.WindowContent>
+            </interactivity:CustomPopupWindowAction>
+        </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
     <Grid Margin="{DynamicResource ContainerMargin}">
         <Grid.ColumnDefinitions>
@@ -18,11 +27,26 @@
         </Grid.ColumnDefinitions>
         <materialDesign:TransitioningContent Grid.Column="0" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromLeft,Duration=0:0:0.5}">
             <materialDesign:Card VerticalAlignment="Stretch">
-                <DataGrid ItemsSource="{Binding CalendarEvents}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Calendar Events" Binding="{Binding Description}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <Grid>
+                    <DataGrid ItemsSource="{Binding CalendarEvents}" SelectedItem="{Binding SelectedCalendarEvent}" SelectionMode="Extended" ClipboardCopyMode="ExcludeHeader">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Calendar Events" Binding="{Binding Description}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <materialDesign:PopupBox Style="{DynamicResource DataManagerPopupBox}">
+                        <StackPanel>
+                            <Button Command="{Binding AddCommand}">
+                                <materialDesign:PackIcon Kind="Plus"/>
+                            </Button>
+                            <Button Command="{Binding EditCommand}">
+                                <materialDesign:PackIcon Kind="Pencil"/>
+                            </Button>
+                            <Button>
+                                <materialDesign:PackIcon Kind="Delete"/>
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
             </materialDesign:Card>
         </materialDesign:TransitioningContent>
         <materialDesign:TransitioningContent Grid.Column="2" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight,Duration=0:0:0.5}">
