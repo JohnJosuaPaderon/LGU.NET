@@ -15,6 +15,7 @@ namespace LGU.Extensions
             instance.UseSqlServer_ApplicantStatus();
             instance.UseSqlServer_Application();
             instance.UseSqlServer_ApplicationDocument();
+            instance.UseSqlServer_CalendarEvent();
             instance.UseSqlServer_ContractualPayrollCluster();
             instance.UseSqlServer_Department();
             instance.UseSqlServer_DepartmentHead();
@@ -99,10 +100,13 @@ namespace LGU.Extensions
         public static IServiceCollection UseSqlServer_CalendarEvent(this IServiceCollection instance)
         {
             instance.AddTransient<ICalendarEventConverter, CalendarEventConverter>();
+            instance.AddSingleton<ICalendarEventFields, CalendarEventFields>();
+            instance.AddSingleton<ICalendarEventParameters, CalendarEventParameters>();
             instance.AddSingleton<IDeleteCalendarEvent, DeleteCalendarEvent>();
             instance.AddSingleton<IGetCalendarEventById, GetCalendarEventById>();
             instance.AddSingleton<IInsertCalendarEvent, InsertCalendarEvent>();
             instance.AddSingleton<IUpdateCalendarEvent, UpdateCalendarEvent>();
+            instance.AddSingleton<IGetCalendarEventList, GetCalendarEventList>();
             instance.AddSingleton<ICalendarEventManager, CalendarEventManager>();
 
             return instance;
