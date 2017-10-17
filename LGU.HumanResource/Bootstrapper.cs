@@ -25,6 +25,7 @@ namespace LGU.HumanResource
             Container.RegisterTypeForNavigation<PersonalDataSheetView>();
             Container.RegisterTypeForNavigation<PayrollStartupView>();
             Container.RegisterTypeForNavigation<ContractualPayrollView>();
+            Container.RegisterTypeForNavigation<MaintenanceView>();
         }
 
         protected override void InitializeServices()
