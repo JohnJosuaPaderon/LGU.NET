@@ -43,10 +43,11 @@ namespace LGU.ViewModels
             }
         }
 
-        private void Close()
+        protected virtual void Close()
         {
             FinishInteraction?.Invoke();
         }
+
         private void ResetMouseCapture()
         {
             Mouse.Capture(null);
