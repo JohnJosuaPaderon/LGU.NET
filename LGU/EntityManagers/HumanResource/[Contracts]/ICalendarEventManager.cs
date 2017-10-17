@@ -19,5 +19,8 @@ namespace LGU.EntityManagers.HumanResource
         IProcessResult<ICalendarEvent> Update(ICalendarEvent calendarEvent);
         Task<IProcessResult<ICalendarEvent>> UpdateAsync(ICalendarEvent calendarEvent);
         Task<IProcessResult<ICalendarEvent>> UpdateAsync(ICalendarEvent calendarEvent, CancellationToken cancellationToken);
+        IEnumerableProcessResult<ICalendarEvent> GetList();
+        Task<IEnumerableProcessResult<ICalendarEvent>> GetListAsync();
+        Task<IEnumerableProcessResult<ICalendarEvent>> GetListAsync(CancellationToken cancellationToken);
     }
 }
