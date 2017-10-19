@@ -17,6 +17,7 @@ namespace LGU.Models.HumanResource
             Type = source?.Type != null ? new EmployeeTypeModel(source?.Type) : null;
             EmploymentStatus = source?.EmploymentStatus != null ? new EmploymentStatusModel(source?.EmploymentStatus) : null;
             WorkTimeSchedule = source?.WorkTimeSchedule != null ? new WorkTimeScheduleModel(source?.WorkTimeSchedule) : null;
+            MonthlySalary = source?.MonthlySalary ?? default(decimal);
         }
 
         private long _Id;
@@ -100,6 +101,13 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _WorkTimeSchedule, value); }
         }
 
+        private decimal _MonthlySalary;
+        public decimal MonthlySalary
+        {
+            get { return _MonthlySalary; }
+            set { SetProperty(ref _MonthlySalary, value); }
+        }
+
         private void RaiseMiddleInitials()
         {
             MiddleInitials = MiddleInitialConstructor.Construct(MiddleName);
@@ -127,6 +135,7 @@ namespace LGU.Models.HumanResource
                 Source.Position = Position?.GetSource();
                 Source.Type = Type?.GetSource();
                 Source.WorkTimeSchedule = WorkTimeSchedule?.GetSource();
+                Source.MonthlySalary = MonthlySalary;
             }
 
             return Source;
