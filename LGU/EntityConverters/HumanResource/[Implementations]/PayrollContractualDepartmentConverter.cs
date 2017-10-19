@@ -40,6 +40,7 @@ namespace LGU.EntityConverters.HumanResource
         public IDataConverterProperty<IPayroll> PPayroll { get; }
         public IDataConverterProperty<IEmployee> PHead { get; }
         public IDataConverterProperty<int> POrdinal { get; }
+        public IEnumerableProcess<IPayrollContractualEmployee> GetEmployees { get; set; }
 
         private IPayrollContractualDepartment Get(
             IDepartment department,
@@ -55,42 +56,161 @@ namespace LGU.EntityConverters.HumanResource
                 Employees = employees
             };
         }
-        
-        //private IPayrollContractualDepartment Get(DbDataReader reader)
-        //{
-        //    var department = PDepartment.TryGetValueFromProcess(_DepartmentManager.GetById, reader.GetInt32, _Fields.DepartmentId);
-        //    var payroll = PPayroll.TryGetValueFromProcess(_PayrollManager.GetById, reader.GetInt64, _Fields.PayrollId);
-        //    var head = PHead.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.HeadId);
-        //}
+
+        private IPayrollContractualDepartment Get(DbDataReader reader)
+        {
+            var department = PDepartment.TryGetValueFromProcess(_DepartmentManager.GetById, reader.GetInt32, _Fields.DepartmentId);
+            var payroll = PPayroll.TryGetValueFromProcess(_PayrollManager.GetById, reader.GetInt64, _Fields.PayrollId);
+            var head = PHead.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.HeadId);
+            IEnumerable<IPayrollContractualEmployee> employees = null;
+
+            if (GetEmployees != null)
+            {
+                var result = GetEmployees.Execute();
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    employees = result.DataList;
+                }
+            }
+
+            return Get(department, payroll, head, employees);
+        }
+
+        private async Task<IPayrollContractualDepartment> GetAsync(DbDataReader reader)
+        {
+            var department = await PDepartment.TryGetValueFromProcessAsync(_DepartmentManager.GetByIdAsync, reader.GetInt32, _Fields.DepartmentId);
+            var payroll = await PPayroll.TryGetValueFromProcessAsync(_PayrollManager.GetByIdAsync, reader.GetInt64, _Fields.PayrollId);
+            var head = await PHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId);
+            IEnumerable<IPayrollContractualEmployee> employees = null;
+
+            if (GetEmployees != null)
+            {
+                var result = await GetEmployees.ExecuteAsync();
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    employees = result.DataList;
+                }
+            }
+
+            return Get(department, payroll, head, employees);
+        }
+
+        private async Task<IPayrollContractualDepartment> GetAsync(DbDataReader reader, CancellationToken cancellationToken)
+        {
+            var department = await PDepartment.TryGetValueFromProcessAsync(_DepartmentManager.GetByIdAsync, reader.GetInt32, _Fields.DepartmentId, cancellationToken);
+            var payroll = await PPayroll.TryGetValueFromProcessAsync(_PayrollManager.GetByIdAsync, reader.GetInt64, _Fields.PayrollId, cancellationToken);
+            var head = await PHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId, cancellationToken);
+            IEnumerable<IPayrollContractualEmployee> employees = null;
+
+            if (GetEmployees != null)
+            {
+                var result = await GetEmployees.ExecuteAsync(cancellationToken);
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    employees = result.DataList;
+                }
+            }
+
+            return Get(department, payroll, head, employees);
+        }
 
         public IEnumerableProcessResult<IPayrollContractualDepartment> EnumerableFromReader(DbDataReader reader)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var list = new List<IPayrollContractualDepartment>();
+
+                while (reader.Read())
+                {
+                    list.Add(Get(reader));
+                }
+
+                return new EnumerableProcessResult<IPayrollContractualDepartment>(list);
+            }
+            catch (Exception ex)
+            {
+                return new EnumerableProcessResult<IPayrollContractualDepartment>(ex);
+            }
         }
 
-        public Task<IEnumerableProcessResult<IPayrollContractualDepartment>> EnumerableFromReaderAsync(DbDataReader reader)
+        public async Task<IEnumerableProcessResult<IPayrollContractualDepartment>> EnumerableFromReaderAsync(DbDataReader reader)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var list = new List<IPayrollContractualDepartment>();
+
+                while (await reader.ReadAsync())
+                {
+                    list.Add(await GetAsync(reader));
+                }
+
+                return new EnumerableProcessResult<IPayrollContractualDepartment>(list);
+            }
+            catch (Exception ex)
+            {
+                return new EnumerableProcessResult<IPayrollContractualDepartment>(ex);
+            }
         }
 
-        public Task<IEnumerableProcessResult<IPayrollContractualDepartment>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
+        public async Task<IEnumerableProcessResult<IPayrollContractualDepartment>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var list = new List<IPayrollContractualDepartment>();
+
+                while (await reader.ReadAsync(cancellationToken))
+                {
+                    list.Add(await GetAsync(reader, cancellationToken));
+                }
+
+                return new EnumerableProcessResult<IPayrollContractualDepartment>(list);
+            }
+            catch (Exception ex)
+            {
+                return new EnumerableProcessResult<IPayrollContractualDepartment>(ex);
+            }
         }
 
         public IProcessResult<IPayrollContractualDepartment> FromReader(DbDataReader reader)
         {
-            throw new NotImplementedException();
+            try
+            {
+                reader.Read();
+                return new ProcessResult<IPayrollContractualDepartment>(Get(reader));
+            }
+            catch (Exception ex)
+            {
+                return new ProcessResult<IPayrollContractualDepartment>(ex);
+            }
         }
 
-        public Task<IProcessResult<IPayrollContractualDepartment>> FromReaderAsync(DbDataReader reader)
+        public async Task<IProcessResult<IPayrollContractualDepartment>> FromReaderAsync(DbDataReader reader)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await reader.ReadAsync();
+                return new ProcessResult<IPayrollContractualDepartment>(await GetAsync(reader));
+            }
+            catch (Exception ex)
+            {
+                return new ProcessResult<IPayrollContractualDepartment>(ex);
+            }
         }
 
-        public Task<IProcessResult<IPayrollContractualDepartment>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPayrollContractualDepartment>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await reader.ReadAsync(cancellationToken);
+                return new ProcessResult<IPayrollContractualDepartment>(await GetAsync(reader, cancellationToken));
+            }
+            catch (Exception ex)
+            {
+                return new ProcessResult<IPayrollContractualDepartment>(ex);
+            }
         }
     }
 }
