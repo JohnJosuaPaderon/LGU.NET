@@ -5,6 +5,6 @@
         string DepartmentId { get; }
         string PayrollId { get; }
         string HeadId { get; }
-        string Ordinal { set; }
+        string Ordinal { get; }
     }
 }
