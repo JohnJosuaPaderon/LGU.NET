@@ -374,6 +374,14 @@ namespace LGU.Extensions
             return instance;
         }
 
+        public static IServiceCollection UseSqlServer_PayrollDepartment(this IServiceCollection instance)
+        {
+            instance.AddSingleton<IPayrollDepartmentFields, PayrollDepartmentFields>();
+            instance.AddSingleton<IPayrollDepartmentParameters, PayrollDepartmentParameters>();
+
+            return instance;
+        }
+
         public static IServiceCollection UseSqlServer_PayrollType(this IServiceCollection instance)
         {
             instance.AddTransient<IPayrollTypeConverter, PayrollTypeConverter>();
