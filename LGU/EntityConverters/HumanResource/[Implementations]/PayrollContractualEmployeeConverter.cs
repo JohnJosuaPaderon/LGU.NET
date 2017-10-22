@@ -20,6 +20,7 @@ namespace LGU.EntityConverters.HumanResource
             _PayrollManager = payrollManager;
             _Fields = fields;
 
+            PDepartment = new DataConverterProperty<IPayrollContractualDepartment>();
             PEmployee = new DataConverterProperty<IEmployee>();
             PPayroll = new DataConverterProperty<IPayroll>();
             PMonthlyRate = new DataConverterProperty<decimal>();
@@ -32,6 +33,7 @@ namespace LGU.EntityConverters.HumanResource
         private readonly IEmployeeManager _EmployeeManager;
         private readonly IPayrollManager<SqlConnection, SqlTransaction> _PayrollManager;
 
+        public IDataConverterProperty<IPayrollContractualDepartment> PDepartment { get; }
         public IDataConverterProperty<IEmployee> PEmployee { get; }
         public IDataConverterProperty<IPayroll> PPayroll { get; }
         public IDataConverterProperty<decimal> PMonthlyRate { get; }
