@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace LGU.Entities.HumanResource
+﻿namespace LGU.Entities.HumanResource
 {
     public class PayrollContractualDepartment : PayrollDepartment, IPayrollContractualDepartment
     {
-        public IEnumerable<IPayrollContractualEmployee> Employees { get; set; }
+        public PayrollContractualDepartment()
+        {
+            Employees = new PayrollContractualEmployeeCollection(this);
+        }
+
+        public IPayrollContractualEmployeeCollection Employees { get; }
     }
 }
