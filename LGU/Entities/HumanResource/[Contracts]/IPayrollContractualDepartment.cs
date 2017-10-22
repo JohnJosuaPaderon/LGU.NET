@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace LGU.Entities.HumanResource
+﻿namespace LGU.Entities.HumanResource
 {
     public interface IPayrollContractualDepartment : IPayrollDepartment
     {
-        IEnumerable<IPayrollContractualEmployee> Employees { get; set; }
+        IPayrollContractualEmployeeCollection Employees { get; }
     }
 }

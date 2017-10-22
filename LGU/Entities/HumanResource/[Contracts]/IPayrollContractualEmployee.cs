@@ -2,6 +2,7 @@
 {
     public interface IPayrollContractualEmployee : IPayrollEmployee
     {
+        IPayrollContractualDepartment Department { get; set; }
         decimal? HdmfPremiumPs { get; set; }
     }
 }
