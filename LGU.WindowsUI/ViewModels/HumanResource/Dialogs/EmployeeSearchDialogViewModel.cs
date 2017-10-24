@@ -1,5 +1,6 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.EntityManagers.HumanResource;
+using LGU.Interactivity.HumanResource;
 using LGU.Models.HumanResource;
 using LGU.Processes;
 using Prism.Commands;
@@ -7,10 +8,11 @@ using Prism.Events;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LGU.ViewModels.HumanResource.Dialogs
 {
-    public sealed class EmployeeSearchDialogViewModel : PopupViewModelBase
+    public sealed class EmployeeSearchDialogViewModel : PopupViewModelBase<IEmployeeSearchNotification>
     {
         public EmployeeSearchDialogViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
         {
@@ -32,7 +34,18 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             set { SetProperty(ref _SearchKey, value); }
         }
 
+        protected async override void Initialize()
+        {
+            SearchKey = PopupNotification.SelectedEmployee?.FullName ?? string.Empty;
+            await SearchAsync();
+        }
+
         private async void Search()
+        {
+            await SearchAsync();
+        }
+
+        private async Task SearchAsync()
         {
             Employees.Clear();
             var result = await _EmployeeManager.SearchAsync(SearchKey);
@@ -55,6 +68,8 @@ namespace LGU.ViewModels.HumanResource.Dialogs
                 {
                     Employees.Add(new EmployeeModel(employee));
                 }
+
+                PopupNotification.SelectedEmployee = Employees[0];
             }
         }
     }
