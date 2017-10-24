@@ -70,5 +70,41 @@ namespace LGU.Models.HumanResource
 
             return Source;
         }
+
+
+        public static bool operator ==(PayrollContractualEmployeeModel left, PayrollContractualEmployeeModel right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(PayrollContractualEmployeeModel left, PayrollContractualEmployeeModel right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (GetType() != obj.GetType()) return false;
+
+            if (obj is PayrollContractualEmployeeModel value)
+            {
+                return
+                    Employee == value.Employee &&
+                    Payroll == value.Payroll;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return
+                Employee.GetHashCode() ^
+                Payroll.GetHashCode();
+        }
     }
 }

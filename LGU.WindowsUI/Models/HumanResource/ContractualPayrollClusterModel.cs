@@ -1,5 +1,6 @@
 ﻿using LGU.Entities.HumanResource;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace LGU.Models.HumanResource
 {
@@ -7,9 +8,15 @@ namespace LGU.Models.HumanResource
     {
         public ContractualPayrollClusterModel(IContractualPayrollCluster source) : base(source)
         {
+            Departments = new ObservableCollection<PayrollContractualDepartmentModel>();
+
             Payroll = source?.Payroll != null ? new PayrollModel(source.Payroll) : null;
             Inclusion = source?.Inclusion != null ? new ContractualPayrollClusterInclusionModel(source.Inclusion) : null;
+
+            TryInitializeDepartments();
         }
+
+        public ObservableCollection<PayrollContractualDepartmentModel> Departments { get; }
 
         private PayrollModel _Payroll;
         public PayrollModel Payroll
@@ -25,7 +32,16 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Inclusion, value); }
         }
 
-        public ObservableCollection<PayrollContractualEmployeeModel> Employees { get; }
+        private void TryInitializeDepartments()
+        {
+            if (Source?.Departments?.Any() ?? false)
+            {
+                foreach (var department in Source.Departments)
+                {
+                    Departments.Add(new PayrollContractualDepartmentModel(department));
+                }
+            }
+        }
 
         public override IContractualPayrollCluster GetSource()
         {
