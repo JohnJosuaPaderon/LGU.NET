@@ -5,8 +5,14 @@
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"
              MinHeight="{DynamicResource MinDialogHeight}"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              MinWidth="{DynamicResource MinDialogWidth}"
              Height="650">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -33,7 +39,7 @@
                 </Grid>
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
-                <DataGrid ItemsSource="{Binding Employees}" SelectedItem="{Binding Content.SelectedEmployee}">
+                <DataGrid ItemsSource="{Binding Employees}" SelectedItem="{Binding Notification.SelectedEmployee,Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Employees" Binding="{Binding InformalFullName}"/>
                     </DataGrid.Columns>

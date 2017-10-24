@@ -23,6 +23,16 @@
         <StackPanel Grid.Row="1" Margin="{DynamicResource ContainerMargin}">
             <TextBox Text="{Binding Department.Description}" materialDesign:HintAssist.Hint="Description"/>
             <TextBox Text="{Binding Department.Abbreviation}" materialDesign:HintAssist.Hint="Abbreviation"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding Department.Head.FullName,Mode=OneWay}" materialDesign:HintAssist.Hint="Head"/>
+                <Button Grid.Column="1" Command="{Binding SearchDepartmentHeadCommand}" Style="{DynamicResource MaterialDesignFloatingActionMiniButton}">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+            </Grid>
         </StackPanel>
         <materialDesign:TransitioningContent Grid.Row="2" Style="{DynamicResource FooterTransitioningContent}">
             <materialDesign:ColorZone Style="{DynamicResource FooterColorZone}">
