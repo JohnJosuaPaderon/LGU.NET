@@ -18,6 +18,9 @@ namespace LGU.EntityProcesses.HumanResource
         public GeneratePayrollContractualEmployeeListByDepartment(IConnectionStringSource connectionStringSource, IPayrollContractualEmployeeConverter converter) : base(connectionStringSource)
         {
             _Converter = converter;
+
+            _Converter.PDepartment.Value = null;
+            _Converter.PPayroll.Value = null;
         }
 
         private IPayrollContractualEmployeeConverter _Converter;
@@ -33,19 +36,16 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IEnumerableProcessResult<IPayrollContractualEmployee> Execute()
         {
-            _Converter.PDepartment.Value = null;
             return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IPayrollContractualEmployee>> ExecuteAsync()
         {
-            _Converter.PDepartment.Value = null;
             return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IPayrollContractualEmployee>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            _Converter.PDepartment.Value = null;
             return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter, cancellationToken);
         }
     }

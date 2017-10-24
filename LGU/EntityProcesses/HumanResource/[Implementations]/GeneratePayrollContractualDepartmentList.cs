@@ -41,16 +41,19 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IEnumerableProcessResult<IPayrollContractualDepartment> Execute()
         {
+            _Converter.PPayroll.Value = null;
             return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IPayrollContractualDepartment>> ExecuteAsync()
         {
+            _Converter.PPayroll.Value = null;
             return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter);
         }
 
         public Task<IEnumerableProcessResult<IPayrollContractualDepartment>> ExecuteAsync(CancellationToken cancellationToken)
         {
+            _Converter.PPayroll.Value = null;
             return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter, cancellationToken);
         }
     }
