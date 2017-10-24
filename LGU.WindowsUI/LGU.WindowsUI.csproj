@@ -140,6 +140,8 @@
     <Compile Include="Converters\DateTimeRangeDisplayConverter.cs" />
     <Compile Include="Converters\DialogModeAddToVisibilityConverter.cs" />
     <Compile Include="Converters\DialogModeEditToVisibilityConverter.cs" />
+    <Compile Include="Converters\EmployeeTypeToBooleanConverter.cs" />
+    <Compile Include="Converters\EmployeeTypeToVisibilityConverter.cs" />
     <Compile Include="Converters\FingerPrintToDisplayConverter.cs" />
     <Compile Include="Converters\NullableToBooleanConverter.cs" />
     <Compile Include="Converters\FingerPrintToPackIconStateConverter.cs" />
@@ -166,11 +168,17 @@
     <Compile Include="Events\TitleEvent.cs" />
     <Compile Include="Events\WindowStateEvent.cs" />
     <Compile Include="Extensions\ObservableCollectionExtension.cs" />
+    <Compile Include="Interactivity\CustomNotification.cs" />
+    <Compile Include="Interactivity\HumanResource\EmployeeSearchNotification.cs" />
+    <Compile Include="Interactivity\HumanResource\IEmployeeSearchNotification.cs" />
+    <Compile Include="Interactivity\ICustomNotification.cs" />
     <Compile Include="MenuItem.cs" />
+    <Compile Include="Models\Core\PersonModelBase.cs" />
     <Compile Include="Models\Core\UserSignUpModel.cs" />
     <Compile Include="Models\HumanResource\CalendarEventModel.cs" />
     <Compile Include="Models\HumanResource\ContractualPayrollClusterInclusionModel.cs" />
     <Compile Include="Models\HumanResource\ContractualPayrollClusterModel.cs" />
+    <Compile Include="Models\HumanResource\DepartmentHeadModel.cs" />
     <Compile Include="Models\HumanResource\DepartmentModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeFingerPrintSetModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeModel.cs" />
@@ -178,6 +186,7 @@
     <Compile Include="Models\HumanResource\EmployeeWorkdayScheduleModel.cs" />
     <Compile Include="Models\HumanResource\EmploymentStatusModel.cs" />
     <Compile Include="Models\HumanResource\FingerPrintModel.cs" />
+    <Compile Include="Models\HumanResource\PayrollContractualDepartmentModel.cs" />
     <Compile Include="Models\HumanResource\PayrollContractualEmployeeModel.cs" />
     <Compile Include="Models\HumanResource\PayrollCutOffModel.cs" />
     <Compile Include="Models\HumanResource\PayrollModel.cs" />
