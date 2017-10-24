@@ -1,6 +1,7 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.EntityManagers.HumanResource;
 using LGU.Extensions;
+using LGU.Interactivity.HumanResource;
 using LGU.Models.HumanResource;
 using LGU.Processes;
 using LGU.ViewModels.HumanResource.Dialogs;
@@ -58,7 +59,7 @@ namespace LGU.ViewModels.HumanResource
             SaveAsCommand = new DelegateCommand(SaveAs);
             ProceedCommand = new DelegateCommand(Proceed);
             SelectRangeDateRequest = new InteractionRequest<INotification>();
-            SearchRequest = new InteractionRequest<INotification>();
+            SearchRequest = new InteractionRequest<IEmployeeSearchNotification>();
             PayrollTypes = new ObservableCollection<PayrollTypeModel>();
         }
 
@@ -73,7 +74,7 @@ namespace LGU.ViewModels.HumanResource
         public DelegateCommand SaveAsCommand { get; }
         public DelegateCommand ProceedCommand { get; }
         public InteractionRequest<INotification> SelectRangeDateRequest { get; }
-        public InteractionRequest<INotification> SearchRequest { get; }
+        public InteractionRequest<IEmployeeSearchNotification> SearchRequest { get; }
         public ObservableCollection<PayrollTypeModel> PayrollTypes { get; }
 
         private PayrollModel _Payroll;
@@ -214,48 +215,60 @@ namespace LGU.ViewModels.HumanResource
         private void Search(string key)
         {
             var searchHint = string.Empty;
+            EmployeeModel employee = null;
 
             switch (key)
             {
                 case SEARCH_KEY_MAYOR:
+                    employee = Payroll.Mayor;
                     searchHint = SEARCH_HINT_MAYOR;
                     break;
                 case SEARCH_KEY_HUMAN_RESOURCE_HEAD:
+                    employee = Payroll.HumanResourceHead;
                     searchHint = SEARCH_HINT_HUMAN_RESOURCE_HEAD;
                     break;
                 case SEARCH_KEY_TREASURER:
+                    employee = Payroll.Treasurer;
                     searchHint = SEARCH_HINT_TREASURER;
                     break;
                 case SEARCH_KEY_CITY_ACCOUNTANT:
+                    employee = Payroll.CityAccountant;
                     searchHint = SEARCH_HINT_CITY_ACCOUNTANT;
                     break;
                 case SEARCH_KEY_CITY_BUDGET_OFFICER:
+                    employee = Payroll.CityBudgetOfficer;
                     searchHint = SEARCH_HINT_CIT_BUDGET_OFFICER;
                     break;
             }
 
-            var notification = new Notification { Title = string.Empty, Content = new EmployeeSearchDialogContent(searchHint) };
-            SearchRequest.Raise(notification, (n) => SearchRequestCallback(key, n.Content as EmployeeSearchDialogContent));
+            var notification = new EmployeeSearchNotification
+            {
+                Title = string.Empty,
+                Content = new EmployeeSearchDialogContent(searchHint),
+                SelectedEmployee = employee
+            };
+
+            SearchRequest.Raise(notification, (n) => SearchRequestCallback(key, n));
         }
 
-        private void SearchRequestCallback(string searchKey, EmployeeSearchDialogContent content)
+        private void SearchRequestCallback(string searchKey, IEmployeeSearchNotification notification)
         {
             switch (searchKey)
             {
                 case SEARCH_KEY_MAYOR:
-                    Payroll.Mayor = content.SelectedEmployee;
+                    Payroll.Mayor = notification.SelectedEmployee;
                     break;
                 case SEARCH_KEY_HUMAN_RESOURCE_HEAD:
-                    Payroll.HumanResourceHead = content.SelectedEmployee;
+                    Payroll.HumanResourceHead = notification.SelectedEmployee;
                     break;
                 case SEARCH_KEY_TREASURER:
-                    Payroll.Treasurer = content.SelectedEmployee;
+                    Payroll.Treasurer = notification.SelectedEmployee;
                     break;
                 case SEARCH_KEY_CITY_ACCOUNTANT:
-                    Payroll.CityAccountant = content.SelectedEmployee;
+                    Payroll.CityAccountant = notification.SelectedEmployee;
                     break;
                 case SEARCH_KEY_CITY_BUDGET_OFFICER:
-                    Payroll.CityBudgetOfficer = content.SelectedEmployee;
+                    Payroll.CityBudgetOfficer = notification.SelectedEmployee;
                     break;
                 default:
                     break;
