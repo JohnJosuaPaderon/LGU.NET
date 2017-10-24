@@ -34,6 +34,7 @@ namespace LGU.Extensions
             instance.UseSqlServer_MultipleChoiceCandidateAnswer();
             instance.UseSqlServer_MultipleChoiceQuestion(); 
             instance.UseSqlServer_Payroll();
+            instance.UseSqlServer_PayrollContractualDepartment();
             instance.UseSqlServer_PayrollContractualEmployee();
             instance.UseSqlServer_PayrollCutOff();
             instance.UseSqlServer_PayrollType();
@@ -143,9 +144,11 @@ namespace LGU.Extensions
             instance.AddSingleton<IDeleteDepartmentHead, DeleteDepartmentHead>();
             instance.AddSingleton<IGetDepartmentHeadById, GetDepartmentHeadById>();
             instance.AddSingleton<IGetDepartmentHeadList, GetDepartmentHeadList>();
-            instance.AddSingleton<IInsertDepartmentHead, InsertDepartmentHead>();
+            instance.AddSingleton<IInsertDepartmentHead<SqlConnection, SqlTransaction>, InsertDepartmentHead>();
             instance.AddSingleton<IUpdateDepartmentHead, UpdateDepartmentHead>();
             instance.AddSingleton<IDepartmentHeadManager, DepartmentHeadManager>();
+            instance.AddSingleton<IDepartmentHeadFields, DepartmentHeadFields>();
+            instance.AddSingleton<IDepartmentHeadParameters, DepartmentHeadParameters>();
 
             return instance;
         }
@@ -352,6 +355,17 @@ namespace LGU.Extensions
             return instance;
         }
 
+        public static IServiceCollection UseSqlServer_PayrollContractualDepartment(this IServiceCollection instance)
+        {
+            instance.AddTransient<IPayrollContractualDepartmentConverter, PayrollContractualDepartmentConverter>();
+            instance.AddSingleton<IPayrollContractualDepartmentFields, PayrollContractualDepartmentFields>();
+            instance.AddSingleton<IPayrollContractualDepartmentParameters, PayrollContractualDepartmentParameters>();
+            instance.AddSingleton<IGeneratePayrollContractualDepartmentList, GeneratePayrollContractualDepartmentList>();
+            instance.AddSingleton<IPayrollContractualDepartmentManager, PayrollContractualDepartmentManager>();
+
+            return instance;
+        }
+
         public static IServiceCollection UseSqlServer_PayrollContractualEmployee(this IServiceCollection instance)
         {
             instance.AddTransient<IPayrollContractualEmployeeConverter, PayrollContractualEmployeeConverter>();
@@ -359,6 +373,7 @@ namespace LGU.Extensions
             instance.AddSingleton<IPayrollContractualEmployeeParameters, PayrollContractualEmployeeParameters>();
             instance.AddSingleton<IInsertPayrollContractualEmployee<SqlConnection, SqlTransaction>, InsertPayrollContractualEmployee>();
             instance.AddSingleton<IGeneratePayrollContractualEmployeeList, GeneratePayrollContractualEmployeeList>();
+            instance.AddSingleton<IGeneratePayrollContractualEmployeeListByDepartment, GeneratePayrollContractualEmployeeListByDepartment>();
             instance.AddSingleton<IPayrollContractualEmployeeManager<SqlConnection, SqlTransaction>, PayrollContractualEmployeeManager>();
 
             return instance;
