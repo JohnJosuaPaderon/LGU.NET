@@ -16,32 +16,36 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="{DynamicResource ContainerGridSpace}"/>
                 <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="{DynamicResource ContainerGridSpace}"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <materialDesign:TransitioningContent Grid.Column="0" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromLeft,Duration=0:0:0.5}">
                 <materialDesign:Card VerticalAlignment="Stretch">
-                    <DataGrid IsReadOnly="True" ItemsSource="{Binding Departments}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Departments" Binding="{Binding Description}"/>
-                            <DataGridTextColumn Width="*"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <Grid>
+                        <DataGrid IsReadOnly="True" ItemsSource="{Binding ContractualPayrollCluster.Departments}" SelectedItem="{Binding SelectedDepartment}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="" Binding="{Binding Ordinal}"/>
+                                <DataGridTextColumn Header="Departments" Binding="{Binding Department.Description}"/>
+                                <DataGridTextColumn Header="Employees" Binding="{Binding Employees.Count,StringFormat='#,##0'}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </materialDesign:Card>
             </materialDesign:TransitioningContent>
-            <materialDesign:TransitioningContent Grid.Column="2" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight,Duration=0:0:0.5}">
+            <materialDesign:TransitioningContent Grid.Column="2" OpeningEffect="{materialDesign:TransitionEffect Kind=ExpandIn,Duration=0:0:0.5}">
                 <materialDesign:Card VerticalAlignment="Stretch">
                     <Grid>
                         <Grid.Resources>
                             <FrameworkElement x:Key="ProxyElement" DataContext="{Binding}"/>
                         </Grid.Resources>
                         <ContentControl Visibility="Collapsed" Content="{StaticResource ProxyElement}"/>
-                        <DataGrid ItemsSource="{Binding Employees}">
+                        <DataGrid ItemsSource="{Binding SelectedDepartment.Employees}" SelectedItem="{Binding SelectedEmployee}">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Employees" Binding="{Binding Employee.FullName}"/>
-                                <DataGridTextColumn Header="Department" Binding="{Binding Employee.Department.Description}"/>
                                 <DataGridTextColumn Header="Monthly Rate" Binding="{Binding MonthlyRate,StringFormat='#,##0.00'}"/>
                                 <DataGridTextColumn Header="HDMF Premium PS" Binding="{Binding HdmfPremiumPs}" Visibility="{Binding DataContext.ContractualPayrollCluster.Inclusion.HdmfPremiumPs, Source={StaticResource ProxyElement}, Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}"/>
                                 <DataGridTextColumn Header="Time-Log Deductions" Binding="{Binding TimeLogDeduction,StringFormat='#,##0.00'}"/>
-                                <DataGridTextColumn Width="*"/>
+                                <DataGridTextColumn Header="Withholding Tax" Binding="{Binding WithholdingTax,StringFormat='#,##0.00'}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Button Style="{DynamicResource DataManagerButton}" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
@@ -79,6 +83,92 @@
                     </Grid>
                 </materialDesign:Card>
             </materialDesign:TransitioningContent>
+            <materialDesign:TransitioningContent Grid.Column="4" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight,Duration=0:0:0.5}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:Card Grid.Row="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Department" Style="{DynamicResource CardTitleTextBlock}"/>
+                                <materialDesign:PopupBox Grid.Column="1">
+                                    <StackPanel MinWidth="75">
+                                        <Button Command="{Binding RemoveDepartmentCommand}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <materialDesign:PackIcon Kind="Delete"/>
+                                                <TextBlock Grid.Column="2" Text="Remove"/>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                            </Grid>
+                            <Grid Grid.Row="1" Margin="{DynamicResource DefaultMargin}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" Text="{Binding SelectedDepartment.Head.FullName}" materialDesign:HintAssist.Hint="Head" IsReadOnly="True"/>
+                                    <Button Grid.Column="2" Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" Command="{Binding SearchEmployeeCommand}" CommandParameter="departmenthead">
+                                        <materialDesign:PackIcon Kind="Magnify"/>
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                    <materialDesign:Card Grid.Row="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Employee" Style="{DynamicResource CardTitleTextBlock}"/>
+                                <materialDesign:PopupBox Grid.Column="1">
+                                    <StackPanel MinWidth="75">
+                                        <Button Command="{Binding RemoveEmployeeCommand}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <materialDesign:PackIcon Kind="Delete"/>
+                                                <TextBlock Grid.Column="2" Text="Remove"/>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                            </Grid>
+                        </Grid>
+                    </materialDesign:Card>
+                </Grid>
+            </materialDesign:TransitioningContent>
         </Grid>
         <materialDesign:ColorZone Grid.Row="1" Style="{DynamicResource FooterColorZone}">
             <Grid>
@@ -89,6 +179,9 @@
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Style="{DynamicResource MaterialDesignFloatingActionButton}" Command="{Binding BackToPayrollSetupCommand}">
                     <materialDesign:PackIcon Kind="ArrowLeft" Height="30" Width="30"/>
+                </Button>
+                <Button Grid.Column="2" Style="{DynamicResource MaterialDesignFloatingActionButton}" Command="{Binding BackToPayrollSetupCommand}">
+                    <materialDesign:PackIcon Kind="ArrowRight" Height="30" Width="30"/>
                 </Button>
             </Grid>
         </materialDesign:ColorZone>
