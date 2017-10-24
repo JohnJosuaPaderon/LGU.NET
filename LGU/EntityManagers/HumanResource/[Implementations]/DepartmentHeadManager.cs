@@ -1,6 +1,7 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.EntityProcesses.HumanResource;
 using LGU.Processes;
+using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,36 +9,44 @@ namespace LGU.EntityManagers.HumanResource
 {
     public sealed class DepartmentHeadManager : EntityManagerBase<IDepartmentHead, long>, IDepartmentHeadManager
     {
-        private readonly IDeleteDepartmentHead r_Delete;
-        private readonly IGetDepartmentHeadById r_GetById;
-        private readonly IGetDepartmentHeadList r_GetList;
-        private readonly IInsertDepartmentHead r_Insert;
-        private readonly IUpdateDepartmentHead r_Update;
+        private const string MESSAGE_INVALID = "Invalid department head.";
+        private const string MESSAGE_INVALID_IDENTIFIER = "Invalid department head identifier.";
 
         public DepartmentHeadManager(
             IDeleteDepartmentHead delete,
             IGetDepartmentHeadById getById,
             IGetDepartmentHeadList getList,
-            IInsertDepartmentHead insert,
+            IInsertDepartmentHead<SqlConnection, SqlTransaction> insert,
             IUpdateDepartmentHead update)
         {
-            r_Delete = delete;
-            r_GetById = getById;
-            r_GetList = getList;
-            r_Insert = insert;
-            r_Update = update;
+            _Delete = delete;
+            _GetById = getById;
+            _GetList = getList;
+            _Insert = insert;
+            _Update = update;
+
+            _InvalidResult = new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, MESSAGE_INVALID);
+            _InvalidIdentifierResult = new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, MESSAGE_INVALID_IDENTIFIER);
         }
+
+        private readonly IDeleteDepartmentHead _Delete;
+        private readonly IGetDepartmentHeadById _GetById;
+        private readonly IGetDepartmentHeadList _GetList;
+        private readonly IInsertDepartmentHead<SqlConnection, SqlTransaction> _Insert;
+        private readonly IUpdateDepartmentHead _Update;
+        private readonly IProcessResult<IDepartmentHead> _InvalidResult;
+        private readonly IProcessResult<IDepartmentHead> _InvalidIdentifierResult;
 
         public IProcessResult<IDepartmentHead> Delete(IDepartmentHead data)
         {
             if (data != null)
             {
-                r_Delete.DepartmentHead = data;
-                return RemoveIfSuccess(r_Delete.Execute());
+                _Delete.DepartmentHead = data;
+                return RemoveIfSuccess(_Delete.Execute());
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head.");
+                return _InvalidResult;
             }
         }
 
@@ -45,12 +54,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Delete.DepartmentHead = data;
-                return RemoveIfSuccess(await r_Delete.ExecuteAsync());
+                _Delete.DepartmentHead = data;
+                return RemoveIfSuccess(await _Delete.ExecuteAsync());
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head.");
+                return _InvalidResult;
             }
         }
 
@@ -58,12 +67,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Delete.DepartmentHead = data;
-                return RemoveIfSuccess(await r_Delete.ExecuteAsync(cancellationToken));
+                _Delete.DepartmentHead = data;
+                return RemoveIfSuccess(await _Delete.ExecuteAsync(cancellationToken));
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head.");
+                return _InvalidResult;
             }
         }
 
@@ -77,13 +86,13 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetById.DepartmentHeadId = id;
-                    return AddUpdateIfSuccess(r_GetById.Execute());
+                    _GetById.DepartmentHeadId = id;
+                    return AddUpdateIfSuccess(_GetById.Execute());
                 }
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head identifier.");
+                return _InvalidIdentifierResult;
             }
         }
 
@@ -97,13 +106,13 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetById.DepartmentHeadId = id;
-                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync());
+                    _GetById.DepartmentHeadId = id;
+                    return AddUpdateIfSuccess(await _GetById.ExecuteAsync());
                 }
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head identifier.");
+                return _InvalidIdentifierResult;
             }
         }
 
@@ -117,41 +126,41 @@ namespace LGU.EntityManagers.HumanResource
                 }
                 else
                 {
-                    r_GetById.DepartmentHeadId = id;
-                    return AddUpdateIfSuccess(await r_GetById.ExecuteAsync(cancellationToken));
+                    _GetById.DepartmentHeadId = id;
+                    return AddUpdateIfSuccess(await _GetById.ExecuteAsync(cancellationToken));
                 }
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head identifier.");
+                return _InvalidIdentifierResult;
             }
         }
 
         public IEnumerableProcessResult<IDepartmentHead> GetList()
         {
-            return AddUpdateIfSuccess(r_GetList.Execute());
+            return AddUpdateIfSuccess(_GetList.Execute());
         }
 
         public async Task<IEnumerableProcessResult<IDepartmentHead>> GetListAsync()
         {
-            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync());
+            return AddUpdateIfSuccess(await _GetList.ExecuteAsync());
         }
 
         public async Task<IEnumerableProcessResult<IDepartmentHead>> GetListAsync(CancellationToken cancellationToken)
         {
-            return AddUpdateIfSuccess(await r_GetList.ExecuteAsync(cancellationToken));
+            return AddUpdateIfSuccess(await _GetList.ExecuteAsync(cancellationToken));
         }
 
         public IProcessResult<IDepartmentHead> Insert(IDepartmentHead data)
         {
             if (data != null)
             {
-                r_Insert.DepartmentHead = data;
-                return AddIfSuccess(r_Insert.Execute());
+                _Insert.DepartmentHead = data;
+                return AddIfSuccess(_Insert.Execute());
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head.");
+                return _InvalidResult;
             }
         }
 
@@ -159,12 +168,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Insert.DepartmentHead = data;
-                return AddIfSuccess(await r_Insert.ExecuteAsync());
+                _Insert.DepartmentHead = data;
+                return AddIfSuccess(await _Insert.ExecuteAsync());
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head.");
+                return _InvalidResult;
             }
         }
 
@@ -172,12 +181,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Insert.DepartmentHead = data;
-                return AddIfSuccess(await r_Insert.ExecuteAsync(cancellationToken));
+                _Insert.DepartmentHead = data;
+                return AddIfSuccess(await _Insert.ExecuteAsync(cancellationToken));
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head.");
+                return _InvalidResult;
             }
         }
 
@@ -185,12 +194,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Update.DepartmentHead = data;
-                return UpdateIfSuccess(r_Update.Execute());
+                _Update.DepartmentHead = data;
+                return UpdateIfSuccess(_Update.Execute());
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head.");
+                return _InvalidResult;
             }
         }
 
@@ -198,12 +207,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Update.DepartmentHead = data;
-                return UpdateIfSuccess(await r_Update.ExecuteAsync());
+                _Update.DepartmentHead = data;
+                return UpdateIfSuccess(await _Update.ExecuteAsync());
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head.");
+                return _InvalidResult;
             }
         }
 
@@ -211,12 +220,12 @@ namespace LGU.EntityManagers.HumanResource
         {
             if (data != null)
             {
-                r_Update.DepartmentHead = data;
-                return UpdateIfSuccess(await r_Update.ExecuteAsync(cancellationToken));
+                _Update.DepartmentHead = data;
+                return UpdateIfSuccess(await _Update.ExecuteAsync(cancellationToken));
             }
             else
             {
-                return new ProcessResult<IDepartmentHead>(ProcessResultStatus.Failed, "Invalid department head.");
+                return _InvalidResult;
             }
         }
     }
