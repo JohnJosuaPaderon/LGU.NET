@@ -40,7 +40,6 @@ namespace LGU.ViewModels.HumanResource
 
         public PayrollStartupViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            _PayrollManager = ApplicationDomain.GetService<IPayrollManager<SqlConnection, SqlTransaction>>();
             _PayrollTypeManager = ApplicationDomain.GetService<IPayrollTypeManager>();
 
             _OpenFileDialog = new OpenFileDialog
@@ -62,8 +61,7 @@ namespace LGU.ViewModels.HumanResource
             SearchRequest = new InteractionRequest<IEmployeeSearchNotification>();
             PayrollTypes = new ObservableCollection<PayrollTypeModel>();
         }
-
-        private readonly IPayrollManager<SqlConnection, SqlTransaction> _PayrollManager;
+        
         private readonly IPayrollTypeManager _PayrollTypeManager;
         private readonly OpenFileDialog _OpenFileDialog;
         private readonly SaveFileDialog _SaveFileDialog;
@@ -77,8 +75,8 @@ namespace LGU.ViewModels.HumanResource
         public InteractionRequest<IEmployeeSearchNotification> SearchRequest { get; }
         public ObservableCollection<PayrollTypeModel> PayrollTypes { get; }
 
-        private PayrollModel _Payroll;
-        public PayrollModel Payroll
+        private PayrollContractualModel _Payroll;
+        public PayrollContractualModel Payroll
         {
             get { return _Payroll; }
             set { SetProperty(ref _Payroll, value); }
@@ -102,23 +100,23 @@ namespace LGU.ViewModels.HumanResource
 
         private async Task LoadFromFileAsync(string filePath)
         {
-            var result = await _PayrollManager.GetDefaultFromFileAsync(filePath);
-            Payroll = new PayrollModel(result.Data);
+            //var result = await _PayrollManager.GetDefaultFromFileAsync(filePath);
+            //Payroll = new PayrollContractualModel(result.Data);
 
-            if (Payroll != null)
-            {
-                var dateTime = DateTime.Now.AddDays(-15);
-                if (dateTime.Day >= 1 || dateTime.Day <= 15)
-                {
-                    Payroll.RangeDate.Begin = new DateTime(dateTime.Year, dateTime.Month, 1);
-                    Payroll.RangeDate.End = new DateTime(dateTime.Year, dateTime.Month, 15);
-                }
-                else
-                {
-                    Payroll.RangeDate.Begin = new DateTime(dateTime.Year, dateTime.Month, 16);
-                    Payroll.RangeDate.End = new DateTime(dateTime.Year, dateTime.Month, DateTime.DaysInMonth(dateTime.Year, dateTime.Month));
-                }
-            }
+            //if (Payroll != null)
+            //{
+            //    var dateTime = DateTime.Now.AddDays(-15);
+            //    if (dateTime.Day >= 1 || dateTime.Day <= 15)
+            //    {
+            //        Payroll.RangeDate.Begin = new DateTime(dateTime.Year, dateTime.Month, 1);
+            //        Payroll.RangeDate.End = new DateTime(dateTime.Year, dateTime.Month, 15);
+            //    }
+            //    else
+            //    {
+            //        Payroll.RangeDate.Begin = new DateTime(dateTime.Year, dateTime.Month, 16);
+            //        Payroll.RangeDate.End = new DateTime(dateTime.Year, dateTime.Month, DateTime.DaysInMonth(dateTime.Year, dateTime.Month));
+            //    }
+            //}
         }
 
         private async Task LoadPayrollTypeListAsync()
@@ -139,7 +137,7 @@ namespace LGU.ViewModels.HumanResource
             }
             else
             {
-                r_NewMessageEvent.Publish(result.Message);
+                _NewMessageEvent.Publish(result.Message);
             }
         }
 
@@ -166,7 +164,7 @@ namespace LGU.ViewModels.HumanResource
             {
                 if (Payroll.Type == null)
                 {
-                    r_NewMessageEvent.Publish("Payroll Type is invalid.");
+                    _NewMessageEvent.Publish("Payroll Type is invalid.");
                 }
                 else
                 {
@@ -185,26 +183,26 @@ namespace LGU.ViewModels.HumanResource
                         {
                             { NAV_PARAM_PAYROLL, Payroll }
                         };
-                        r_RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, nameof(ContractualPayrollView), parameters);
+                        _RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, nameof(ContractualPayrollView), parameters);
                     }
                     else
                     {
-                        r_NewMessageEvent.Publish("Cut-off couldn't determine.");
+                        _NewMessageEvent.Publish("Cut-off couldn't determine.");
                     }
                 }
             }
             else
             {
-                r_NewMessageEvent.Publish("Invalid payroll.");
+                _NewMessageEvent.Publish("Invalid payroll.");
             }
         }
 
         private async void SaveAs()
         {
-            if (_SaveFileDialog.ShowDialog() ?? false)
-            {
-                await _PayrollManager.SaveDefaultToFileAsync(Payroll.GetSource(), _SaveFileDialog.FileName);
-            }
+            //if (_SaveFileDialog.ShowDialog() ?? false)
+            //{
+            //    await _PayrollManager.SaveDefaultToFileAsync(Payroll.GetSource(), _SaveFileDialog.FileName);
+            //}
         }
 
         private void SelectRangeDate()
@@ -286,8 +284,8 @@ namespace LGU.ViewModels.HumanResource
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            Payroll = navigationContext.Parameters[NAV_PARAM_PAYROLL] as PayrollModel;
-            r_ChangeHeaderEvent.Publish(TEXT_HEADER);
+            Payroll = navigationContext.Parameters[NAV_PARAM_PAYROLL] as PayrollContractualModel;
+            _ChangeHeaderEvent.Publish(TEXT_HEADER);
         }
     }
 }

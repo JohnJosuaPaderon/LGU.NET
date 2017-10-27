@@ -7,7 +7,6 @@ namespace LGU.Models.HumanResource
         public PayrollContractualEmployeeModel(IPayrollContractualEmployee source) : base(source ?? new PayrollContractualEmployee())
         {
             Employee = new EmployeeModel(source?.Employee);
-            Payroll = new PayrollModel(source?.Payroll);
             MonthlyRate = source?.MonthlyRate ?? default(decimal);
             WithholdingTax = source?.WithholdingTax ?? default(decimal);
             HdmfPremiumPs = source?.HdmfPremiumPs;
@@ -19,13 +18,6 @@ namespace LGU.Models.HumanResource
         {
             get { return _Employee; }
             set { SetProperty(ref _Employee, value); }
-        }
-
-        private PayrollModel _Payroll;
-        public PayrollModel Payroll
-        {
-            get { return _Payroll; }
-            set { SetProperty(ref _Payroll, value); }
         }
 
         private decimal _MonthlyRate;
@@ -63,7 +55,6 @@ namespace LGU.Models.HumanResource
                 Source.Employee = Employee.GetSource();
                 Source.HdmfPremiumPs = HdmfPremiumPs;
                 Source.MonthlyRate = MonthlyRate;
-                Source.Payroll = Payroll.GetSource();
                 Source.WithholdingTax = WithholdingTax;
                 Source.TimeLogDeduction = TimeLogDeduction;
             }
@@ -91,8 +82,7 @@ namespace LGU.Models.HumanResource
             if (obj is PayrollContractualEmployeeModel value)
             {
                 return
-                    Employee == value.Employee &&
-                    Payroll == value.Payroll;
+                    Employee == value.Employee;
             }
             else
             {
@@ -103,8 +93,7 @@ namespace LGU.Models.HumanResource
         public override int GetHashCode()
         {
             return
-                Employee.GetHashCode() ^
-                Payroll.GetHashCode();
+                Employee.GetHashCode();
         }
     }
 }

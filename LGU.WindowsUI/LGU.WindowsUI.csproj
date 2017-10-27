@@ -176,8 +176,6 @@
     <Compile Include="Models\Core\PersonModelBase.cs" />
     <Compile Include="Models\Core\UserSignUpModel.cs" />
     <Compile Include="Models\HumanResource\CalendarEventModel.cs" />
-    <Compile Include="Models\HumanResource\ContractualPayrollClusterInclusionModel.cs" />
-    <Compile Include="Models\HumanResource\ContractualPayrollClusterModel.cs" />
     <Compile Include="Models\HumanResource\DepartmentHeadModel.cs" />
     <Compile Include="Models\HumanResource\DepartmentModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeFingerPrintSetModel.cs" />
@@ -188,8 +186,8 @@
     <Compile Include="Models\HumanResource\FingerPrintModel.cs" />
     <Compile Include="Models\HumanResource\PayrollContractualDepartmentModel.cs" />
     <Compile Include="Models\HumanResource\PayrollContractualEmployeeModel.cs" />
+    <Compile Include="Models\HumanResource\PayrollContractualModel.cs" />
     <Compile Include="Models\HumanResource\PayrollCutOffModel.cs" />
-    <Compile Include="Models\HumanResource\PayrollModel.cs" />
     <Compile Include="Models\HumanResource\PayrollTypeModel.cs" />
     <Compile Include="Models\HumanResource\PdsAddressModel.cs" />
     <Compile Include="Models\HumanResource\LocatorLeaveTypeModel.cs" />
@@ -230,6 +228,7 @@
     <Compile Include="ViewModels\HumanResource\ActualTimeLogExportViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\ApplicationMainViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\CalendarEventMaintenanceViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\ContractualPayrollFinishViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\ContractualPayrollViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\CreateNewSalaryGradeViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\DepartmentManagementViewModel.cs" />
@@ -289,6 +288,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\CalendarEventMaintenanceView.xaml.cs">
       <DependentUpon>CalendarEventMaintenanceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\ContractualPayrollFinishView.xaml.cs">
+      <DependentUpon>ContractualPayrollFinishView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\ContractualPayrollView.xaml.cs">
       <DependentUpon>ContractualPayrollView.xaml</DependentUpon>
@@ -498,6 +500,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\CalendarEventMaintenanceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\ContractualPayrollFinishView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

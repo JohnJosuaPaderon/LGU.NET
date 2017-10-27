@@ -91,7 +91,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             if (result.Status == ProcessResultStatus.Success)
             {
                 DialogHelper.CloseDialog();
-                r_NewMessageEvent.Publish("Department details has been updated successfully.");
+                _NewMessageEvent.Publish("Department details has been updated successfully.");
                 //ShowInfoMessage("Department details has been updated successfully.");
             }
             else if (result.Status == ProcessResultStatus.Failed)

@@ -1,4 +1,6 @@
-﻿namespace LGU.EntityProcesses.HumanResource
+﻿using LGU.Configurations;
+
+namespace LGU.EntityProcesses.HumanResource
 {
     public interface IPayrollConfigurationProvider
     {
@@ -7,5 +9,6 @@
         string TreasurerId { get; }
         string CityAccountantId { get; }
         string CityBudgetOfficerId { get; }
+        IJConfigurationHeader Header { get; }
     }
 }

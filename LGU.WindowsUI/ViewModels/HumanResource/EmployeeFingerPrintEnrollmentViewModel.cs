@@ -68,7 +68,7 @@ namespace LGU.ViewModels.HumanResource
             {
                 if (result.DataList != null && result.DataList.Any())
                 {
-                    r_NewMessageEvent.Publish($"Found {result.DataList.Count().ToString("#,##0")} employee(s).");
+                    _NewMessageEvent.Publish($"Found {result.DataList.Count().ToString("#,##0")} employee(s).");
 
                     foreach (var item in result.DataList)
                     {
@@ -77,12 +77,12 @@ namespace LGU.ViewModels.HumanResource
                 }
                 else
                 {
-                    r_NewMessageEvent.Publish("No employee matched.");
+                    _NewMessageEvent.Publish("No employee matched.");
                 }
             }
             else
             {
-                r_NewMessageEvent.Publish($"There's an error on searching employees: {result.Message}");
+                _NewMessageEvent.Publish($"There's an error on searching employees: {result.Message}");
             }
         }
 
@@ -113,7 +113,7 @@ namespace LGU.ViewModels.HumanResource
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            r_ChangeHeaderEvent.Publish("Employees");
+            _ChangeHeaderEvent.Publish("Employees");
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

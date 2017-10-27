@@ -15,7 +15,7 @@ namespace LGU.ViewModels.HumanResource
 
         private void Navigate(string viewName)
         {
-            r_RegionManager.RequestNavigate(MainKioskViewModel.KioskContentRegion, viewName);
+            _RegionManager.RequestNavigate(MainKioskViewModel.KioskContentRegion, viewName);
         }
     }
 }

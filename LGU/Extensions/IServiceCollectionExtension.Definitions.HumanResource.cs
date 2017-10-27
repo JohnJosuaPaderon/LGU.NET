@@ -16,7 +16,6 @@ namespace LGU.Extensions
             instance.UseSqlServer_Application();
             instance.UseSqlServer_ApplicationDocument();
             instance.UseSqlServer_CalendarEvent();
-            instance.UseSqlServer_ContractualPayrollCluster();
             instance.UseSqlServer_Department();
             instance.UseSqlServer_DepartmentHead();
             instance.UseSqlServer_Employee();
@@ -32,8 +31,7 @@ namespace LGU.Extensions
             instance.UseSqlServer_Locator();
             instance.UseSqlServer_LocatorLeaveType();
             instance.UseSqlServer_MultipleChoiceCandidateAnswer();
-            instance.UseSqlServer_MultipleChoiceQuestion(); 
-            instance.UseSqlServer_Payroll();
+            instance.UseSqlServer_MultipleChoiceQuestion();
             instance.UseSqlServer_PayrollContractualDepartment();
             instance.UseSqlServer_PayrollContractualEmployee();
             instance.UseSqlServer_PayrollCutOff();
@@ -109,14 +107,6 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateCalendarEvent, UpdateCalendarEvent>();
             instance.AddSingleton<IGetCalendarEventList, GetCalendarEventList>();
             instance.AddSingleton<ICalendarEventManager, CalendarEventManager>();
-
-            return instance;
-        }
-
-        public static IServiceCollection UseSqlServer_ContractualPayrollCluster(this IServiceCollection instance)
-        {
-            instance.AddSingleton<IInsertContractualPayrollCluster, InsertContractualPayrollCluster>();
-            instance.AddSingleton<IContractualPayrollClusterManager, ContractualPayrollClusterManager>();
 
             return instance;
         }
@@ -339,22 +329,7 @@ namespace LGU.Extensions
 
             return instance;
         }
-
-        public static IServiceCollection UseSqlServer_Payroll(this IServiceCollection instance)
-        {
-            instance.AddTransient<IPayrollConverter, PayrollConverter>();
-            instance.AddSingleton<IPayrollFields, PayrollFields>();
-            instance.AddSingleton<IPayrollParameters, PayrollParameters>();
-            instance.AddSingleton<IInsertPayroll<SqlConnection, SqlTransaction>, InsertPayroll>();
-            instance.AddSingleton<IGetDefaultPayrollFromFile, GetDefaultPayrollFromFile>();
-            instance.AddSingleton<ISaveDefaultPayrollToFile, SaveDefaultPayrollToFile>();
-            instance.AddSingleton<IGetPayrollById, GetPayrollById>();
-            instance.AddSingleton<IPayrollConfigurationProvider, PayrollConfigurationProvider>();
-            instance.AddSingleton<IPayrollManager<SqlConnection, SqlTransaction>, PayrollManager>();
-
-            return instance;
-        }
-
+        
         public static IServiceCollection UseSqlServer_PayrollContractualDepartment(this IServiceCollection instance)
         {
             instance.AddTransient<IPayrollContractualDepartmentConverter, PayrollContractualDepartmentConverter>();

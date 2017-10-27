@@ -13,7 +13,7 @@ namespace LGU.ViewModels.HumanResource
 
         protected override void Initialize()
         {
-            r_ChangeHeaderEvent.Publish(HEADER);
+            _ChangeHeaderEvent.Publish(HEADER);
         }
     }
 }

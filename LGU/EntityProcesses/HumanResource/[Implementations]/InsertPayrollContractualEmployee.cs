@@ -23,7 +23,6 @@ namespace LGU.EntityProcesses.HumanResource
 
         private SqlQueryInfo<IPayrollContractualEmployee> QueryInfo =>
             SqlQueryInfo<IPayrollContractualEmployee>.CreateProcedureQueryInfo(PayrollContractualEmployee, GetQualifiedDbObjectName(), GetProcessResult, true)
-            .AddInputParameter(_Parameters.PayrollId, PayrollContractualEmployee.Payroll?.Id)
             .AddInputParameter(_Parameters.EmployeeId, PayrollContractualEmployee.Employee?.Id)
             .AddInputParameter(_Parameters.MonthlyRate, PayrollContractualEmployee.MonthlyRate)
             .AddInputParameter(_Parameters.TimeLogDeduction, PayrollContractualEmployee.TimeLogDeduction)

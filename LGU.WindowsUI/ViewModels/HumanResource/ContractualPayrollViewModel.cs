@@ -17,6 +17,7 @@ namespace LGU.ViewModels.HumanResource
     {
         private const string TEXT_HEADER = "Payroll - Contractual";
         private const string NAV_PARAM_PAYROLL = "payroll";
+        private const string NAV_PARAM_CONTRACTUAL_PAYROLL_CLUSTER = "contractualpayrollcluster";
         private const string SEARCH_PARAM_DEPARTMENT_HEAD = "departmenthead";
 
         public ContractualPayrollViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
@@ -24,6 +25,7 @@ namespace LGU.ViewModels.HumanResource
             _PayrollContractualDepartmentManager = ApplicationDomain.GetService<IPayrollContractualDepartmentManager>();
 
             BackToPayrollSetupCommand = new DelegateCommand(BackToPayrollSetup);
+            ProceedCommand = new DelegateCommand(Proceed);
             RemoveEmployeeCommand = new DelegateCommand(RemoveEmployee);
             RemoveDepartmentCommand = new DelegateCommand(RemoveDepartment);
             SearchEmployeeCommand = new DelegateCommand<string>(SearchEmployee);
@@ -33,21 +35,22 @@ namespace LGU.ViewModels.HumanResource
         private readonly IPayrollContractualDepartmentManager _PayrollContractualDepartmentManager;
 
         public DelegateCommand BackToPayrollSetupCommand { get; }
+        public DelegateCommand ProceedCommand { get; }
         public DelegateCommand RemoveEmployeeCommand { get; }
         public DelegateCommand RemoveDepartmentCommand { get; }
         public DelegateCommand<string> SearchEmployeeCommand { get; }
         public InteractionRequest<INotification> SearchEmployeeRequest { get; }
 
-        private ContractualPayrollClusterModel _ContractualPayrollCluster = new ContractualPayrollClusterModel(new ContractualPayrollCluster()
-        {
-            Inclusion = new ContractualPayrollClusterInclusion()
-        });
+        //private ContractualPayrollClusterModel _ContractualPayrollCluster = new ContractualPayrollClusterModel(new ContractualPayrollCluster()
+        //{
+        //    Inclusion = new ContractualPayrollClusterInclusion()
+        //});
 
-        public ContractualPayrollClusterModel ContractualPayrollCluster
-        {
-            get { return _ContractualPayrollCluster; }
-            set { SetProperty(ref _ContractualPayrollCluster, value); }
-        }
+        //public ContractualPayrollClusterModel ContractualPayrollCluster
+        //{
+        //    get { return _ContractualPayrollCluster; }
+        //    set { SetProperty(ref _ContractualPayrollCluster, value); }
+        //}
 
         private PayrollContractualDepartmentModel _SelectedDepartment;
         public PayrollContractualDepartmentModel SelectedDepartment
@@ -65,10 +68,10 @@ namespace LGU.ViewModels.HumanResource
 
         private async Task TryGetDepartmentListAsync()
         {
-            if (!ContractualPayrollCluster.Departments.Any())
-            {
-                await GetDepartmentListAsync();
-            }
+            //if (!ContractualPayrollCluster.Departments.Any())
+            //{
+            //    await GetDepartmentListAsync();
+            //}
         }
 
         private void RemoveEmployee()
@@ -92,21 +95,21 @@ namespace LGU.ViewModels.HumanResource
 
         private void RemoveDepartment()
         {
-            if (SelectedDepartment != null)
-            {
-                if (ContractualPayrollCluster.Departments.Any())
-                {
-                    ContractualPayrollCluster.Departments.Remove(SelectedDepartment);
-                }
-                else
-                {
-                    EnqueueMessage("Uncategorized error.");
-                }
-            }
-            else
-            {
-                EnqueueMessage("No selected department.");
-            }
+            //if (SelectedDepartment != null)
+            //{
+            //    if (ContractualPayrollCluster.Departments.Any())
+            //    {
+            //        ContractualPayrollCluster.Departments.Remove(SelectedDepartment);
+            //    }
+            //    else
+            //    {
+            //        EnqueueMessage("Uncategorized error.");
+            //    }
+            //}
+            //else
+            //{
+            //    EnqueueMessage("No selected department.");
+            //}
         }
 
         private void SearchEmployee(string searchParam)
@@ -123,24 +126,24 @@ namespace LGU.ViewModels.HumanResource
 
         private async Task GetDepartmentListAsync()
         {
-            ContractualPayrollCluster.Departments.Clear();
+            //ContractualPayrollCluster.Departments.Clear();
 
-            var result = await _PayrollContractualDepartmentManager.GenerateListAsync(ContractualPayrollCluster.Payroll.RangeDate.GetSource());
+            //var result = await _PayrollContractualDepartmentManager.GenerateListAsync(ContractualPayrollCluster.Payroll.RangeDate.GetSource());
 
-            if (result.Status == ProcessResultStatus.Success)
-            {
-                if (result.DataList != null && result.DataList.Any())
-                {
-                    foreach (var item in result.DataList)
-                    {
-                        ContractualPayrollCluster.Departments.Add(new PayrollContractualDepartmentModel(item));
-                    }
-                }
-            }
-            else
-            {
-                EnqueueMessage(result.Message);
-            }
+            //if (result.Status == ProcessResultStatus.Success)
+            //{
+            //    if (result.DataList != null && result.DataList.Any())
+            //    {
+            //        foreach (var item in result.DataList)
+            //        {
+            //            ContractualPayrollCluster.Departments.Add(new PayrollContractualDepartmentModel(item));
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    EnqueueMessage(result.Message);
+            //}
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -155,20 +158,30 @@ namespace LGU.ViewModels.HumanResource
 
         public async void OnNavigatedTo(NavigationContext navigationContext)
         {
-            ContractualPayrollCluster.Payroll = navigationContext.Parameters[NAV_PARAM_PAYROLL] as PayrollModel;
-            r_ChangeHeaderEvent.Publish(TEXT_HEADER);
+            //ContractualPayrollCluster.Payroll = navigationContext.Parameters[NAV_PARAM_PAYROLL] as PayrollContractualModel;
+            //_ChangeHeaderEvent.Publish(TEXT_HEADER);
 
-            await TryGetDepartmentListAsync();
+            //await TryGetDepartmentListAsync();
         }
 
         private void BackToPayrollSetup()
         {
-            var parameters = new NavigationParameters
-            {
-                { NAV_PARAM_PAYROLL, ContractualPayrollCluster.Payroll }
-            };
+            //var parameters = new NavigationParameters
+            //{
+            //    { NAV_PARAM_PAYROLL, ContractualPayrollCluster.Payroll }
+            //};
 
-            r_RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, nameof(PayrollStartupView), parameters);
+            //_RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, nameof(PayrollStartupView), parameters);
+        }
+
+        private void Proceed()
+        {
+            //var parameters = new NavigationParameters
+            //{
+            //    { NAV_PARAM_CONTRACTUAL_PAYROLL_CLUSTER, ContractualPayrollCluster }
+            //};
+
+            //_RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, nameof(ContractualPayrollFinishView), parameters);
         }
     }
 }

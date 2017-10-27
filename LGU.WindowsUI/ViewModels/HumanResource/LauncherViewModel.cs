@@ -11,7 +11,7 @@ namespace LGU.ViewModels.HumanResource
         {
             NavigateCommand = new DelegateCommand<string>(Navigate);
 
-            r_TitleEvent.Publish("Human Resource & Development Office");
+            _TitleEvent.Publish("Human Resource & Development Office");
         }
 
         public DelegateCommand<string> NavigateCommand { get; }
@@ -23,7 +23,7 @@ namespace LGU.ViewModels.HumanResource
                 { "view", view }
             };
 
-            r_RegionManager.RequestNavigate(MainWindowViewModel.MainContentRegionName, nameof(MainView), parameters);
+            _RegionManager.RequestNavigate(MainWindowViewModel.MainContentRegionName, nameof(MainView), parameters);
         }
     }
 }

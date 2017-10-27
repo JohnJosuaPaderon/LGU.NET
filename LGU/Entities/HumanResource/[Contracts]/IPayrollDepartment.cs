@@ -3,8 +3,7 @@
     public interface IPayrollDepartment
     {
         IDepartment Department { get; set; }
-        IPayroll Payroll { get; set; }
-        IEmployee Head { get; set; }
+        IDepartmentHead Head { get; set; }
         int Ordinal { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.Processes;
-using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
@@ -8,7 +7,6 @@ namespace LGU.EntityConverters.HumanResource
     {
         IDataConverterProperty<IPayrollContractualDepartment> PDepartment { get; }
         IDataConverterProperty<IEmployee> PEmployee { get; }
-        IDataConverterProperty<IPayroll> PPayroll { get; }
         IDataConverterProperty<decimal> PMonthlyRate { get; }
         IDataConverterProperty<decimal?> PWithholdingTax { get; }
         IDataConverterProperty<decimal?> PHdmfPremiumPs { get; }

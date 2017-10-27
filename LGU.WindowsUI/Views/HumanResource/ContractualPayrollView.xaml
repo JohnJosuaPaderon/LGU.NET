@@ -24,7 +24,6 @@
                     <Grid>
                         <DataGrid IsReadOnly="True" ItemsSource="{Binding ContractualPayrollCluster.Departments}" SelectedItem="{Binding SelectedDepartment}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="" Binding="{Binding Ordinal}"/>
                                 <DataGridTextColumn Header="Departments" Binding="{Binding Department.Description}"/>
                                 <DataGridTextColumn Header="Employees" Binding="{Binding Employees.Count,StringFormat='#,##0'}"/>
                             </DataGrid.Columns>
@@ -43,7 +42,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Employees" Binding="{Binding Employee.FullName}"/>
                                 <DataGridTextColumn Header="Monthly Rate" Binding="{Binding MonthlyRate,StringFormat='#,##0.00'}"/>
-                                <DataGridTextColumn Header="HDMF Premium PS" Binding="{Binding HdmfPremiumPs}" Visibility="{Binding DataContext.ContractualPayrollCluster.Inclusion.HdmfPremiumPs, Source={StaticResource ProxyElement}, Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}"/>
+                                <DataGridTextColumn Header="HDMF Premium PS" Binding="{Binding HdmfPremiumPs,StringFormat='#,##0.00'}" Visibility="{Binding DataContext.ContractualPayrollCluster.Inclusion.HdmfPremiumPs, Source={StaticResource ProxyElement}, Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}"/>
                                 <DataGridTextColumn Header="Time-Log Deductions" Binding="{Binding TimeLogDeduction,StringFormat='#,##0.00'}"/>
                                 <DataGridTextColumn Header="Withholding Tax" Binding="{Binding WithholdingTax,StringFormat='#,##0.00'}"/>
                             </DataGrid.Columns>
@@ -118,13 +117,8 @@
                                     </StackPanel>
                                 </materialDesign:PopupBox>
                             </Grid>
-                            <Grid Grid.Row="1" Margin="{DynamicResource DefaultMargin}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
+                            <StackPanel Grid.Row="1" Margin="{DynamicResource DefaultMargin}">
+                                <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
@@ -134,7 +128,7 @@
                                         <materialDesign:PackIcon Kind="Magnify"/>
                                     </Button>
                                 </Grid>
-                            </Grid>
+                            </StackPanel>
                         </Grid>
                     </materialDesign:Card>
                     <materialDesign:Card Grid.Row="2">
@@ -165,6 +159,9 @@
                                     </StackPanel>
                                 </materialDesign:PopupBox>
                             </Grid>
+                            <StackPanel Grid.Row="1" Margin="{DynamicResource DefaultMargin}">
+                                <TextBox Text="{Binding SelectedEmployee.HdmfPremiumPs,StringFormat='#,##0.00'}" materialDesign:HintAssist.Hint="HDMF Premium PS" Visibility="{Binding ContractualPayrollCluster.Inclusion.HdmfPremiumPs,Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}"/>
+                            </StackPanel>
                         </Grid>
                     </materialDesign:Card>
                 </Grid>
@@ -180,7 +177,7 @@
                 <Button Grid.Column="0" Style="{DynamicResource MaterialDesignFloatingActionButton}" Command="{Binding BackToPayrollSetupCommand}">
                     <materialDesign:PackIcon Kind="ArrowLeft" Height="30" Width="30"/>
                 </Button>
-                <Button Grid.Column="2" Style="{DynamicResource MaterialDesignFloatingActionButton}" Command="{Binding BackToPayrollSetupCommand}">
+                <Button Grid.Column="2" Style="{DynamicResource MaterialDesignFloatingActionButton}" Command="{Binding ProceedCommand}">
                     <materialDesign:PackIcon Kind="ArrowRight" Height="30" Width="30"/>
                 </Button>
             </Grid>

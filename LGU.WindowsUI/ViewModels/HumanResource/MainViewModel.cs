@@ -22,7 +22,7 @@ namespace LGU.ViewModels.HumanResource
             MenuItems.Add(new MenuItem { HeaderText = "Payroll", Icon = PackIconKind.AccountMultiple, ViewName = nameof(PayrollStartupView) });
             MenuItems.Add(new MenuItem { HeaderText = "Maintenance", Icon = PackIconKind.Settings, ViewName = nameof(MaintenanceView) });
 
-            r_ChangeHeaderEvent.Subscribe(header => Header = header);
+            _ChangeHeaderEvent.Subscribe(header => Header = header);
         }
 
         private string _Header;
@@ -43,7 +43,7 @@ namespace LGU.ViewModels.HumanResource
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            r_RegionManager.RequestNavigate(MainViewContentRegion, (string)navigationContext.Parameters["view"]);
+            _RegionManager.RequestNavigate(MainViewContentRegion, (string)navigationContext.Parameters["view"]);
         }
     }
 }

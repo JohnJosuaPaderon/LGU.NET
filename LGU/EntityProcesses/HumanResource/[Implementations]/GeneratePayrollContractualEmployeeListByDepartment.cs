@@ -20,7 +20,6 @@ namespace LGU.EntityProcesses.HumanResource
             _Converter = converter;
 
             _Converter.PDepartment.Value = null;
-            _Converter.PPayroll.Value = null;
         }
 
         private IPayrollContractualEmployeeConverter _Converter;

@@ -3,7 +3,8 @@ using LGU.Processes;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IGetDefaultPayrollFromFile : IProcess<IPayroll>
+    public interface IGetDefaultPayrollFromFile<TDepartment> : IProcess<IPayroll<TDepartment>>
+        where TDepartment : IPayrollDepartment
     {
         string FilePath { get; set; }
     }

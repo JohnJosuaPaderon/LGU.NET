@@ -14,7 +14,7 @@ namespace LGU.ViewModels.HumanResource
 
         protected override void Initialize()
         {
-            r_ChangeHeaderEvent.Publish("Personal Data Sheet");
+            _ChangeHeaderEvent.Publish("Personal Data Sheet");
         }
 
         #region INavigationAware

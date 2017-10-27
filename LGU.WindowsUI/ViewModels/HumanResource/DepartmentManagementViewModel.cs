@@ -83,7 +83,7 @@ namespace LGU.ViewModels.HumanResource
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            r_ChangeHeaderEvent.Publish("Departments");
+            _ChangeHeaderEvent.Publish("Departments");
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

@@ -11,8 +11,8 @@ namespace LGU.Models.HumanResource
             Employees = new ObservableCollection<PayrollContractualEmployeeModel>();
 
             Department = source?.Department != null ? new DepartmentModel(source.Department) : null;
-            Payroll = source?.Payroll != null ? new PayrollModel(source.Payroll) : null;
-            Head = source?.Head != null ? new EmployeeModel(source.Head) : null;
+            Payroll = source?.Payroll != null ? new PayrollContractualModel(source.Payroll) : null;
+            Head = source?.Head != null ? new DepartmentHeadModel(source.Head) : null;
             Ordinal = source?.Ordinal ?? default(int);
 
             TryInitializeEmployees();
@@ -27,15 +27,15 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Department, value); }
         }
 
-        private PayrollModel _Payroll;
-        public PayrollModel Payroll
+        private PayrollContractualModel _Payroll;
+        public PayrollContractualModel Payroll
         {
             get { return _Payroll; }
             set { SetProperty(ref _Payroll, value); }
         }
 
-        private EmployeeModel _Head;
-        public EmployeeModel Head
+        private DepartmentHeadModel _Head;
+        public DepartmentHeadModel Head
         {
             get { return _Head; }
             set { SetProperty(ref _Head, value); }

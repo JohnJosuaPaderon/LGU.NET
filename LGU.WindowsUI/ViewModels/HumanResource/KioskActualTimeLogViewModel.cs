@@ -93,7 +93,7 @@ namespace LGU.ViewModels.HumanResource
             if (Employee != null && RawTimeLogs != null && RawTimeLogs.Any())
             {
                 await _HumanResourceReport.ExportActualTimeLogAsync(Employee.GetSource(), RawTimeLogs, CutOff.GetSource(), this);
-                r_RegionManager.RequestNavigate(MainKioskViewModel.KioskContentRegion, nameof(KioskServiceSelectionView));
+                _RegionManager.RequestNavigate(MainKioskViewModel.KioskContentRegion, nameof(KioskServiceSelectionView));
             }
             else
             {

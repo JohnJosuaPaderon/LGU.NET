@@ -13,11 +13,11 @@ namespace LGU.ViewModels
     {
         public ViewModelBase(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
-            r_RegionManager = regionManager;
+            _RegionManager = regionManager;
             r_EventAggregator = eventAggregator;
-            r_TitleEvent = r_EventAggregator.GetEvent<TitleEvent>();
-            r_ChangeHeaderEvent = r_EventAggregator.GetEvent<ChangeHeaderEvent>();
-            r_NewMessageEvent = r_EventAggregator.GetEvent<NewMessageEvent>();
+            _TitleEvent = r_EventAggregator.GetEvent<TitleEvent>();
+            _ChangeHeaderEvent = r_EventAggregator.GetEvent<ChangeHeaderEvent>();
+            _NewMessageEvent = r_EventAggregator.GetEvent<NewMessageEvent>();
             r_ShowCloseButtonEvent = r_EventAggregator.GetEvent<ShowCloseButtonEvent>();
             r_ShowMinButtonEvent = r_EventAggregator.GetEvent<ShowMinButtonEvent>();
             r_ShowMaxRestorButtonEvent = r_EventAggregator.GetEvent<ShowMaxRestoreButtonEvent>();
@@ -28,11 +28,11 @@ namespace LGU.ViewModels
             InitializeCommand = new DelegateCommand(Initialize);
         }
 
-        protected readonly IRegionManager r_RegionManager;
+        protected readonly IRegionManager _RegionManager;
         protected readonly IEventAggregator r_EventAggregator;
-        protected readonly NewMessageEvent r_NewMessageEvent;
-        protected readonly TitleEvent r_TitleEvent;
-        protected readonly ChangeHeaderEvent r_ChangeHeaderEvent;
+        protected readonly NewMessageEvent _NewMessageEvent;
+        protected readonly TitleEvent _TitleEvent;
+        protected readonly ChangeHeaderEvent _ChangeHeaderEvent;
         protected readonly ShowCloseButtonEvent r_ShowCloseButtonEvent;
         protected readonly ShowMinButtonEvent r_ShowMinButtonEvent;
         protected readonly ShowMaxRestoreButtonEvent r_ShowMaxRestorButtonEvent;
@@ -88,12 +88,12 @@ namespace LGU.ViewModels
 
         protected virtual void EnqueueMessage(string message)
         {
-            r_NewMessageEvent.Publish(message);
+            _NewMessageEvent.Publish(message);
         }
 
         protected virtual void EnqueueListCountMessage(int items, string singularMark, string pluralMark)
         {
-            r_NewMessageEvent.Publish($"Found {items.ToString("#,##0")} {(items > 1 ? pluralMark : singularMark)}");
+            _NewMessageEvent.Publish($"Found {items.ToString("#,##0")} {(items > 1 ? pluralMark : singularMark)}");
         }
 
         protected virtual void EnqueueListCountMessage(int items, string mark)

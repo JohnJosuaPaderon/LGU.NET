@@ -42,7 +42,7 @@ namespace LGU.ViewModels
 
         private void Navigate()
         {
-            r_RegionManager.RequestNavigate(NavigationTargetRegion, SelectedMenuItem.ViewName);
+            _RegionManager.RequestNavigate(NavigationTargetRegion, SelectedMenuItem.ViewName);
             IsMenuOpen = false;
         }
     }

@@ -13,5 +13,6 @@ namespace LGU.Entities.HumanResource
         decimal MonthlySalary { get; set; }
         IPayrollType PayrollType { get; set; }
         bool IsFlexWorkSchedule { get; set; }
+        string TimeKeepingCode { get; set; }
     }
 }

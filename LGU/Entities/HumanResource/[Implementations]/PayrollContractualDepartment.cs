@@ -7,6 +7,7 @@
             Employees = new PayrollContractualEmployeeCollection(this);
         }
 
-        public IPayrollContractualEmployeeCollection Employees { get; }
+        public IPayrollContractual Payroll { get; set; }
+        public IEntityCollection<IPayrollContractualEmployee> Employees { get; }
     }
 }

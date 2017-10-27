@@ -61,12 +61,12 @@ namespace LGU.ViewModels.HumanResource
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            r_ChangeHeaderEvent.Publish("Create New Salary Grades");
+            _ChangeHeaderEvent.Publish("Create New Salary Grades");
         }
 
         private void Navigate(string view)
         {
-            r_RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, view);
+            _RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, view);
         }
 
         private void AddNewSalaryGrade()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace LGU.Entities.HumanResource
 {
@@ -19,6 +20,19 @@ namespace LGU.Entities.HumanResource
             }
 
             base.UnsafeAdd(item);
+        }
+
+        protected override void UnsafeAdd(IEnumerable<IPayrollContractualEmployee> items)
+        {
+            foreach (var item in items)
+            {
+                if (item.Department != Department)
+                {
+                    item.Department = Department;
+                }
+            }
+
+            base.UnsafeAdd(items);
         }
 
         protected override bool UnsafeRemove(IPayrollContractualEmployee item)

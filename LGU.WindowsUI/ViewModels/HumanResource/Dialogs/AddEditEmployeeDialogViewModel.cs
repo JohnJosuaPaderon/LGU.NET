@@ -283,7 +283,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             };
             DialogHelper.CloseDialog();
 
-            r_RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, nameof(PersonalDataSheetView), parameters);
+            _RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, nameof(PersonalDataSheetView), parameters);
         }
 
         private async void Save()

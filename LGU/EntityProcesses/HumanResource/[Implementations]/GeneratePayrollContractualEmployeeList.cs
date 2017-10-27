@@ -30,7 +30,6 @@ namespace LGU.EntityProcesses.HumanResource
 
         public IEnumerableProcessResult<IPayrollContractualEmployee> Execute()
         {
-            _Converter.PPayroll.Value = null;
             _Converter.PWithholdingTax.Value = null;
 
             return _SqlHelper.ExecuteReaderEnumerable(QueryInfo, _Converter);
@@ -38,7 +37,6 @@ namespace LGU.EntityProcesses.HumanResource
 
         public Task<IEnumerableProcessResult<IPayrollContractualEmployee>> ExecuteAsync()
         {
-            _Converter.PPayroll.Value = null;
             _Converter.PWithholdingTax.Value = null;
 
             return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter);
@@ -46,7 +44,6 @@ namespace LGU.EntityProcesses.HumanResource
 
         public Task<IEnumerableProcessResult<IPayrollContractualEmployee>> ExecuteAsync(CancellationToken cancellationToken)
         {
-            _Converter.PPayroll.Value = null;
             _Converter.PWithholdingTax.Value = null;
 
             return _SqlHelper.ExecuteReaderEnumerableAsync(QueryInfo, _Converter, cancellationToken);

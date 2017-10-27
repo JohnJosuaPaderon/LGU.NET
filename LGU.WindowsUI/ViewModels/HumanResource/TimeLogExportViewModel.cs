@@ -90,7 +90,7 @@ namespace LGU.ViewModels.HumanResource
 
         protected override void Initialize()
         {
-            r_ChangeHeaderEvent.Publish("DTR Printing");
+            _ChangeHeaderEvent.Publish("DTR Printing");
         }
 
         private async void GetDepartment()

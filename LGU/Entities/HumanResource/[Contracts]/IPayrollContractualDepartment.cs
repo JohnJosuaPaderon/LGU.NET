@@ -2,6 +2,7 @@
 {
     public interface IPayrollContractualDepartment : IPayrollDepartment
     {
-        IPayrollContractualEmployeeCollection Employees { get; }
+        IPayrollContractual Payroll { get; set; }
+        IEntityCollection<IPayrollContractualEmployee> Employees { get; }
     }
 }

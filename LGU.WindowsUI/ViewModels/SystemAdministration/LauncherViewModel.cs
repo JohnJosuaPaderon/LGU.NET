@@ -49,7 +49,7 @@ namespace LGU.ViewModels.SystemAdministration
 
                     if (result.Status == ProcessResultStatus.Success)
                     {
-                        r_RegionManager.RequestNavigate(MainWindowViewModel.MainContentRegionName, nameof(MainView));
+                        _RegionManager.RequestNavigate(MainWindowViewModel.MainContentRegionName, nameof(MainView));
                     }
                     else
                     {

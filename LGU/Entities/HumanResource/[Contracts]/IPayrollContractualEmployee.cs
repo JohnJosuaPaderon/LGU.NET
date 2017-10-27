@@ -1,8 +1,7 @@
 ﻿namespace LGU.Entities.HumanResource
 {
-    public interface IPayrollContractualEmployee : IPayrollEmployee
+    public interface IPayrollContractualEmployee : IPayrollEmployee<IPayrollContractualDepartment>
     {
-        IPayrollContractualDepartment Department { get; set; }
         decimal? HdmfPremiumPs { get; set; }
     }
 }

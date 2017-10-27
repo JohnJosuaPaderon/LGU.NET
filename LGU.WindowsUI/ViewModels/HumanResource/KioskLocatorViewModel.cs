@@ -93,11 +93,11 @@ namespace LGU.ViewModels.HumanResource
             if (result.Status == ProcessResultStatus.Success)
             {
                 await r_HumanResourceReport.ExportLocatorAsync(result.Data, this);
-                r_RegionManager.RequestNavigate(MainKioskViewModel.KioskContentRegion, nameof(KioskServiceSelectionView));
+                _RegionManager.RequestNavigate(MainKioskViewModel.KioskContentRegion, nameof(KioskServiceSelectionView));
             }
             else
             {
-                r_NewMessageEvent.Publish(result.Message);
+                _NewMessageEvent.Publish(result.Message);
             }
         }
 
@@ -133,29 +133,29 @@ namespace LGU.ViewModels.HumanResource
             }
             else
             {
-                r_NewMessageEvent.Publish(result.Message);
+                _NewMessageEvent.Publish(result.Message);
             }
         }
 
         #region Export Events
         public void OnException(Exception exception)
         {
-            r_NewMessageEvent.Publish(exception.Message);
+            _NewMessageEvent.Publish(exception.Message);
         }
 
         public void OnError(string message)
         {
-            r_NewMessageEvent.Publish(message);
+            _NewMessageEvent.Publish(message);
         }
 
         public void OnExported(string[] filePaths)
         {
-            r_NewMessageEvent.Publish("Successfully exported.");
+            _NewMessageEvent.Publish("Successfully exported.");
         }
 
         public void OnExported(string filePath)
         {
-            r_NewMessageEvent.Publish("Successfully exported.");
+            _NewMessageEvent.Publish("Successfully exported.");
         }
         #endregion
     }

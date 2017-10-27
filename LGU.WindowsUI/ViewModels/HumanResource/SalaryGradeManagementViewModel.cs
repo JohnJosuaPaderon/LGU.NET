@@ -25,7 +25,7 @@ namespace LGU.ViewModels.HumanResource
             GetCurrentCommand = new DelegateCommand(GetCurrent);
             SalaryGrades = new ObservableCollection<SalaryGradeModel>();
 
-            r_ChangeHeaderEvent.Publish("Salary Grades");
+            _ChangeHeaderEvent.Publish("Salary Grades");
         }
 
         private readonly ISalaryGradeBatchManager r_SalaryGradeBatchManager;
@@ -117,12 +117,12 @@ namespace LGU.ViewModels.HumanResource
 
         private void Navigate(string view)
         {
-            r_RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, view);
+            _RegionManager.RequestNavigate(MainViewModel.MainViewContentRegion, view);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            r_ChangeHeaderEvent.Publish("Salary Grades");
+            _ChangeHeaderEvent.Publish("Salary Grades");
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

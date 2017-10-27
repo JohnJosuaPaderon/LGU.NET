@@ -95,7 +95,7 @@ namespace LGU.ViewModels.HumanResource
 
         private void Navigate(string viewName)
         {
-            r_RegionManager.RequestNavigate(KioskContentRegion, viewName);
+            _RegionManager.RequestNavigate(KioskContentRegion, viewName);
         }
 
         private async Task GetSystemDateAsync()
@@ -138,7 +138,7 @@ namespace LGU.ViewModels.HumanResource
             }
             else
             {
-                r_NewMessageEvent.Publish(result.Message);
+                _NewMessageEvent.Publish(result.Message);
             }
         }
 
@@ -190,7 +190,7 @@ namespace LGU.ViewModels.HumanResource
             }
             else
             {
-                r_NewMessageEvent.Publish(result.Message);
+                _NewMessageEvent.Publish(result.Message);
             }
         }
 
@@ -253,7 +253,7 @@ namespace LGU.ViewModels.HumanResource
         private void EndSession()
         {
             Employee = null;
-            r_NewMessageEvent.Publish($"Session has been ended @ {DateTime.Now.ToString("MMMM dd, yyyy hh:mm:ss tt")}");
+            _NewMessageEvent.Publish($"Session has been ended @ {DateTime.Now.ToString("MMMM dd, yyyy hh:mm:ss tt")}");
         }
 
         private void IdentifyFeatureSet(ref FeatureSet FeatureSet)
@@ -265,7 +265,7 @@ namespace LGU.ViewModels.HumanResource
                 if (CandidateIDs.Count == 0)
                 {
                     Employee = null;
-                    r_NewMessageEvent.Publish("No employee found.");
+                    _NewMessageEvent.Publish("No employee found.");
                 }
             }
             catch (Exception)
@@ -283,7 +283,7 @@ namespace LGU.ViewModels.HumanResource
             }
             else
             {
-                r_NewMessageEvent.Publish("Failed to initialize finger print scanner.");
+                _NewMessageEvent.Publish("Failed to initialize finger print scanner.");
             }
         }
 

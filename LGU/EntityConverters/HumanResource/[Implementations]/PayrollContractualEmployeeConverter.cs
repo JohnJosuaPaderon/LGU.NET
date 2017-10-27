@@ -6,7 +6,6 @@ using LGU.Processes;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,15 +13,13 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class PayrollContractualEmployeeConverter : IPayrollContractualEmployeeConverter
     {
-        public PayrollContractualEmployeeConverter(IPayrollContractualEmployeeFields fields, IEmployeeManager employeeManager, IPayrollManager<SqlConnection, SqlTransaction> payrollManager)
+        public PayrollContractualEmployeeConverter(IPayrollContractualEmployeeFields fields, IEmployeeManager employeeManager)
         {
             _EmployeeManager = employeeManager;
-            _PayrollManager = payrollManager;
             _Fields = fields;
 
             PDepartment = new DataConverterProperty<IPayrollContractualDepartment>();
             PEmployee = new DataConverterProperty<IEmployee>();
-            PPayroll = new DataConverterProperty<IPayroll>();
             PMonthlyRate = new DataConverterProperty<decimal>();
             PWithholdingTax = new DataConverterProperty<decimal?>();
             PHdmfPremiumPs = new DataConverterProperty<decimal?>();
@@ -31,22 +28,19 @@ namespace LGU.EntityConverters.HumanResource
 
         private readonly IPayrollContractualEmployeeFields _Fields;
         private readonly IEmployeeManager _EmployeeManager;
-        private readonly IPayrollManager<SqlConnection, SqlTransaction> _PayrollManager;
 
         public IDataConverterProperty<IPayrollContractualDepartment> PDepartment { get; }
         public IDataConverterProperty<IEmployee> PEmployee { get; }
-        public IDataConverterProperty<IPayroll> PPayroll { get; }
         public IDataConverterProperty<decimal> PMonthlyRate { get; }
         public IDataConverterProperty<decimal?> PWithholdingTax { get; }
         public IDataConverterProperty<decimal?> PHdmfPremiumPs { get; }
         public IDataConverterProperty<decimal> PTimeLogDeduction { get; }
 
-        private IPayrollContractualEmployee Get(IEmployee employee, IPayroll payroll, DbDataReader reader)
+        private IPayrollContractualEmployee Get(IEmployee employee, DbDataReader reader)
         {
             return new PayrollContractualEmployee()
             {
                 Employee = employee,
-                Payroll = payroll,
                 MonthlyRate = PMonthlyRate.TryGetValue(reader.GetDecimal, _Fields.MonthlyRate),
                 HdmfPremiumPs = PHdmfPremiumPs.TryGetValue(reader.GetNullableDecimal, _Fields.HdmfPremiumPs),
                 TimeLogDeduction = PTimeLogDeduction.TryGetValue(reader.GetDecimal, _Fields.TimeLogDeduction),
@@ -57,25 +51,22 @@ namespace LGU.EntityConverters.HumanResource
         private IPayrollContractualEmployee Get(DbDataReader reader)
         {
             var employee = PEmployee.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.EmployeeId);
-            var payroll = PPayroll.TryGetValueFromProcess(_PayrollManager.GetById, reader.GetInt64, _Fields.PayrollId);
 
-            return Get(employee, payroll, reader);
+            return Get(employee, reader);
         }
 
         private async Task<IPayrollContractualEmployee> GetAsync(DbDataReader reader)
         {
             var employee = await PEmployee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId);
-            var payroll = await PPayroll.TryGetValueFromProcessAsync(_PayrollManager.GetByIdAsync, reader.GetInt64, _Fields.PayrollId);
 
-            return Get(employee, payroll, reader);
+            return Get(employee, reader);
         }
 
         private async Task<IPayrollContractualEmployee> GetAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var employee = await PEmployee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId, cancellationToken);
-            var payroll = await PPayroll.TryGetValueFromProcessAsync(_PayrollManager.GetByIdAsync, reader.GetInt64, _Fields.PayrollId, cancellationToken);
 
-            return Get(employee, payroll, reader);
+            return Get(employee, reader);
         }
 
         public IEnumerableProcessResult<IPayrollContractualEmployee> EnumerableFromReader(DbDataReader reader)

@@ -19,19 +19,19 @@ namespace LGU.Converters
             }
             else if (range.Begin.Date == range.End.Date)
             {
-                return string.Format("{0:MMMM d, yyyy}", range.Begin);
+                return string.Format("{0:MMMM dd, yyyy}", range.Begin);
             }
             else if (range.Begin.Month == range.End.Month && range.Begin.Year == range.End.Year)
             {
-                return string.Format("{0:MMMM} {0:d} - {1:d} {1:yyyy}", range.Begin, range.End);
+                return string.Format("{0:MMMM} {0:dd} - {1:dd}, {1:yyyy}", range.Begin, range.End);
             }
             else if (range.Begin.Year == range.End.Year)
             {
-                return string.Format("{0:MMMM d} - {1:MMMM d} {0:yyyy}", range.Begin, range.End);
+                return string.Format("{0:MMMM dd} - {1:MMMM dd}, {0:yyyy}", range.Begin, range.End);
             }
             else
             {
-                return string.Format("{0:MMMM d, yyyy} - {1:MMMM d, yyyy}", range.Begin, range.End);
+                return string.Format("{0:MMMM dd, yyyy} - {1:MMMM dd, yyyy}", range.Begin, range.End);
             }
         }
 

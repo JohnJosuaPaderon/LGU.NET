@@ -18,7 +18,7 @@ namespace LGU.ViewModels
         public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
             r_SystemManager = ApplicationDomain.GetService<ISystemManager>();
-            r_TitleEvent.Subscribe(t => Title = t);
+            _TitleEvent.Subscribe(t => Title = t);
             r_ShowCloseButtonEvent.Subscribe(arg => ShowCloseButton = arg);
             r_ShowMinButtonEvent.Subscribe(arg => ShowMinButton = arg);
             r_ShowMaxRestorButtonEvent.Subscribe(arg => ShowMaxRestoreButton = arg);
@@ -89,7 +89,7 @@ namespace LGU.ViewModels
 
             if (!string.IsNullOrWhiteSpace(InitialMainContentRegionSource))
             {
-                r_RegionManager.RequestNavigate(MainContentRegionName, InitialMainContentRegionSource);
+                _RegionManager.RequestNavigate(MainContentRegionName, InitialMainContentRegionSource);
             }
         }
     }

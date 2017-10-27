@@ -3,9 +3,9 @@ using System;
 
 namespace LGU.Models.HumanResource
 {
-    public sealed class PayrollModel : ModelBase<IPayroll>
+    public sealed class PayrollContractualModel : ModelBase<IPayrollContractual>
     {
-        public PayrollModel(IPayroll source) : base(source ?? new Payroll())
+        public PayrollContractualModel(IPayrollContractual source) : base(source ?? new PayrollContractual())
         {
             Id = source?.Id ?? default(long);
             Type = new PayrollTypeModel(source?.Type);
@@ -89,10 +89,9 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _CityBudgetOfficer, value); }
         }
 
-        public override IPayroll GetSource()
+        public override IPayrollContractual GetSource()
         {
             Source.Id = Id;
-            Source.Type = Type.GetSource();
             Source.CutOff = CutOff.GetSource();
             Source.RangeDate = RangeDate.GetSource();
             Source.RunDate = RunDate;
