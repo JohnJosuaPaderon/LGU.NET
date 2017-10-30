@@ -26,7 +26,7 @@ namespace LGU.ViewModels.HumanResource
             }
 
             _TimeLogManager = ApplicationDomain.GetService<ITimeLogManager>();
-            _KioskEmployeeChangedEvent = r_EventAggregator.GetEvent<KioskEmployeeChangedEvent>();
+            _KioskEmployeeChangedEvent = _EventAggregator.GetEvent<KioskEmployeeChangedEvent>();
             _HumanResourceReport = ApplicationDomain.GetService<IHumanResourceReport>();
 
             TimeLogs = new ObservableCollection<ITimeLog>();

@@ -15,7 +15,7 @@ namespace LGU.ViewModels.HumanResource
         protected override void Initialize()
         {
             base.Initialize();
-            r_EventAggregator.GetEvent<DepartmentEvent>().Subscribe(d => Department = d);
+            _EventAggregator.GetEvent<DepartmentEvent>().Subscribe(d => Department = d);
         }
 
         private DepartmentModel _Department;

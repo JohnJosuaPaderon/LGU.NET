@@ -176,7 +176,6 @@
     <Compile Include="Models\Core\PersonModelBase.cs" />
     <Compile Include="Models\Core\UserSignUpModel.cs" />
     <Compile Include="Models\HumanResource\CalendarEventModel.cs" />
-    <Compile Include="Models\HumanResource\DepartmentHeadModel.cs" />
     <Compile Include="Models\HumanResource\DepartmentModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeFingerPrintSetModel.cs" />
     <Compile Include="Models\HumanResource\EmployeeModel.cs" />
@@ -188,17 +187,17 @@
     <Compile Include="Models\HumanResource\PayrollContractualEmployeeModel.cs" />
     <Compile Include="Models\HumanResource\PayrollContractualModel.cs" />
     <Compile Include="Models\HumanResource\PayrollCutOffModel.cs" />
+    <Compile Include="Models\HumanResource\PayrollModelBase.cs" />
     <Compile Include="Models\HumanResource\PayrollTypeModel.cs" />
-    <Compile Include="Models\HumanResource\PdsAddressModel.cs" />
     <Compile Include="Models\HumanResource\LocatorLeaveTypeModel.cs" />
     <Compile Include="Models\HumanResource\LocatorModel.cs" />
-    <Compile Include="Models\HumanResource\PersonalDataSheetModel.cs" />
     <Compile Include="Models\HumanResource\PositionModel.cs" />
     <Compile Include="Models\HumanResource\SalaryGradeBatchModel.cs" />
     <Compile Include="Models\HumanResource\SalaryGradeModel.cs" />
     <Compile Include="Models\HumanResource\SalaryGradeStepModel.cs" />
     <Compile Include="Models\HumanResource\SelectableEmployeeModel.cs" />
     <Compile Include="Models\HumanResource\TimeLogModel.cs" />
+    <Compile Include="Models\HumanResource\TimeLogTypeModel.cs" />
     <Compile Include="Models\HumanResource\WorkTimeScheduleModel.cs" />
     <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\SystemAdministration\ConnectionStringModel.cs" />

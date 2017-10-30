@@ -20,8 +20,8 @@ namespace LGU.ViewModels.HumanResource.Dialogs
         {
             r_DepartmentManager = ApplicationDomain.GetService<IDepartmentManager>();
             SaveCommand = new DelegateCommand(Save);
-            r_AddDepartmentEvent = r_EventAggregator.GetEvent<AddDepartmentEvent>();
-            r_EditDepartmentEvent = r_EventAggregator.GetEvent<EditDepartmentEvent>();
+            r_AddDepartmentEvent = _EventAggregator.GetEvent<AddDepartmentEvent>();
+            r_EditDepartmentEvent = _EventAggregator.GetEvent<EditDepartmentEvent>();
             Initialize();
         }
 

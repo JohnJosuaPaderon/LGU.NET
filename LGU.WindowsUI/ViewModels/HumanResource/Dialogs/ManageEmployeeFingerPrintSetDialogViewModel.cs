@@ -24,7 +24,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
         {
             r_EmployeeFingerPrintSetManager = ApplicationDomain.GetService<IEmployeeFingerPrintSetManager>();
 
-            r_ManageEmployeeFingerPrintSetEvent = r_EventAggregator.GetEvent<ManageEmployeeFingerPrintSetEvent>();
+            r_ManageEmployeeFingerPrintSetEvent = _EventAggregator.GetEvent<ManageEmployeeFingerPrintSetEvent>();
             Capture = new Capture();
             ChangeCurrentFingerPrintCommand = new DelegateCommand<FingerPrintModel>(ChangeCurrentFingerPrint);
             SaveCommand = new DelegateCommand(Save);

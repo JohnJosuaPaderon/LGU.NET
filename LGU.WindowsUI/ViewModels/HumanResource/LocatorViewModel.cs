@@ -14,8 +14,8 @@ namespace LGU.ViewModels.HumanResource
 
         public LocatorViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_AddEvent = r_EventAggregator.GetEvent<AddLocatorEvent>();
-            r_EditEvent = r_EventAggregator.GetEvent<EditLocatorEvent>();
+            r_AddEvent = _EventAggregator.GetEvent<AddLocatorEvent>();
+            r_EditEvent = _EventAggregator.GetEvent<EditLocatorEvent>();
 
             AddCommand = new DelegateCommand(Add);
         }

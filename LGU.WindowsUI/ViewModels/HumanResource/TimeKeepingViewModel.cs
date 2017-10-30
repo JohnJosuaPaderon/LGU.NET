@@ -304,7 +304,7 @@ namespace LGU.ViewModels.HumanResource
 
         protected async override void Initialize()
         {
-            r_EventAggregator.GetEvent<TitleEvent>().Publish("Time-Keeping");
+            _EventAggregator.GetEvent<TitleEvent>().Publish("Time-Keeping");
             _Capture.EventHandler = this;
             SelectedLogResult = NotYetReadyResult;
 

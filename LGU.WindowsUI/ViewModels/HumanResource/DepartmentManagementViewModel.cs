@@ -49,7 +49,7 @@ namespace LGU.ViewModels.HumanResource
         protected override void Initialize()
         {
             base.Initialize();
-            DepartmentEvent = r_EventAggregator.GetEvent<DepartmentEvent>();
+            DepartmentEvent = _EventAggregator.GetEvent<DepartmentEvent>();
         }
 
         private async void RequestSearch()
@@ -73,12 +73,12 @@ namespace LGU.ViewModels.HumanResource
 
         private void Add()
         {
-            r_EventAggregator.GetEvent<AddDepartmentEvent>().Publish(new DepartmentModel(new Department()));
+            _EventAggregator.GetEvent<AddDepartmentEvent>().Publish(new DepartmentModel(new Department()));
         }
 
         private void Edit()
         {
-            r_EventAggregator.GetEvent<EditDepartmentEvent>().Publish(SelectedDepartment);
+            _EventAggregator.GetEvent<EditDepartmentEvent>().Publish(SelectedDepartment);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

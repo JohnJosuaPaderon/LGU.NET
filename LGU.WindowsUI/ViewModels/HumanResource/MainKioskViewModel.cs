@@ -37,16 +37,16 @@ namespace LGU.ViewModels.HumanResource
             r_EmployeeDictionary = new Dictionary<string, EmployeeModel>();
             r_DataUpdateTimer = new Timer(60_000);
             r_CurrentDateTimer = new Timer(1_000);
-            r_KioskEmployeeChangedEvent = r_EventAggregator.GetEvent<KioskEmployeeChangedEvent>();
+            r_KioskEmployeeChangedEvent = _EventAggregator.GetEvent<KioskEmployeeChangedEvent>();
 
             r_Capture.EventHandler = this;
             r_Identification.EventHandler = this;
 
-            r_ShowCloseButtonEvent.Publish(false);
-            r_ShowMaxRestorButtonEvent.Publish(false);
-            r_ShowMinButtonEvent.Publish(false);
-            r_ShowTitleBarEvent.Publish(false);
-            r_AccountDisplayEvent.Publish(false);
+            _ShowCloseButtonEvent.Publish(false);
+            _ShowMaxRestorButtonEvent.Publish(false);
+            _ShowMinButtonEvent.Publish(false);
+            _ShowTitleBarEvent.Publish(false);
+            _AccountDisplayEvent.Publish(false);
 
             EndSessionCommand = new DelegateCommand(EndSession);
             NavigateCommand = new DelegateCommand<string>(Navigate);

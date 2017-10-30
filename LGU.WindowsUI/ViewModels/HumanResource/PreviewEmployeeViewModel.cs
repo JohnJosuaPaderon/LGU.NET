@@ -11,7 +11,7 @@ namespace LGU.ViewModels.HumanResource
 
         public PreviewEmployeeViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_EventAggregator.GetEvent<EmployeeEvent>().Subscribe(pl => Employee = pl);
+            _EventAggregator.GetEvent<EmployeeEvent>().Subscribe(pl => Employee = pl);
         }
 
         public EmployeeModel Employee

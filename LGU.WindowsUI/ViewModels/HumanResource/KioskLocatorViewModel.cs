@@ -23,7 +23,7 @@ namespace LGU.ViewModels.HumanResource
             r_LocatorLeaveTypeManager = ApplicationDomain.GetService<ILocatorLeaveTypeManager>();
             r_HumanResourceReport = ApplicationDomain.GetService<IHumanResourceReport>();
             r_LocatorManager = ApplicationDomain.GetService<ILocatorManager>();
-            r_KioskEmployeeChangedEvent = r_EventAggregator.GetEvent<KioskEmployeeChangedEvent>();
+            r_KioskEmployeeChangedEvent = _EventAggregator.GetEvent<KioskEmployeeChangedEvent>();
 
             ChangeOfficeOutTimePageCommand = new DelegateCommand<object>(ChangeOfficeOutTimePage);
             ChangeExpectedReturnTimePageCommand = new DelegateCommand<object>(ChangeExpectedReturnTimePage);

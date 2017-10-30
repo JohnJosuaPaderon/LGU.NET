@@ -14,30 +14,30 @@ namespace LGU.ViewModels
         public ViewModelBase(IRegionManager regionManager, IEventAggregator eventAggregator)
         {
             _RegionManager = regionManager;
-            r_EventAggregator = eventAggregator;
-            _TitleEvent = r_EventAggregator.GetEvent<TitleEvent>();
-            _ChangeHeaderEvent = r_EventAggregator.GetEvent<ChangeHeaderEvent>();
-            _NewMessageEvent = r_EventAggregator.GetEvent<NewMessageEvent>();
-            r_ShowCloseButtonEvent = r_EventAggregator.GetEvent<ShowCloseButtonEvent>();
-            r_ShowMinButtonEvent = r_EventAggregator.GetEvent<ShowMinButtonEvent>();
-            r_ShowMaxRestorButtonEvent = r_EventAggregator.GetEvent<ShowMaxRestoreButtonEvent>();
-            r_ShowTitleBarEvent = r_EventAggregator.GetEvent<ShowTitleBarEvent>();
-            r_AccountDisplayEvent = r_EventAggregator.GetEvent<AccountDisplayEvent>();
+            _EventAggregator = eventAggregator;
+            _TitleEvent = _EventAggregator.GetEvent<TitleEvent>();
+            _ChangeHeaderEvent = _EventAggregator.GetEvent<ChangeHeaderEvent>();
+            _NewMessageEvent = _EventAggregator.GetEvent<NewMessageEvent>();
+            _ShowCloseButtonEvent = _EventAggregator.GetEvent<ShowCloseButtonEvent>();
+            _ShowMinButtonEvent = _EventAggregator.GetEvent<ShowMinButtonEvent>();
+            _ShowMaxRestorButtonEvent = _EventAggregator.GetEvent<ShowMaxRestoreButtonEvent>();
+            _ShowTitleBarEvent = _EventAggregator.GetEvent<ShowTitleBarEvent>();
+            _AccountDisplayEvent = _EventAggregator.GetEvent<AccountDisplayEvent>();
 
             ResetMouseCaptureCommand = new DelegateCommand(ResetMouseCapture);
             InitializeCommand = new DelegateCommand(Initialize);
         }
 
         protected readonly IRegionManager _RegionManager;
-        protected readonly IEventAggregator r_EventAggregator;
+        protected readonly IEventAggregator _EventAggregator;
         protected readonly NewMessageEvent _NewMessageEvent;
         protected readonly TitleEvent _TitleEvent;
         protected readonly ChangeHeaderEvent _ChangeHeaderEvent;
-        protected readonly ShowCloseButtonEvent r_ShowCloseButtonEvent;
-        protected readonly ShowMinButtonEvent r_ShowMinButtonEvent;
-        protected readonly ShowMaxRestoreButtonEvent r_ShowMaxRestorButtonEvent;
-        protected readonly ShowTitleBarEvent r_ShowTitleBarEvent;
-        protected readonly AccountDisplayEvent r_AccountDisplayEvent;
+        protected readonly ShowCloseButtonEvent _ShowCloseButtonEvent;
+        protected readonly ShowMinButtonEvent _ShowMinButtonEvent;
+        protected readonly ShowMaxRestoreButtonEvent _ShowMaxRestorButtonEvent;
+        protected readonly ShowTitleBarEvent _ShowTitleBarEvent;
+        protected readonly AccountDisplayEvent _AccountDisplayEvent;
 
         public DelegateCommand ResetMouseCaptureCommand { get; }
         public DelegateCommand InitializeCommand { get; }

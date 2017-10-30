@@ -19,11 +19,11 @@ namespace LGU.ViewModels
         {
             r_SystemManager = ApplicationDomain.GetService<ISystemManager>();
             _TitleEvent.Subscribe(t => Title = t);
-            r_ShowCloseButtonEvent.Subscribe(arg => ShowCloseButton = arg);
-            r_ShowMinButtonEvent.Subscribe(arg => ShowMinButton = arg);
-            r_ShowMaxRestorButtonEvent.Subscribe(arg => ShowMaxRestoreButton = arg);
-            r_ShowTitleBarEvent.Subscribe(arg => ShowTitleBar = arg);
-            r_AccountDisplayEvent.Subscribe(arg => AccountDisplay = arg);
+            _ShowCloseButtonEvent.Subscribe(arg => ShowCloseButton = arg);
+            _ShowMinButtonEvent.Subscribe(arg => ShowMinButton = arg);
+            _ShowMaxRestorButtonEvent.Subscribe(arg => ShowMaxRestoreButton = arg);
+            _ShowTitleBarEvent.Subscribe(arg => ShowTitleBar = arg);
+            _AccountDisplayEvent.Subscribe(arg => AccountDisplay = arg);
         }
 
         private string _Title = "Welcome to LGU.NET";
@@ -84,8 +84,8 @@ namespace LGU.ViewModels
 
         protected override void Initialize()
         {
-            r_EventAggregator.GetEvent<WindowStateEvent>().Subscribe(ws => WindowState = ws);
-            r_EventAggregator.GetEvent<NewMessageEvent>().Subscribe(nm => MessageQueue.Enqueue(nm));
+            _EventAggregator.GetEvent<WindowStateEvent>().Subscribe(ws => WindowState = ws);
+            _EventAggregator.GetEvent<NewMessageEvent>().Subscribe(nm => MessageQueue.Enqueue(nm));
 
             if (!string.IsNullOrWhiteSpace(InitialMainContentRegionSource))
             {

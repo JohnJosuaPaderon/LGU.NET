@@ -115,7 +115,7 @@ namespace LGU.ViewModels.HumanResource
                                 return;
                             }
 
-                            step.SalaryGrade = salaryGradeResult.Data;
+                            step.SalaryGrade = SalaryGradeModel.TryCreate(salaryGradeResult.Data);
                             var stepResult = await r_SalaryGradeStepManager.InsertAsync(step.GetSource());
 
                             if (stepResult.Status == ProcessResultStatus.Failed)

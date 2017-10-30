@@ -25,8 +25,8 @@ namespace LGU.ViewModels.HumanResource.Dialogs
             _EmployeeTypeManager = ApplicationDomain.GetService<IEmployeeTypeManager>();
             _EmployeeWorkdayScheduleManager = ApplicationDomain.GetService<IEmployeeWorkdayScheduleManager>();
 
-            _AddEmployeeEvent = r_EventAggregator.GetEvent<AddEmployeeEvent>();
-            _EditEmployeeEvent = r_EventAggregator.GetEvent<EditEmployeeEvent>();
+            _AddEmployeeEvent = _EventAggregator.GetEvent<AddEmployeeEvent>();
+            _EditEmployeeEvent = _EventAggregator.GetEvent<EditEmployeeEvent>();
 
             SaveCommand = new DelegateCommand(Save);
             OpenPdsCommand = new DelegateCommand(OpenPds);
