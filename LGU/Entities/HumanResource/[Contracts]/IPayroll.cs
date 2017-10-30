@@ -2,8 +2,7 @@
 
 namespace LGU.Entities.HumanResource
 {
-    public interface IPayroll<TDepartment> : IEntity<long>
-        where TDepartment : IPayrollDepartment
+    public interface IPayroll : IEntity<long>
     {
         IPayrollType Type { get; }
         IPayrollCutOff CutOff { get; set; }
@@ -14,7 +13,5 @@ namespace LGU.Entities.HumanResource
         IEmployee Treasurer { get; set; }
         IEmployee CityAccountant { get; set; }
         IEmployee CityBudgetOfficer { get; set; }
-
-        IEntityCollection<TDepartment> Departments { get; }
     }
 }

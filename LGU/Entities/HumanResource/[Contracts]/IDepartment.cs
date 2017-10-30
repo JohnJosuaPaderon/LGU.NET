@@ -4,6 +4,6 @@
     {
         string Description { get; set; }
         string Abbreviation { get; set; }
-        IDepartmentHead Head { get; set; }
+        IEmployee Head { get; set; }
     }
 }
