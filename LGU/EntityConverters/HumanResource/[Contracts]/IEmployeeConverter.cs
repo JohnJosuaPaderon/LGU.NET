@@ -20,7 +20,7 @@ namespace LGU.EntityConverters.HumanResource
         IDataConverterProperty<IGender> PGender { get; }
         IDataConverterProperty<IPosition> PPosition { get; }
         IDataConverterProperty<IEmployeeType> PType { get; }
-        IDataConverterProperty<IDepartmentHead> PDepartmentHead { get; }
+        IDataConverterProperty<IEmployee> PDepartmentHead { get; }
         IDataConverterProperty<IWorkTimeSchedule> PWorkTimeSchedule { get; }
         IDataConverterProperty<IPayrollType> PPayrollType { get; }
         IDataConverterProperty<bool> PIsFlexWorkSchedule { get; }

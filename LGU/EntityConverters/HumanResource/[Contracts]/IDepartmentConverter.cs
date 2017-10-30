@@ -8,6 +8,6 @@ namespace LGU.EntityConverters.HumanResource
         IDataConverterProperty<int> PId { get; }
         IDataConverterProperty<string> PDescription { get; }
         IDataConverterProperty<string> PAbbreviation { get; }
-        IDataConverterProperty<IDepartmentHead> PHead { get; }
+        IDataConverterProperty<IEmployee> PHead { get; }
     }
 }
