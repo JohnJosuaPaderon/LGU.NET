@@ -4,6 +4,11 @@ namespace LGU.Models.HumanResource
 {
     public sealed class EmployeeFingerPrintSetModel : ModelBase<IEmployeeFingerPrintSet>
     {
+        public static EmployeeFingerPrintSetModel TryCreate(IEmployeeFingerPrintSet employeeFingerPrintSet)
+        {
+            return employeeFingerPrintSet != null ? new EmployeeFingerPrintSetModel(employeeFingerPrintSet) : null;
+        }
+
         public EmployeeFingerPrintSetModel(IEmployeeFingerPrintSet source) : base(source)
         {
             Employee = source.Employee;

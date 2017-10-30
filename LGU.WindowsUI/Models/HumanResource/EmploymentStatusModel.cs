@@ -4,10 +4,15 @@ namespace LGU.Models.HumanResource
 {
     public sealed class EmploymentStatusModel : ModelBase<IEmploymentStatus>
     {
+        public static EmploymentStatusModel TryCreate(IEmploymentStatus employmentStatus)
+        {
+            return employmentStatus != null ? new EmploymentStatusModel(employmentStatus) : null;
+        }
+
         public EmploymentStatusModel(IEmploymentStatus source) : base(source)
         {
-            Id = source?.Id ?? default(short);
-            Description = source?.Description;
+            Id = source.Id;
+            Description = source.Description;
         }
 
         private short _Id;
@@ -26,11 +31,8 @@ namespace LGU.Models.HumanResource
 
         public override IEmploymentStatus GetSource()
         {
-            if (Source != null)
-            {
-                Source.Id = Id;
-                Source.Description = Description;
-            }
+            Source.Id = Id;
+            Source.Description = Description;
 
             return Source;
         }

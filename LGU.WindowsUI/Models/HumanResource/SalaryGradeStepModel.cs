@@ -4,12 +4,17 @@ namespace LGU.Models.HumanResource
 {
     public sealed class SalaryGradeStepModel : ModelBase<ISalaryGradeStep>
     {
+        public static SalaryGradeStepModel TryCreate(ISalaryGradeStep salaryGradeStep)
+        {
+            return salaryGradeStep != null ? new SalaryGradeStepModel(salaryGradeStep) : null;
+        }
+
         public SalaryGradeStepModel(ISalaryGradeStep source) : base(source)
         {
-            Id = source?.Id ?? default(long);
-            SalaryGrade = source?.SalaryGrade;
-            Step = source?.Step ?? default(int);
-            Amount = source?.Amount ?? default(decimal);
+            Id = source.Id;
+            SalaryGrade = SalaryGradeModel.TryCreate(source.SalaryGrade);
+            Step = source.Step;
+            Amount = source.Amount;
         }
 
         private long _Id;
@@ -19,8 +24,8 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Id, value); }
         }
 
-        private ISalaryGrade _SalaryGrade;
-        public ISalaryGrade SalaryGrade
+        private SalaryGradeModel _SalaryGrade;
+        public SalaryGradeModel SalaryGrade
         {
             get { return _SalaryGrade; }
             set { SetProperty(ref _SalaryGrade, value); }
@@ -42,17 +47,41 @@ namespace LGU.Models.HumanResource
 
         public override ISalaryGradeStep GetSource()
         {
-            if (Source != null)
-            {
-                Source.Id = Id;
-                Source.Amount = Amount;
+            Source.Id = Id;
+            Source.Amount = Amount;
 
-                return Source;
+            return Source;
+        }
+
+        public static bool operator ==(SalaryGradeStepModel left, SalaryGradeStepModel right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(SalaryGradeStepModel left, SalaryGradeStepModel right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (GetType() != obj.GetType()) return false;
+
+            if (obj is SalaryGradeStepModel value)
+            {
+                return (Id == 0 || value.Id == 0) ? false : Id == value.Id;
             }
             else
             {
-                return null;
+                return false;
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }

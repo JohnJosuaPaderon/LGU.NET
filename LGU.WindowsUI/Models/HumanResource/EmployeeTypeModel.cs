@@ -4,6 +4,11 @@ namespace LGU.Models.HumanResource
 {
     public sealed class EmployeeTypeModel : ModelBase<IEmployeeType>
     {
+        public static EmployeeTypeModel TryCreate(IEmployeeType employeeType)
+        {
+            return employeeType != null ? new EmployeeTypeModel(employeeType) : null;
+        }
+
         public EmployeeTypeModel(IEmployeeType source) : base(source)
         {
             Id = source?.Id ?? default(short);
@@ -26,11 +31,8 @@ namespace LGU.Models.HumanResource
 
         public override IEmployeeType GetSource()
         {
-            if (Source != null)
-            {
-                Source.Id = Id;
-                Source.Description = Description;
-            }
+            Source.Id = Id;
+            Source.Description = Description;
 
             return Source;
         }

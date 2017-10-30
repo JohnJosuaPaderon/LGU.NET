@@ -5,16 +5,21 @@ namespace LGU.Models.HumanResource
 {
     public sealed class LocatorModel : ModelBase<ILocator>
     {
+        public static LocatorModel TryCreate(ILocator locator)
+        {
+            return locator != null ? new LocatorModel(locator) : null;
+        }
+
         public LocatorModel(ILocator source) : base(source)
         {
-            Id = source?.Id ?? default(long);
-            Requestor = source?.Requestor;
-            Date = source?.Date ?? default(DateTime);
-            OfficeOutTime = source?.OfficeOutTime ?? default(DateTime);
-            ExpectedReturnTime = source?.ExpectedReturnTime ?? default(DateTime);
-            LeaveType = source?.LeaveType;
-            Purpose = source?.Purpose;
-            DepartmentHead = source?.DepartmentHead;
+            Id = source.Id;
+            Requestor = EmployeeModel.TryCreate(source.Requestor);
+            Date = source.Date;
+            OfficeOutTime = source.OfficeOutTime;
+            ExpectedReturnTime = source.ExpectedReturnTime;
+            LeaveType = LocatorLeaveTypeModel.TryCreate(source.LeaveType);
+            Purpose = source.Purpose;
+            DepartmentHead = source.DepartmentHead;
         }
 
         private long _Id;
@@ -24,8 +29,8 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Id, value); }
         }
 
-        private IEmployee _Requestor;
-        public IEmployee Requestor
+        private EmployeeModel _Requestor;
+        public EmployeeModel Requestor
         {
             get { return _Requestor; }
             set { SetProperty(ref _Requestor, value); }
@@ -52,8 +57,8 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _ExpectedReturnTime, value); }
         }
 
-        private ILocatorLeaveType _LeaveType;
-        public ILocatorLeaveType LeaveType
+        private LocatorLeaveTypeModel _LeaveType;
+        public LocatorLeaveTypeModel LeaveType
         {
             get { return _LeaveType; }
             set { SetProperty(ref _LeaveType, value); }
@@ -75,22 +80,46 @@ namespace LGU.Models.HumanResource
 
         public override ILocator GetSource()
         {
-            if (Source != null)
-            {
-                Source.Id = Id;
-                Source.Date = Date;
-                Source.OfficeOutTime = OfficeOutTime;
-                Source.ExpectedReturnTime = ExpectedReturnTime;
-                Source.LeaveType = LeaveType;
-                Source.Purpose = Purpose;
-                Source.DepartmentHead = DepartmentHead;
+            Source.Id = Id;
+            Source.Date = Date;
+            Source.OfficeOutTime = OfficeOutTime;
+            Source.ExpectedReturnTime = ExpectedReturnTime;
+            Source.LeaveType = LeaveType.GetSource();
+            Source.Purpose = Purpose;
+            Source.DepartmentHead = DepartmentHead;
 
-                return Source;
+            return Source;
+        }
+
+        public static bool operator ==(LocatorModel left, LocatorModel right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(LocatorModel left, LocatorModel right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (GetType() != obj.GetType()) return false;
+
+            if (obj is LocatorModel value)
+            {
+                return (Id == 0 || value.Id == 0) ? false : Id == value.Id;
             }
             else
             {
-                return null;
+                return false;
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }

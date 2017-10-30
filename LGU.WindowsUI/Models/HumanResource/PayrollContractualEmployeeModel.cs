@@ -4,13 +4,18 @@ namespace LGU.Models.HumanResource
 {
     public sealed class PayrollContractualEmployeeModel : ModelBase<IPayrollContractualEmployee>
     {
+        public static PayrollContractualEmployeeModel TryCreate(IPayrollContractualEmployee payrollContractualEmployee)
+        {
+            return payrollContractualEmployee != null ? new PayrollContractualEmployeeModel(payrollContractualEmployee) : null;
+        }
+
         public PayrollContractualEmployeeModel(IPayrollContractualEmployee source) : base(source ?? new PayrollContractualEmployee())
         {
-            Employee = new EmployeeModel(source?.Employee);
-            MonthlyRate = source?.MonthlyRate ?? default(decimal);
-            WithholdingTax = source?.WithholdingTax ?? default(decimal);
-            HdmfPremiumPs = source?.HdmfPremiumPs;
-            TimeLogDeduction = source?.TimeLogDeduction ?? 0;
+            Employee = EmployeeModel.TryCreate(source.Employee);
+            MonthlyRate = source.MonthlyRate;
+            WithholdingTax = source.WithholdingTax;
+            HdmfPremiumPs = source.HdmfPremiumPs;
+            TimeLogDeduction = source.TimeLogDeduction;
         }
 
         private EmployeeModel _Employee;
@@ -50,14 +55,11 @@ namespace LGU.Models.HumanResource
 
         public override IPayrollContractualEmployee GetSource()
         {
-            if (Source != null)
-            {
-                Source.Employee = Employee.GetSource();
-                Source.HdmfPremiumPs = HdmfPremiumPs;
-                Source.MonthlyRate = MonthlyRate;
-                Source.WithholdingTax = WithholdingTax;
-                Source.TimeLogDeduction = TimeLogDeduction;
-            }
+            Source.Employee = Employee.GetSource();
+            Source.HdmfPremiumPs = HdmfPremiumPs;
+            Source.MonthlyRate = MonthlyRate;
+            Source.WithholdingTax = WithholdingTax;
+            Source.TimeLogDeduction = TimeLogDeduction;
 
             return Source;
         }

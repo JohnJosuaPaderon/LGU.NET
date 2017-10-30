@@ -5,14 +5,19 @@ namespace LGU.Models.HumanResource
 {
     public class EmployeeModel : PersonModelBase<IEmployee>
     {
+        public static EmployeeModel TryCreate(IEmployee employee)
+        {
+            return employee != null ? new EmployeeModel(employee) : null;
+        }
+
         public EmployeeModel(IEmployee source) : base(source)
         {
-            Department = source?.Department != null ? new DepartmentModel(source?.Department) : null;
-            Position = source?.Position != null ? new PositionModel(source?.Position) : null;
-            Type = source?.Type != null ? new EmployeeTypeModel(source?.Type) : null;
-            EmploymentStatus = source?.EmploymentStatus != null ? new EmploymentStatusModel(source?.EmploymentStatus) : null;
-            WorkTimeSchedule = source?.WorkTimeSchedule != null ? new WorkTimeScheduleModel(source?.WorkTimeSchedule) : null;
-            MonthlySalary = source?.MonthlySalary ?? default(decimal);
+            Department = DepartmentModel.TryCreate(source.Department);
+            Position = PositionModel.TryCreate(source.Position);
+            Type = EmployeeTypeModel.TryCreate(source.Type);
+            EmploymentStatus = EmploymentStatusModel.TryCreate(source.EmploymentStatus);
+            WorkTimeSchedule = WorkTimeScheduleModel.TryCreate(source.WorkTimeSchedule);
+            MonthlySalary = source.MonthlySalary;
         }
         
         private DepartmentModel _Department;
@@ -59,15 +64,12 @@ namespace LGU.Models.HumanResource
 
         public override IEmployee GetSource()
         {
-            if (Source != null)
-            {
-                Source.Department = Department?.GetSource();
-                Source.EmploymentStatus = EmploymentStatus?.GetSource();
-                Source.Position = Position?.GetSource();
-                Source.Type = Type?.GetSource();
-                Source.WorkTimeSchedule = WorkTimeSchedule?.GetSource();
-                Source.MonthlySalary = MonthlySalary;
-            }
+            Source.Department = Department?.GetSource();
+            Source.EmploymentStatus = EmploymentStatus?.GetSource();
+            Source.Position = Position?.GetSource();
+            Source.Type = Type?.GetSource();
+            Source.WorkTimeSchedule = WorkTimeSchedule?.GetSource();
+            Source.MonthlySalary = MonthlySalary;
 
             return Source;
         }

@@ -4,16 +4,21 @@ namespace LGU.Models.HumanResource
 {
     public sealed class EmployeeWorkdayScheduleModel : ModelBase<IEmployeeWorkdaySchedule>
     {
+        public static EmployeeWorkdayScheduleModel TryCreate(IEmployeeWorkdaySchedule employeeWorkdaySchedule)
+        {
+            return employeeWorkdaySchedule != null ? new EmployeeWorkdayScheduleModel(employeeWorkdaySchedule) : null;
+        }
+
         public EmployeeWorkdayScheduleModel(IEmployeeWorkdaySchedule source) : base(source)
         {
-            Employee = source?.Employee != null ? new EmployeeModel(source.Employee) : null;
-            Sunday = source?.Sunday ?? default(bool);
-            Monday = source?.Monday ?? default(bool);
-            Tuesday = source?.Tuesday ?? default(bool);
-            Wednesday = source?.Wednesday ?? default(bool);
-            Thursday = source?.Thursday ?? default(bool);
-            Friday = source?.Friday ?? default(bool);
-            Saturday = source?.Saturday ?? default(bool);
+            Employee = EmployeeModel.TryCreate(source.Employee);
+            Sunday = source.Sunday;
+            Monday = source.Monday;
+            Tuesday = source.Tuesday;
+            Wednesday = source.Wednesday;
+            Thursday = source.Thursday;
+            Friday = source.Friday;
+            Saturday = source.Saturday;
         }
 
         private EmployeeModel _Employee;
@@ -74,17 +79,14 @@ namespace LGU.Models.HumanResource
 
         public override IEmployeeWorkdaySchedule GetSource()
         {
-            if (Source != null)
-            {
-                Source.Employee = Employee?.GetSource();
-                Source.Sunday = Sunday;
-                Source.Monday = Monday;
-                Source.Tuesday = Tuesday;
-                Source.Wednesday = Wednesday;
-                Source.Thursday = Thursday;
-                Source.Friday = Friday;
-                Source.Saturday = Saturday;
-            }
+            Source.Employee = Employee?.GetSource();
+            Source.Sunday = Sunday;
+            Source.Monday = Monday;
+            Source.Tuesday = Tuesday;
+            Source.Wednesday = Wednesday;
+            Source.Thursday = Thursday;
+            Source.Friday = Friday;
+            Source.Saturday = Saturday;
 
             return Source;
         }

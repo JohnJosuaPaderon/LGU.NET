@@ -6,14 +6,19 @@ namespace LGU.Models.HumanResource
 {
     public sealed class PayrollContractualDepartmentModel : ModelBase<IPayrollContractualDepartment>
     {
+        public static PayrollContractualDepartmentModel TryCreate(IPayrollContractualDepartment payrollContractualDepartment)
+        {
+            return payrollContractualDepartment != null ? new PayrollContractualDepartmentModel(payrollContractualDepartment) : null;
+        }
+
         public PayrollContractualDepartmentModel(IPayrollContractualDepartment source) : base(source)
         {
             Employees = new ObservableCollection<PayrollContractualEmployeeModel>();
 
-            Department = source?.Department != null ? new DepartmentModel(source.Department) : null;
-            Payroll = source?.Payroll != null ? new PayrollContractualModel(source.Payroll) : null;
-            Head = source?.Head != null ? new DepartmentHeadModel(source.Head) : null;
-            Ordinal = source?.Ordinal ?? default(int);
+            Department = DepartmentModel.TryCreate(source.Department);
+            Payroll = PayrollContractualModel.TryCreate(source.Payroll);
+            Head = EmployeeModel.TryCreate(source.Head);
+            Ordinal = source.Ordinal;
 
             TryInitializeEmployees();
         }
@@ -34,8 +39,8 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Payroll, value); }
         }
 
-        private DepartmentHeadModel _Head;
-        public DepartmentHeadModel Head
+        private EmployeeModel _Head;
+        public EmployeeModel Head
         {
             get { return _Head; }
             set { SetProperty(ref _Head, value); }
@@ -50,23 +55,17 @@ namespace LGU.Models.HumanResource
 
         private void TryInitializeEmployees()
         {
-            if (Source?.Employees.Any() ?? false)
+            foreach (var employee in Source.Employees)
             {
-                foreach (var employee in Source.Employees)
-                {
-                    Employees.Add(new PayrollContractualEmployeeModel(employee));
-                }
+                Employees.Add(PayrollContractualEmployeeModel.TryCreate(employee));
             }
         }
 
         public override IPayrollContractualDepartment GetSource()
         {
-            if (Source != null)
+            foreach (var employee in Employees)
             {
-                foreach (var employee in Employees)
-                {
-                    Source.Employees.Add(employee.GetSource());
-                }
+                Source.Employees.Add(employee.GetSource());
             }
 
             return Source;

@@ -6,14 +6,19 @@ namespace LGU.Models.HumanResource
 {
     public sealed class WorkTimeScheduleModel : ModelBase<IWorkTimeSchedule>
     {
+        public static WorkTimeScheduleModel TryCreate(IWorkTimeSchedule workTimeSchedule)
+        {
+            return workTimeSchedule != null ? new WorkTimeScheduleModel(workTimeSchedule) : null;
+        }
+
         public WorkTimeScheduleModel(IWorkTimeSchedule source) : base(source)
         {
-            Id = source?.Id ?? default(int);
-            Description = source?.Description;
-            WorkTimeStart = source?.WorkTimeStart ?? default(DateTime);
-            WorkTimeEnd = source?.WorkTimeEnd ?? default(DateTime);
-            BreakTime = source?.BreakTime ?? default(TimeSpan);
-            WorkingMonthDays = source?.WorkingMonthDays ?? default(int);
+            Id = source.Id;
+            Description = source.Description;
+            WorkTimeStart = source.WorkTimeStart;
+            WorkTimeEnd = source.WorkTimeEnd;
+            BreakTime = source.BreakTime;
+            WorkingMonthDays = source.WorkingMonthDays;
         }
 
         private int _Id;
@@ -68,15 +73,12 @@ namespace LGU.Models.HumanResource
 
         public override IWorkTimeSchedule GetSource()
         {
-            if (Source != null)
-            {
-                Source.Id = Id;
-                Source.Description = Description;
-                Source.WorkTimeStart = WorkTimeStart;
-                Source.WorkTimeEnd = WorkTimeEnd;
-                Source.BreakTime = BreakTime;
-                Source.WorkingMonthDays = WorkingMonthDays;
-            }
+            Source.Id = Id;
+            Source.Description = Description;
+            Source.WorkTimeStart = WorkTimeStart;
+            Source.WorkTimeEnd = WorkTimeEnd;
+            Source.BreakTime = BreakTime;
+            Source.WorkingMonthDays = WorkingMonthDays;
 
             return Source;
         }

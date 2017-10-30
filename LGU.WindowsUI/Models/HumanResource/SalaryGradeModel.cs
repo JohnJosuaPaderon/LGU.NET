@@ -6,11 +6,21 @@ namespace LGU.Models.HumanResource
 {
     public sealed class SalaryGradeModel : ModelBase<ISalaryGrade>
     {
+        public static SalaryGradeModel TryCreate(ISalaryGrade salaryGrade)
+        {
+            return salaryGrade != null ? new SalaryGradeModel(salaryGrade) : null;
+        }
+
+        public static SalaryGradeModel TryCreate(ISalaryGrade salaryGrade, IEnumerable<SalaryGradeStepModel> steps)
+        {
+            return salaryGrade != null ? new SalaryGradeModel(salaryGrade, steps) : null;
+        }
+
         public SalaryGradeModel(ISalaryGrade source) : base(source)
         {
-            Id = source?.Id ?? default(long);
-            Number = source?.Number ?? default(int);
-            Batch = source?.Batch;
+            Id = source.Id;
+            Number = source.Number;
+            Batch = source.Batch;
             Steps = new ObservableCollection<SalaryGradeStepModel>
             {
                 new SalaryGradeStepModel(new SalaryGradeStep(source, 1)),
@@ -57,16 +67,40 @@ namespace LGU.Models.HumanResource
 
         public override ISalaryGrade GetSource()
         {
-            if (Source != null)
-            {
-                Source.Id = Id;
+            Source.Id = Id;
 
-                return Source;
+            return Source;
+        }
+
+        public static bool operator ==(SalaryGradeModel left, SalaryGradeModel right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(SalaryGradeModel left, SalaryGradeModel right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (GetType() != obj.GetType()) return false;
+
+            if (obj is SalaryGradeModel value)
+            {
+                return (Id == 0 || value.Id == 0) ? false : Id == value.Id;
             }
             else
             {
-                return null;
+                return false;
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }

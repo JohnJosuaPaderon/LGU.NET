@@ -1,11 +1,15 @@
 ﻿using DPFP;
 using LGU.Entities.Core;
-using System.Diagnostics;
 
 namespace LGU.Models.HumanResource
 {
     public sealed class FingerPrintModel : ModelBase<IFingerPrint>
     {
+        public static FingerPrintModel TryCreate(IFingerPrint fingerPrint)
+        {
+            return fingerPrint != null ? new FingerPrintModel(fingerPrint) : null;
+        }
+
         public FingerPrintModel(IFingerPrint source) : base(source)
         {
             FingerType = source.FingerType;
@@ -31,16 +35,14 @@ namespace LGU.Models.HumanResource
         public Template Data
         {
             get { return _Data; }
-            set { SetProperty(ref _Data, value, () => Debug.WriteLine("Set Data : HandType = {0}; FingerType = {1}", HandType, FingerType)); }
+            set { SetProperty(ref _Data, value); }
         }
 
         public override IFingerPrint GetSource()
         {
-            var fingerPrint = new FingerPrint(FingerType, HandType)
-            {
-                Data = Data
-            };
-            return fingerPrint;
+            Source.Data = Data;
+
+            return Source;
         }
     }
 }

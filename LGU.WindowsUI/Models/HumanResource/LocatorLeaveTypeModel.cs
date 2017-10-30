@@ -4,10 +4,15 @@ namespace LGU.Models.HumanResource
 {
     public sealed class LocatorLeaveTypeModel : ModelBase<ILocatorLeaveType>
     {
-        public LocatorLeaveTypeModel(ILocatorLeaveType source) : base(source ?? new LocatorLeaveType())
+        public static LocatorLeaveTypeModel TryCreate(ILocatorLeaveType locatorLeaveType)
         {
-            Id = source?.Id ?? default(short);
-            Description = source?.Description;
+            return locatorLeaveType != null ? new LocatorLeaveTypeModel(locatorLeaveType) : null;
+        }
+
+        public LocatorLeaveTypeModel(ILocatorLeaveType source) : base(source)
+        {
+            Id = source.Id;
+            Description = source.Description;
         }
 
         private short _Id;
@@ -30,7 +35,37 @@ namespace LGU.Models.HumanResource
             Source.Description = Description;
 
             return Source;
+        }
 
+        public static bool operator ==(LocatorLeaveTypeModel left, LocatorLeaveTypeModel right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(LocatorLeaveTypeModel left, LocatorLeaveTypeModel right)
+        {
+            return !(left == right);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (GetType() != obj.GetType()) return false;
+
+            if (obj is LocatorLeaveTypeModel value)
+            {
+                return (Id == 0 || value.Id == 0) ? false : Id == value.Id;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
     }
 }

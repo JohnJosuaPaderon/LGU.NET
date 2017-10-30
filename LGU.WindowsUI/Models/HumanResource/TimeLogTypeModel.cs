@@ -1,15 +1,16 @@
 ﻿using LGU.Entities.HumanResource;
+using System;
 
 namespace LGU.Models.HumanResource
 {
-    public sealed class PayrollTypeModel : ModelBase<IPayrollType>
+    public sealed class TimeLogTypeModel : ModelBase<ITimeLogType>
     {
-        public static PayrollTypeModel TryCreate(IPayrollType payrollType)
+        public static TimeLogTypeModel TryCreate(ITimeLogType timeLogType)
         {
-            return payrollType != null ? new PayrollTypeModel(payrollType) : null;
+            return timeLogType != null ? new TimeLogTypeModel(timeLogType) : null;
         }
 
-        public PayrollTypeModel(IPayrollType source) : base(source)
+        public TimeLogTypeModel(ITimeLogType source) : base(source)
         {
             Id = source.Id;
             Description = source.Description;
@@ -29,7 +30,7 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _Description, value); }
         }
 
-        public override IPayrollType GetSource()
+        public override ITimeLogType GetSource()
         {
             Source.Id = Id;
             Source.Description = Description;
@@ -37,12 +38,12 @@ namespace LGU.Models.HumanResource
             return Source;
         }
 
-        public static bool operator ==(PayrollTypeModel left, PayrollTypeModel right)
+        public static bool operator ==(TimeLogTypeModel left, TimeLogTypeModel right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(PayrollTypeModel left, PayrollTypeModel right)
+        public static bool operator !=(TimeLogTypeModel left, TimeLogTypeModel right)
         {
             return !(left == right);
         }
@@ -53,7 +54,7 @@ namespace LGU.Models.HumanResource
             if (ReferenceEquals(this, obj)) return true;
             if (GetType() != obj.GetType()) return false;
 
-            if (obj is PayrollTypeModel value)
+            if (obj is TimeLogTypeModel value)
             {
                 return (Id == 0 || value.Id == 0) ? false : Id == value.Id;
             }

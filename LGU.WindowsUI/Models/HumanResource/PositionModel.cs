@@ -4,11 +4,16 @@ namespace LGU.Models.HumanResource
 {
     public sealed class PositionModel : ModelBase<IPosition>
     {
+        public static PositionModel TryCreate(IPosition position)
+        {
+            return position != null ? new PositionModel(position) : null;
+        }
+
         public PositionModel(IPosition source) : base(source)
         {
-            Id = source?.Id ?? default(int);
-            Abbreviation = source?.Abbreviation;
-            Description = source?.Description;
+            Id = source.Id;
+            Abbreviation = source.Abbreviation;
+            Description = source.Description;
         }
 
         private int _Id;
@@ -34,12 +39,9 @@ namespace LGU.Models.HumanResource
 
         public override IPosition GetSource()
         {
-            if (Source != null)
-            {
-                Source.Id = Id;
-                Source.Abbreviation = Abbreviation;
-                Source.Description = Description;
-            }
+            Source.Id = Id;
+            Source.Abbreviation = Abbreviation;
+            Source.Description = Description;
 
             return Source;
         }

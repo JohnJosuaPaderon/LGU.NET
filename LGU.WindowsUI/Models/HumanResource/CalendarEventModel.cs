@@ -5,15 +5,20 @@ namespace LGU.Models.HumanResource
 {
     public sealed class CalendarEventModel : ModelBase<ICalendarEvent>
     {
+        public static CalendarEventModel TryCreate(ICalendarEvent calendarEvent)
+        {
+            return calendarEvent != null ? new CalendarEventModel(calendarEvent) : null;
+        }
+
         public CalendarEventModel(ICalendarEvent source) : base(source)
         {
-            Id = source?.Id ?? default(long);
-            Description = source?.Description;
-            DateOccur = source?.DateOccur ?? default(DateTime);
-            DateOccurEnd = source?.DateOccurEnd;
-            IsHoliday = source?.IsHoliday ?? default(bool);
-            IsNonWorking = source?.IsNonWorking ?? default(bool);
-            IsAnnual = source?.IsAnnual ?? default(bool);
+            Id = source.Id;
+            Description = source.Description;
+            DateOccur = source.DateOccur;
+            DateOccurEnd = source.DateOccurEnd;
+            IsHoliday = source.IsHoliday;
+            IsNonWorking = source.IsNonWorking;
+            IsAnnual = source.IsAnnual;
         }
 
         private long _Id;
@@ -67,16 +72,13 @@ namespace LGU.Models.HumanResource
 
         public override ICalendarEvent GetSource()
         {
-            if (Source != null)
-            {
-                Source.Id = Id;
-                Source.Description = Description;
-                Source.DateOccur = DateOccur;
-                Source.DateOccurEnd = DateOccurEnd;
-                Source.IsHoliday = IsHoliday;
-                Source.IsNonWorking = IsNonWorking;
-                Source.IsAnnual = IsAnnual;
-            }
+            Source.Id = Id;
+            Source.Description = Description;
+            Source.DateOccur = DateOccur;
+            Source.DateOccurEnd = DateOccurEnd;
+            Source.IsHoliday = IsHoliday;
+            Source.IsNonWorking = IsNonWorking;
+            Source.IsAnnual = IsAnnual;
 
             return Source;
         }
