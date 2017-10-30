@@ -33,7 +33,7 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter(PARAM_CUT_OFF_BEGIN, CutOff.Begin)
             .AddInputParameter(PARAM_CUT_OFF_END, CutOff.End);
 
-        private void GetEmployeesInitializer((IDepartment Department, IDepartmentHead Head) arg)
+        private void GetEmployeesInitializer((IDepartment Department, IEmployee Head) arg)
         {
             _GetEmployees.CutOff = CutOff;
             _GetEmployees.Department = arg.Department;
