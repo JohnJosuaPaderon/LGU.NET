@@ -17,7 +17,6 @@ namespace LGU.Extensions
             instance.UseSqlServer_ApplicationDocument();
             instance.UseSqlServer_CalendarEvent();
             instance.UseSqlServer_Department();
-            instance.UseSqlServer_DepartmentHead();
             instance.UseSqlServer_Employee();
             instance.UseSqlServer_EmployeeFlexWorkSchedule();
             instance.UseSqlServer_EmployeeSalaryGradeStep();
@@ -124,21 +123,6 @@ namespace LGU.Extensions
             instance.AddSingleton<IUpdateDepartment, UpdateDepartment>();
             instance.AddSingleton<IGetDepartmentListWithTimeLog, GetDepartmentListWithTimeLog>();
             instance.AddSingleton<IDepartmentManager, DepartmentManager>();
-
-            return instance;
-        }
-
-        public static IServiceCollection UseSqlServer_DepartmentHead(this IServiceCollection instance)
-        {
-            instance.AddTransient<IDepartmentHeadConverter, DepartmentHeadConverter>();
-            instance.AddSingleton<IDeleteDepartmentHead, DeleteDepartmentHead>();
-            instance.AddSingleton<IGetDepartmentHeadById, GetDepartmentHeadById>();
-            instance.AddSingleton<IGetDepartmentHeadList, GetDepartmentHeadList>();
-            instance.AddSingleton<IInsertDepartmentHead<SqlConnection, SqlTransaction>, InsertDepartmentHead>();
-            instance.AddSingleton<IUpdateDepartmentHead, UpdateDepartmentHead>();
-            instance.AddSingleton<IDepartmentHeadManager, DepartmentHeadManager>();
-            instance.AddSingleton<IDepartmentHeadFields, DepartmentHeadFields>();
-            instance.AddSingleton<IDepartmentHeadParameters, DepartmentHeadParameters>();
 
             return instance;
         }
