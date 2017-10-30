@@ -3,13 +3,11 @@ using System;
 
 namespace LGU.Entities.HumanResource
 {
-    public class Payroll<TDepartment> : Entity<long>, IPayroll<TDepartment>
-        where TDepartment : IPayrollDepartment
+    public class Payroll : Entity<long>, IPayroll
     {
-        public Payroll(IPayrollType type, IEntityCollection<TDepartment> departments)
+        public Payroll(IPayrollType type)
         {
             Type = type ?? throw new ArgumentNullException(nameof(type));
-            Departments = departments ?? throw new ArgumentNullException(nameof(departments));
         }
 
         public IPayrollType Type { get; }
@@ -21,7 +19,6 @@ namespace LGU.Entities.HumanResource
         public IEmployee Treasurer { get; set; }
         public IEmployee CityAccountant { get; set; }
         public IEmployee CityBudgetOfficer { get; set; }
-        public IEntityCollection<TDepartment> Departments { get; }
 
         public override string ToString()
         {

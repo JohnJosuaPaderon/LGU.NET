@@ -6,7 +6,7 @@ namespace LGU.Entities.HumanResource
     {
         public string Description { get; set; }
         public string Abbreviation { get; set; }
-        public IDepartmentHead Head { get; set; }
+        public IEmployee Head { get; set; }
 
         public override string ToString()
         {
