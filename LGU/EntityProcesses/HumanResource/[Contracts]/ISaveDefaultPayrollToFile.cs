@@ -6,7 +6,7 @@ namespace LGU.EntityProcesses.HumanResource
     public interface ISaveDefaultPayrollToFile <TDepartment> : IProcess
         where TDepartment : IPayrollDepartment
     {
-        IPayroll<TDepartment> Payroll { get; set; }
+        IPayroll Payroll { get; set; }
         string FilePath { get; set; }
     }
 }
