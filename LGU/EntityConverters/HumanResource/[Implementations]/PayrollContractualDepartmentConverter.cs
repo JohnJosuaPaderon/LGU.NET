@@ -16,33 +16,33 @@ namespace LGU.EntityConverters.HumanResource
         public PayrollContractualDepartmentConverter(
             IPayrollContractualDepartmentFields fields,
             IDepartmentManager departmentManager,
-            IDepartmentHeadManager departmentHeadManager)
+            IEmployeeManager employeeManager)
         {
             _Fields = fields;
             _DepartmentManager = departmentManager;
-            _DepartmentHeadManager = departmentHeadManager;
+            _EmployeeManager = employeeManager;
 
             PDepartment = new DataConverterProperty<IDepartment>();
             PPayroll = new DataConverterProperty<IPayrollContractual>();
-            PHead = new DataConverterProperty<IDepartmentHead>();
+            PHead = new DataConverterProperty<IEmployee>();
             POrdinal = new DataConverterProperty<int>();
         }
 
         private readonly IPayrollContractualDepartmentFields _Fields;
         private readonly IDepartmentManager _DepartmentManager;
-        private readonly IDepartmentHeadManager _DepartmentHeadManager;
+        private readonly IEmployeeManager _EmployeeManager;
 
         public IDataConverterProperty<IDepartment> PDepartment { get; }
         public IDataConverterProperty<IPayrollContractual> PPayroll { get; }
-        public IDataConverterProperty<IDepartmentHead> PHead { get; }
+        public IDataConverterProperty<IEmployee> PHead { get; }
         public IDataConverterProperty<int> POrdinal { get; }
         public IEnumerableProcess<IPayrollContractualEmployee> GetEmployees { get; set; }
-        public Action<(IDepartment Department, IDepartmentHead Head)> GetEmployeesInitializer { get; set; } 
+        public Action<(IDepartment Department, IEmployee Head)> GetEmployeesInitializer { get; set; } 
 
         private IPayrollContractualDepartment Get(
             IDepartment department,
             IPayrollContractual payroll,
-            IDepartmentHead head,
+            IEmployee head,
             IEnumerableProcessResult<IPayrollContractualEmployee> employeesResult,
             DbDataReader reader)
         {
@@ -65,7 +65,7 @@ namespace LGU.EntityConverters.HumanResource
         private IPayrollContractualDepartment Get(DbDataReader reader)
         {
             var department = PDepartment.TryGetValueFromProcess(_DepartmentManager.GetById, reader.GetInt32, _Fields.DepartmentId);
-            var head = PHead.TryGetValueFromProcess(_DepartmentHeadManager.GetById, reader.GetInt64, _Fields.HeadId);
+            var head = PHead.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.HeadId);
 
             GetEmployeesInitializer?.Invoke((department, head));
             return Get(department, null, head, GetEmployees?.Execute(), reader);
@@ -74,7 +74,7 @@ namespace LGU.EntityConverters.HumanResource
         private async Task<IPayrollContractualDepartment> GetAsync(DbDataReader reader)
         {
             var department = await PDepartment.TryGetValueFromProcessAsync(_DepartmentManager.GetByIdAsync, reader.GetInt32, _Fields.DepartmentId);
-            var head = await PHead.TryGetValueFromProcessAsync(_DepartmentHeadManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId);
+            var head = await PHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId);
 
             GetEmployeesInitializer?.Invoke((department, head));
             return Get(department, null, head, await GetEmployees?.ExecuteAsync(), reader);
@@ -83,7 +83,7 @@ namespace LGU.EntityConverters.HumanResource
         private async Task<IPayrollContractualDepartment> GetAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             var department = await PDepartment.TryGetValueFromProcessAsync(_DepartmentManager.GetByIdAsync, reader.GetInt32, _Fields.DepartmentId, cancellationToken);
-            var head = await PHead.TryGetValueFromProcessAsync(_DepartmentHeadManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId, cancellationToken);
+            var head = await PHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId, cancellationToken);
 
             GetEmployeesInitializer?.Invoke((department, head));
             return Get(department, null, head, await GetEmployees?.ExecuteAsync(cancellationToken), reader);

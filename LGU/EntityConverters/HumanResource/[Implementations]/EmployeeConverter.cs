@@ -22,7 +22,7 @@ namespace LGU.EntityConverters.HumanResource
             IEmployeeTypeManager employeeTypeManager,
             IEmploymentStatusManager employmentStatusManager,
             IPositionManager positionManager,
-            IDepartmentHeadManager departmentHeadManager,
+            IEmployeeManager employeeManager,
             IWorkTimeScheduleManager workTimeScheduleManager,
             IPayrollTypeManager payrollTypeManager)
         {
@@ -32,7 +32,7 @@ namespace LGU.EntityConverters.HumanResource
             _EmployeeTypeManager = employeeTypeManager;
             _EmploymentStatusManager = employmentStatusManager;
             _PositionManager = positionManager;
-            _DepartmentHeadManager = departmentHeadManager;
+            _EmployeeManager = employeeManager;
             _WorkTimeScheduleManager = workTimeScheduleManager;
             _PayrollTypeManager = payrollTypeManager;
 
@@ -49,7 +49,7 @@ namespace LGU.EntityConverters.HumanResource
             PGender = new DataConverterProperty<IGender>();
             PPosition = new DataConverterProperty<IPosition>();
             PType = new DataConverterProperty<IEmployeeType>();
-            PDepartmentHead = new DataConverterProperty<IDepartmentHead>();
+            PDepartmentHead = new DataConverterProperty<IEmployee>();
             PWorkTimeSchedule = new DataConverterProperty<IWorkTimeSchedule>();
             PPayrollType = new DataConverterProperty<IPayrollType>();
             PIsFlexWorkSchedule = new DataConverterProperty<bool>();
@@ -68,7 +68,7 @@ namespace LGU.EntityConverters.HumanResource
         public IDataConverterProperty<IGender> PGender { get; }
         public IDataConverterProperty<IPosition> PPosition { get; }
         public IDataConverterProperty<IEmployeeType> PType { get; }
-        public IDataConverterProperty<IDepartmentHead> PDepartmentHead { get; }
+        public IDataConverterProperty<IEmployee> PDepartmentHead { get; }
         public IDataConverterProperty<IWorkTimeSchedule> PWorkTimeSchedule { get; }
         public IDataConverterProperty<IPayrollType> PPayrollType { get; }
         public IDataConverterProperty<bool> PIsFlexWorkSchedule { get; }
@@ -79,7 +79,7 @@ namespace LGU.EntityConverters.HumanResource
         private readonly IEmployeeTypeManager _EmployeeTypeManager;
         private readonly IEmploymentStatusManager _EmploymentStatusManager;
         private readonly IPositionManager _PositionManager;
-        private readonly IDepartmentHeadManager _DepartmentHeadManager;
+        private readonly IEmployeeManager _EmployeeManager;
         private readonly IWorkTimeScheduleManager _WorkTimeScheduleManager;
         private readonly IPayrollTypeManager _PayrollTypeManager;
 
@@ -89,7 +89,7 @@ namespace LGU.EntityConverters.HumanResource
             IEmployeeType type,
             IEmploymentStatus employmentStatus,
             IPosition position,
-            IDepartmentHead departmentHead,
+            IEmployee departmentHead,
             IWorkTimeSchedule workTimeSchedule,
             IPayrollType payrollType,
             DbDataReader reader)
@@ -123,7 +123,7 @@ namespace LGU.EntityConverters.HumanResource
             var type = PType.TryGetValueFromProcess(_EmployeeTypeManager.GetById, reader.GetInt16, _Fields.TypeId);
             var employmentStatus = PEmploymentStatus.TryGetValueFromProcess(_EmploymentStatusManager.GetById, reader.GetInt16, _Fields.EmploymentStatusId);
             var position = PPosition.TryGetValueFromProcess(_PositionManager.GetById, reader.GetInt32, _Fields.PositionId);
-            var departmentHead = PDepartmentHead.TryGetValueFromProcess(_DepartmentHeadManager.GetById, reader.GetInt64, _Fields.DepartmentHeadId);
+            var departmentHead = PDepartmentHead.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.DepartmentHeadId);
             var workTimeSchedule = PWorkTimeSchedule.TryGetValueFromProcess(_WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.WorkTimeScheduleId);
             var payrollType = PPayrollType.TryGetValueFromProcess(_PayrollTypeManager.GetById, reader.GetInt16, _Fields.PayrollTypeId);
 
@@ -146,7 +146,7 @@ namespace LGU.EntityConverters.HumanResource
             var type = await PType.TryGetValueFromProcessAsync(_EmployeeTypeManager.GetByIdAsync, reader.GetInt16, _Fields.TypeId);
             var employmentStatus = await PEmploymentStatus.TryGetValueFromProcessAsync(_EmploymentStatusManager.GetByIdAsync, reader.GetInt16, _Fields.EmploymentStatusId);
             var position = await PPosition.TryGetValueFromProcessAsync(_PositionManager.GetByIdAsync, reader.GetInt32, _Fields.PositionId);
-            var departmentHead = await PDepartmentHead.TryGetValueFromProcessAsync(_DepartmentHeadManager.GetByIdAsync, reader.GetInt64, _Fields.DepartmentHeadId);
+            var departmentHead = await PDepartmentHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.DepartmentHeadId);
             var workTimeSchedule = await PWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.WorkTimeScheduleId);
             var payrollType = await PPayrollType.TryGetValueFromProcessAsync(_PayrollTypeManager.GetByIdAsync, reader.GetInt16, _Fields.PayrollTypeId);
 
@@ -169,7 +169,7 @@ namespace LGU.EntityConverters.HumanResource
             var type = await PType.TryGetValueFromProcessAsync(_EmployeeTypeManager.GetByIdAsync, reader.GetInt16, _Fields.TypeId, cancellationToken);
             var employmentStatus = await PEmploymentStatus.TryGetValueFromProcessAsync(_EmploymentStatusManager.GetByIdAsync, reader.GetInt16, _Fields.EmploymentStatusId, cancellationToken);
             var position = await PPosition.TryGetValueFromProcessAsync(_PositionManager.GetByIdAsync, reader.GetInt32, _Fields.PositionId, cancellationToken);
-            var departmentHead = await PDepartmentHead.TryGetValueFromProcessAsync(_DepartmentHeadManager.GetByIdAsync, reader.GetInt64, _Fields.DepartmentHeadId, cancellationToken);
+            var departmentHead = await PDepartmentHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.DepartmentHeadId, cancellationToken);
             var workTimeSchedule = await PWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.WorkTimeScheduleId, cancellationToken);
             var payrollType = await PPayrollType.TryGetValueFromProcessAsync(_PayrollTypeManager.GetByIdAsync, reader.GetInt16, _Fields.PayrollTypeId, cancellationToken);
 

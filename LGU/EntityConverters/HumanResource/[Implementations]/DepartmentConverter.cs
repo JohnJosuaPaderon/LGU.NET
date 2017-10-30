@@ -13,26 +13,26 @@ namespace LGU.EntityConverters.HumanResource
 {
     public class DepartmentConverter : IDepartmentConverter
     {
-        public DepartmentConverter(IDepartmentFields fields, IDepartmentHeadManager departmentHeadManager)
+        public DepartmentConverter(IDepartmentFields fields, IEmployeeManager employeeManager)
         {
             _Fields = fields;
-            _DepartmentHeadManager = departmentHeadManager;
+            _EmployeeManager = employeeManager;
 
             PId = new DataConverterProperty<int>();
             PDescription = new DataConverterProperty<string>();
             PAbbreviation = new DataConverterProperty<string>();
-            PHead = new DataConverterProperty<IDepartmentHead>();
+            PHead = new DataConverterProperty<IEmployee>();
         }
 
         private readonly IDepartmentFields _Fields;
-        private readonly IDepartmentHeadManager _DepartmentHeadManager;
+        private readonly IEmployeeManager _EmployeeManager;
 
         public IDataConverterProperty<int> PId { get; }
         public IDataConverterProperty<string> PDescription { get; }
         public IDataConverterProperty<string> PAbbreviation { get; }
-        public IDataConverterProperty<IDepartmentHead> PHead { get; }
+        public IDataConverterProperty<IEmployee> PHead { get; }
 
-        private IDepartment Get(IDepartmentHead head, DbDataReader reader)
+        private IDepartment Get(IEmployee head, DbDataReader reader)
         {
             return new Department()
             {
@@ -45,19 +45,19 @@ namespace LGU.EntityConverters.HumanResource
 
         private IDepartment Get(DbDataReader reader)
         {
-            var head = PHead.TryGetValueFromProcess(_DepartmentHeadManager.GetById, reader.GetInt64, _Fields.HeadId);
+            var head = PHead.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.HeadId);
             return Get(head, reader);
         }
 
         private async Task<IDepartment> GetAsync(DbDataReader reader)
         {
-            var head = await PHead.TryGetValueFromProcessAsync(_DepartmentHeadManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId);
+            var head = await PHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId);
             return Get(head, reader);
         }
 
         private async Task<IDepartment> GetAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var head = await PHead.TryGetValueFromProcessAsync(_DepartmentHeadManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId, cancellationToken);
+            var head = await PHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId, cancellationToken);
             return Get(head, reader);
         }
 
