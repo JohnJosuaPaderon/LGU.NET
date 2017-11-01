@@ -112,6 +112,8 @@ namespace LGU.Data.Rdbms
                             {
                                 if (reader.HasRows)
                                 {
+                                    converter.InitializeDependency();
+
                                     return await converter.FromReaderAsync(reader, cancellationToken);
                                 }
                                 else
@@ -148,6 +150,8 @@ namespace LGU.Data.Rdbms
                             {
                                 if (reader.HasRows)
                                 {
+                                    converter.InitializeDependency();
+
                                     return await converter.EnumerableFromReaderAsync(reader, cancellationToken);
                                 }
                                 else

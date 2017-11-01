@@ -108,6 +108,8 @@ namespace LGU.Data.Rdbms
                             {
                                 if (reader.HasRows)
                                 {
+                                    converter.InitializeDependency();
+
                                     return await converter.FromReaderAsync(reader);
                                 }
                                 else
@@ -129,41 +131,6 @@ namespace LGU.Data.Rdbms
             }
         }
 
-        public async Task<IEnumerableProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, Func<SqlDataReader, IEnumerableProcessResult<T>> getFromReader)
-        {
-            try
-            {
-                using (var connection = await ConnectionEstablisher.EstablishAsync())
-                {
-                    try
-                    {
-                        using (var command = queryInfo.CreateCommand(connection))
-                        {
-                            using (var reader = await command.ExecuteReaderAsync())
-                            {
-                                if (reader.HasRows)
-                                {
-                                    return getFromReader(reader);
-                                }
-                                else
-                                {
-                                    return new EnumerableProcessResult<T>(ProcessResultStatus.Success, "No result.");
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        return new EnumerableProcessResult<T>(ex);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return new EnumerableProcessResult<T>(ex);
-            }
-        }
-
         public async Task<IEnumerableProcessResult<T>> ExecuteReaderEnumerableAsync<T>(IDbQueryInfo<SqlConnection, SqlTransaction, SqlCommand, SqlParameter> queryInfo, IDataConverter<T> converter)
         {
             try
@@ -178,6 +145,8 @@ namespace LGU.Data.Rdbms
                             {
                                 if (reader.HasRows)
                                 {
+                                    converter.InitializeDependency();
+
                                     return await converter.EnumerableFromReaderAsync(reader);
                                 }
                                 else
