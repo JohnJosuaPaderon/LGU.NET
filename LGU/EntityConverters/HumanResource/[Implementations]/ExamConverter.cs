@@ -12,16 +12,8 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class ExamConverter : IExamConverter
     {
-        private readonly IApplicationManager r_ApplicationManager;
-        private readonly IExamSetManager r_ExamSetManager;
-
-        public ExamConverter(
-            IApplicationManager applicationManager,
-            IExamSetManager examSetManager)
-        {
-            r_ApplicationManager = applicationManager;
-            r_ExamSetManager = examSetManager;
-        }
+        private IApplicationManager ApplicationManager;
+        private IExamSetManager ExamSetManager;
 
         private IExam GetData(IApplication application, IExamSet set, DbDataReader reader)
         {
@@ -43,24 +35,24 @@ namespace LGU.EntityConverters.HumanResource
 
         private IExam GetData(DbDataReader reader)
         {
-            var applicationResult = r_ApplicationManager.GetById(reader.GetInt64("ApplicationId"));
-            var setResult = r_ExamSetManager.GetById(reader.GetInt32("SetId"));
+            var applicationResult = ApplicationManager.GetById(reader.GetInt64("ApplicationId"));
+            var setResult = ExamSetManager.GetById(reader.GetInt32("SetId"));
 
             return GetData(applicationResult.Data, setResult.Data, reader);
         }
 
         private async Task<IExam> GetDataAsync(DbDataReader reader)
         {
-            var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"));
-            var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"));
+            var applicationResult = await ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"));
+            var setResult = await ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"));
 
             return GetData(applicationResult.Data, setResult.Data, reader);
         }
 
         private async Task<IExam> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"), cancellationToken);
-            var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"), cancellationToken);
+            var applicationResult = await ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"), cancellationToken);
+            var setResult = await ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"), cancellationToken);
 
             return GetData(applicationResult.Data, setResult.Data, reader);
         }
@@ -159,6 +151,12 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IExam>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            ApplicationManager = ApplicationDomain.GetService<IApplicationManager>();
+            ExamSetManager = ApplicationDomain.GetService<IExamSetManager>();
         }
     }
 }

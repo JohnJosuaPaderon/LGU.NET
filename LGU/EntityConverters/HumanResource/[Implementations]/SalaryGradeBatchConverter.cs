@@ -118,5 +118,10 @@ namespace LGU.EntityConverters.HumanResource
                 return new ProcessResult<ISalaryGradeBatch>(ex);
             }
         }
+
+        public void InitializeDependency()
+        {
+            // TODO: Initialize Entity Managers
+        }
     }
 }

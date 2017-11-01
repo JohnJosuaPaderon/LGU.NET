@@ -12,12 +12,7 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class SalaryGradeConverter : ISalaryGradeConverter
     {
-        private readonly ISalaryGradeBatchManager r_SalaryGradeBatchManager;
-
-        public SalaryGradeConverter(ISalaryGradeBatchManager salaryGradeBatchManager)
-        {
-            r_SalaryGradeBatchManager = salaryGradeBatchManager;
-        }
+        private ISalaryGradeBatchManager SalaryGradeBatchManager;
 
         private ISalaryGrade GetData(ISalaryGradeBatch batch, DbDataReader reader)
         {
@@ -29,21 +24,21 @@ namespace LGU.EntityConverters.HumanResource
 
         private ISalaryGrade GetData(DbDataReader reader)
         {
-            var batchResult = r_SalaryGradeBatchManager.GetById(reader.GetInt32("BatchId"));
+            var batchResult = SalaryGradeBatchManager.GetById(reader.GetInt32("BatchId"));
 
             return GetData(batchResult.Data, reader);
         }
 
         private async Task<ISalaryGrade> GetDataAsync(DbDataReader reader)
         {
-            var batchResult = await r_SalaryGradeBatchManager.GetByIdAsync(reader.GetInt32("BatchId"));
+            var batchResult = await SalaryGradeBatchManager.GetByIdAsync(reader.GetInt32("BatchId"));
 
             return GetData(batchResult.Data, reader);
         }
 
         private async Task<ISalaryGrade> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var batchResult = await r_SalaryGradeBatchManager.GetByIdAsync(reader.GetInt32("BatchId"), cancellationToken);
+            var batchResult = await SalaryGradeBatchManager.GetByIdAsync(reader.GetInt32("BatchId"), cancellationToken);
 
             return GetData(batchResult.Data, reader);
         }
@@ -142,6 +137,11 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<ISalaryGrade>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            SalaryGradeBatchManager = ApplicationDomain.GetService<ISalaryGradeBatchManager>();
         }
     }
 }

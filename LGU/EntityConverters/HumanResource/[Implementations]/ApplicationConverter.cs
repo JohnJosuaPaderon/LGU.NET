@@ -12,19 +12,9 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class ApplicationConverter : IApplicationConverter
     {
-        private readonly IApplicantManager r_ApplicantManager;
-        private readonly IApplicationStatusManager r_ApplicationStatusManager;
-        private readonly IPositionManager r_PositionManager;
-
-        public ApplicationConverter(
-            IApplicantManager applicantManager,
-            IApplicationStatusManager applicationStatusManager,
-            IPositionManager positionManager)
-        {
-            r_ApplicantManager = applicantManager;
-            r_ApplicationStatusManager = applicationStatusManager;
-            r_PositionManager = positionManager;
-        }
+        private IApplicantManager ApplicantManager;
+        private IApplicationStatusManager ApplicationStatusManager;
+        private IPositionManager PositionManager;
 
         private IApplication GetData(IApplicant applicant, IApplicationStatus status, IPosition applyingPosition, DbDataReader reader)
         {
@@ -46,27 +36,27 @@ namespace LGU.EntityConverters.HumanResource
 
         private IApplication GetData(DbDataReader reader)
         {
-            var applicantResult = r_ApplicantManager.GetById(reader.GetInt64("ApplicantId"));
-            var statusResult = r_ApplicationStatusManager.GetById(reader.GetInt16("StatusId"));
-            var applyingPositionResult = r_PositionManager.GetById(reader.GetInt16("ApplyingPositionId"));
+            var applicantResult = ApplicantManager.GetById(reader.GetInt64("ApplicantId"));
+            var statusResult = ApplicationStatusManager.GetById(reader.GetInt16("StatusId"));
+            var applyingPositionResult = PositionManager.GetById(reader.GetInt16("ApplyingPositionId"));
 
             return GetData(applicantResult.Data, statusResult.Data, applyingPositionResult.Data, reader);
         }
 
         private async Task<IApplication> GetDataAsync(DbDataReader reader)
         {
-            var applicantResult = await r_ApplicantManager.GetByIdAsync(reader.GetInt64("ApplicantId"));
-            var statusResult = await r_ApplicationStatusManager.GetByIdAsync(reader.GetInt16("StatusId"));
-            var applyingPositionResult = await r_PositionManager.GetByIdAsync(reader.GetInt16("ApplyingPositionId"));
+            var applicantResult = await ApplicantManager.GetByIdAsync(reader.GetInt64("ApplicantId"));
+            var statusResult = await ApplicationStatusManager.GetByIdAsync(reader.GetInt16("StatusId"));
+            var applyingPositionResult = await PositionManager.GetByIdAsync(reader.GetInt16("ApplyingPositionId"));
 
             return GetData(applicantResult.Data, statusResult.Data, applyingPositionResult.Data, reader);
         }
 
         private async Task<IApplication> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var applicantResult = await r_ApplicantManager.GetByIdAsync(reader.GetInt64("ApplicantId"), cancellationToken);
-            var statusResult = await r_ApplicationStatusManager.GetByIdAsync(reader.GetInt16("StatusId"), cancellationToken);
-            var applyingPositionResult = await r_PositionManager.GetByIdAsync(reader.GetInt16("ApplyingPositionId"), cancellationToken);
+            var applicantResult = await ApplicantManager.GetByIdAsync(reader.GetInt64("ApplicantId"), cancellationToken);
+            var statusResult = await ApplicationStatusManager.GetByIdAsync(reader.GetInt16("StatusId"), cancellationToken);
+            var applyingPositionResult = await PositionManager.GetByIdAsync(reader.GetInt16("ApplyingPositionId"), cancellationToken);
 
             return GetData(applicantResult.Data, statusResult.Data, applyingPositionResult.Data, reader);
         }
@@ -165,6 +155,13 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IApplication>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            ApplicantManager = ApplicationDomain.GetService<IApplicantManager>();
+            ApplicationStatusManager = ApplicationDomain.GetService<IApplicationStatusManager>();
+            PositionManager = ApplicationDomain.GetService<IPositionManager>();
         }
     }
 }

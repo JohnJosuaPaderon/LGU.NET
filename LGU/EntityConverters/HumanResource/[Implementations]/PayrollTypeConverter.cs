@@ -118,5 +118,10 @@ namespace LGU.EntityConverters.HumanResource
                 return new ProcessResult<IPayrollType>(ex);
             }
         }
+
+        public void InitializeDependency()
+        {
+            // TODO: Initialize Entity Managers
+        }
     }
 }

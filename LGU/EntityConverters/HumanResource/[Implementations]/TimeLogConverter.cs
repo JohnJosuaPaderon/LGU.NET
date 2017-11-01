@@ -12,16 +12,8 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class TimeLogConverter : ITimeLogConverter
     {
-        private readonly IEmployeeManager r_EmployeeManager;
-        private readonly ITimeLogTypeManager r_TimeLogTypeManager;
-
-        public TimeLogConverter(
-            IEmployeeManager employeeManager,
-            ITimeLogTypeManager timeLogTypeManager)
-        {
-            r_EmployeeManager = employeeManager;
-            r_TimeLogTypeManager = timeLogTypeManager;
-        }
+        private IEmployeeManager EmployeeManager;
+        private ITimeLogTypeManager TimeLogTypeManager;
 
         private ITimeLog GetData(IEmployee employee, ITimeLogType type, DbDataReader reader)
         {
@@ -43,24 +35,24 @@ namespace LGU.EntityConverters.HumanResource
 
         private ITimeLog GetData(DbDataReader reader)
         {
-            var employeeResult = r_EmployeeManager.GetById(reader.GetInt64("EmployeeId"));
-            var typeResult = r_TimeLogTypeManager.GetById(reader.GetInt16("TypeId"));
+            var employeeResult = EmployeeManager.GetById(reader.GetInt64("EmployeeId"));
+            var typeResult = TimeLogTypeManager.GetById(reader.GetInt16("TypeId"));
 
             return GetData(employeeResult.Data, typeResult.Data, reader);
         }
 
         private async Task<ITimeLog> GetDataAsync(DbDataReader reader)
         {
-            var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"));
-            var typeResult = await r_TimeLogTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
+            var employeeResult = await EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"));
+            var typeResult = await TimeLogTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
 
             return GetData(employeeResult.Data, typeResult.Data, reader);
         }
 
         private async Task<ITimeLog> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"), cancellationToken);
-            var typeResult = await r_TimeLogTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
+            var employeeResult = await EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"), cancellationToken);
+            var typeResult = await TimeLogTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
 
             return GetData(employeeResult.Data, typeResult.Data, reader);
         }
@@ -159,6 +151,12 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<ITimeLog>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
+            TimeLogTypeManager = ApplicationDomain.GetService<ITimeLogTypeManager>();
         }
     }
 }

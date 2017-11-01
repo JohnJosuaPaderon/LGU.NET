@@ -12,12 +12,7 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class EssayQuestionConverter : IEssayQuestionConverter
     {
-        public EssayQuestionConverter(IExamSetManager examSetManager)
-        {
-            _ExamSetManager = examSetManager;
-        }
-
-        private readonly IExamSetManager _ExamSetManager;
+        private IExamSetManager ExamSetManager;
 
         private IEssayQuestion GetData(IExamSet set, DbDataReader reader)
         {
@@ -39,21 +34,21 @@ namespace LGU.EntityConverters.HumanResource
 
         private IEssayQuestion GetData(DbDataReader reader)
         {
-            var setResult = _ExamSetManager.GetById(reader.GetInt32("SetId"));
+            var setResult = ExamSetManager.GetById(reader.GetInt32("SetId"));
 
             return GetData(setResult.Data, reader);
         }
 
         private async Task<IEssayQuestion> GetDataAsync(DbDataReader reader)
         {
-            var setResult = await _ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"));
+            var setResult = await ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"));
 
             return GetData(setResult.Data, reader);
         }
 
         private async Task<IEssayQuestion> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var setResult = await _ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"), cancellationToken);
+            var setResult = await ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"), cancellationToken);
 
             return GetData(setResult.Data, reader);
         }
@@ -152,6 +147,11 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IEssayQuestion>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            ExamSetManager = ApplicationDomain.GetService<IExamSetManager>();
         }
     }
 }

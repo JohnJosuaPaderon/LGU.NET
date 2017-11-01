@@ -12,13 +12,8 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class MultipleChoiceQuestionConverter : IMultipleChoiceQuestionConverter
     {
-        private readonly IExamSetManager r_ExamSetManager;
-
-        public MultipleChoiceQuestionConverter(IExamSetManager examSetManager)
-        {
-            r_ExamSetManager = examSetManager;
-        }
-
+        private IExamSetManager ExamSetManager;
+        
         private IMultipleChoiceQuestion GetData(IExamSet set, DbDataReader reader)
         {
             if (set != null)
@@ -38,21 +33,21 @@ namespace LGU.EntityConverters.HumanResource
 
         private IMultipleChoiceQuestion GetData(DbDataReader reader)
         {
-            var setResult = r_ExamSetManager.GetById(reader.GetInt32("SetId"));
+            var setResult = ExamSetManager.GetById(reader.GetInt32("SetId"));
 
             return GetData(setResult.Data, reader);
         }
 
         private async Task<IMultipleChoiceQuestion> GetDataAsync(DbDataReader reader)
         {
-            var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"));
+            var setResult = await ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"));
 
             return GetData(setResult.Data, reader);
         }
 
         private async Task<IMultipleChoiceQuestion> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var setResult = await r_ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"), cancellationToken);
+            var setResult = await ExamSetManager.GetByIdAsync(reader.GetInt32("SetId"), cancellationToken);
 
             return GetData(setResult.Data, reader);
         }
@@ -151,6 +146,11 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IMultipleChoiceQuestion>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            ExamSetManager = ApplicationDomain.GetService<IExamSetManager>();
         }
     }
 }

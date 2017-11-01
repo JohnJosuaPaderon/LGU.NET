@@ -14,14 +14,8 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class ApplicantConverter : IApplicantConverter
     {
-        private readonly IGenderManager r_GenderManager;
-        private readonly IApplicantStatusManager r_ApplicantStatusManager;
-
-        public ApplicantConverter(IGenderManager genderManager, IApplicantStatusManager applicantStatusManager)
-        {
-            r_GenderManager = genderManager;
-            r_ApplicantStatusManager = applicantStatusManager;
-        }
+        private IGenderManager GenderManager;
+        private IApplicantStatusManager ApplicantStatusManager;
 
         private IApplicant GetData(IGender gender, IApplicantStatus status, DbDataReader reader)
         {
@@ -42,24 +36,24 @@ namespace LGU.EntityConverters.HumanResource
 
         private IApplicant GetData(DbDataReader reader)
         {
-            var genderResult = r_GenderManager.GetById(reader.GetInt16("GenderId"));
-            var statusResult = r_ApplicantStatusManager.GetById(reader.GetInt16("StatusId"));
+            var genderResult = GenderManager.GetById(reader.GetInt16("GenderId"));
+            var statusResult = ApplicantStatusManager.GetById(reader.GetInt16("StatusId"));
 
             return GetData(genderResult.Data, statusResult.Data, reader);
         }
 
         private async Task<IApplicant> GetDataAsync(DbDataReader reader)
         {
-            var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"));
-            var statusResult = await r_ApplicantStatusManager.GetByIdAsync(reader.GetInt16("StatusId"));
+            var genderResult = await GenderManager.GetByIdAsync(reader.GetInt16("GenderId"));
+            var statusResult = await ApplicantStatusManager.GetByIdAsync(reader.GetInt16("StatusId"));
 
             return GetData(genderResult.Data, statusResult.Data, reader);
         }
 
         private async Task<IApplicant> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var genderResult = await r_GenderManager.GetByIdAsync(reader.GetInt16("GenderId"), cancellationToken);
-            var statusResult = await r_ApplicantStatusManager.GetByIdAsync(reader.GetInt16("StatusId"), cancellationToken);
+            var genderResult = await GenderManager.GetByIdAsync(reader.GetInt16("GenderId"), cancellationToken);
+            var statusResult = await ApplicantStatusManager.GetByIdAsync(reader.GetInt16("StatusId"), cancellationToken);
 
             return GetData(genderResult.Data, statusResult.Data, reader);
         }
@@ -158,6 +152,12 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IApplicant>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            GenderManager = ApplicationDomain.GetService<IGenderManager>();
+            ApplicantStatusManager = ApplicationDomain.GetService<IApplicantStatusManager>();
         }
     }
 }

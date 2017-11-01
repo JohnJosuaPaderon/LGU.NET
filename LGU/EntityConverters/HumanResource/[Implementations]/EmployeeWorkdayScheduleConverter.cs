@@ -23,10 +23,8 @@ namespace LGU.EntityConverters.HumanResource
         private const string FIELD_FRIDAY = "Friday";
         private const string FIELD_SATURDAY = "Saturday";
 
-        public EmployeeWorkdayScheduleConverter(IEmployeeManager employeeManager)
+        public EmployeeWorkdayScheduleConverter()
         {
-            _EmployeeManager = employeeManager;
-
             Prop_Id = new DataConverterProperty<long>();
             Prop_Employee = new DataConverterProperty<IEmployee>();
             Prop_Sunday = new DataConverterProperty<bool>();
@@ -38,7 +36,7 @@ namespace LGU.EntityConverters.HumanResource
             Prop_Saturday = new DataConverterProperty<bool>();
         }
 
-        private readonly IEmployeeManager _EmployeeManager;
+        private IEmployeeManager EmployeeManager;
 
         public IDataConverterProperty<long> Prop_Id { get; }
         public IDataConverterProperty<IEmployee> Prop_Employee { get; }
@@ -68,19 +66,19 @@ namespace LGU.EntityConverters.HumanResource
         
         private IEmployeeWorkdaySchedule Get(DbDataReader reader)
         {
-            var employee = Prop_Employee.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, FIELD_EMPLOYEE_ID);
+            var employee = Prop_Employee.TryGetValueFromProcess(EmployeeManager.GetById, reader.GetInt64, FIELD_EMPLOYEE_ID);
             return Get(employee, reader);
         }
 
         private async Task<IEmployeeWorkdaySchedule> GetAsync(DbDataReader reader)
         {
-            var employee = await Prop_Employee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, FIELD_EMPLOYEE_ID);
+            var employee = await Prop_Employee.TryGetValueFromProcessAsync(EmployeeManager.GetByIdAsync, reader.GetInt64, FIELD_EMPLOYEE_ID);
             return Get(employee, reader);
         }
 
         private async Task<IEmployeeWorkdaySchedule> GetAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var employee = await Prop_Employee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, FIELD_EMPLOYEE_ID, cancellationToken);
+            var employee = await Prop_Employee.TryGetValueFromProcessAsync(EmployeeManager.GetByIdAsync, reader.GetInt64, FIELD_EMPLOYEE_ID, cancellationToken);
             return Get(employee, reader);
         }
 
@@ -178,6 +176,11 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IEmployeeWorkdaySchedule>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
         }
     }
 }

@@ -13,9 +13,8 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class PayrollContractualEmployeeConverter : IPayrollContractualEmployeeConverter
     {
-        public PayrollContractualEmployeeConverter(IPayrollContractualEmployeeFields fields, IEmployeeManager employeeManager)
+        public PayrollContractualEmployeeConverter(IPayrollContractualEmployeeFields fields)
         {
-            _EmployeeManager = employeeManager;
             _Fields = fields;
 
             PDepartment = new DataConverterProperty<IPayrollContractualDepartment>();
@@ -27,7 +26,6 @@ namespace LGU.EntityConverters.HumanResource
         }
 
         private readonly IPayrollContractualEmployeeFields _Fields;
-        private readonly IEmployeeManager _EmployeeManager;
 
         public IDataConverterProperty<IPayrollContractualDepartment> PDepartment { get; }
         public IDataConverterProperty<IEmployee> PEmployee { get; }
@@ -35,6 +33,8 @@ namespace LGU.EntityConverters.HumanResource
         public IDataConverterProperty<decimal?> PWithholdingTax { get; }
         public IDataConverterProperty<decimal?> PHdmfPremiumPs { get; }
         public IDataConverterProperty<decimal> PTimeLogDeduction { get; }
+
+        private IEmployeeManager EmployeeManager;
 
         private IPayrollContractualEmployee Get(IEmployee employee, DbDataReader reader)
         {
@@ -50,21 +50,21 @@ namespace LGU.EntityConverters.HumanResource
 
         private IPayrollContractualEmployee Get(DbDataReader reader)
         {
-            var employee = PEmployee.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.EmployeeId);
+            var employee = PEmployee.TryGetValueFromProcess(EmployeeManager.GetById, reader.GetInt64, _Fields.EmployeeId);
 
             return Get(employee, reader);
         }
 
         private async Task<IPayrollContractualEmployee> GetAsync(DbDataReader reader)
         {
-            var employee = await PEmployee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId);
+            var employee = await PEmployee.TryGetValueFromProcessAsync(EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId);
 
             return Get(employee, reader);
         }
 
         private async Task<IPayrollContractualEmployee> GetAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var employee = await PEmployee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId, cancellationToken);
+            var employee = await PEmployee.TryGetValueFromProcessAsync(EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId, cancellationToken);
 
             return Get(employee, reader);
         }
@@ -163,6 +163,11 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IPayrollContractualEmployee>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
         }
     }
 }

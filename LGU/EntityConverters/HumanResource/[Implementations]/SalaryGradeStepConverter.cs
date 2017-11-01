@@ -12,13 +12,8 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class SalaryGradeStepConverter : ISalaryGradeStepConverter
     {
-        private readonly ISalaryGradeManager r_SalaryGradeManager;
-
-        public SalaryGradeStepConverter(ISalaryGradeManager salaryGradeManager)
-        {
-            r_SalaryGradeManager = salaryGradeManager;
-        }
-
+        private ISalaryGradeManager SalaryGradeManager;
+        
         private ISalaryGradeStep GetData(ISalaryGrade salaryGrade, DbDataReader reader)
         {
             return new SalaryGradeStep(salaryGrade, reader.GetInt32("Step"))
@@ -30,21 +25,21 @@ namespace LGU.EntityConverters.HumanResource
 
         private ISalaryGradeStep GetData(DbDataReader reader)
         {
-            var salaryGradeResult = r_SalaryGradeManager.GetById(reader.GetInt64("SalaryGradeId"));
+            var salaryGradeResult = SalaryGradeManager.GetById(reader.GetInt64("SalaryGradeId"));
 
             return GetData(salaryGradeResult.Data, reader);
         }
 
         private async Task<ISalaryGradeStep> GetDataAsync(DbDataReader reader)
         {
-            var salaryGradeResult = await r_SalaryGradeManager.GetByIdAsync(reader.GetInt64("SalaryGradeId"));
+            var salaryGradeResult = await SalaryGradeManager.GetByIdAsync(reader.GetInt64("SalaryGradeId"));
 
             return GetData(salaryGradeResult.Data, reader);
         }
 
         private async Task<ISalaryGradeStep> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var salaryGradeResult = await r_SalaryGradeManager.GetByIdAsync(reader.GetInt64("SalaryGradeId"), cancellationToken);
+            var salaryGradeResult = await SalaryGradeManager.GetByIdAsync(reader.GetInt64("SalaryGradeId"), cancellationToken);
 
             return GetData(salaryGradeResult.Data, reader);
         }
@@ -143,6 +138,11 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<ISalaryGradeStep>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            SalaryGradeManager = ApplicationDomain.GetService<ISalaryGradeManager>();
         }
     }
 }

@@ -115,5 +115,10 @@ namespace LGU.EntityConverters.HumanResource
                 return new ProcessResult<ITimeLogType>(ex);
             }
         }
+
+        public void InitializeDependency()
+        {
+            // TODO: Initialize Entity Managers
+        }
     }
 }

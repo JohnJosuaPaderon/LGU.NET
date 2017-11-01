@@ -115,5 +115,10 @@ namespace LGU.EntityConverters.HumanResource
                 return new ProcessResult<ILocatorLeaveType>(ex);
             }
         }
+
+        public void InitializeDependency()
+        {
+            // TODO: Initialize Entity Managers
+        }
     }
 }

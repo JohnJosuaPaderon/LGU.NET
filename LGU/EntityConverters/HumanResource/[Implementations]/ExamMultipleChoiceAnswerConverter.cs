@@ -12,19 +12,9 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class ExamMultipleChoiceAnswerConverter : IExamMultipleChoiceAnswerConverter
     {
-        public ExamMultipleChoiceAnswerConverter(
-            IExamManager examManager,
-            IMultipleChoiceQuestionManager multipleChoiceQuestionManager,
-            IMultipleChoiceCandidateAnswerManager multipleChoiceCandidateAnswerManager)
-        {
-            _ExamManager = examManager;
-            _MultipleChoiceQuestionManager = multipleChoiceQuestionManager;
-            _MultipleChoiceCandidateAnswerManager = multipleChoiceCandidateAnswerManager;
-        }
-
-        private readonly IExamManager _ExamManager;
-        private readonly IMultipleChoiceQuestionManager _MultipleChoiceQuestionManager;
-        private readonly IMultipleChoiceCandidateAnswerManager _MultipleChoiceCandidateAnswerManager;
+        private IExamManager ExamManager;
+        private IMultipleChoiceQuestionManager MultipleChoiceQuestionManager;
+        private IMultipleChoiceCandidateAnswerManager MultipleChoiceCandidateAnswerManager;
 
         private IExamMultipleChoiceAnswer GetData(IExam exam, IMultipleChoiceQuestion question, IMultipleChoiceCandidateAnswer answer, DbDataReader reader)
         {
@@ -44,27 +34,27 @@ namespace LGU.EntityConverters.HumanResource
 
         private IExamMultipleChoiceAnswer GetData(DbDataReader reader)
         {
-            var examResult = _ExamManager.GetById(reader.GetInt64("ExamId"));
-            var questionResult = _MultipleChoiceQuestionManager.GetById(reader.GetInt64("QuestionId"));
-            var answerResult = _MultipleChoiceCandidateAnswerManager.GetById(reader.GetInt64("AnswerId"));
+            var examResult = ExamManager.GetById(reader.GetInt64("ExamId"));
+            var questionResult = MultipleChoiceQuestionManager.GetById(reader.GetInt64("QuestionId"));
+            var answerResult = MultipleChoiceCandidateAnswerManager.GetById(reader.GetInt64("AnswerId"));
 
             return GetData(examResult.Data, questionResult.Data, answerResult.Data, reader);
         }
 
         private async Task<IExamMultipleChoiceAnswer> GetDataAsync(DbDataReader reader)
         {
-            var examResult = await _ExamManager.GetByIdAsync(reader.GetInt64("ExamId"));
-            var questionResult = await _MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"));
-            var answerResult = await _MultipleChoiceCandidateAnswerManager.GetByIdAsync(reader.GetInt64("AnswerId"));
+            var examResult = await ExamManager.GetByIdAsync(reader.GetInt64("ExamId"));
+            var questionResult = await MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"));
+            var answerResult = await MultipleChoiceCandidateAnswerManager.GetByIdAsync(reader.GetInt64("AnswerId"));
 
             return GetData(examResult.Data, questionResult.Data, answerResult.Data, reader);
         }
 
         private async Task<IExamMultipleChoiceAnswer> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var examResult = await _ExamManager.GetByIdAsync(reader.GetInt64("ExamId"), cancellationToken);
-            var questionResult = await _MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"), cancellationToken);
-            var answerResult = await _MultipleChoiceCandidateAnswerManager.GetByIdAsync(reader.GetInt64("AnswerId"), cancellationToken);
+            var examResult = await ExamManager.GetByIdAsync(reader.GetInt64("ExamId"), cancellationToken);
+            var questionResult = await MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"), cancellationToken);
+            var answerResult = await MultipleChoiceCandidateAnswerManager.GetByIdAsync(reader.GetInt64("AnswerId"), cancellationToken);
 
             return GetData(examResult.Data, questionResult.Data, answerResult.Data, reader);
         }
@@ -163,6 +153,13 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IExamMultipleChoiceAnswer>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            ExamManager = ApplicationDomain.GetService<IExamManager>();
+            MultipleChoiceCandidateAnswerManager = ApplicationDomain.GetService<IMultipleChoiceCandidateAnswerManager>();
+            MultipleChoiceQuestionManager = ApplicationDomain.GetService<IMultipleChoiceQuestionManager>();
         }
     }
 }

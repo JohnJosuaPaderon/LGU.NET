@@ -144,5 +144,10 @@ namespace LGU.EntityConverters.HumanResource
                 return new ProcessResult<ICalendarEvent>(ex);
             }
         }
+
+        public void InitializeDependency()
+        {
+            // TODO: Initialize Entity Managers
+        }
     }
 }

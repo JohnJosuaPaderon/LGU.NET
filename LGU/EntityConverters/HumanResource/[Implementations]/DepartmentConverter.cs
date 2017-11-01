@@ -13,10 +13,9 @@ namespace LGU.EntityConverters.HumanResource
 {
     public class DepartmentConverter : IDepartmentConverter
     {
-        public DepartmentConverter(IDepartmentFields fields, IEmployeeManager employeeManager)
+        public DepartmentConverter(IDepartmentFields fields)
         {
             _Fields = fields;
-            _EmployeeManager = employeeManager;
 
             PId = new DataConverterProperty<int>();
             PDescription = new DataConverterProperty<string>();
@@ -25,12 +24,13 @@ namespace LGU.EntityConverters.HumanResource
         }
 
         private readonly IDepartmentFields _Fields;
-        private readonly IEmployeeManager _EmployeeManager;
 
         public IDataConverterProperty<int> PId { get; }
         public IDataConverterProperty<string> PDescription { get; }
         public IDataConverterProperty<string> PAbbreviation { get; }
         public IDataConverterProperty<IEmployee> PHead { get; }
+
+        private IEmployeeManager EmployeeManager;
 
         private IDepartment Get(IEmployee head, DbDataReader reader)
         {
@@ -45,19 +45,19 @@ namespace LGU.EntityConverters.HumanResource
 
         private IDepartment Get(DbDataReader reader)
         {
-            var head = PHead.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.HeadId);
+            var head = PHead.TryGetValueFromProcess(EmployeeManager.GetById, reader.GetInt64, _Fields.HeadId);
             return Get(head, reader);
         }
 
         private async Task<IDepartment> GetAsync(DbDataReader reader)
         {
-            var head = await PHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId);
+            var head = await PHead.TryGetValueFromProcessAsync(EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId);
             return Get(head, reader);
         }
 
         private async Task<IDepartment> GetAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var head = await PHead.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId, cancellationToken);
+            var head = await PHead.TryGetValueFromProcessAsync(EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.HeadId, cancellationToken);
             return Get(head, reader);
         }
 
@@ -156,6 +156,11 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IDepartment>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
         }
     }
 }

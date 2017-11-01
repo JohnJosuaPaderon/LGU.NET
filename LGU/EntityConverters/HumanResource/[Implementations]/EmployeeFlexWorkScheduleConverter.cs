@@ -13,19 +13,12 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class EmployeeFlexWorkScheduleConverter : IEmployeeFlexWorkScheduleConverter
     {
-        public EmployeeFlexWorkScheduleConverter(
-            IEmployeeFlexWorkScheduleFields fields,
-            IEmployeeManager employeeManager,
-            IWorkTimeScheduleManager workTimeScheduleManager)
+        public EmployeeFlexWorkScheduleConverter(IEmployeeFlexWorkScheduleFields fields)
         {
             _Fields = fields;
-            _EmployeeManager = employeeManager;
-            _WorkTimeScheduleManager = workTimeScheduleManager;
         }
 
         private readonly IEmployeeFlexWorkScheduleFields _Fields;
-        private readonly IEmployeeManager _EmployeeManager;
-        private readonly IWorkTimeScheduleManager _WorkTimeScheduleManager;
 
         public IDataConverterProperty<long> PId { get; }
         public IDataConverterProperty<IEmployee> PEmployee { get; }
@@ -38,6 +31,9 @@ namespace LGU.EntityConverters.HumanResource
         public IDataConverterProperty<IWorkTimeSchedule> PThursdayWorkTimeSchedule { get; }
         public IDataConverterProperty<IWorkTimeSchedule> PFridayWorkTimeSchedule { get; }
         public IDataConverterProperty<IWorkTimeSchedule> PSaturdayWorkTimeSchedule { get; }
+
+        private IEmployeeManager EmployeeManager;
+        private IWorkTimeScheduleManager WorkTimeScheduleManager;
 
         private IEmployeeFlexWorkSchedule Get(
             IEmployee employee,
@@ -72,14 +68,14 @@ namespace LGU.EntityConverters.HumanResource
 
         private IEmployeeFlexWorkSchedule Get(DbDataReader reader)
         {
-            var employee = PEmployee.TryGetValueFromProcess(_EmployeeManager.GetById, reader.GetInt64, _Fields.EmployeeId);
-            var sundayWorkTimeSchedule = PSundayWorkTimeSchedule.TryGetValueFromProcess(_WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.SundayWorkTimeScheduleId);
-            var mondayWorkTimeSchedule = PMondayWorkTimeSchedule.TryGetValueFromProcess(_WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.MondayWorkTimeScheduleId);
-            var tuesdayWorkTimeSchedule = PTuesdayWorkTimeSchedule.TryGetValueFromProcess(_WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.TuesdayWorkTimeScheduleId);
-            var wednesdayWorkTimeSchedule = PWednesdayWorkTimeSchedule.TryGetValueFromProcess(_WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.WednesdayWorkTimeScheduleId);
-            var thursdayWorkTimeSchedule = PThursdayWorkTimeSchedule.TryGetValueFromProcess(_WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.ThursdayWorkTimeScheduleId);
-            var fridayWorkTimeSchedule = PFridayWorkTimeSchedule.TryGetValueFromProcess(_WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.FridayWorkTimeScheduleId);
-            var saturdayWorkTimeSchedule = PSaturdayWorkTimeSchedule.TryGetValueFromProcess(_WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.SaturdayWorkTimeScheduleId);
+            var employee = PEmployee.TryGetValueFromProcess(EmployeeManager.GetById, reader.GetInt64, _Fields.EmployeeId);
+            var sundayWorkTimeSchedule = PSundayWorkTimeSchedule.TryGetValueFromProcess(WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.SundayWorkTimeScheduleId);
+            var mondayWorkTimeSchedule = PMondayWorkTimeSchedule.TryGetValueFromProcess(WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.MondayWorkTimeScheduleId);
+            var tuesdayWorkTimeSchedule = PTuesdayWorkTimeSchedule.TryGetValueFromProcess(WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.TuesdayWorkTimeScheduleId);
+            var wednesdayWorkTimeSchedule = PWednesdayWorkTimeSchedule.TryGetValueFromProcess(WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.WednesdayWorkTimeScheduleId);
+            var thursdayWorkTimeSchedule = PThursdayWorkTimeSchedule.TryGetValueFromProcess(WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.ThursdayWorkTimeScheduleId);
+            var fridayWorkTimeSchedule = PFridayWorkTimeSchedule.TryGetValueFromProcess(WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.FridayWorkTimeScheduleId);
+            var saturdayWorkTimeSchedule = PSaturdayWorkTimeSchedule.TryGetValueFromProcess(WorkTimeScheduleManager.GetById, reader.GetInt32, _Fields.SaturdayWorkTimeScheduleId);
 
             return Get(
                 employee,
@@ -95,14 +91,14 @@ namespace LGU.EntityConverters.HumanResource
 
         private async Task<IEmployeeFlexWorkSchedule> GetAsync(DbDataReader reader)
         {
-            var employee = await PEmployee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId);
-            var sundayWorkTimeSchedule = await PSundayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.SundayWorkTimeScheduleId);
-            var mondayWorkTimeSchedule = await PMondayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.MondayWorkTimeScheduleId);
-            var tuesdayWorkTimeSchedule = await PTuesdayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.TuesdayWorkTimeScheduleId);
-            var wednesdayWorkTimeSchedule = await PWednesdayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.WednesdayWorkTimeScheduleId);
-            var thursdayWorkTimeSchedule = await PThursdayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.ThursdayWorkTimeScheduleId);
-            var fridayWorkTimeSchedule = await PFridayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.FridayWorkTimeScheduleId);
-            var saturdayWorkTimeSchedule = await PSaturdayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.SaturdayWorkTimeScheduleId);
+            var employee = await PEmployee.TryGetValueFromProcessAsync(EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId);
+            var sundayWorkTimeSchedule = await PSundayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.SundayWorkTimeScheduleId);
+            var mondayWorkTimeSchedule = await PMondayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.MondayWorkTimeScheduleId);
+            var tuesdayWorkTimeSchedule = await PTuesdayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.TuesdayWorkTimeScheduleId);
+            var wednesdayWorkTimeSchedule = await PWednesdayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.WednesdayWorkTimeScheduleId);
+            var thursdayWorkTimeSchedule = await PThursdayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.ThursdayWorkTimeScheduleId);
+            var fridayWorkTimeSchedule = await PFridayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.FridayWorkTimeScheduleId);
+            var saturdayWorkTimeSchedule = await PSaturdayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.SaturdayWorkTimeScheduleId);
 
             return Get(
                 employee,
@@ -118,14 +114,14 @@ namespace LGU.EntityConverters.HumanResource
 
         private async Task<IEmployeeFlexWorkSchedule> GetAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var employee = await PEmployee.TryGetValueFromProcessAsync(_EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId, cancellationToken);
-            var sundayWorkTimeSchedule = await PSundayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.SundayWorkTimeScheduleId, cancellationToken);
-            var mondayWorkTimeSchedule = await PMondayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.MondayWorkTimeScheduleId, cancellationToken);
-            var tuesdayWorkTimeSchedule = await PTuesdayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.TuesdayWorkTimeScheduleId, cancellationToken);
-            var wednesdayWorkTimeSchedule = await PWednesdayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.WednesdayWorkTimeScheduleId, cancellationToken);
-            var thursdayWorkTimeSchedule = await PThursdayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.ThursdayWorkTimeScheduleId, cancellationToken);
-            var fridayWorkTimeSchedule = await PFridayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.FridayWorkTimeScheduleId, cancellationToken);
-            var saturdayWorkTimeSchedule = await PSaturdayWorkTimeSchedule.TryGetValueFromProcessAsync(_WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.SaturdayWorkTimeScheduleId, cancellationToken);
+            var employee = await PEmployee.TryGetValueFromProcessAsync(EmployeeManager.GetByIdAsync, reader.GetInt64, _Fields.EmployeeId, cancellationToken);
+            var sundayWorkTimeSchedule = await PSundayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.SundayWorkTimeScheduleId, cancellationToken);
+            var mondayWorkTimeSchedule = await PMondayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.MondayWorkTimeScheduleId, cancellationToken);
+            var tuesdayWorkTimeSchedule = await PTuesdayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.TuesdayWorkTimeScheduleId, cancellationToken);
+            var wednesdayWorkTimeSchedule = await PWednesdayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.WednesdayWorkTimeScheduleId, cancellationToken);
+            var thursdayWorkTimeSchedule = await PThursdayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.ThursdayWorkTimeScheduleId, cancellationToken);
+            var fridayWorkTimeSchedule = await PFridayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.FridayWorkTimeScheduleId, cancellationToken);
+            var saturdayWorkTimeSchedule = await PSaturdayWorkTimeSchedule.TryGetValueFromProcessAsync(WorkTimeScheduleManager.GetByIdAsync, reader.GetInt32, _Fields.SaturdayWorkTimeScheduleId, cancellationToken);
 
             return Get(
                 employee,
@@ -233,6 +229,12 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IEmployeeFlexWorkSchedule>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
+            WorkTimeScheduleManager = ApplicationDomain.GetService<IWorkTimeScheduleManager>();
         }
     }
 }

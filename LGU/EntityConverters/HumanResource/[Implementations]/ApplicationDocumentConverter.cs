@@ -14,16 +14,8 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class ApplicationDocumentConverter : IApplicationDocumentConverter
     {
-        private readonly IDocumentPathTypeManager r_DocumentPathTypeManager;
-        private readonly IApplicationManager r_ApplicationManager;
-
-        public ApplicationDocumentConverter(
-            IDocumentPathTypeManager documentPathTypeManager,
-            IApplicationManager applicationManager)
-        {
-            r_DocumentPathTypeManager = documentPathTypeManager;
-            r_ApplicationManager = applicationManager;
-        }
+        private IDocumentPathTypeManager DocumentPathTypeManager;
+        private IApplicationManager ApplicationManager;
 
         private IApplicationDocument GetData(IApplication application, IDocumentPathType pathType, DbDataReader reader)
         {
@@ -47,24 +39,24 @@ namespace LGU.EntityConverters.HumanResource
 
         private IApplicationDocument GetData(DbDataReader reader)
         {
-            var applicationResult = r_ApplicationManager.GetById(reader.GetInt64("ApplicationId"));
-            var pathTypeResult = r_DocumentPathTypeManager.GetById(reader.GetInt16("PathTypeId"));
+            var applicationResult = ApplicationManager.GetById(reader.GetInt64("ApplicationId"));
+            var pathTypeResult = DocumentPathTypeManager.GetById(reader.GetInt16("PathTypeId"));
 
             return GetData(applicationResult.Data, pathTypeResult.Data, reader);
         }
 
         private async Task<IApplicationDocument> GetDataAsync(DbDataReader reader)
         {
-            var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"));
-            var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"));
+            var applicationResult = await ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"));
+            var pathTypeResult = await DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"));
 
             return GetData(applicationResult.Data, pathTypeResult.Data, reader);
         }
 
         private async Task<IApplicationDocument> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var applicationResult = await r_ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"), cancellationToken);
-            var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"), cancellationToken);
+            var applicationResult = await ApplicationManager.GetByIdAsync(reader.GetInt64("ApplicationId"), cancellationToken);
+            var pathTypeResult = await DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"), cancellationToken);
 
             return GetData(applicationResult.Data, pathTypeResult.Data, reader);
         }
@@ -163,6 +155,12 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IApplicationDocument>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            DocumentPathTypeManager = ApplicationDomain.GetService<IDocumentPathTypeManager>();
+            ApplicationManager = ApplicationDomain.GetService<IApplicationManager>();
         }
     }
 }

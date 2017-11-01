@@ -12,16 +12,8 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class EmployeeSalaryGradeStepConverter : IEmployeeSalaryGradeStepConverter
     {
-        public EmployeeSalaryGradeStepConverter(
-            IEmployeeManager employeeManager,
-            ISalaryGradeStepManager salaryGradeStepManager)
-        {
-            _EmployeeManager = employeeManager;
-            _SalaryGradeStepManager = salaryGradeStepManager;
-        }
-
-        private readonly IEmployeeManager _EmployeeManager;
-        private readonly ISalaryGradeStepManager _SalaryGradeStepManager;
+        private IEmployeeManager EmployeeManager;
+        private ISalaryGradeStepManager SalaryGradeStepManager;
 
         private IEmployeeSalaryGradeStep GetData(IEmployee employee, ISalaryGradeStep salaryGradeStep, DbDataReader reader)
         {
@@ -35,24 +27,24 @@ namespace LGU.EntityConverters.HumanResource
 
         private IEmployeeSalaryGradeStep GetData(DbDataReader reader)
         {
-            var employeeResult = _EmployeeManager.GetById(reader.GetInt64("EmployeeId"));
-            var salaryGradeStepResult = _SalaryGradeStepManager.GetById(reader.GetInt64("SalaryGradeStepId"));
+            var employeeResult = EmployeeManager.GetById(reader.GetInt64("EmployeeId"));
+            var salaryGradeStepResult = SalaryGradeStepManager.GetById(reader.GetInt64("SalaryGradeStepId"));
 
             return GetData(employeeResult.Data, salaryGradeStepResult.Data, reader);
         }
 
         private async Task<IEmployeeSalaryGradeStep> GetDataAsync(DbDataReader reader)
         {
-            var employeeResult = await _EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"));
-            var salaryGradeStepResult = await _SalaryGradeStepManager.GetByIdAsync(reader.GetInt64("SalaryGradeStepId"));
+            var employeeResult = await EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"));
+            var salaryGradeStepResult = await SalaryGradeStepManager.GetByIdAsync(reader.GetInt64("SalaryGradeStepId"));
 
             return GetData(employeeResult.Data, salaryGradeStepResult.Data, reader);
         }
 
         private async Task<IEmployeeSalaryGradeStep> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var employeeResult = await _EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"), cancellationToken);
-            var salaryGradeStepResult = await _SalaryGradeStepManager.GetByIdAsync(reader.GetInt64("SalaryGradeStepId"), cancellationToken);
+            var employeeResult = await EmployeeManager.GetByIdAsync(reader.GetInt64("EmployeeId"), cancellationToken);
+            var salaryGradeStepResult = await SalaryGradeStepManager.GetByIdAsync(reader.GetInt64("SalaryGradeStepId"), cancellationToken);
 
             return GetData(employeeResult.Data, salaryGradeStepResult.Data, reader);
         }
@@ -154,6 +146,12 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IEmployeeSalaryGradeStep>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
+            SalaryGradeStepManager = ApplicationDomain.GetService<ISalaryGradeStepManager>();
         }
     }
 }

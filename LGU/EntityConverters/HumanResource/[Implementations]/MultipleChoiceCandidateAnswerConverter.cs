@@ -12,12 +12,7 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class MultipleChoiceCandidateAnswerConverter : IMultipleChoiceCandidateAnswerConverter
     {
-        private readonly IMultipleChoiceQuestionManager r_MultipleChoiceQuestionManager;
-
-        public MultipleChoiceCandidateAnswerConverter(IMultipleChoiceQuestionManager multipleChoiceQuestionManager)
-        {
-            r_MultipleChoiceQuestionManager = multipleChoiceQuestionManager;
-        }
+        private IMultipleChoiceQuestionManager MultipleChoiceQuestionManager;
 
         private IMultipleChoiceCandidateAnswer GetData(IMultipleChoiceQuestion question, DbDataReader reader)
         {
@@ -38,21 +33,21 @@ namespace LGU.EntityConverters.HumanResource
 
         private IMultipleChoiceCandidateAnswer GetData(DbDataReader reader)
         {
-            var questionResult = r_MultipleChoiceQuestionManager.GetById(reader.GetInt64("QuestionId"));
+            var questionResult = MultipleChoiceQuestionManager.GetById(reader.GetInt64("QuestionId"));
 
             return GetData(questionResult.Data, reader);
         }
 
         private async Task<IMultipleChoiceCandidateAnswer> GetDataAsync(DbDataReader reader)
         {
-            var questionResult = await r_MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"));
+            var questionResult = await MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"));
 
             return GetData(questionResult.Data, reader);
         }
 
         private async Task<IMultipleChoiceCandidateAnswer> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var questionResult = await r_MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"), cancellationToken);
+            var questionResult = await MultipleChoiceQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"), cancellationToken);
 
             return GetData(questionResult.Data, reader);
         }
@@ -151,6 +146,11 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IMultipleChoiceCandidateAnswer>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            MultipleChoiceQuestionManager = ApplicationDomain.GetService<IMultipleChoiceQuestionManager>();
         }
     }
 }

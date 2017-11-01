@@ -12,18 +12,8 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class ExamEssayAnswerConverter : IExamEssayAnswerConverter
     {
-        
-
-        public ExamEssayAnswerConverter(
-            IExamManager examManager,
-            IEssayQuestionManager essayQuestionManager)
-        {
-            _ExamManager = examManager;
-            _EssayQuestionManager = essayQuestionManager;
-        }
-
-        private readonly IExamManager _ExamManager;
-        private readonly IEssayQuestionManager _EssayQuestionManager;
+        private IExamManager ExamManager;
+        private IEssayQuestionManager EssayQuestionManager;
 
         private IExamEssayAnswer GetData(IExam exam, IEssayQuestion question, DbDataReader reader)
         {
@@ -43,24 +33,24 @@ namespace LGU.EntityConverters.HumanResource
 
         private IExamEssayAnswer GetData(DbDataReader reader)
         {
-            var examResult = _ExamManager.GetById(reader.GetInt64("ExamId"));
-            var questionResult = _EssayQuestionManager.GetById(reader.GetInt64("QuestionId"));
+            var examResult = ExamManager.GetById(reader.GetInt64("ExamId"));
+            var questionResult = EssayQuestionManager.GetById(reader.GetInt64("QuestionId"));
 
             return GetData(examResult.Data, questionResult.Data, reader);
         }
 
         private async Task<IExamEssayAnswer> GetDataAsync(DbDataReader reader)
         {
-            var examResult = await _ExamManager.GetByIdAsync(reader.GetInt64("ExamId"));
-            var questionResult = await _EssayQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"));
+            var examResult = await ExamManager.GetByIdAsync(reader.GetInt64("ExamId"));
+            var questionResult = await EssayQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"));
 
             return GetData(examResult.Data, questionResult.Data, reader);
         }
 
         private async Task<IExamEssayAnswer> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var examResult = await _ExamManager.GetByIdAsync(reader.GetInt64("ExamId"), cancellationToken);
-            var questionResult = await _EssayQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"), cancellationToken);
+            var examResult = await ExamManager.GetByIdAsync(reader.GetInt64("ExamId"), cancellationToken);
+            var questionResult = await EssayQuestionManager.GetByIdAsync(reader.GetInt64("QuestionId"), cancellationToken);
 
             return GetData(examResult.Data, questionResult.Data, reader);
         }
@@ -159,6 +149,12 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IExamEssayAnswer>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            ExamManager = ApplicationDomain.GetService<IExamManager>();
+            EssayQuestionManager = ApplicationDomain.GetService<IEssayQuestionManager>();
         }
     }
 }

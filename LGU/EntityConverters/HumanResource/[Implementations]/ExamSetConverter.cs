@@ -116,5 +116,10 @@ namespace LGU.EntityConverters.HumanResource
                 return new ProcessResult<IExamSet>(ex);
             }
         }
+
+        public void InitializeDependency()
+        {
+            // TODO: Initialize Entity Managers
+        }
     }
 }
