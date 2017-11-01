@@ -6,11 +6,11 @@ namespace LGU.EntityConverters.HumanResource
 {
     public interface IWorkTimeScheduleConverter : IDataConverter<IWorkTimeSchedule>
     {
-        IDataConverterProperty<int> Prop_Id { get; }
-        IDataConverterProperty<string> Prop_Description { get; }
-        IDataConverterProperty<DateTime> Prop_WorkTimeStart { get; }
-        IDataConverterProperty<DateTime> Prop_WorkTimeEnd { get; }
-        IDataConverterProperty<TimeSpan?> Prop_BreakTime { get; }
-        IDataConverterProperty<int> Prop_WorkingMonthDays { get; }
+        IDataConverterProperty<int> PId { get; }
+        IDataConverterProperty<string> PDescription { get; }
+        IDataConverterProperty<DateTime> PWorkTimeStart { get; }
+        IDataConverterProperty<DateTime> PWorkTimeEnd { get; }
+        IDataConverterProperty<TimeSpan?> PBreakTime { get; }
+        IDataConverterProperty<int> PWorkingMonthDays { get; }
     }
 }
