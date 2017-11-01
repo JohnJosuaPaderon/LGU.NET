@@ -13,6 +13,7 @@ namespace LGU.Processes
         IEnumerableProcessResult<T> EnumerableFromReader(TDataReader reader);
         Task<IEnumerableProcessResult<T>> EnumerableFromReaderAsync(TDataReader reader);
         Task<IEnumerableProcessResult<T>> EnumerableFromReaderAsync(TDataReader reader, CancellationToken cancellationToken);
+        void InitializeDependency();
     }
 
     public interface IDataConverter<T>
@@ -23,5 +24,6 @@ namespace LGU.Processes
         IEnumerableProcessResult<T> EnumerableFromReader(DbDataReader reader);
         Task<IEnumerableProcessResult<T>> EnumerableFromReaderAsync(DbDataReader reader);
         Task<IEnumerableProcessResult<T>> EnumerableFromReaderAsync(DbDataReader reader, CancellationToken cancellationToken);
+        void InitializeDependency();
     }
 }
