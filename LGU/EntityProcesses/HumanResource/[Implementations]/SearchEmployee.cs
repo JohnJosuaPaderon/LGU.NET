@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class SearchEmployee : EmployeeProcess, ISearchEmployee
+    public sealed class SearchEmployee : HumanResourceProcessBaseV2, ISearchEmployee
     {
         private const string PARAM_SEARCH_KEY = "@_SearchKey";
 
-        public SearchEmployee(IConnectionStringSource connectionStringSource, IEmployeeConverter converter) : base(connectionStringSource, converter)
+        public SearchEmployee(IConnectionStringSource connectionStringSource, IEmployeeConverter converter) : base(connectionStringSource)
         {
+            _Converter = converter;
         }
+
+        private readonly IEmployeeConverter _Converter;
 
         public string SearchKey { get; set; }
 

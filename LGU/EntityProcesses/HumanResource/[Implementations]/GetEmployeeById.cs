@@ -8,14 +8,16 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class GetEmployeeById : EmployeeProcess, IGetEmployeeById
+    public sealed class GetEmployeeById : HumanResourceProcessBaseV2, IGetEmployeeById
     {
-        public GetEmployeeById(IConnectionStringSource connectionStringSource, IEmployeeConverter converter, IEmployeeParameters parameters) : base(connectionStringSource, converter)
+        public GetEmployeeById(IConnectionStringSource connectionStringSource, IEmployeeParameters parameters, IEmployeeConverter converter) : base(connectionStringSource)
         {
             _Parameters = parameters;
+            _Converter = converter;
         }
 
         private readonly IEmployeeParameters _Parameters;
+        private readonly IEmployeeConverter _Converter;
 
         public long EmployeeId { get; set; }
 

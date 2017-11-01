@@ -9,17 +9,19 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class GetEmployeeListWithTimeLogByDepartment : EmployeeProcess, IGetEmployeeListWithTimeLogByDepartment
+    public sealed class GetEmployeeListWithTimeLogByDepartment : HumanResourceProcessBaseV2, IGetEmployeeListWithTimeLogByDepartment
     {
         private const string PARAM_CUT_OFF_BEGIN = "@_CutOffBegin";
         private const string PARAM_CUT_OFF_END = "@_CutOffEnd";
 
-        public GetEmployeeListWithTimeLogByDepartment(IConnectionStringSource connectionStringSource, IEmployeeConverter converter, IEmployeeParameters parameters) : base(connectionStringSource, converter)
+        public GetEmployeeListWithTimeLogByDepartment(IConnectionStringSource connectionStringSource, IEmployeeParameters parameters, IEmployeeConverter converter) : base(connectionStringSource)
         {
             _Parameters = parameters;
+            _Converter = converter;
         }
 
         private readonly IEmployeeParameters _Parameters;
+        private readonly IEmployeeConverter _Converter;
 
         public ValueRange<DateTime> CutOff { get; set; }
         public IDepartment Department { get; set; }

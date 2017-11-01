@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class GetEmployeeList : EmployeeProcess, IGetEmployeeList
+    public sealed class GetEmployeeList : HumanResourceProcessBaseV2, IGetEmployeeList
     {
-        public GetEmployeeList(IConnectionStringSource connectionStringSource, IEmployeeConverter converter) : base(connectionStringSource, converter)
+        public GetEmployeeList(IConnectionStringSource connectionStringSource, IEmployeeConverter converter) : base(connectionStringSource)
         {
+            _Converter = converter;
         }
+
+        private readonly IEmployeeConverter _Converter;
 
         private SqlQueryInfo QueryInfo => SqlQueryInfo.CreateProcedureQueryInfo(GetQualifiedDbObjectName());
 

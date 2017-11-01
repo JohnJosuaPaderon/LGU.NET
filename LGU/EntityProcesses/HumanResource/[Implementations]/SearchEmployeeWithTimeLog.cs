@@ -4,21 +4,23 @@ using LGU.Entities.HumanResource;
 using LGU.EntityConverters.HumanResource;
 using LGU.Processes;
 using System;
-using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class SearchEmployeeWithTimeLog : EmployeeProcess, ISearchEmployeeWithTimeLog
+    public sealed class SearchEmployeeWithTimeLog : HumanResourceProcessBaseV2, ISearchEmployeeWithTimeLog
     {
         private const string PARAM_SEARCH_KEY = "@_SearchKey";
         private const string PARAM_CUT_OFF_BEGIN = "@_CutOffBegin";
         private const string PARAM_CUT_OFF_END = "@_CutOffEnd";
 
-        public SearchEmployeeWithTimeLog(IConnectionStringSource connectionStringSource, IEmployeeConverter converter) : base(connectionStringSource, converter)
+        public SearchEmployeeWithTimeLog(IConnectionStringSource connectionStringSource, IEmployeeConverter converter) : base(connectionStringSource)
         {
+            _Converter = converter;
         }
+
+        private readonly IEmployeeConverter _Converter;
 
         public string SearchKey { get; set; }
         public ValueRange<DateTime> CutOff { get; set; }
