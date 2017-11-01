@@ -12,12 +12,7 @@ namespace LGU.EntityConverters.HumanResource
 {
     public sealed class EmployeeFingerPrintSetConverter : IEmployeeFingerPrintSetConverter
     {
-        private readonly IEmployeeManager r_EmployeeManager;
-
-        public EmployeeFingerPrintSetConverter(IEmployeeManager employeeManager)
-        {
-            r_EmployeeManager = employeeManager;
-        }
+        private IEmployeeManager EmployeeManager;
 
         private IEmployeeFingerPrintSet GetData(IEmployee employee, DbDataReader reader)
         {
@@ -60,7 +55,7 @@ namespace LGU.EntityConverters.HumanResource
 
         private IEmployeeFingerPrintSet GetData(DbDataReader reader)
         {
-            var employeeResult = r_EmployeeManager.GetById(reader.GetInt64("Id"));
+            var employeeResult = EmployeeManager.GetById(reader.GetInt64("Id"));
 
             if (employeeResult.Status == ProcessResultStatus.Success)
             {
@@ -74,7 +69,7 @@ namespace LGU.EntityConverters.HumanResource
 
         private async Task<IEmployeeFingerPrintSet> GetDataAsync(DbDataReader reader)
         {
-            var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("Id"));
+            var employeeResult = await EmployeeManager.GetByIdAsync(reader.GetInt64("Id"));
 
             if (employeeResult.Status == ProcessResultStatus.Success)
             {
@@ -88,7 +83,7 @@ namespace LGU.EntityConverters.HumanResource
 
         private async Task<IEmployeeFingerPrintSet> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var employeeResult = await r_EmployeeManager.GetByIdAsync(reader.GetInt64("Id"), cancellationToken);
+            var employeeResult = await EmployeeManager.GetByIdAsync(reader.GetInt64("Id"), cancellationToken);
 
             if (employeeResult.Status == ProcessResultStatus.Success)
             {
@@ -194,6 +189,11 @@ namespace LGU.EntityConverters.HumanResource
             {
                 return new ProcessResult<IEmployeeFingerPrintSet>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            EmployeeManager = ApplicationDomain.GetService<IEmployeeManager>();
         }
     }
 }
