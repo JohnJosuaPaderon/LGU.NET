@@ -167,6 +167,7 @@
     <Compile Include="Events\ShowTitleBarEvent.cs" />
     <Compile Include="Events\TitleEvent.cs" />
     <Compile Include="Events\WindowStateEvent.cs" />
+    <Compile Include="Extensions\IUnityContainerExtension.Definitions.HumanResource.cs" />
     <Compile Include="Extensions\ObservableCollectionExtension.cs" />
     <Compile Include="Interactivity\CustomNotification.cs" />
     <Compile Include="Interactivity\HumanResource\EmployeeSearchNotification.cs" />

@@ -1,4 +1,5 @@
-﻿using LGU.Extensions;
+﻿using LGU.EntityManagers.HumanResource;
+using LGU.Extensions;
 using LGU.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Unity;
@@ -24,6 +25,7 @@ namespace LGU
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+            
             ApplicationDomain.SystemDirectory = ConfigurationManager.AppSettings["SystemDirectory"];
             ApplicationDomain.ReportDirectory = ConfigurationManager.AppSettings.GetString("ReportDirectory");
             ApplicationDomain.ReportTemplateDirectory = ConfigurationManager.AppSettings.GetString("ReportTemplateDirectory");
