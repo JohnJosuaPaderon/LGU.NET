@@ -454,6 +454,8 @@ namespace LGU.Extensions
         public static IServiceCollection UseSqlServer_WorkTimeSchedule(this IServiceCollection instance)
         {
             instance.AddTransient<IWorkTimeScheduleConverter, WorkTimeScheduleConverter>();
+            instance.AddSingleton<IWorkTimeScheduleFields, WorkTimeScheduleFields>();
+            instance.AddSingleton<IWorkTimeScheduleParameters, WorkTimeScheduleParameters>();
             instance.AddSingleton<IDeleteWorkTimeSchedule, DeleteWorkTimeSchedule>();
             instance.AddSingleton<IGetWorkTimeScheduleById, GetWorkTimeScheduleById>();
             instance.AddSingleton<IGetWorkTimeScheduleList, GetWorkTimeScheduleList>();
