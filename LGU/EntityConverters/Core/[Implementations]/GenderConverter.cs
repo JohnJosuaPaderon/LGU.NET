@@ -128,5 +128,10 @@ namespace LGU.EntityConverters.Core
                 return new ProcessResult<IGender>(ex);
             }
         }
+
+        public void InitializeDependency()
+        {
+            // TODO: Initialize Entity Managers
+        }
     }
 }

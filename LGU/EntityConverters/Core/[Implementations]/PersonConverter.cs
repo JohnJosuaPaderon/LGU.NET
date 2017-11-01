@@ -22,10 +22,8 @@ namespace LGU.EntityConverters.Core
         private const string FIELD_BIRTH_DATE = "BirthDate";
         private const string FIELD_DECEASED = "Deceased";
 
-        public PersonConverter(IGenderManager genderManager)
+        public PersonConverter()
         {
-            r_GenderManager = genderManager;
-
             Prop_Id = new DataConverterProperty<long>();
             Prop_FirstName = new DataConverterProperty<string>();
             Prop_MiddleName = new DataConverterProperty<string>();
@@ -33,7 +31,7 @@ namespace LGU.EntityConverters.Core
             Prop_NameExtension = new DataConverterProperty<string>();
         }
 
-        private readonly IGenderManager r_GenderManager;
+        private IGenderManager GenderManager;
 
         public IDataConverterProperty<long> Prop_Id { get; }
         public IDataConverterProperty<string> Prop_FirstName { get; }
@@ -62,19 +60,19 @@ namespace LGU.EntityConverters.Core
 
         private IPerson GetData(DbDataReader reader)
         {
-            var gender = Prop_Gender.TryGetValueFromProcess(r_GenderManager.GetById, reader.GetInt16, FIELD_GENDER_ID) ;
+            var gender = Prop_Gender.TryGetValueFromProcess(GenderManager.GetById, reader.GetInt16, FIELD_GENDER_ID) ;
             return GetData(gender, reader);
         }
 
         private async Task<IPerson> GetDataAsync(DbDataReader reader)
         {
-            var gender = await Prop_Gender.TryGetValueFromProcessAsync(r_GenderManager.GetByIdAsync, reader.GetInt16, FIELD_GENDER_ID);
+            var gender = await Prop_Gender.TryGetValueFromProcessAsync(GenderManager.GetByIdAsync, reader.GetInt16, FIELD_GENDER_ID);
             return GetData(gender, reader);
         }
 
         private async Task<IPerson> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var gender = await Prop_Gender.TryGetValueFromProcessAsync(r_GenderManager.GetByIdAsync, reader.GetInt16, FIELD_GENDER_ID, cancellationToken);
+            var gender = await Prop_Gender.TryGetValueFromProcessAsync(GenderManager.GetByIdAsync, reader.GetInt16, FIELD_GENDER_ID, cancellationToken);
             return GetData(gender, reader);
         }
 
@@ -172,6 +170,11 @@ namespace LGU.EntityConverters.Core
             {
                 return new EnumerableProcessResult<IPerson>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            GenderManager = ApplicationDomain.GetService<IGenderManager>();
         }
     }
 }

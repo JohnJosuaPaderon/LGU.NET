@@ -12,13 +12,8 @@ namespace LGU.EntityConverters.Core
 {
     public sealed class DocumentConverter : IDocumentConverter
     {
-        private readonly IDocumentPathTypeManager r_DocumentPathTypeManager;
-
-        public DocumentConverter(IDocumentPathTypeManager documentPathTypeManager)
-        {
-            r_DocumentPathTypeManager = documentPathTypeManager;
-        }
-
+        private IDocumentPathTypeManager DocumentPathTypeManager;
+        
         private IDocument GetData(IDocumentPathType pathType, DbDataReader reader)
         {
             return new Document()
@@ -34,21 +29,21 @@ namespace LGU.EntityConverters.Core
 
         private IDocument GetData(DbDataReader reader)
         {
-            var pathTypeResult = r_DocumentPathTypeManager.GetById(reader.GetInt16("PathTypeId"));
+            var pathTypeResult = DocumentPathTypeManager.GetById(reader.GetInt16("PathTypeId"));
 
             return GetData(pathTypeResult.Data, reader);
         }
 
         private async Task<IDocument> GetDataAsync(DbDataReader reader)
         {
-            var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"));
+            var pathTypeResult = await DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"));
 
             return GetData(pathTypeResult.Data, reader);
         }
 
         private async Task<IDocument> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var pathTypeResult = await r_DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"), cancellationToken);
+            var pathTypeResult = await DocumentPathTypeManager.GetByIdAsync(reader.GetInt16("PathTypeId"), cancellationToken);
 
             return GetData(pathTypeResult.Data, reader);
         }
@@ -131,6 +126,11 @@ namespace LGU.EntityConverters.Core
         public Task<IProcessResult<IDocument>> FromReaderAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+
+        public void InitializeDependency()
+        {
+            DocumentPathTypeManager = ApplicationDomain.GetService<IDocumentPathTypeManager>();
         }
     }
 }

@@ -12,19 +12,9 @@ namespace LGU.EntityConverters.Core
 {
     public sealed class UserConverter : IUserConverter
     {
-        public UserConverter(
-            IPersonManager personManager,
-            IUserStatusManager userStatusManager,
-            IUserTypeManager userTypeManager)
-        {
-            _PersonManager = personManager;
-            _UserStatusManager = userStatusManager;
-            _UserTypeManager = userTypeManager;
-        }
-
-        private readonly IPersonManager _PersonManager;
-        private readonly IUserStatusManager _UserStatusManager;
-        private readonly IUserTypeManager _UserTypeManager;
+        private IPersonManager PersonManager;
+        private IUserStatusManager UserStatusManager;
+        private IUserTypeManager UserTypeManager;
 
         private IUser GetData(IPerson owner, IUserStatus status, IUserType type, DbDataReader reader)
         {
@@ -56,27 +46,27 @@ namespace LGU.EntityConverters.Core
 
         private IUser GetData(DbDataReader reader)
         {
-            var ownerResult = _PersonManager.GetById(reader.GetInt64("OwnerId"));
-            var statusResult = _UserStatusManager.GetById(reader.GetInt16("StatusId"));
-            var typeResult = _UserTypeManager.GetById(reader.GetInt16("TypeId"));
+            var ownerResult = PersonManager.GetById(reader.GetInt64("OwnerId"));
+            var statusResult = UserStatusManager.GetById(reader.GetInt16("StatusId"));
+            var typeResult = UserTypeManager.GetById(reader.GetInt16("TypeId"));
 
             return GetData(ownerResult.Data, statusResult.Data, typeResult.Data, reader);
         }
 
         private async Task<IUser> GetDataAsync(DbDataReader reader)
         {
-            var ownerResult = await _PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"));
-            var statusResult = await _UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"));
-            var typeResult = await _UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
+            var ownerResult = await PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"));
+            var statusResult = await UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"));
+            var typeResult = await UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"));
 
             return GetData(ownerResult.Data, statusResult.Data, typeResult.Data, reader);
         }
 
         private async Task<IUser> GetDataAsync(DbDataReader reader, CancellationToken cancellationToken)
         {
-            var ownerResult = await _PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"), cancellationToken);
-            var statusResult = await _UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"), cancellationToken);
-            var typeResult = await _UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
+            var ownerResult = await PersonManager.GetByIdAsync(reader.GetInt64("OwnerId"), cancellationToken);
+            var statusResult = await UserStatusManager.GetByIdAsync(reader.GetInt16("StatusId"), cancellationToken);
+            var typeResult = await UserTypeManager.GetByIdAsync(reader.GetInt16("TypeId"), cancellationToken);
 
             return GetData(ownerResult.Data, statusResult.Data, typeResult.Data, reader);
         }
@@ -175,6 +165,13 @@ namespace LGU.EntityConverters.Core
             {
                 return new ProcessResult<IUser>(ex);
             }
+        }
+
+        public void InitializeDependency()
+        {
+            PersonManager = ApplicationDomain.GetService<IPersonManager>();
+            UserStatusManager = ApplicationDomain.GetService<IUserStatusManager>();
+            UserTypeManager = ApplicationDomain.GetService<IUserTypeManager>();
         }
     }
 }

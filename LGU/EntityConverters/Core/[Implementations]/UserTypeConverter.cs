@@ -115,5 +115,10 @@ namespace LGU.EntityConverters.Core
                 return new ProcessResult<IUserType>(ex);
             }
         }
+
+        public void InitializeDependency()
+        {
+            // TODO: Initialize Entity Managers
+        }
     }
 }
