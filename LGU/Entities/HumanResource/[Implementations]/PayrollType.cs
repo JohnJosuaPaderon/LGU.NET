@@ -2,10 +2,16 @@
 {
     public class PayrollType : Entity<short>, IPayrollType
     {
-        public static PayrollType Regular { get; }
-        public static PayrollType Contractual { get; }
-        public static PayrollType ContractualPerVisit { get; }
-        public static PayrollType Casual { get; }
+        static PayrollType()
+        {
+            var initializer = ApplicationDomain.GetService<IPayrollTypeInitializer>();
+
+            Regular = initializer.Regular;
+            Contractual = initializer.Contractual;
+        }
+
+        public static IPayrollType Regular { get; }
+        public static IPayrollType Contractual { get; }
 
         public string Description { get; set; }
 
