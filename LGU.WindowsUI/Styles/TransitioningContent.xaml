@@ -4,7 +4,7 @@
     <Style x:Key="TileTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="SlideInFromBottom" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="SlideInFromBottom" Duration="0:0:0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -12,7 +12,7 @@
     <Style x:Key="NavigationTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="SlideInFromBottom" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="SlideInFromBottom" Duration="0:0:0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -20,7 +20,7 @@
     <Style x:Key="ExtraLargeHeaderTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="SlideInFromTop" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="SlideInFromTop" Duration="0:0:0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -28,7 +28,7 @@
     <Style x:Key="LargeHeaderTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="SlideInFromTop" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="SlideInFromTop" Duration="0:0:0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -36,7 +36,7 @@
     <Style x:Key="RegularHeaderTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="SlideInFromTop" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="SlideInFromTop" Duration="0:0:0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -44,7 +44,7 @@
     <Style x:Key="FooterTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="SlideInFromBottom" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="SlideInFromBottom" Duration="0:0:0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -52,7 +52,7 @@
     <Style x:Key="SlideInFromLeftTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="SlideInFromLeft" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="SlideInFromLeft" Duration="0:0:0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -60,7 +60,7 @@
     <Style x:Key="SlideInFromRightTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="SlideInFromRight" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="SlideInFromRight" Duration="0:0:0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -68,7 +68,7 @@
     <Style x:Key="SlideInFromTopTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="SlideInFromTop" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="SlideInFromTop" Duration="0:0:0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -76,7 +76,7 @@
     <Style x:Key="SlideInFromBottomTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="SlideInFromBottom" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="SlideInFromBottom" Duration="0:0:0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
@@ -84,7 +84,7 @@
     <Style x:Key="ExpandInTransitioningContent" TargetType="{x:Type materialDesign:TransitioningContent}">
         <Setter Property="OpeningEffect">
             <Setter.Value>
-                <materialDesign:TransitionEffect Kind="ExpandIn" Duration="0:0:1"/>
+                <materialDesign:TransitionEffect Kind="ExpandIn" Duration="0:0:0.5"/>
             </Setter.Value>
         </Setter>
     </Style>
