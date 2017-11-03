@@ -362,6 +362,7 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetPayrollTypeById, GetPayrollTypeById>();
             instance.AddSingleton<IGetPayrollTypeList, GetPayrollTypeList>();
             instance.AddSingleton<IPayrollTypeManager, PayrollTypeManager>();
+            instance.AddSingleton<IPayrollTypeInitializer, PayrollTypeInitializer>();
 
             return instance;
         }
