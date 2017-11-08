@@ -1,12 +1,10 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.Processes;
-using System.Data.Common;
+using System.Data.SqlClient;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IInsertPayrollContractualDepartment<TConnection, TTransaction> : IProcess<IPayrollContractualDepartment>, IProcess<IPayrollContractualDepartment, TConnection, TTransaction>
-        where TConnection : DbConnection
-        where TTransaction : DbTransaction
+    public interface IInsertPayrollContractualDepartment : IProcess<IPayrollContractualDepartment>, IProcess<IPayrollContractualDepartment, SqlConnection, SqlTransaction>
     {
         IPayrollContractualDepartment PayrollContractualDepartment { get; set; }
     }
