@@ -8,6 +8,6 @@
         }
 
         public IPayrollContractual Payroll { get; set; }
-        public IEntityCollection<IPayrollContractualEmployee> Employees { get; }
+        public IPayrollContractualEmployeeCollection Employees { get; }
     }
 }

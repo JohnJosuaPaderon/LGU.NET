@@ -1,9 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LGU.Entities.HumanResource
 {
-    public class PayrollContractualDepartmentCollection : EntityCollection<IPayrollContractualDepartment>, IPayrollContractualDepartmentCollection
+    public sealed class PayrollContractualDepartmentCollection : EntityCollection<IPayrollContractualDepartment>, IPayrollContractualDepartmentCollection
     {
+        public PayrollContractualDepartmentCollection(IPayrollContractual payroll)
+        {
+            Payroll = payroll ?? throw new ArgumentNullException(nameof(payroll));
+        }
+
         public IPayrollContractual Payroll { get; }
 
         protected override void UnsafeAdd(IPayrollContractualDepartment item)
