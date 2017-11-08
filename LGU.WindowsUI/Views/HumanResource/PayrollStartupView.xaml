@@ -3,138 +3,28 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:views="clr-namespace:LGU.Views"
-             xmlns:dialogs="clr-namespace:LGU.Views.HumanResource.Dialogs"
-             xmlns:interactivity="clr-namespace:LGU.Interactivity"
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding InitializeCommand}"/>
-        </i:EventTrigger>
-        <prism:InteractionRequestTrigger SourceObject="{Binding SelectRangeDateRequest, Mode=OneWay}">
-            <interactivity:CustomPopupWindowAction IsModal="True">
-                <interactivity:CustomPopupWindowAction.WindowContent>
-                    <views:DateTimeRangeSelectionView/>
-                </interactivity:CustomPopupWindowAction.WindowContent>
-            </interactivity:CustomPopupWindowAction>
-        </prism:InteractionRequestTrigger>
-        <prism:InteractionRequestTrigger SourceObject="{Binding SearchRequest,Mode=OneWay}">
-            <interactivity:CustomPopupWindowAction IsModal="True">
-                <interactivity:CustomPopupWindowAction.WindowContent>
-                    <dialogs:EmployeeSearchDialogView/>
-                </interactivity:CustomPopupWindowAction.WindowContent>
-            </interactivity:CustomPopupWindowAction>
-        </prism:InteractionRequestTrigger>
-    </i:Interaction.Triggers>
-    <materialDesign:DialogHost>
-        <materialDesign:Card HorizontalAlignment="Center" VerticalAlignment="Center" MinHeight="300" MinWidth="400">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Set-up Payroll" Style="{DynamicResource CardTitleTextBlock}"/>
-                    <materialDesign:PopupBox Grid.Column="1">
-                        <StackPanel>
-                            <Button Content="Load from file" Command="{Binding LoadFromFileCommand}"/>
-                            <Button Content="Save as..." Command="{Binding SaveAsCommand}"/>
-                        </StackPanel>
-                    </materialDesign:PopupBox>
-                </Grid>
-                <Grid Grid.Row="1" Margin="{DynamicResource DefaultMargin}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <ComboBox Grid.Row="0" ItemsSource="{Binding PayrollTypes}" SelectedItem="{Binding Payroll.Type}" materialDesign:HintAssist.Hint="Payroll Type">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Description}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="{Binding Payroll.RangeDate.Begin,StringFormat='MMMM d, yyyy'}" materialDesign:HintAssist.Hint="From" IsReadOnly="True"/>
-                        <TextBox Grid.Column="2" Text="{Binding Payroll.RangeDate.End,StringFormat='MMMM d, yyyy'}" materialDesign:HintAssist.Hint="To" IsReadOnly="True"/>
-                        <Button Grid.Column="4" Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" Command="{Binding SelectRangeDateCommand}">
-                            <materialDesign:PackIcon Kind="Pencil"/>
-                        </Button>
-                    </Grid>
-                    <materialDesign:Card Grid.Row="4">
-                        <Expander Header="Signatories">
-                            <Grid Margin="{DynamicResource DefaultMargin}">
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFloatingActionMiniButton}"/>
-                                </Grid.Resources>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <TextBox Grid.Row="0" Text="{Binding Payroll.Mayor.InformalFullName,Mode=OneWay}" materialDesign:HintAssist.Hint="Mayor"/>
-                                <TextBox Grid.Row="2" Text="{Binding Payroll.HumanResourceHead.InformalFullName,Mode=OneWay}" materialDesign:HintAssist.Hint="Human Resource Head"/>
-                                <TextBox Grid.Row="4" Text="{Binding Payroll.Treasurer.InformalFullName,Mode=OneWay}" materialDesign:HintAssist.Hint="Treasurer"/>
-                                <TextBox Grid.Row="6" Text="{Binding Payroll.CityAccountant.InformalFullName,Mode=OneWay}" materialDesign:HintAssist.Hint="City Accountant"/>
-                                <TextBox Grid.Row="8" Text="{Binding Payroll.CityBudgetOfficer.InformalFullName,Mode=OneWay}" materialDesign:HintAssist.Hint="City Budget Officer"/>
-                                <Button Grid.Row="0" Grid.Column="2" Command="{Binding SearchCommand}" CommandParameter="mayor">
-                                    <materialDesign:PackIcon Kind="Magnify"/>
-                                </Button>
-                                <Button Grid.Row="2" Grid.Column="2" Command="{Binding SearchCommand}" CommandParameter="humanresourcehead">
-                                    <materialDesign:PackIcon Kind="Magnify"/>
-                                </Button>
-                                <Button Grid.Row="4" Grid.Column="2" Command="{Binding SearchCommand}" CommandParameter="treasurer">
-                                    <materialDesign:PackIcon Kind="Magnify"/>
-                                </Button>
-                                <Button Grid.Row="6" Grid.Column="2" Command="{Binding SearchCommand}" CommandParameter="cityaccountant">
-                                    <materialDesign:PackIcon Kind="Magnify"/>
-                                </Button>
-                                <Button Grid.Row="8" Grid.Column="2" Command="{Binding SearchCommand}" CommandParameter="citybudgetofficer">
-                                    <materialDesign:PackIcon Kind="Magnify"/>
-                                </Button>
-                            </Grid>
-                        </Expander>
-                    </materialDesign:Card>
-                </Grid>
-                <materialDesign:ColorZone Grid.Row="2" Style="{DynamicResource FooterColorZone}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="1" Style="{DynamicResource MaterialDesignFloatingActionButton}" Command="{Binding ProceedCommand}">
-                            <materialDesign:PackIcon Kind="ArrowRight" Height="30" Width="30"/>
-                        </Button>
-                    </Grid>
-                </materialDesign:ColorZone>
-            </Grid>
-        </materialDesign:Card>
-    </materialDesign:DialogHost>
+    <ItemsControl>
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.Resources>
+            <Style TargetType="{x:Type materialDesign:TransitioningContent}" BasedOn="{StaticResource ExpandInTransitioningContent}"/>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+                <Setter Property="Height" Value="NaN"/>
+                <Setter Property="Width" Value="NaN"/>
+                <Setter Property="MinHeight" Value="50"/>
+                <Setter Property="MinWidth" Value="200"/>
+                <Setter Property="Margin" Value="{DynamicResource DefaultMargin}"/>
+            </Style>
+        </ItemsControl.Resources>
+        <materialDesign:TransitioningContent>
+            <Button Content="Regular"/>
+        </materialDesign:TransitioningContent>
+        <materialDesign:TransitioningContent>
+            <Button Content="Contractual" Command="{Binding NavigateCommand}" CommandParameter="ContractualPayrollView"/>
+        </materialDesign:TransitioningContent>
+    </ItemsControl>
 </UserControl>

@@ -23,7 +23,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="From" Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
-                <Calendar Grid.Row="2" SelectedDate="{Binding Content.Begin}">
+                <Calendar Grid.Row="2" SelectedDate="{Binding Notification.DateTimeRange.Begin}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedDatesChanged">
                             <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
@@ -38,7 +38,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="To" Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
-                <Calendar Grid.Row="2" SelectedDate="{Binding Content.End}">
+                <Calendar Grid.Row="2" SelectedDate="{Binding Notification.DateTimeRange.End}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedDatesChanged">
                             <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>

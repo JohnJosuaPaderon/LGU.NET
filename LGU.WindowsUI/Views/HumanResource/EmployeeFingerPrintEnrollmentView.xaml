@@ -22,7 +22,7 @@
             <ColumnDefinition Width="{DynamicResource ContainerGridSpace}"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromLeft,Duration=0:0:1}">
+        <materialDesign:TransitioningContent Style="{DynamicResource SlideInFromLeftTransitioningContent}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -93,7 +93,7 @@
                 </materialDesign:Card>
             </Grid>
         </materialDesign:TransitioningContent>
-        <materialDesign:TransitioningContent Grid.Column="2" OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight,Duration=0:0:1}">
+        <materialDesign:TransitioningContent Grid.Column="2" Style="{DynamicResource SlideInFromRightTransitioningContent}">
             <local:PreviewEmployeeView/>
         </materialDesign:TransitioningContent>
     </Grid>

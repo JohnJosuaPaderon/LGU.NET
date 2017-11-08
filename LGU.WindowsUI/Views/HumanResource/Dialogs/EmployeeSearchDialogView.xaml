@@ -30,7 +30,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" Text="{Binding SearchKey,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource SearchTextBox}" materialDesign:HintAssist.Hint="{Binding Content.SearchHint}">
+                    <TextBox Grid.Column="0" Text="{Binding SearchKey,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource SearchTextBox}" materialDesign:HintAssist.Hint="{Binding Notification.SearchHint}">
                         <TextBox.InputBindings>
                             <KeyBinding Command="{Binding SearchCommand}" Key="Return"/>
                         </TextBox.InputBindings>

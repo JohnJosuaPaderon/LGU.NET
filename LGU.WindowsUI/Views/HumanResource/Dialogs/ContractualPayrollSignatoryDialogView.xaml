@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="LGU.Views.HumanResource.Dialogs.ContractualPayrollSignatoryDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"  
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:interactivity="clr-namespace:LGU.Interactivity"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:local="clr-namespace:LGU.Views.HumanResource.Dialogs"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding EmployeeSearchRequest}">
+            <interactivity:CustomPopupWindowAction IsModal="True">
+                <interactivity:CustomPopupWindowAction.WindowContent>
+                    <local:EmployeeSearchDialogView/>
+                </interactivity:CustomPopupWindowAction.WindowContent>
+            </interactivity:CustomPopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Signatories" Style="{DynamicResource CardTitleTextBlock}"/>
+        <Grid Grid.Row="1" MinWidth="350" Margin="{DynamicResource DefaultMargin}">
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource _TextBox}">
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignFloatingActionMiniButton}"/>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding Notification.Payroll.Mayor.FullName,Mode=OneWay}" materialDesign:HintAssist.Hint="Mayor"/>
+                <Button Grid.Column="2" Command="{Binding SearchEmployeeCommand}" CommandParameter="mayor">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding Notification.Payroll.HumanResourceHead.FullName,Mode=OneWay}" materialDesign:HintAssist.Hint="Human Resource Head"/>
+                <Button Grid.Column="2" Command="{Binding SearchEmployeeCommand}" CommandParameter="humanresourcehead">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding Notification.Payroll.Treasurer.FullName,Mode=OneWay}" materialDesign:HintAssist.Hint="Treasurer"/>
+                <Button Grid.Column="2" Command="{Binding SearchEmployeeCommand}" CommandParameter="treasurer">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding Notification.Payroll.CityAccountant.FullName,Mode=OneWay}" materialDesign:HintAssist.Hint="City Accountant"/>
+                <Button Grid.Column="2" Command="{Binding SearchEmployeeCommand}" CommandParameter="cityaccountant">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding Notification.Payroll.CityBudgetOfficer.FullName,Mode=OneWay}" materialDesign:HintAssist.Hint="City Budget Officer"/>
+                <Button Grid.Column="2" Command="{Binding SearchEmployeeCommand}" CommandParameter="citybudgetofficer">
+                    <materialDesign:PackIcon Kind="Magnify"/>
+                </Button>
+            </Grid>
+        </Grid>
+        <materialDesign:ColorZone Grid.Row="2" Style="{DynamicResource FooterColorZone}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" Command="{Binding CloseCommand}">
+                    <materialDesign:PackIcon Kind="Close"/>
+                </Button>
+            </Grid>
+        </materialDesign:ColorZone>
+    </Grid>
+</UserControl>
