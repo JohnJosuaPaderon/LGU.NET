@@ -84,7 +84,7 @@ namespace LGU.Reports
             {
                 try
                 {
-                    Document.SaveAs2(filePath);
+                    Document.SaveAs(filePath);
                     EventHandler?.OnExported(filePath);
                 }
                 catch (Exception ex)
