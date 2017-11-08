@@ -5,6 +5,7 @@ namespace LGU.EntityConverters.HumanResource
 {
     public interface IPayrollContractualEmployeeConverter : IDataConverter<IPayrollContractualEmployee>
     {
+        IDataConverterProperty<long> PId { get; }
         IDataConverterProperty<IPayrollContractualDepartment> PDepartment { get; }
         IDataConverterProperty<IEmployee> PEmployee { get; }
         IDataConverterProperty<decimal> PMonthlyRate { get; }
