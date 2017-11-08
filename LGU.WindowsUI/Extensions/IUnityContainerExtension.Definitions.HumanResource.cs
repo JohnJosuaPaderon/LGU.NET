@@ -337,7 +337,7 @@ namespace LGU.Extensions
             instance.RegisterType<IPayrollContractualEmployeeConverter, PayrollContractualEmployeeConverter>();
             instance.RegisterType<IPayrollContractualEmployeeFields, PayrollContractualEmployeeFields>();
             instance.RegisterType<IPayrollContractualEmployeeParameters, PayrollContractualEmployeeParameters>();
-            instance.RegisterType<IInsertPayrollContractualEmployee<SqlConnection, SqlTransaction>, InsertPayrollContractualEmployee>();
+            instance.RegisterType<IInsertPayrollContractualEmployee, InsertPayrollContractualEmployee>();
             instance.RegisterType<IGeneratePayrollContractualEmployeeList, GeneratePayrollContractualEmployeeList>();
             instance.RegisterType<IGeneratePayrollContractualEmployeeListByDepartment, GeneratePayrollContractualEmployeeListByDepartment>();
             instance.RegisterType<IPayrollContractualEmployeeManager<SqlConnection, SqlTransaction>, PayrollContractualEmployeeManager>();
