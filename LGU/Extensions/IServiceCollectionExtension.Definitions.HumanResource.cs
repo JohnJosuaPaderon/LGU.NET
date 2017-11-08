@@ -330,7 +330,7 @@ namespace LGU.Extensions
             instance.AddTransient<IPayrollContractualEmployeeConverter, PayrollContractualEmployeeConverter>();
             instance.AddSingleton<IPayrollContractualEmployeeFields, PayrollContractualEmployeeFields>();
             instance.AddSingleton<IPayrollContractualEmployeeParameters, PayrollContractualEmployeeParameters>();
-            instance.AddSingleton<IInsertPayrollContractualEmployee<SqlConnection, SqlTransaction>, InsertPayrollContractualEmployee>();
+            instance.AddSingleton<IInsertPayrollContractualEmployee, InsertPayrollContractualEmployee>();
             instance.AddSingleton<IGeneratePayrollContractualEmployeeList, GeneratePayrollContractualEmployeeList>();
             instance.AddSingleton<IGeneratePayrollContractualEmployeeListByDepartment, GeneratePayrollContractualEmployeeListByDepartment>();
             instance.AddSingleton<IPayrollContractualEmployeeManager<SqlConnection, SqlTransaction>, PayrollContractualEmployeeManager>();
@@ -362,7 +362,6 @@ namespace LGU.Extensions
             instance.AddSingleton<IGetPayrollTypeById, GetPayrollTypeById>();
             instance.AddSingleton<IGetPayrollTypeList, GetPayrollTypeList>();
             instance.AddSingleton<IPayrollTypeManager, PayrollTypeManager>();
-            instance.AddSingleton<IPayrollTypeInitializer, PayrollTypeInitializer>();
 
             return instance;
         }
