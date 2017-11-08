@@ -13,9 +13,11 @@ namespace LGU.Models.HumanResource
         public PayrollContractualModel(IPayrollContractual source) : base(source)
         {
             Departments = new ObservableCollection<PayrollContractualDepartmentModel>();
+            Inclusion = PayrollContractualInclusionModel.TryInstantiate(source.Inclusion);
         }
 
-        ObservableCollection<PayrollContractualDepartmentModel> Departments { get; }
+        public PayrollContractualInclusionModel Inclusion { get; }
+        public ObservableCollection<PayrollContractualDepartmentModel> Departments { get; }
 
         public override IPayrollContractual GetSource()
         {
