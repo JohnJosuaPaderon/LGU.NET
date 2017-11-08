@@ -17,6 +17,7 @@ namespace LGU.EntityConverters.HumanResource
         {
             _Fields = fields;
 
+            PId = new DataConverterProperty<long>();
             PDepartment = new DataConverterProperty<IPayrollContractualDepartment>();
             PEmployee = new DataConverterProperty<IEmployee>();
             PMonthlyRate = new DataConverterProperty<decimal>();
@@ -27,6 +28,7 @@ namespace LGU.EntityConverters.HumanResource
 
         private readonly IPayrollContractualEmployeeFields _Fields;
 
+        public IDataConverterProperty<long> PId { get; }
         public IDataConverterProperty<IPayrollContractualDepartment> PDepartment { get; }
         public IDataConverterProperty<IEmployee> PEmployee { get; }
         public IDataConverterProperty<decimal> PMonthlyRate { get; }
@@ -44,7 +46,8 @@ namespace LGU.EntityConverters.HumanResource
                 MonthlyRate = PMonthlyRate.TryGetValue(reader.GetDecimal, _Fields.MonthlyRate),
                 HdmfPremiumPs = PHdmfPremiumPs.TryGetValue(reader.GetNullableDecimal, _Fields.HdmfPremiumPs),
                 TimeLogDeduction = PTimeLogDeduction.TryGetValue(reader.GetDecimal, _Fields.TimeLogDeduction),
-                WithholdingTax = PWithholdingTax.TryGetValue(reader.GetNullableDecimal, _Fields.WithholdingTax)
+                WithholdingTax = PWithholdingTax.TryGetValue(reader.GetNullableDecimal, _Fields.WithholdingTax),
+                Id = PId.TryGetValue(reader.GetInt64, _Fields.Id)
             };
         }
 

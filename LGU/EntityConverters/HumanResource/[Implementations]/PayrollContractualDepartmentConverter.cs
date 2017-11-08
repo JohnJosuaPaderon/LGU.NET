@@ -17,6 +17,7 @@ namespace LGU.EntityConverters.HumanResource
         {
             _Fields = fields;
 
+            PId = new DataConverterProperty<long>();
             PDepartment = new DataConverterProperty<IDepartment>();
             PPayroll = new DataConverterProperty<IPayrollContractual>();
             PHead = new DataConverterProperty<IEmployee>();
@@ -25,6 +26,7 @@ namespace LGU.EntityConverters.HumanResource
 
         private readonly IPayrollContractualDepartmentFields _Fields;
 
+        public IDataConverterProperty<long> PId { get; }
         public IDataConverterProperty<IDepartment> PDepartment { get; }
         public IDataConverterProperty<IPayrollContractual> PPayroll { get; }
         public IDataConverterProperty<IEmployee> PHead { get; }
@@ -47,7 +49,8 @@ namespace LGU.EntityConverters.HumanResource
                 Department = department,
                 Payroll = payroll,
                 Head = head,
-                Ordinal = POrdinal.TryGetValue(reader.GetInt32, _Fields.Ordinal)
+                Ordinal = POrdinal.TryGetValue(reader.GetInt32, _Fields.Ordinal),
+                Id = PId.TryGetValue(reader.GetInt64, _Fields.Id)
             };
 
             if (employeesResult.Status == ProcessResultStatus.Success && employeesResult.DataList != null)
