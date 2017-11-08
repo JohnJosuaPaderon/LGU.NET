@@ -16,7 +16,7 @@ namespace LGU.ViewModels
             _RegionManager = regionManager;
             _EventAggregator = eventAggregator;
             _TitleEvent = _EventAggregator.GetEvent<TitleEvent>();
-            _ChangeHeaderEvent = _EventAggregator.GetEvent<ChangeHeaderEvent>();
+            _HeaderEvent = _EventAggregator.GetEvent<HeaderEvent>();
             _NewMessageEvent = _EventAggregator.GetEvent<NewMessageEvent>();
             _ShowCloseButtonEvent = _EventAggregator.GetEvent<ShowCloseButtonEvent>();
             _ShowMinButtonEvent = _EventAggregator.GetEvent<ShowMinButtonEvent>();
@@ -32,7 +32,7 @@ namespace LGU.ViewModels
         protected readonly IEventAggregator _EventAggregator;
         protected readonly NewMessageEvent _NewMessageEvent;
         protected readonly TitleEvent _TitleEvent;
-        protected readonly ChangeHeaderEvent _ChangeHeaderEvent;
+        protected readonly HeaderEvent _HeaderEvent;
         protected readonly ShowCloseButtonEvent _ShowCloseButtonEvent;
         protected readonly ShowMinButtonEvent _ShowMinButtonEvent;
         protected readonly ShowMaxRestoreButtonEvent _ShowMaxRestorButtonEvent;

@@ -24,7 +24,7 @@ namespace LGU.ViewModels.HumanResource
             GetTimeLogsCommand = new DelegateCommand(GetTimeLogs);
             CutOff = new ValueRangeModel<DateTime>(new ValueRange<DateTime>(DateTime.Now));
 
-            _ChangeHeaderEvent.Publish("Actual Time Logs");
+            _HeaderEvent.Publish("Actual Time Logs");
         }
 
         private readonly IEmployeeManager r_EmployeeManager;

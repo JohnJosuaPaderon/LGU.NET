@@ -13,18 +13,21 @@ namespace LGU.ViewModels
         public static string MainDialogName { get; } = "MainDialog";
         public static string InitialMainContentRegionSource { get; set; }
 
-        private readonly ISystemManager r_SystemManager;
-
         public MainWindowViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
-            r_SystemManager = ApplicationDomain.GetService<ISystemManager>();
+            _SystemManager = ApplicationDomain.GetService<ISystemManager>();
+
             _TitleEvent.Subscribe(t => Title = t);
             _ShowCloseButtonEvent.Subscribe(arg => ShowCloseButton = arg);
             _ShowMinButtonEvent.Subscribe(arg => ShowMinButton = arg);
             _ShowMaxRestorButtonEvent.Subscribe(arg => ShowMaxRestoreButton = arg);
             _ShowTitleBarEvent.Subscribe(arg => ShowTitleBar = arg);
             _AccountDisplayEvent.Subscribe(arg => AccountDisplay = arg);
+
+            _MessageQueue = new SnackbarMessageQueue(new System.TimeSpan(0, 0, 1));
         }
+
+        private readonly ISystemManager _SystemManager;
 
         private string _Title = "Welcome to LGU.NET";
         public string Title
@@ -33,7 +36,7 @@ namespace LGU.ViewModels
             set { SetProperty(ref _Title, value); }
         }
 
-        private SnackbarMessageQueue _MessageQueue = new SnackbarMessageQueue();
+        private SnackbarMessageQueue _MessageQueue;
         public SnackbarMessageQueue MessageQueue
         {
             get { return _MessageQueue; }

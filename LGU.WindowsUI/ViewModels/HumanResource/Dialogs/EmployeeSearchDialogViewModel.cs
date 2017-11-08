@@ -36,8 +36,11 @@ namespace LGU.ViewModels.HumanResource.Dialogs
 
         protected async override void Initialize()
         {
-            SearchKey = PopupNotification.SelectedEmployee?.FullName ?? string.Empty;
-            await SearchAsync();
+            if (PopupNotification.SelectedEmployee != null)
+            {
+                SearchKey = PopupNotification.SelectedEmployee.FullName ?? string.Empty;
+                await SearchAsync();
+            }
         }
 
         private async void Search()

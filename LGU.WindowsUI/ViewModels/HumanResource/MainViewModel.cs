@@ -22,7 +22,7 @@ namespace LGU.ViewModels.HumanResource
             MenuItems.Add(new MenuItem { HeaderText = "Payroll", Icon = PackIconKind.AccountMultiple, ViewName = nameof(PayrollStartupView) });
             MenuItems.Add(new MenuItem { HeaderText = "Maintenance", Icon = PackIconKind.Settings, ViewName = nameof(MaintenanceView) });
 
-            _ChangeHeaderEvent.Subscribe(header => Header = header);
+            _HeaderEvent.Subscribe(header => Header = header);
         }
 
         private string _Header;

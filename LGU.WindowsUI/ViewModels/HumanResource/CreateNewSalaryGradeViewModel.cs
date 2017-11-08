@@ -61,7 +61,7 @@ namespace LGU.ViewModels.HumanResource
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            _ChangeHeaderEvent.Publish("Create New Salary Grades");
+            _HeaderEvent.Publish("Create New Salary Grades");
         }
 
         private void Navigate(string view)

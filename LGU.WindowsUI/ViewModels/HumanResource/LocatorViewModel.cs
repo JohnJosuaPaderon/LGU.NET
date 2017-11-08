@@ -42,7 +42,7 @@ namespace LGU.ViewModels.HumanResource
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            _ChangeHeaderEvent.Publish("Locator");
+            _HeaderEvent.Publish("Locator");
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
