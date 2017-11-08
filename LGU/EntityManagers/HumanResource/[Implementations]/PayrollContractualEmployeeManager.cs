@@ -13,7 +13,7 @@ namespace LGU.EntityManagers.HumanResource
         private const string MESSAGE_INVALID = "Invalid payroll contractual employee.";
 
         public PayrollContractualEmployeeManager(
-            IInsertPayrollContractualEmployee<SqlConnection, SqlTransaction> insert,
+            IInsertPayrollContractualEmployee insert,
             IGeneratePayrollContractualEmployeeList generateList)
         {
             _Insert = insert;
@@ -22,7 +22,7 @@ namespace LGU.EntityManagers.HumanResource
             _InvalidResult = new ProcessResult<IPayrollContractualEmployee>(ProcessResultStatus.Failed, MESSAGE_INVALID);
         }
 
-        private readonly IInsertPayrollContractualEmployee<SqlConnection, SqlTransaction> _Insert;
+        private readonly IInsertPayrollContractualEmployee _Insert;
         private readonly IGeneratePayrollContractualEmployeeList _GenerateList;
         private readonly IProcessResult<IPayrollContractualEmployee> _InvalidResult;
 
