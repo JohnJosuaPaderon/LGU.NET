@@ -2,13 +2,14 @@
 using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.Processes;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public sealed class InsertPayrollContractualEmployee : HumanResourceProcessBaseV2, IInsertPayrollContractualEmployee<SqlConnection, SqlTransaction>
+    public sealed class InsertPayrollContractualEmployee : HumanResourceProcessBaseV2, IInsertPayrollContractualEmployee
     {
         private const string MESSAGE_FAILED = "Failed to insert payroll contractual employee.";
 
@@ -23,7 +24,9 @@ namespace LGU.EntityProcesses.HumanResource
 
         private SqlQueryInfo<IPayrollContractualEmployee> QueryInfo =>
             SqlQueryInfo<IPayrollContractualEmployee>.CreateProcedureQueryInfo(PayrollContractualEmployee, GetQualifiedDbObjectName(), GetProcessResult, true)
+            .AddOutputParameter(_Parameters.Id, DbType.Int64)
             .AddInputParameter(_Parameters.EmployeeId, PayrollContractualEmployee.Employee?.Id)
+            .AddInputParameter(_Parameters.DepartmentId, PayrollContractualEmployee.Department?.Id)
             .AddInputParameter(_Parameters.MonthlyRate, PayrollContractualEmployee.MonthlyRate)
             .AddInputParameter(_Parameters.TimeLogDeduction, PayrollContractualEmployee.TimeLogDeduction)
             .AddInputParameter(_Parameters.WithholdingTax, PayrollContractualEmployee.WithholdingTax)
