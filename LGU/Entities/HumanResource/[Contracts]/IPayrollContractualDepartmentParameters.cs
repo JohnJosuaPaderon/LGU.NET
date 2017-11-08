@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.HumanResource
 {
-    public interface IPayrollContractualDepartmentParameters : IPayrollDepartmentFields
+    public interface IPayrollContractualDepartmentParameters : IPayrollDepartmentParameters
     {
 
     }

@@ -3,6 +3,6 @@
     public interface IPayrollContractualDepartment : IPayrollDepartment
     {
         IPayrollContractual Payroll { get; set; }
-        IEntityCollection<IPayrollContractualEmployee> Employees { get; }
+        IPayrollContractualEmployeeCollection Employees { get; }
     }
 }

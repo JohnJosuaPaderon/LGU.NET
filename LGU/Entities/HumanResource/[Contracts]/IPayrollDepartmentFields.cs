@@ -2,6 +2,7 @@
 {
     public interface IPayrollDepartmentFields
     {
+        string Id { get; }
         string DepartmentId { get; }
         string PayrollId { get; }
         string HeadId { get; }

@@ -2,6 +2,7 @@
 {
     public interface IPayrollContractual : IPayroll
     {
+        IPayrollContractualInclusion Inclusion { get; }
         IPayrollContractualDepartmentCollection Departments { get; }
     }
 }

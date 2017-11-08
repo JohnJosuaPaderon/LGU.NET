@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.HumanResource
 {
-    public interface IPayrollDepartment
+    public interface IPayrollDepartment : IEntity<long>
     {
         IDepartment Department { get; set; }
         IEmployee Head { get; set; }
