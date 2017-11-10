@@ -257,7 +257,7 @@ namespace LGU.ViewModels.HumanResource.Dialogs
                 {
                     if (result.Data != null)
                     {
-                        SalaryGradeStep = new SalaryGradeStepModel(result.Data);
+                        SalaryGradeStep = new SalaryGradeStepModel(result.Data, SalaryGradeModel.TryCreate(result.Data.SalaryGrade));
                     }
                     else
                     {
