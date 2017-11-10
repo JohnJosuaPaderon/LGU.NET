@@ -4,15 +4,15 @@ namespace LGU.Models.HumanResource
 {
     public sealed class SalaryGradeStepModel : ModelBase<ISalaryGradeStep>
     {
-        public static SalaryGradeStepModel TryCreate(ISalaryGradeStep salaryGradeStep)
+        public static SalaryGradeStepModel TryCreate(ISalaryGradeStep salaryGradeStep, SalaryGradeModel salaryGradeModel)
         {
-            return salaryGradeStep != null ? new SalaryGradeStepModel(salaryGradeStep) : null;
+            return salaryGradeStep != null ? new SalaryGradeStepModel(salaryGradeStep, salaryGradeModel) : null;
         }
 
-        public SalaryGradeStepModel(ISalaryGradeStep source) : base(source)
+        public SalaryGradeStepModel(ISalaryGradeStep source, SalaryGradeModel salaryGradeModel) : base(source)
         {
             Id = source.Id;
-            SalaryGrade = SalaryGradeModel.TryCreate(source.SalaryGrade);
+            SalaryGrade = salaryGradeModel;
             Step = source.Step;
             Amount = source.Amount;
         }
