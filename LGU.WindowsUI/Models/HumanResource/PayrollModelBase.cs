@@ -93,14 +93,14 @@ namespace LGU.Models.HumanResource
         public override T GetSource()
         {
             Source.Id = Id;
-            Source.CutOff = CutOff.GetSource();
+            Source.CutOff = CutOff?.GetSource();
             Source.RangeDate = RangeDate.GetSource();
             Source.RunDate = RunDate;
-            Source.HumanResourceHead = HumanResourceHead.GetSource();
-            Source.Mayor = Mayor.GetSource();
-            Source.Treasurer = Treasurer.GetSource();
-            Source.CityAccountant = CityAccountant.GetSource();
-            Source.CityBudgetOfficer = CityBudgetOfficer.GetSource();
+            Source.HumanResourceHead = HumanResourceHead?.GetSource();
+            Source.Mayor = Mayor?.GetSource();
+            Source.Treasurer = Treasurer?.GetSource();
+            Source.CityAccountant = CityAccountant?.GetSource();
+            Source.CityBudgetOfficer = CityBudgetOfficer?.GetSource();
 
             return Source;
         }

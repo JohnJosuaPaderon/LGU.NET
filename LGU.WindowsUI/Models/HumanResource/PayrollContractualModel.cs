@@ -21,6 +21,8 @@ namespace LGU.Models.HumanResource
 
         public override IPayrollContractual GetSource()
         {
+            Source.Inclusion.HdmfPremiumPs = Inclusion.HdmfPremiumPs;
+
             foreach (var department in Departments)
             {
                 Source.Departments.AddUpdate(department.GetSource());
