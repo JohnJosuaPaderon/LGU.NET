@@ -2,6 +2,7 @@
 {
     public interface IPayrollDepartmentParameters
     {
+        string Id { get; }
         string DepartmentId { get; }
         string PayrollId { get; }
         string HeadId { get; }
