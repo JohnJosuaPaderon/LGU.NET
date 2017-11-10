@@ -33,6 +33,7 @@ namespace LGU.Extensions
             instance.UseSqlServer_MultipleChoiceQuestion();
             instance.UseSqlServer_PayrollContractualDepartment();
             instance.UseSqlServer_PayrollContractualEmployee();
+            instance.UseSqlServer_PayrollContractualInclusion();
             instance.UseSqlServer_PayrollCutOff();
             instance.UseSqlServer_PayrollType();
             instance.UseSqlServer_Position();
@@ -313,12 +314,18 @@ namespace LGU.Extensions
 
             return instance;
         }
+
+        public static IServiceCollection UseSqlServer_PayrollContractual(this IServiceCollection instance)
+        {
+            return instance;
+        }
         
         public static IServiceCollection UseSqlServer_PayrollContractualDepartment(this IServiceCollection instance)
         {
             instance.AddTransient<IPayrollContractualDepartmentConverter, PayrollContractualDepartmentConverter>();
             instance.AddSingleton<IPayrollContractualDepartmentFields, PayrollContractualDepartmentFields>();
             instance.AddSingleton<IPayrollContractualDepartmentParameters, PayrollContractualDepartmentParameters>();
+            instance.AddSingleton<IInsertPayrollContractualDepartment, InsertPayrollContractualDepartment>();
             instance.AddSingleton<IGeneratePayrollContractualDepartmentList, GeneratePayrollContractualDepartmentList>();
             instance.AddSingleton<IPayrollContractualDepartmentManager, PayrollContractualDepartmentManager>();
 
@@ -334,6 +341,18 @@ namespace LGU.Extensions
             instance.AddSingleton<IGeneratePayrollContractualEmployeeList, GeneratePayrollContractualEmployeeList>();
             instance.AddSingleton<IGeneratePayrollContractualEmployeeListByDepartment, GeneratePayrollContractualEmployeeListByDepartment>();
             instance.AddSingleton<IPayrollContractualEmployeeManager<SqlConnection, SqlTransaction>, PayrollContractualEmployeeManager>();
+
+            return instance;
+        }
+
+        public static IServiceCollection UseSqlServer_PayrollContractualInclusion(this IServiceCollection instance)
+        {
+            instance.AddTransient<IPayrollContractualInclusionConverter, PayrollContractualInclusionConverter>();
+            instance.AddSingleton<IPayrollContractualInclusionFields, PayrollContractualInclusionFields>();
+            instance.AddSingleton<IPayrollContractualInclusionParameters, PayrollContractualInclusionParameters>();
+            instance.AddSingleton<IGetPayrollContractualInclusion, GetPayrollContractualInclusion>();
+            instance.AddSingleton<IInsertPayrollContractualInclusion, InsertPayrollContractualInclusion>();
+            instance.AddSingleton<IPayrollContractualInclusionManager, PayrollContractualInclusionManager>();
 
             return instance;
         }
