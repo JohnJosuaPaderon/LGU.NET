@@ -1,6 +1,7 @@
 ﻿using LGU.Data.Extensions;
 using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
+using LGU.EntityManagers.HumanResource;
 using LGU.Processes;
 using System.Data;
 using System.Data.SqlClient;
@@ -13,12 +14,14 @@ namespace LGU.EntityProcesses.HumanResource
     {
         private readonly string MESSAGE_FAILED = "Failed to insert Payroll Contractual Department.";
 
-        public InsertPayrollContractualDepartment(IConnectionStringSource connectionStringSource, IPayrollContractualDepartmentParameters parameters) : base(connectionStringSource)
+        public InsertPayrollContractualDepartment(IConnectionStringSource connectionStringSource, IPayrollContractualDepartmentParameters parameters, IPayrollContractualEmployeeManager employeeManager) : base(connectionStringSource)
         {
             _Parameters = parameters;
+            _EmployeeManager = employeeManager;
         }
 
         private readonly IPayrollContractualDepartmentParameters _Parameters;
+        private readonly IPayrollContractualEmployeeManager _EmployeeManager;
 
         public IPayrollContractualDepartment PayrollContractualDepartment { get; set; }
 
@@ -44,19 +47,69 @@ namespace LGU.EntityProcesses.HumanResource
             }
         }
 
+        private IProcessResult<IPayrollContractualDepartment> FailedResult_Employee(IProcessResult<IPayrollContractualEmployee> employeeResult)
+        {
+            return new ProcessResult<IPayrollContractualDepartment>($"{MESSAGE_FAILED} {employeeResult.Message}", employeeResult.Exception);
+        }
+
         public IProcessResult<IPayrollContractualDepartment> Execute(SqlConnection connection, SqlTransaction transaction)
         {
-            return _SqlHelper.ExecuteNonQuery(QueryInfo, connection, transaction);
+            var result = _SqlHelper.ExecuteNonQuery(QueryInfo, connection, transaction);
+
+            if (result.Status == ProcessResultStatus.Success)
+            {
+                foreach (var employee in result.Data.Employees)
+                {
+                    var employeeResult = _EmployeeManager.Insert(employee, connection, transaction);
+
+                    if (employeeResult.Status == ProcessResultStatus.Failed)
+                    {
+                        return FailedResult_Employee(employeeResult);
+                    }
+                }
+            }
+
+            return result;
         }
 
-        public Task<IProcessResult<IPayrollContractualDepartment>> ExecuteAsync(SqlConnection connection, SqlTransaction transaction)
+        public async Task<IProcessResult<IPayrollContractualDepartment>> ExecuteAsync(SqlConnection connection, SqlTransaction transaction)
         {
-            return _SqlHelper.ExecuteNonQueryAsync(QueryInfo, connection, transaction);
+            var result = await _SqlHelper.ExecuteNonQueryAsync(QueryInfo, connection, transaction);
+
+            if (result.Status == ProcessResultStatus.Success)
+            {
+                foreach (var employee in result.Data.Employees)
+                {
+                    var employeeResult = await _EmployeeManager.InsertAsync(employee, connection, transaction);
+
+                    if (employeeResult.Status == ProcessResultStatus.Failed)
+                    {
+                        return FailedResult_Employee(employeeResult);
+                    }
+                }
+            }
+
+            return result;
         }
 
-        public Task<IProcessResult<IPayrollContractualDepartment>> ExecuteAsync(SqlConnection connection, SqlTransaction transaction, CancellationToken cancellationToken)
+        public async Task<IProcessResult<IPayrollContractualDepartment>> ExecuteAsync(SqlConnection connection, SqlTransaction transaction, CancellationToken cancellationToken)
         {
-            return _SqlHelper.ExecuteNonQueryAsync(QueryInfo, connection, transaction, cancellationToken);
+            var result = await _SqlHelper.ExecuteNonQueryAsync(QueryInfo, connection, transaction, cancellationToken);
+
+            if (result.Status == ProcessResultStatus.Success)
+            {
+                foreach (var employee in result.Data.Employees)
+                {
+                    var employeeResult = await _EmployeeManager.InsertAsync(employee, connection, transaction, cancellationToken);
+
+                    if (employeeResult.Status == ProcessResultStatus.Failed)
+                    {
+                        return FailedResult_Employee(employeeResult);
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }
