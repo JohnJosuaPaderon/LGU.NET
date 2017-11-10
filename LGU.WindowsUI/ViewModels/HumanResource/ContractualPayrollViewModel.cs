@@ -22,24 +22,28 @@ namespace LGU.ViewModels.HumanResource
         public ContractualPayrollViewModel(IRegionManager regionManager, IEventAggregator eventAggregator) : base(regionManager, eventAggregator)
         {
             _DepartmentManager = ApplicationDomain.GetService<IPayrollContractualDepartmentManager>();
+            _PayrollManager = ApplicationDomain.GetService<IPayrollContractualManager>();
 
             ChangeCutOffCommand = new DelegateCommand(ChangeCutOff);
             SearchEmployeeCommand = new DelegateCommand<string>(SearchEmployee);
             RemoveSelectedDepartmentCommand = new DelegateCommand(RemoveSelectedDepartment);
             RemoveSelectedEmployeeCommand = new DelegateCommand(RemoveSelectedEmployee);
             EditSignatoryCommand = new DelegateCommand(EditSignatory);
+            SaveCommand = new DelegateCommand(Save);
             ChangeCutOffRequest = new InteractionRequest<IDateTimeRangeSelectionNotification>();
             SearchEmployeeRequest = new InteractionRequest<IEmployeeSearchNotification>();
             EditSignatoryRequest = new InteractionRequest<IContractualPayrollSignatoryNotification>();
         }
 
         private readonly IPayrollContractualDepartmentManager _DepartmentManager;
+        private readonly IPayrollContractualManager _PayrollManager;
 
         public DelegateCommand ChangeCutOffCommand { get; }
         public DelegateCommand<string> SearchEmployeeCommand { get; }
         public DelegateCommand RemoveSelectedDepartmentCommand { get; }
         public DelegateCommand RemoveSelectedEmployeeCommand { get; }
         public DelegateCommand EditSignatoryCommand { get; }
+        public DelegateCommand SaveCommand { get; }
         public InteractionRequest<IDateTimeRangeSelectionNotification> ChangeCutOffRequest { get; }
         public InteractionRequest<IEmployeeSearchNotification> SearchEmployeeRequest { get; }
         public InteractionRequest<IContractualPayrollSignatoryNotification> EditSignatoryRequest { get; }
@@ -147,6 +151,8 @@ namespace LGU.ViewModels.HumanResource
 
         private async void GenerateDepartmentList(IDateTimeRangeSelectionNotification notification)
         {
+            _BusyAppEvent.Busy();
+
             var result = await _DepartmentManager.GenerateListAsync(notification.DateTimeRange.GetSource());
 
             Payroll.Departments.Clear();
@@ -157,6 +163,7 @@ namespace LGU.ViewModels.HumanResource
                 {
                     foreach (var department in result.DataList)
                     {
+                        department.Payroll = Payroll.GetSource();
                         Payroll.Departments.Add(PayrollContractualDepartmentModel.TryCreate(department));
                     }
                 }
@@ -165,6 +172,29 @@ namespace LGU.ViewModels.HumanResource
             {
                 _NewMessageEvent.EnqueueErrorMessage(result.Message);
             }
+
+            _BusyAppEvent.Unbusy();
+        }
+
+        private async void Save()
+        {
+            _BusyAppEvent.Busy();
+
+            if (Payroll != null)
+            {
+                var result = await _PayrollManager.InsertAsync(Payroll.GetSource());
+
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    _NewMessageEvent.EnqueueMessage("Payroll successfully created.");
+                }
+                else
+                {
+                    _NewMessageEvent.EnqueueMessage(result.Message);
+                }
+            }
+
+            _BusyAppEvent.Unbusy();
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

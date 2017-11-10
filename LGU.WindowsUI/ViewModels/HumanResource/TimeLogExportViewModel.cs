@@ -147,6 +147,8 @@ namespace LGU.ViewModels.HumanResource
         {
             IEnumerableProcessResult<ITimeLog> result = null;
 
+            _BusyAppEvent.Busy();
+
             switch (SelectedExportOption)
             {
                 case TimeLogExportOption.All:
@@ -160,7 +162,6 @@ namespace LGU.ViewModels.HumanResource
                     else
                     {
                         EnqueueMessage("Invalid department.");
-                        DialogHelper.CloseDialog();
                         return;
                     }
                     break;
@@ -172,7 +173,6 @@ namespace LGU.ViewModels.HumanResource
                     else
                     {
                         EnqueueMessage("Invalid employee.");
-                        DialogHelper.CloseDialog();
                         return;
                     }
                     break;
@@ -185,8 +185,9 @@ namespace LGU.ViewModels.HumanResource
             else
             {
                 EnqueueMessage("Nothing to be exported.");
-                DialogHelper.CloseDialog();
             }
+
+            _BusyAppEvent.Unbusy();
         }
 
         #region Export EventHandlers

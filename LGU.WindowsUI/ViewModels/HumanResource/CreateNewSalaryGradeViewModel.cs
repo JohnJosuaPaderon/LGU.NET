@@ -75,7 +75,12 @@ namespace LGU.ViewModels.HumanResource
             {
                 if (SalaryGrades.Count < SalaryGrade.MaxGrade)
                 {
-                    SalaryGrades.Add(new SalaryGradeModel(new SalaryGrade(Batch.GetSource(), SalaryGrades.Last().Number + 1)));
+                    var salaryGrade = new SalaryGrade(Batch.GetSource(), SalaryGrades.Last().Number + 1);
+                    var salaryGradeModel = new SalaryGradeModel(salaryGrade);
+                    var steps = SalaryGradeModel.GetDefaultSteps(salaryGrade, salaryGradeModel);
+                    salaryGradeModel.Steps.AddRange(steps);
+
+                    SalaryGrades.Add(salaryGradeModel);
                 }
                 else
                 {
@@ -84,7 +89,12 @@ namespace LGU.ViewModels.HumanResource
             }
             else
             {
-                SalaryGrades.Add(new SalaryGradeModel(new SalaryGrade(Batch.GetSource(), 1)));
+                var salaryGrade = new SalaryGrade(Batch.GetSource(), 1);
+                var salaryGradeModel = new SalaryGradeModel(salaryGrade);
+                var steps = SalaryGradeModel.GetDefaultSteps(salaryGrade, salaryGradeModel);
+                salaryGradeModel.Steps.AddRange(steps);
+
+                SalaryGrades.Add(salaryGradeModel);
             }
         }
 

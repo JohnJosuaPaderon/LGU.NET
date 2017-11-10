@@ -80,6 +80,7 @@ namespace LGU.ViewModels.HumanResource
                     {
                         foreach (ISalaryGrade salaryGrade in salaryGradeResult.DataList)
                         {
+                            var salaryGradeModel = SalaryGradeModel.TryCreate(salaryGrade);
                             var steps = new List<SalaryGradeStepModel>();
                             var stepResult = await r_SalaryGradeStepManager.GetListBySalaryGradeAsync(salaryGrade);
 
@@ -89,7 +90,7 @@ namespace LGU.ViewModels.HumanResource
                                 {
                                     foreach (ISalaryGradeStep step in stepResult.DataList)
                                     {
-                                        steps.Add(new SalaryGradeStepModel(step));
+                                        salaryGradeModel.Steps.Add(SalaryGradeStepModel.TryCreate(step, null));
                                     }
                                 }
                             }
@@ -99,7 +100,7 @@ namespace LGU.ViewModels.HumanResource
                                 return;
                             }
 
-                            SalaryGrades.Add(new SalaryGradeModel(salaryGrade, steps));
+                            SalaryGrades.Add(salaryGradeModel);
                         }
                     }
                 }
