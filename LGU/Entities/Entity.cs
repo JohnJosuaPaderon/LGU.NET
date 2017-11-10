@@ -20,8 +20,14 @@
             if (ReferenceEquals(this, obj)) return true;
             if (GetType() != obj.GetType()) return false;
 
-            var value = obj as Entity<TIdentifier>;
-            return Id.Equals(value.Id);
+            if (obj is Entity<TIdentifier> value)
+            {
+                return (Equals(Id, default(TIdentifier)) && Equals(value.Id, default(TIdentifier))) ? false : Equals(Id, value.Id);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public override int GetHashCode()
