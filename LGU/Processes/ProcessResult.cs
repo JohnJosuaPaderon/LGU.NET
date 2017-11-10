@@ -4,6 +4,34 @@ namespace LGU.Processes
 {
     public struct ProcessResult : IProcessResult
     {
+        private const string MESSAGE_EXCEPTION_THROWN = "An exception has been thrown.";
+        private const string MESSAGE_SUCCESS = "Process successfully completed.";
+
+        public static ProcessResult Failed(string message)
+        {
+            return new ProcessResult(ProcessResultStatus.Failed, message);
+        }
+
+        public static ProcessResult Failed(Exception exception)
+        {
+            return new ProcessResult(ProcessResultStatus.Failed, MESSAGE_EXCEPTION_THROWN, exception);
+        }
+
+        public static ProcessResult Failed(string message, Exception exception)
+        {
+            return new ProcessResult(ProcessResultStatus.Failed, message, exception);
+        }
+
+        public static ProcessResult Success()
+        {
+            return new ProcessResult(ProcessResultStatus.Success, MESSAGE_SUCCESS);
+        }
+
+        public static ProcessResult Success(string message)
+        {
+            return new ProcessResult(ProcessResultStatus.Success, message);
+        }
+
         public ProcessResult(ProcessResultStatus status) : this(status, null)
         {
         }
@@ -34,6 +62,40 @@ namespace LGU.Processes
 
     public struct ProcessResult<T> : IProcessResult<T>
     {
+        private const string MESSAGE_EXCEPTION_THROWN = "An exception has been thrown.";
+        private const string MESSAGE_SUCCESS = "Process successfully completed.";
+        private const string MESSAGE_NO_RESULT = "Process successfully completed but has no result.";
+
+        public static ProcessResult<T> Failed(string message)
+        {
+            return new ProcessResult<T>(default(T), ProcessResultStatus.Failed, message);
+        }
+
+        public static ProcessResult<T> Failed(Exception exception)
+        {
+            return new ProcessResult<T>(default(T), ProcessResultStatus.Failed, MESSAGE_EXCEPTION_THROWN, exception);
+        }
+
+        public static ProcessResult<T> Failed(string message, Exception exception)
+        {
+            return new ProcessResult<T>(default(T), ProcessResultStatus.Failed, message, exception);
+        }
+
+        public static ProcessResult<T> Success(T data)
+        {
+            return new ProcessResult<T>(data, ProcessResultStatus.Success, MESSAGE_SUCCESS);
+        }
+
+        public static ProcessResult<T> Success(T data, string message)
+        {
+            return new ProcessResult<T>(data, ProcessResultStatus.Success, message);
+        }
+
+        public static ProcessResult<T> NoResult()
+        {
+            return new ProcessResult<T>(default(T), ProcessResultStatus.Undefined, MESSAGE_NO_RESULT);
+        }
+
         public ProcessResult(ProcessResultStatus status) : this(status, null)
         {
         }
