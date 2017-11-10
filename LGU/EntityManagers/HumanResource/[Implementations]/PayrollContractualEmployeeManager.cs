@@ -44,19 +44,6 @@ namespace LGU.EntityManagers.HumanResource
             return _GenerateList.ExecuteAsync(cancellationToken);
         }
 
-        public IProcessResult<IPayrollContractualEmployee> Insert(IPayrollContractualEmployee payrollContractualEmployee)
-        {
-            if (payrollContractualEmployee != null)
-            {
-                _Insert.PayrollContractualEmployee = payrollContractualEmployee;
-                return _Insert.Execute();
-            }
-            else
-            {
-                return _InvalidResult;
-            }
-        }
-
         public IProcessResult<IPayrollContractualEmployee> Insert(IPayrollContractualEmployee payrollContractualEmployee, SqlConnection connection, SqlTransaction transaction)
         {
             if (payrollContractualEmployee != null)
@@ -70,38 +57,12 @@ namespace LGU.EntityManagers.HumanResource
             }
         }
 
-        public async Task<IProcessResult<IPayrollContractualEmployee>> InsertAsync(IPayrollContractualEmployee payrollContractualEmployee)
-        {
-            if (payrollContractualEmployee != null)
-            {
-                _Insert.PayrollContractualEmployee = payrollContractualEmployee;
-                return await _Insert.ExecuteAsync();
-            }
-            else
-            {
-                return _InvalidResult;
-            }
-        }
-
         public async Task<IProcessResult<IPayrollContractualEmployee>> InsertAsync(IPayrollContractualEmployee payrollContractualEmployee, SqlConnection connection, SqlTransaction transaction)
         {
             if (payrollContractualEmployee != null)
             {
                 _Insert.PayrollContractualEmployee = payrollContractualEmployee;
                 return await _Insert.ExecuteAsync(connection, transaction);
-            }
-            else
-            {
-                return _InvalidResult;
-            }
-        }
-
-        public async Task<IProcessResult<IPayrollContractualEmployee>> InsertAsync(IPayrollContractualEmployee payrollContractualEmployee, CancellationToken cancellationToken)
-        {
-            if (payrollContractualEmployee != null)
-            {
-                _Insert.PayrollContractualEmployee = payrollContractualEmployee;
-                return await _Insert.ExecuteAsync(cancellationToken);
             }
             else
             {
