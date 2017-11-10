@@ -172,7 +172,7 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <Button Grid.Column="5" Content="Print" Style="{DynamicResource FooterActionButton}" MinWidth="100" Command="{Binding PrintCommand}">
-                            <i:Interaction.Triggers>
+                            <!--<i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
                                         <i:InvokeCommandAction.CommandParameter>
@@ -183,7 +183,7 @@
                                         </i:InvokeCommandAction.CommandParameter>
                                     </i:InvokeCommandAction>
                                 </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                            </i:Interaction.Triggers>-->
                         </Button>
                     </Grid>
                 </materialDesign:Card>

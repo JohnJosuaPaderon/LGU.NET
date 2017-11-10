@@ -236,7 +236,7 @@
                         <TextBlock Text="Signatories"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Column="2" Command="{Binding ProceedCommand}" Height="NaN" Width="NaN">
+                <Button Grid.Column="2" Command="{Binding SaveCommand}" Height="NaN" Width="NaN">
                     <StackPanel>
                         <materialDesign:PackIcon Kind="ContentSave" Height="30" Width="30" HorizontalAlignment="Center"/>
                         <TextBlock Text="Save &amp; Print"/>
