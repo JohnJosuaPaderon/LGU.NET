@@ -3,7 +3,6 @@ using LGU.EntityConverters.HumanResource;
 using LGU.EntityManagers.HumanResource;
 using LGU.EntityProcesses.HumanResource;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data.SqlClient;
 
 namespace LGU.Extensions
 {
@@ -31,6 +30,7 @@ namespace LGU.Extensions
             instance.UseSqlServer_LocatorLeaveType();
             instance.UseSqlServer_MultipleChoiceCandidateAnswer();
             instance.UseSqlServer_MultipleChoiceQuestion();
+            instance.UseSqlServer_PayrollContractual();
             instance.UseSqlServer_PayrollContractualDepartment();
             instance.UseSqlServer_PayrollContractualEmployee();
             instance.UseSqlServer_PayrollContractualInclusion();
@@ -317,6 +317,11 @@ namespace LGU.Extensions
 
         public static IServiceCollection UseSqlServer_PayrollContractual(this IServiceCollection instance)
         {
+            instance.AddTransient<IPayrollContractualConverter, PayrollContractualConverter>();
+            instance.AddSingleton<IPayrollContractualFields, PayrollContractualFields>();
+            instance.AddSingleton<IPayrollContractualParameters, PayrollContractualParameters>();
+            instance.AddSingleton<IInsertPayrollContractual, InsertPayrollContractual>();
+            instance.AddSingleton<IPayrollContractualManager, PayrollContractualManager>();
             return instance;
         }
         
@@ -340,7 +345,7 @@ namespace LGU.Extensions
             instance.AddSingleton<IInsertPayrollContractualEmployee, InsertPayrollContractualEmployee>();
             instance.AddSingleton<IGeneratePayrollContractualEmployeeList, GeneratePayrollContractualEmployeeList>();
             instance.AddSingleton<IGeneratePayrollContractualEmployeeListByDepartment, GeneratePayrollContractualEmployeeListByDepartment>();
-            instance.AddSingleton<IPayrollContractualEmployeeManager<SqlConnection, SqlTransaction>, PayrollContractualEmployeeManager>();
+            instance.AddSingleton<IPayrollContractualEmployeeManager, PayrollContractualEmployeeManager>();
 
             return instance;
         }

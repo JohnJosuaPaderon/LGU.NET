@@ -1,5 +1,6 @@
 ﻿using LGU.EntityManagers;
 using LGU.EntityProcesses;
+using LGU.Processes;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
@@ -21,6 +22,14 @@ namespace LGU.Extensions
             instance.UseSqlServerForHumanResource();
 
             Debug.WriteLine($"SQL Server integrated successfully : {DateTime.Now.ToString("HH:mm:ss")}");
+
+            return instance;
+        }
+
+        public static IServiceCollection UseDefaultProcessResultConverters(this IServiceCollection instance)
+        {
+            instance.AddSingleton<IDbDataReaderToEnumerableProcessResultConverter, DefaultDbDataReaderToEnumerableProcessResultConverter>();
+            instance.AddSingleton<IDbDataReaderToProcessResultConverter, DefaultDbDataReaderToProcessResultConverter>();
 
             return instance;
         }
