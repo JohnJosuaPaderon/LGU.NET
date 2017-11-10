@@ -5,6 +5,6 @@ namespace LGU.EntityProcesses.HumanResource
 {
     public interface IInsertPayrollContractual : IProcess<IPayrollContractual>
     {
-        IPayrollContractual PayrollContractual { get; }
+        IPayrollContractual PayrollContractual { get; set; }
     }
 }
