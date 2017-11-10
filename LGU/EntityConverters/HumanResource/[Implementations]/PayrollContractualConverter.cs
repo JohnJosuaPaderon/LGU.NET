@@ -6,7 +6,7 @@ using System.Data.Common;
 
 namespace LGU.EntityConverters.HumanResource
 {
-    public sealed class PayrollContractualConverter : PayrollConverterBase<IPayrollContractual>
+    public sealed class PayrollContractualConverter : PayrollConverterBase<IPayrollContractual>, IPayrollContractualConverter
     {
         public PayrollContractualConverter(IDbDataReaderToProcessResultConverter toProcessResultConverter, IDbDataReaderToEnumerableProcessResultConverter toEnumerableProcessResultConverter, IPayrollFields payrollFields) : base(toProcessResultConverter, toEnumerableProcessResultConverter, payrollFields)
         {
