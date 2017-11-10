@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.HumanResource
 {
-    public sealed class PayrollParameters : IPayrollParameters
+    public class PayrollParameters : IPayrollParameters
     {
         public PayrollParameters()
         {

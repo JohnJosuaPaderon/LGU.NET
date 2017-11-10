@@ -1,6 +1,6 @@
 ﻿namespace LGU.Entities.HumanResource
 {
-    public sealed class PayrollFields : IPayrollFields
+    public class PayrollFields : IPayrollFields
     {
         public PayrollFields()
         {
