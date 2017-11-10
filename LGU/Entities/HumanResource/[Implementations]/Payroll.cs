@@ -8,6 +8,7 @@ namespace LGU.Entities.HumanResource
         public Payroll(IPayrollType type)
         {
             Type = type ?? throw new ArgumentNullException(nameof(type));
+            RunDate = DateTime.Now;
         }
 
         public IPayrollType Type { get; }
