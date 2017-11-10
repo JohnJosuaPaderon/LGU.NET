@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace LGU.EntityProcesses.HumanResource
 {
-    public interface IInsertPayrollContractualEmployee : IProcess<IPayrollContractualEmployee>, IProcess<IPayrollContractualEmployee, SqlConnection, SqlTransaction>
+    public interface IInsertPayrollContractualEmployee : IProcess<IPayrollContractualEmployee, SqlConnection, SqlTransaction>
     {
         IPayrollContractualEmployee PayrollContractualEmployee { get; set; }
     }
