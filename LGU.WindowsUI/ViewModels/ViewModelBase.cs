@@ -23,6 +23,7 @@ namespace LGU.ViewModels
             _ShowMaxRestorButtonEvent = _EventAggregator.GetEvent<ShowMaxRestoreButtonEvent>();
             _ShowTitleBarEvent = _EventAggregator.GetEvent<ShowTitleBarEvent>();
             _AccountDisplayEvent = _EventAggregator.GetEvent<AccountDisplayEvent>();
+            _BusyAppEvent = _EventAggregator.GetEvent<BusyAppEvent>();
 
             ResetMouseCaptureCommand = new DelegateCommand(ResetMouseCapture);
             InitializeCommand = new DelegateCommand(Initialize);
@@ -38,9 +39,17 @@ namespace LGU.ViewModels
         protected readonly ShowMaxRestoreButtonEvent _ShowMaxRestorButtonEvent;
         protected readonly ShowTitleBarEvent _ShowTitleBarEvent;
         protected readonly AccountDisplayEvent _AccountDisplayEvent;
+        protected readonly BusyAppEvent _BusyAppEvent;
 
         public DelegateCommand ResetMouseCaptureCommand { get; }
         public DelegateCommand InitializeCommand { get; }
+
+        private bool _IsBusy;
+        public bool IsBusy
+        {
+            get { return _IsBusy; }
+            set { SetProperty(ref _IsBusy, value); }
+        }
 
         private void ResetMouseCapture()
         {

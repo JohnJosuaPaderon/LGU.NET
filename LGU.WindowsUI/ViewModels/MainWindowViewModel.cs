@@ -25,6 +25,7 @@ namespace LGU.ViewModels
             _AccountDisplayEvent.Subscribe(arg => AccountDisplay = arg);
 
             _MessageQueue = new SnackbarMessageQueue(new System.TimeSpan(0, 0, 1));
+            _BusyAppEvent.Subscribe((isBusy) => IsBusy = isBusy);
         }
 
         private readonly ISystemManager _SystemManager;
