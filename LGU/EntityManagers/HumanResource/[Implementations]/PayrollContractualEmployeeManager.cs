@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LGU.EntityManagers.HumanResource
 {
-    public sealed class PayrollContractualEmployeeManager : IPayrollContractualEmployeeManager<SqlConnection, SqlTransaction>
+    public sealed class PayrollContractualEmployeeManager : IPayrollContractualEmployeeManager
     {
         private const string MESSAGE_INVALID = "Invalid payroll contractual employee.";
 
