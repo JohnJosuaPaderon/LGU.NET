@@ -54,6 +54,14 @@
         <Grid>
             <ContentControl prism:RegionManager.RegionName="{x:Static viewModels:MainWindowViewModel.MainContentRegionName}"/>
             <materialDesign:Snackbar MessageQueue="{Binding MessageQueue}" HorizontalAlignment="Stretch" Opacity="0.85"/>
+            <Grid Background="#9000" Visibility="{Binding IsBusy,Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}">
+                <materialDesign:Card VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <StackPanel Margin="{DynamicResource ContainerMargin}">
+                        <ProgressBar Style="{DynamicResource MaterialDesignCircularProgressBar}" IsIndeterminate="True" Height="50" Width="50"/>
+                        <TextBlock Text="Please Wait..." Style="{DynamicResource CardTitleTextBlock}"/>
+                    </StackPanel>
+                </materialDesign:Card>
+            </Grid>
         </Grid>
     </materialDesign:DialogHost>
 </mahApps:MetroWindow>
