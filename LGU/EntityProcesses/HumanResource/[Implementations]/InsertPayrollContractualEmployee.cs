@@ -37,6 +37,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
             if (affectedRows > 0)
             {
+                data.Id = command.Parameters.GetInt64(_Parameters.Id);
                 return new ProcessResult<IPayrollContractualEmployee>(data);
             }
             else
@@ -45,24 +46,9 @@ namespace LGU.EntityProcesses.HumanResource
             }
         }
 
-        public IProcessResult<IPayrollContractualEmployee> Execute()
-        {
-            return _SqlHelper.ExecuteNonQuery(QueryInfo);
-        }
-
         public IProcessResult<IPayrollContractualEmployee> Execute(SqlConnection connection, SqlTransaction transaction)
         {
             return _SqlHelper.ExecuteNonQuery(QueryInfo, connection, transaction);
-        }
-
-        public Task<IProcessResult<IPayrollContractualEmployee>> ExecuteAsync()
-        {
-            return _SqlHelper.ExecuteNonQueryAsync(QueryInfo);
-        }
-
-        public Task<IProcessResult<IPayrollContractualEmployee>> ExecuteAsync(CancellationToken cancellationToken)
-        {
-            return _SqlHelper.ExecuteNonQueryAsync(QueryInfo, cancellationToken);
         }
 
         public Task<IProcessResult<IPayrollContractualEmployee>> ExecuteAsync(SqlConnection connection, SqlTransaction transaction)
