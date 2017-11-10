@@ -149,10 +149,11 @@
     <Compile Include="Converters\TimeFileSegregationToDisplayConverter.cs" />
     <Compile Include="Converters\TimeLogExportOptionToDisplayConverter.cs" />
     <Compile Include="Events\AccountDisplayEvent.cs" />
+    <Compile Include="Events\BusyAppEvent.cs" />
     <Compile Include="Events\HumanResource\AddDepartmentEvent.cs" />
     <Compile Include="Events\HumanResource\AddEmployeeEvent.cs" />
     <Compile Include="Events\HumanResource\AddLocatorEvent.cs" />
-    <Compile Include="Events\ChangeHeaderEvent.cs" />
+    <Compile Include="Events\HeaderEvent.cs" />
     <Compile Include="Events\HumanResource\KioskEmployeeChangedEvent.cs" />
     <Compile Include="Events\HumanResource\DepartmentEvent.cs" />
     <Compile Include="Events\HumanResource\EditDepartmentEvent.cs" />
@@ -170,9 +171,13 @@
     <Compile Include="Extensions\IUnityContainerExtension.Definitions.HumanResource.cs" />
     <Compile Include="Extensions\ObservableCollectionExtension.cs" />
     <Compile Include="Interactivity\CustomNotification.cs" />
+    <Compile Include="Interactivity\DateTimeRangeSelectionNotification.cs" />
+    <Compile Include="Interactivity\HumanResource\ContractualPayrollSignatoryNotification.cs" />
     <Compile Include="Interactivity\HumanResource\EmployeeSearchNotification.cs" />
+    <Compile Include="Interactivity\HumanResource\IContractualPayrollSignatoryNotification.cs" />
     <Compile Include="Interactivity\HumanResource\IEmployeeSearchNotification.cs" />
     <Compile Include="Interactivity\ICustomNotification.cs" />
+    <Compile Include="Interactivity\IDateTimeRangeSelectionNotification.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="Models\Core\PersonModelBase.cs" />
     <Compile Include="Models\Core\UserSignUpModel.cs" />
@@ -186,6 +191,7 @@
     <Compile Include="Models\HumanResource\FingerPrintModel.cs" />
     <Compile Include="Models\HumanResource\PayrollContractualDepartmentModel.cs" />
     <Compile Include="Models\HumanResource\PayrollContractualEmployeeModel.cs" />
+    <Compile Include="Models\HumanResource\PayrollContractualInclusionModel.cs" />
     <Compile Include="Models\HumanResource\PayrollContractualModel.cs" />
     <Compile Include="Models\HumanResource\PayrollCutOffModel.cs" />
     <Compile Include="Models\HumanResource\PayrollModelBase.cs" />
@@ -228,7 +234,6 @@
     <Compile Include="ViewModels\HumanResource\ActualTimeLogExportViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\ApplicationMainViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\CalendarEventMaintenanceViewModel.cs" />
-    <Compile Include="ViewModels\HumanResource\ContractualPayrollFinishViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\ContractualPayrollViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\CreateNewSalaryGradeViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\DepartmentManagementViewModel.cs" />
@@ -237,6 +242,7 @@
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditDepartmentDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditEmployeeDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditLocatorDialogViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\ContractualPayrollSignatoryDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\EmployeeSearchDialogContent.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\EmployeeSearchDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\ManageEmployeeFingerPrintSetDialogViewModel.cs" />
@@ -289,9 +295,6 @@
     <Compile Include="Views\HumanResource\CalendarEventMaintenanceView.xaml.cs">
       <DependentUpon>CalendarEventMaintenanceView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HumanResource\ContractualPayrollFinishView.xaml.cs">
-      <DependentUpon>ContractualPayrollFinishView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\HumanResource\ContractualPayrollView.xaml.cs">
       <DependentUpon>ContractualPayrollView.xaml</DependentUpon>
     </Compile>
@@ -313,6 +316,9 @@
     </Compile>
     <Compile Include="Views\HumanResource\Dialogs\AddEditLocatorDialogView.xaml.cs">
       <DependentUpon>AddEditLocatorDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HumanResource\Dialogs\ContractualPayrollSignatoryDialogView.xaml.cs">
+      <DependentUpon>ContractualPayrollSignatoryDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HumanResource\Dialogs\EmployeeSearchDialogView.xaml.cs">
       <DependentUpon>EmployeeSearchDialogView.xaml</DependentUpon>
@@ -503,10 +509,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\HumanResource\ContractualPayrollFinishView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\HumanResource\ContractualPayrollView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -532,6 +534,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HumanResource\Dialogs\AddEditLocatorDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HumanResource\Dialogs\ContractualPayrollSignatoryDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

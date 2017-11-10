@@ -38,6 +38,7 @@ namespace LGU
         protected virtual void InitializeServices()
         {
             ServiceCollection.SetConnectionStringSource();
+            ServiceCollection.UseDefaultProcessResultConverters();
             ServiceCollection.UseSqlServer();
             ServiceCollection.EnableReporting();
         }
