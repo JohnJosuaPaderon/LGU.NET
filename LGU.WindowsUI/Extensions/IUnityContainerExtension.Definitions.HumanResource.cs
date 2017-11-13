@@ -2,8 +2,7 @@
 using LGU.EntityConverters.HumanResource;
 using LGU.EntityManagers.HumanResource;
 using LGU.EntityProcesses.HumanResource;
-using Microsoft.Practices.Unity;
-using System.Data.SqlClient;
+using Unity;
 
 namespace LGU.Extensions
 {
