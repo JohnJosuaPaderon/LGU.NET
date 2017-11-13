@@ -1,5 +1,4 @@
-﻿using LGU.EntityManagers.HumanResource;
-using LGU.Extensions;
+﻿using LGU.Extensions;
 using LGU.Views;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Unity;
