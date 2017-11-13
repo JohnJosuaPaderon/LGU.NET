@@ -2,6 +2,16 @@
 {
     public sealed class ValueRangeModel<T> : ModelBase<ValueRange<T>> 
     {
+        public static ValueRangeModel<T> TryCreate(T identicalValues)
+        {
+            return new ValueRangeModel<T>(new ValueRange<T>(identicalValues));
+        }
+
+        public static ValueRangeModel<T> TryCreate(T begin, T end)
+        {
+            return new ValueRangeModel<T>(new ValueRange<T>(begin, end));
+        }
+
         public ValueRangeModel(ValueRange<T> source) : base(source)
         {
             Begin = source.Begin;
