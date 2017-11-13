@@ -61,7 +61,7 @@ namespace LGU.Models.HumanResource
                 Source.Id = Id;
                 Source.LoginDate = LoginDate;
                 Source.LogoutDate = LogoutDate;
-                Source.Type = Type.GetSource();
+                Source.Type = Type?.GetSource();
 
                 return Source;
             }
