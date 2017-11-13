@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="LGU.Views.HumanResource.TimeLogManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"      
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:interactivity="clr-namespace:LGU.Interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:views="clr-namespace:LGU.Views"
+             xmlns:localDialogs="clr-namespace:LGU.Views.HumanResource.Dialogs"
+             prism:ViewModelLocator.AutoWireViewModel="True">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}"/>
+        </i:EventTrigger>
+        <prism:InteractionRequestTrigger SourceObject="{Binding DateTimeRangeSelectionRequest}">
+            <interactivity:CustomPopupWindowAction IsModal="True">
+                <interactivity:CustomPopupWindowAction.WindowContent>
+                    <views:DateTimeRangeSelectionView/>
+                </interactivity:CustomPopupWindowAction.WindowContent>
+            </interactivity:CustomPopupWindowAction>
+        </prism:InteractionRequestTrigger>
+        <prism:InteractionRequestTrigger SourceObject="{Binding AddEditTimeLogRequest}">
+            <interactivity:CustomPopupWindowAction IsModal="True">
+                <interactivity:CustomPopupWindowAction.WindowContent>
+                    <localDialogs:AddEditTimeLogDialogView/>
+                </interactivity:CustomPopupWindowAction.WindowContent>
+            </interactivity:CustomPopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    <Grid Margin="{DynamicResource ContainerMargin}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding SearchEmployeeKey,UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource SearchTextBox}" materialDesign:HintAssist.Hint="Search Employee...">
+                        <TextBox.InputBindings>
+                            <KeyBinding Command="{Binding SearchEmployeeCommand}" Key="Return"/>
+                        </TextBox.InputBindings>
+                    </TextBox>
+                    <Button Grid.Column="1" Style="{DynamicResource SearchButton}" Command="{Binding SearchEmployeeCommand}">
+                        <materialDesign:PackIcon Kind="Magnify" Height="20" Width="20"/>
+                    </Button>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
+                <DataGrid ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Employees" Binding="{Binding FullName}"/>
+                        <DataGridTextColumn Header="Department" Binding="{Binding Department.Description}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </materialDesign:Card>
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0">
+                <Grid Height="40">
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignBody2TextBlock}">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Cut-Off :" Margin="10 0 0 0"/>
+                    <TextBlock Grid.Column="2" Text="{Binding CutOff.Begin,StringFormat='MMMM dd, yyyy',FallbackValue='MMMM dd, yyyy'}"/>
+                    <TextBlock Grid.Column="4" Text="-"/>
+                    <TextBlock Grid.Column="6" Text="{Binding CutOff.End,StringFormat='MMMM dd, yyyy',FallbackValue='MMMM dd, yyyy'}"/>
+                    <Button Grid.Column="8" Style="{DynamicResource SearchButton}" Command="{Binding SelectCutOffCommand}">
+                        <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20"/>
+                    </Button>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="2" VerticalAlignment="Stretch">
+                <Grid>
+                    <DataGrid ItemsSource="{Binding TimeLogs}" SelectedItem="{Binding SelectedTimeLog}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Time-In" Binding="{Binding LoginDate,StringFormat='MMM. dd, yyyy hh:mm tt'}"/>
+                            <DataGridTextColumn Header="Time-Out" Binding="{Binding LogoutDate,StringFormat='MMM. dd, yyyy hh:mm tt'}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <materialDesign:PopupBox Style="{DynamicResource DataManagerPopupBox}">
+                        <StackPanel>
+                            <Button Command="{Binding AddTimeLogCommand}">
+                                <materialDesign:PackIcon Kind="Plus"/>
+                            </Button>
+                            <Button Command="{Binding EditTimeLogCommand}">
+                                <materialDesign:PackIcon Kind="Pencil"/>
+                            </Button>
+                            <Button Command="{Binding DeleteTimeLogCommand}">
+                                <materialDesign:PackIcon Kind="Delete"/>
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:PopupBox>
+                </Grid>
+            </materialDesign:Card>
+        </Grid>
+        <Grid Grid.Column="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+        </Grid>
+    </Grid>
+</UserControl>
