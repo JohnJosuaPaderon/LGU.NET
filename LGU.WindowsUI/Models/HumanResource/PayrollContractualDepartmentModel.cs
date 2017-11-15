@@ -63,6 +63,10 @@ namespace LGU.Models.HumanResource
 
         public override IPayrollContractualDepartment GetSource()
         {
+            Source.Employees.Clear();
+
+            Source.Head = Head?.GetSource();
+
             foreach (var employee in Employees)
             {
                 Source.Employees.Add(employee.GetSource());
