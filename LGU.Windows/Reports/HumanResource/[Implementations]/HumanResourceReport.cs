@@ -51,6 +51,26 @@ namespace LGU.Reports.HumanResource
             }
         }
 
+        public void ExportPayrollContractual(IPayrollContractual payrollContractual, IExportEventHandler eventHandler)
+        {
+            using (var export = ApplicationDomain.GetService<IExportPayrollContractual>())
+            {
+                export.EventHandler = eventHandler;
+                export.PayrollContractual = payrollContractual;
+                export.Export();
+            }
+        }
+
+        public async Task ExportPayrollContractualAsync(IPayrollContractual payrollContractual, IExportEventHandler eventHandler)
+        {
+            using (var export = ApplicationDomain.GetService<IExportPayrollContractual>())
+            {
+                export.EventHandler = eventHandler;
+                export.PayrollContractual = payrollContractual;
+                await export.ExportAsync();
+            }
+        }
+
         public void ExportTimeLog(IEnumerable<ITimeLog> timeLogs, ValueRange<DateTime> cutOff, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler)
         {
             using (var export = ApplicationDomain.GetService<IExportTimeLog>())
