@@ -1,33 +1,39 @@
 ﻿using LGU.Reports.HumanResource;
+using LGU.Spreadsheet;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LGU.Extensions
 {
     public static class IServiceCollectionExtension
     {
-        public static IServiceCollection SetConnectionStringSource(this IServiceCollection serviceCollection)
+        public static IServiceCollection SetConnectionStringSource(this IServiceCollection instance)
         {
-            serviceCollection.AddSingleton<IConnectionStringSource, ConnectionStringSource>();
-            return serviceCollection;
+            instance.AddSingleton<IConnectionStringSource, ConnectionStringSource>();
+            return instance;
         }
 
-        public static IServiceCollection SetSystemAdministratorManager(this IServiceCollection serviceCollection)
+        public static IServiceCollection SetSystemAdministratorManager(this IServiceCollection instance)
         {
-            serviceCollection.AddSingleton<ISystemAdministratorManager, SystemAdministratorManager>();
-            return serviceCollection;
+            instance.AddSingleton<ISystemAdministratorManager, SystemAdministratorManager>();
+            return instance;
         }
 
-        public static IServiceCollection EnableReporting(this IServiceCollection serviceCollection)
+        public static IServiceCollection EnableReporting(this IServiceCollection instance)
         {
-            serviceCollection.AddTransient<IExportLocator, ExportLocator>();
-            serviceCollection.AddTransient<IExportTimeLog, ExportTimeLog>();
-            serviceCollection.AddTransient<IExportActualTimeLog, ExportActualTimeLog>();
-            serviceCollection.AddSingleton<ILocatorReportInfoProvider, LocatorReportInfoProvider>();
-            serviceCollection.AddSingleton<ITimeLogReportInfoProvider, TimeLogReportInfoProvider>();
-            serviceCollection.AddSingleton<IActualTimeLogReportInfoProvider, ActualTimeLogReportInfoProvider>();
-            serviceCollection.AddSingleton<IHumanResourceReport, HumanResourceReport>();
+            instance.AddSingleton<IExcelCharactersDecorator, ExcelCharactersDecorator>();
 
-            return serviceCollection;
+            instance.AddTransient<IExportLocator, ExportLocator>();
+            instance.AddTransient<IExportTimeLog, ExportTimeLog>();
+            instance.AddTransient<IExportActualTimeLog, ExportActualTimeLog>();
+            instance.AddSingleton<ILocatorReportInfoProvider, LocatorReportInfoProvider>();
+            instance.AddSingleton<ITimeLogReportInfoProvider, TimeLogReportInfoProvider>();
+            instance.AddSingleton<IActualTimeLogReportInfoProvider, ActualTimeLogReportInfoProvider>();
+            instance.AddSingleton<IHumanResourceReport, HumanResourceReport>();
+            instance.AddSingleton<IExportPayrollContractual, ExportPayrollContractual>();
+            instance.AddSingleton<IPayrollContractualHeaderWriter, PayrollContractualHeaderWriter>();
+            instance.AddSingleton<IPayrollContractualReportInfoProvider, PayrollContractualReportInfoProvider>();
+
+            return instance;
         }
     }
 }
