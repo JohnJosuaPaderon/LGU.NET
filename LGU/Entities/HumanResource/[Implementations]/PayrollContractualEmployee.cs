@@ -12,5 +12,10 @@
                 _HdmfPremiumPs = value;
             }
         }
+
+        protected override decimal CalculateTotalDeduction()
+        {
+            return base.CalculateTotalDeduction() + HdmfPremiumPs ?? 0;
+        }
     }
 }

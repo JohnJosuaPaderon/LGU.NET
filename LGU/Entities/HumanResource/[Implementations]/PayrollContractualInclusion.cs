@@ -7,6 +7,8 @@ namespace LGU.Entities.HumanResource
         public PayrollContractualInclusion(IPayrollContractual payroll)
         {
             Payroll = payroll ?? throw new ArgumentNullException(nameof(payroll));
+
+            HdmfPremiumPs = true;
         }
 
         public IPayrollContractual Payroll { get; }
