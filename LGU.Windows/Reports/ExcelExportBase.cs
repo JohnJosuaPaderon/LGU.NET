@@ -135,9 +135,41 @@ namespace LGU.Reports
             CurrentRange.Value = value;
         }
 
+        protected void SetCellValueIfNotDefault<T>(int row, int column, T value)
+        {
+            if (!Equals(value, default(T)))
+            {
+                SetCellValue(row, column, value);
+            }
+        }
+
+        protected void SetCellValueIfNotDefault<T>(int row, int column, T value, T defaultValue)
+        {
+            if (!Equals(value, defaultValue))
+            {
+                SetCellValue(row, column, value);
+            }
+        }
+
         protected void SetCellValue(ExcelCell cell, object value)
         {
             SetCellValue(cell.RowIndex, cell.ColumnIndex, value);
+        }
+
+        protected void SetCellValueIfNotDefault<T>(ExcelCell cell, T value)
+        {
+            if (!Equals(value, default(T)))
+            {
+                SetCellValue(cell, value);
+            }
+        }
+
+        protected void SetCellValueIfNotDefault<T>(ExcelCell cell, T value, T defaultValue)
+        {
+            if (!Equals(value, defaultValue))
+            {
+                SetCellValue(cell, value);
+            }
         }
 
         protected void SetCellValue(int row, int column, object value, string numberFormat)
@@ -145,6 +177,42 @@ namespace LGU.Reports
             CurrentRange = ActiveWorksheet.Cells[row, column];
             CurrentRange.NumberFormat = numberFormat;
             CurrentRange.Value = value;
+        }
+
+        protected void SetCellValueIfNotDefault<T>(int row, int column, T value, string numberFormat)
+        {
+            if (!Equals(value, default(T)))
+            {
+                SetCellValue(row, column, value, numberFormat);
+            }
+        }
+
+        protected void SetCellValueIfNotDefault<T>(int row, int column, T value, T defaultValue, string numberFormat)
+        {
+            if (!Equals(value, defaultValue))
+            {
+                SetCellValue(row, column, value, numberFormat);
+            }
+        }
+
+        protected Excel.Range GetRange(ExcelCell beginCell, ExcelCell endCell)
+        {
+            return GetRange(beginCell, endCell, ActiveWorksheet);
+        }
+
+        protected Excel.Range GetRange(ExcelCell beginCell, ExcelCell endCell, Excel.Worksheet worksheet)
+        {
+            return worksheet.Range[GetCell(beginCell, worksheet), GetCell(endCell, worksheet)];
+        }
+
+        protected Excel.Range GetCell(ExcelCell excelCell)
+        {
+            return GetCell(excelCell, ActiveWorksheet);
+        }
+
+        protected Excel.Range GetCell(ExcelCell excelCell, Excel.Worksheet worksheet)
+        {
+            return worksheet.Cells[excelCell.RowIndex, excelCell.ColumnIndex];
         }
 
         public virtual void Dispose()
