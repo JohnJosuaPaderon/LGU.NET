@@ -8,5 +8,7 @@
         decimal MonthlyRate { get; set; }
         decimal TimeLogDeduction { get; set; }
         decimal? WithholdingTax { get; set; }
+        decimal AmountAccrued { get; }
+        decimal AmountPaid { get; }
     }
 }
