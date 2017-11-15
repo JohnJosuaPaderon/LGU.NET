@@ -13,5 +13,7 @@ namespace LGU.Reports.HumanResource
         Task ExportTimeLogAsync(IEnumerable<ITimeLog> timeLogs, ValueRange<DateTime> cutOff, TimeLogExportOption exportOption, TimeLogFileSegregation fileSegregation, IExportEventHandler eventHandler);
         void ExportLocator(ILocator locator, IExportEventHandler eventHandler);
         Task ExportLocatorAsync(ILocator locator, IExportEventHandler eventHandler);
+        void ExportPayrollContractual(IPayrollContractual payrollContractual, IExportEventHandler eventHandler);
+        Task ExportPayrollContractualAsync(IPayrollContractual payrollContractual, IExportEventHandler eventHandler);
     }
 }
