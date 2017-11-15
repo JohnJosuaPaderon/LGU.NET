@@ -4,6 +4,8 @@ using LGU.Interactivity;
 using LGU.Interactivity.HumanResource;
 using LGU.Models.HumanResource;
 using LGU.Processes;
+using LGU.Reports;
+using LGU.Reports.HumanResource;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
@@ -13,7 +15,7 @@ using System.Linq;
 
 namespace LGU.ViewModels.HumanResource
 {
-    public sealed class ContractualPayrollViewModel : ViewModelBase, INavigationAware
+    public sealed class ContractualPayrollViewModel : ViewModelBase, INavigationAware, IExportEventHandler
     {
         private const string TEXT_HEADER = "Payroll - Contractual";
         private const string NAV_PARAM_PAYROLL = "payroll";
@@ -23,6 +25,7 @@ namespace LGU.ViewModels.HumanResource
         {
             _DepartmentManager = ApplicationDomain.GetService<IPayrollContractualDepartmentManager>();
             _PayrollManager = ApplicationDomain.GetService<IPayrollContractualManager>();
+            _Report = ApplicationDomain.GetService<IHumanResourceReport>();
 
             ChangeCutOffCommand = new DelegateCommand(ChangeCutOff);
             SearchEmployeeCommand = new DelegateCommand<string>(SearchEmployee);
@@ -37,6 +40,7 @@ namespace LGU.ViewModels.HumanResource
 
         private readonly IPayrollContractualDepartmentManager _DepartmentManager;
         private readonly IPayrollContractualManager _PayrollManager;
+        private readonly IHumanResourceReport _Report;
 
         public DelegateCommand ChangeCutOffCommand { get; }
         public DelegateCommand<string> SearchEmployeeCommand { get; }
@@ -187,6 +191,8 @@ namespace LGU.ViewModels.HumanResource
                 if (result.Status == ProcessResultStatus.Success)
                 {
                     _NewMessageEvent.EnqueueMessage("Payroll successfully created.");
+
+                    await _Report.ExportPayrollContractualAsync(result.Data, this);
                 }
                 else
                 {
@@ -211,5 +217,27 @@ namespace LGU.ViewModels.HumanResource
         {
 
         }
+
+        #region IExportEventHandler
+        public void OnException(Exception exception)
+        {
+            _NewMessageEvent.EnqueueException(exception);
+        }
+
+        public void OnError(string message)
+        {
+            _NewMessageEvent.EnqueueErrorMessage(message);
+        }
+
+        public void OnExported(string[] filePaths)
+        {
+            _NewMessageEvent.EnqueueMessage("Exported successfully.");
+        }
+
+        public void OnExported(string filePath)
+        {
+            _NewMessageEvent.EnqueueMessage("Exported successfully.");
+        } 
+        #endregion
     }
 }
