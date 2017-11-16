@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security;
 
 namespace LGU.Utilities
 {
@@ -43,6 +44,11 @@ namespace LGU.Utilities
         public static TimeSpan? ToNullableTimeSpan(object value)
         {
             return ConversionBase(value, ValueConverter.ToNullableTimeSpan);
+        }
+
+        public static SecureString ToSecureString(object value)
+        {
+            return ConversionBase(value, ValueConverter.ToSecureString);
         }
     }
 }

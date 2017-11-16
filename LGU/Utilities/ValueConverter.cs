@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security;
 
 namespace LGU.Utilities
 {
@@ -142,6 +143,18 @@ namespace LGU.Utilities
             if (value != null)
             {
                 return ToTimeSpan(value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static SecureString ToSecureString(object value)
+        {
+            if (value != null)
+            {
+                return SecureStringConverter.Convert(ToString(value));
             }
             else
             {
