@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.IO;
+using System.Security;
 
 namespace LGU.Data.Extensions
 {
@@ -341,6 +342,11 @@ namespace LGU.Data.Extensions
         public static TimeSpan? GetNullableTimeSpan(this DbDataReader reader, string fieldName)
         {
             return GetValueBase(reader, fieldName, DbValueConverter.ToNullableTimeSpan);
+        }
+
+        public static SecureString GetSecureString(this DbDataReader reader, string fieldName)
+        {
+            return GetValueBase(reader, fieldName, DbValueConverter.ToSecureString);
         }
 
         public static Dictionary<string, object> ToDictionary(this DbDataReader reader)
