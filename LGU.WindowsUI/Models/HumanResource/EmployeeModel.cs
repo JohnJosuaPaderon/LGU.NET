@@ -1,5 +1,7 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.Models.Core;
+using LGU.Security;
+using LGU.Utilities;
 
 namespace LGU.Models.HumanResource
 {
@@ -18,6 +20,9 @@ namespace LGU.Models.HumanResource
             EmploymentStatus = EmploymentStatusModel.TryCreate(source.EmploymentStatus);
             WorkTimeSchedule = WorkTimeScheduleModel.TryCreate(source.WorkTimeSchedule);
             MonthlySalary = source.MonthlySalary;
+            IsFlexWorkSchedule = source.IsFlexWorkSchedule;
+            Title = source.Title;
+            BankAccountNumber = Crypto.Decrypt(SecureStringConverter.Convert(source.SecureBankAccountNumber));
         }
         
         private DepartmentModel _Department;
@@ -62,6 +67,27 @@ namespace LGU.Models.HumanResource
             set { SetProperty(ref _MonthlySalary, value); }
         }
 
+        private bool _IsFlexWorkSchedule;
+        public bool IsFlexWorkSchedule
+        {
+            get { return _IsFlexWorkSchedule; }
+            set { SetProperty(ref _IsFlexWorkSchedule, value); }
+        }
+
+        private string _Title;
+        public string Title
+        {
+            get { return _Title; }
+            set { SetProperty(ref _Title, value); }
+        }
+
+        private string _BankAccountNumber;
+        public string BankAccountNumber
+        {
+            get { return _BankAccountNumber; }
+            set { SetProperty(ref _BankAccountNumber, value); }
+        }
+
         public override IEmployee GetSource()
         {
             Source.Department = Department?.GetSource();
@@ -70,6 +96,9 @@ namespace LGU.Models.HumanResource
             Source.Type = Type?.GetSource();
             Source.WorkTimeSchedule = WorkTimeSchedule?.GetSource();
             Source.MonthlySalary = MonthlySalary;
+            Source.IsFlexWorkSchedule = IsFlexWorkSchedule;
+            Source.Title = Title;
+            Source.SecureBankAccountNumber = SecureStringConverter.Convert(Crypto.Encrypt(BankAccountNumber));
 
             return Source;
         }
