@@ -28,6 +28,11 @@
             <dragablz:TabablzControl Grid.Row="1">
                 <TabItem Header="Personal Details">
                     <Grid Margin="{DynamicResource ContainerMargin}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
@@ -40,37 +45,35 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBox Grid.Row="0" Text="{Binding Employee.LastName}" materialDesign:HintAssist.Hint="Last Name"/>
-                        <TextBox Grid.Row="2" Text="{Binding Employee.FirstName}" materialDesign:HintAssist.Hint="First Name"/>
-                        <TextBox Grid.Row="4" Text="{Binding Employee.MiddleName}" materialDesign:HintAssist.Hint="Middle Name"/>
-                        <TextBox Grid.Row="6" Text="{Binding Employee.NameExtension}" materialDesign:HintAssist.Hint="Name Extension"/>
-                        <ComboBox Grid.Row="8" ItemsSource="{Binding Departments}" SelectedItem="{Binding Employee.Department}" materialDesign:HintAssist.Hint="Department">
+                        <TextBox Grid.Column="0" Grid.Row="0" Text="{Binding Employee.LastName}" materialDesign:HintAssist.Hint="Last Name"/>
+                        <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Employee.FirstName}" materialDesign:HintAssist.Hint="First Name"/>
+                        <TextBox Grid.Column="0" Grid.Row="2" Text="{Binding Employee.MiddleName}" materialDesign:HintAssist.Hint="Middle Name"/>
+                        <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding Employee.NameExtension}" materialDesign:HintAssist.Hint="Name Extension"/>
+                        <ComboBox Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" ItemsSource="{Binding Departments}" SelectedItem="{Binding Employee.Department}" materialDesign:HintAssist.Hint="Department">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Description}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Row="10" ItemsSource="{Binding Types}" SelectedItem="{Binding Employee.Type}" materialDesign:HintAssist.Hint="Type">
+                        <ComboBox Grid.Column="0" Grid.Row="6" ItemsSource="{Binding Types}" SelectedItem="{Binding Employee.Type}" materialDesign:HintAssist.Hint="Type">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Description}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ComboBox Grid.Row="12" ItemsSource="{Binding WorkTimeSchedules}" SelectedItem="{Binding Employee.WorkTimeSchedule}" materialDesign:HintAssist.Hint="Work-Time Schedule">
+                        <ComboBox Grid.Column="2" Grid.Row="6" ItemsSource="{Binding WorkTimeSchedules}" SelectedItem="{Binding Employee.WorkTimeSchedule}" materialDesign:HintAssist.Hint="Work-Time Schedule">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Description}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <TextBox Grid.Row="14" Text="{Binding Employee.MonthlySalary, StringFormat='#,##0.00'}" materialDesign:HintAssist.Hint="Monthly Salary" Visibility="{Binding Employee.Type.Id,Converter={x:Static converters:EmployeeTypeToVisibilityConverter.Instance},ConverterParameter=2}"/>
+                        <TextBox Grid.Column="0" Grid.Row="8" Text="{Binding Employee.Title}" materialDesign:HintAssist.Hint="Title"/>
+                        <TextBox Grid.Column="2" Grid.Row="8" Text="{Binding Employee.BankAccountNumber}" materialDesign:HintAssist.Hint="Bank Account No."/>
+                        <TextBox Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="3" Text="{Binding Employee.MonthlySalary, StringFormat='#,##0.00'}" materialDesign:HintAssist.Hint="Monthly Salary" Visibility="{Binding Employee.Type.Id,Converter={x:Static converters:EmployeeTypeToVisibilityConverter.Instance},ConverterParameter=2}"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Salary Grade">
