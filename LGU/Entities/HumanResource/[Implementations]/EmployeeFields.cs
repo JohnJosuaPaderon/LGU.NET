@@ -15,6 +15,8 @@ namespace LGU.Entities.HumanResource
             WorkTimeScheduleId = "WorkTimeScheduleId";
             PayrollTypeId = "PayrollTypeId";
             IsFlexWorkSchedule = "IsFlexWorkSchedule";
+            Title = "Title";
+            BankAccountNumber = "BankAccountNumber";
         }
         
         public string MonthlySalary { get; }
@@ -26,5 +28,7 @@ namespace LGU.Entities.HumanResource
         public string WorkTimeScheduleId { get; }
         public string PayrollTypeId { get; }
         public string IsFlexWorkSchedule { get; }
+        public string Title { get; }
+        public string BankAccountNumber { get; }
     }
 }
