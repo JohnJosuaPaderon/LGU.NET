@@ -2,6 +2,7 @@
 using LGU.Entities.HumanResource;
 using LGU.Processes;
 using System;
+using System.Security;
 
 namespace LGU.EntityConverters.HumanResource
 {
@@ -24,5 +25,7 @@ namespace LGU.EntityConverters.HumanResource
         IDataConverterProperty<IWorkTimeSchedule> PWorkTimeSchedule { get; }
         IDataConverterProperty<IPayrollType> PPayrollType { get; }
         IDataConverterProperty<bool> PIsFlexWorkSchedule { get; }
+        IDataConverterProperty<string> PTitle { get; }
+        IDataConverterProperty<SecureString> PSecureBankAccountNumber { get; }
     }
 }
