@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Diagnostics;
+using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,6 +38,8 @@ namespace LGU.EntityConverters.HumanResource
             PWorkTimeSchedule = new DataConverterProperty<IWorkTimeSchedule>();
             PPayrollType = new DataConverterProperty<IPayrollType>();
             PIsFlexWorkSchedule = new DataConverterProperty<bool>();
+            PTitle = new DataConverterProperty<string>();
+            PSecureBankAccountNumber = new DataConverterProperty<SecureString>();
         }
 
         private readonly IEmployeeFields _Fields;
@@ -58,6 +61,8 @@ namespace LGU.EntityConverters.HumanResource
         public IDataConverterProperty<IWorkTimeSchedule> PWorkTimeSchedule { get; }
         public IDataConverterProperty<IPayrollType> PPayrollType { get; }
         public IDataConverterProperty<bool> PIsFlexWorkSchedule { get; }
+        public IDataConverterProperty<string> PTitle { get; }
+        public IDataConverterProperty<SecureString> PSecureBankAccountNumber { get; }
 
         private IGenderManager GenderManager;
         private IDepartmentManager DepartmentManager;
@@ -97,7 +102,9 @@ namespace LGU.EntityConverters.HumanResource
                 DepartmentHead = departmentHead,
                 WorkTimeSchedule = workTimeSchedule,
                 PayrollType = payrollType,
-                //IsFlexWorkSchedule = PIsFlexWorkSchedule.TryGetValue(reader.GetBoolean, _Fields.IsFlexWorkSchedule)
+                IsFlexWorkSchedule = PIsFlexWorkSchedule.TryGetValue(reader.GetBoolean, _Fields.IsFlexWorkSchedule),
+                Title = PTitle.TryGetValue(reader.GetString, _Fields.Title),
+                SecureBankAccountNumber = PSecureBankAccountNumber.TryGetValue(reader.GetSecureString, _Fields.BankAccountNumber)
             };
         }
 
