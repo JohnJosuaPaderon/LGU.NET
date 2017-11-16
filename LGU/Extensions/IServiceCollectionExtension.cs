@@ -1,6 +1,7 @@
 ﻿using LGU.EntityManagers;
 using LGU.EntityProcesses;
 using LGU.Processes;
+using LGU.Security;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
@@ -30,6 +31,13 @@ namespace LGU.Extensions
         {
             instance.AddSingleton<IDbDataReaderToEnumerableProcessResultConverter, DefaultDbDataReaderToEnumerableProcessResultConverter>();
             instance.AddSingleton<IDbDataReaderToProcessResultConverter, DefaultDbDataReaderToProcessResultConverter>();
+
+            return instance;
+        }
+
+        public static IServiceCollection UseCryptoPasswordProvider(this IServiceCollection instance)
+        {
+            instance.AddSingleton<ICryptoPasswordProvider, CryptoPasswordProvider>();
 
             return instance;
         }
