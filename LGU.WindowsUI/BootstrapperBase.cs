@@ -36,6 +36,7 @@ namespace LGU
 
         protected virtual void InitializeServices()
         {
+            ServiceCollection.UseCryptoPasswordProvider();
             ServiceCollection.SetConnectionStringSource();
             ServiceCollection.UseDefaultProcessResultConverters();
             ServiceCollection.UseSqlServer();
