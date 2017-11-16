@@ -2,6 +2,7 @@
 using LGU.Data.Rdbms;
 using LGU.Entities.HumanResource;
 using LGU.Processes;
+using LGU.Utilities;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading;
@@ -40,6 +41,8 @@ namespace LGU.EntityProcesses.HumanResource
             .AddInputParameter(_Parameters.WorkTimeScheduleId, Employee.WorkTimeSchedule?.Id)
             .AddInputParameter(_Parameters.MonthlySalary, Employee.MonthlySalary)
             .AddInputParameter(_Parameters.IsFlexWorkSchedule, Employee.IsFlexWorkSchedule)
+            .AddInputParameter(_Parameters.Title, Employee.Title)
+            .AddInputParameter(_Parameters.BankAccountNumber, SecureStringConverter.Convert(Employee.SecureBankAccountNumber))
             .AddLogByParameter();
 
         private IProcessResult<IEmployee> GetProcessResult(IEmployee data, SqlCommand command, int affectedRows)
