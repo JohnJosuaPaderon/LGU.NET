@@ -1,4 +1,5 @@
 ﻿using LGU.Entities.Core;
+using System.Security;
 
 namespace LGU.Entities.HumanResource
 {
@@ -15,5 +16,6 @@ namespace LGU.Entities.HumanResource
         bool IsFlexWorkSchedule { get; set; }
         string TimeKeepingCode { get; set; }
         string Title { get; set; }
+        SecureString SecureBankAccountNumber { get; set; }
     }
 }

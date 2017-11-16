@@ -13,5 +13,7 @@ namespace LGU.Entities.HumanResource
         string WorkTimeScheduleId { get; }
         string PayrollTypeId { get; }
         string IsFlexWorkSchedule { get; }
+        string Title { get; }
+        string BankAccountNumber { get; }
     }
 }
