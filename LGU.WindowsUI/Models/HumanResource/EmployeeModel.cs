@@ -100,7 +100,7 @@ namespace LGU.Models.HumanResource
             Source.Title = Title;
             Source.SecureBankAccountNumber = SecureStringConverter.Convert(Crypto.Encrypt(BankAccountNumber));
 
-            return Source;
+            return base.GetSource();
         }
     }
 }
