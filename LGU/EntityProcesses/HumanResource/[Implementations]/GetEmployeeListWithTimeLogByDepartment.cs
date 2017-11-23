@@ -18,6 +18,7 @@ namespace LGU.EntityProcesses.HumanResource
         {
             _Parameters = parameters;
             _Converter = converter;
+            _Converter.PSecureBankAccountNumber.Value = null;
         }
 
         private readonly IEmployeeParameters _Parameters;

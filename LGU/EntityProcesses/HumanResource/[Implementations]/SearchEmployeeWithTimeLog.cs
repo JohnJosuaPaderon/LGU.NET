@@ -18,6 +18,7 @@ namespace LGU.EntityProcesses.HumanResource
         public SearchEmployeeWithTimeLog(IConnectionStringSource connectionStringSource, IEmployeeConverter converter) : base(connectionStringSource)
         {
             _Converter = converter;
+            _Converter.PSecureBankAccountNumber.Value = null;
         }
 
         private readonly IEmployeeConverter _Converter;
