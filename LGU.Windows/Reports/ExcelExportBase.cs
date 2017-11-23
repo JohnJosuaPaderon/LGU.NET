@@ -17,7 +17,7 @@ namespace LGU.Reports
         protected Excel.Range CurrentRange { get; set; }
         protected bool Faulted { get; set; }
 
-        protected void Initialize()
+        protected virtual void Initialize()
         {
             try
             {
