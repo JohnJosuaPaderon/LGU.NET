@@ -1,9 +1,11 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.Extensions;
+using LGU.Security;
 using LGU.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace LGU.Reports.HumanResource
@@ -20,6 +22,14 @@ namespace LGU.Reports.HumanResource
         private readonly IPayrollContractualHeaderWriter _HeaderWriter;
 
         public IPayrollContractual PayrollContractual { get; set; }
+
+        private StringBuilder BankRequestBuilder;
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            BankRequestBuilder = new StringBuilder();
+        }
 
         public void Export()
         {
@@ -40,6 +50,8 @@ namespace LGU.Reports.HumanResource
             {
                 foreach (var department in PayrollContractual.Departments)
                 {
+                    WriteBankRequestFile(department.Employees);
+
                     employeeCounter = 1;
 
                     if (department.Employees.Count <= _InfoProvider.MaxItemPerSheet)
@@ -58,15 +70,51 @@ namespace LGU.Reports.HumanResource
             }
         }
 
+        private void WriteBankRequestFile(IPayrollContractualEmployeeCollection employees)
+        {
+            foreach (var employee in employees)
+            {
+                WriteBankRequestFile(employee);
+            }
+        }
+
+        private void WriteBankRequestFile(IPayrollContractualEmployee employee)
+        {
+            var bankAccountNumber = BankAccountNumber(employee);
+
+            if (!string.IsNullOrWhiteSpace(bankAccountNumber))
+            {
+                BankRequestBuilder.AppendLine($"{bankAccountNumber}{FullName(employee)}{AmountPaid(employee)}15900129");
+            }
+        }
+
+        private static string AmountPaid(IPayrollContractualEmployee employee)
+        {
+            return Math.Abs(employee.AmountPaid).ToString("0000000000000.00").Replace(".", string.Empty);
+        }
+
+        private static string FullName(IPayrollContractualEmployee employee)
+        {
+            return employee.Employee?.FullName.PadRight(40);
+        }
+
+        private static string BankAccountNumber(IPayrollContractualEmployee employee)
+        {
+            return Crypto.Decrypt(SecureStringConverter.Convert(employee.Employee?.SecureBankAccountNumber));
+        }
+
         private void TrySave()
         {
             try
             {
                 DirectoryResolver.Resolve(_InfoProvider.SaveDirectory);
-                var path = Path.Combine(_InfoProvider.SaveDirectory, $"{PayrollContractual.RangeDate.ToFormattedString()}_{PayrollContractual.RunDate.ToString("yyyy-MM-dd-HH-mm")}_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm")}.xlsx");
+                var basePath = Path.Combine(_InfoProvider.SaveDirectory, $"{PayrollContractual.RangeDate.ToFormattedString()}_{PayrollContractual.RunDate.ToString("yyyy-MM-dd-HH-mm")}_{DateTime.Now.ToString("yyyy-MM-dd-HH-mm")}");
+                var excelPath = $"{basePath}.xlsx";
+                var bankAccountPath = $"{basePath}.txt";
                 TemplateWorksheet.Delete();
-                Workbook.SaveAs(path);
-                EventHandler?.OnExported(path);
+                Workbook.SaveAs(excelPath);
+                File.WriteAllText(bankAccountPath, BankRequestBuilder.ToString());
+                EventHandler?.OnExported(excelPath);
             }
             catch (Exception ex)
             {
