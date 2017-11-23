@@ -1,5 +1,6 @@
 ﻿using LGU.Utilities;
 using System;
+using System.IO;
 using System.Security;
 
 namespace LGU.Security
@@ -8,7 +9,14 @@ namespace LGU.Security
     {
         public CryptoPasswordProvider()
         {
-            _SecurePassword = SecureStringConverter.Convert(Environment.CurrentDirectory);
+            var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "crypto.txt");
+
+            if (!File.Exists(file))
+            {
+                File.WriteAllText(file, "C:\\LGU.NET\\HumanResource");
+            }
+
+            _SecurePassword = SecureStringConverter.Convert(File.ReadAllText(file));
         }
 
         private readonly SecureString _SecurePassword;
