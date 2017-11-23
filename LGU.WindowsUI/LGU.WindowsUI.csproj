@@ -151,6 +151,7 @@
     <Compile Include="BootstrapperBase.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\DateTimeRangeDisplayConverter.cs" />
+    <Compile Include="Converters\CipherTextDecryptor.cs" />
     <Compile Include="Converters\DialogModeAddToVisibilityConverter.cs" />
     <Compile Include="Converters\DialogModeEditToVisibilityConverter.cs" />
     <Compile Include="Converters\EmployeeTypeToBooleanConverter.cs" />
