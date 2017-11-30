@@ -75,12 +75,19 @@ namespace LGU.ViewModels.HumanResource
 
         protected override void Initialize()
         {
-            if (Payroll == null)
+            try
             {
-                Payroll = new PayrollContractualModel(new PayrollContractual()
+                if (Payroll == null)
                 {
-                    RangeDate = new ValueRange<DateTime>(DateTime.Now.AddDays(-15), DateTime.Now)
-                });
+                    Payroll = new PayrollContractualModel(new PayrollContractual()
+                    {
+                        RangeDate = new ValueRange<DateTime>(DateTime.Now.AddDays(-15), DateTime.Now)
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                _NewMessageEvent.EnqueueException(ex);
             }
         }
 
