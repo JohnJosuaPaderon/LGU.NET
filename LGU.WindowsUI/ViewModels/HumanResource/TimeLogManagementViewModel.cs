@@ -152,9 +152,22 @@ namespace LGU.ViewModels.HumanResource
             }
         }
 
-        private void DeleteTimeLog()
+        private async void DeleteTimeLog()
         {
+            if (SelectedTimeLog != null)
+            {
+               var result = await _TimeLogManager.DeleteAsync(SelectedTimeLog.GetSource());
 
+                if (result.Status == ProcessResultStatus.Success)
+                {
+                    _NewMessageEvent.EnqueueMessage("Successfully deleted.");
+                    await GetTimeLogsAsync();
+                }
+                else
+                {
+                    _NewMessageEvent.EnqueueErrorMessage(result.Message);
+                }
+            }
         }
 
         private async Task GetTimeLogsAsync()
