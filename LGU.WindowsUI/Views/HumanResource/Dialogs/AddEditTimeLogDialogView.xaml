@@ -5,6 +5,11 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              prism:ViewModelLocator.AutoWireViewModel="True">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -12,144 +17,128 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="{Binding Notification.HeaderText,FallbackValue='Add or Edit Time-Log'}" Style="{DynamicResource CardTitleTextBlock}"/>
-        <Grid Grid.Row="1" Margin="{DynamicResource ContainerMargin}" MinHeight="450" MinWidth="500">
-            <materialDesign:Transitioner SelectedIndex="{Binding SelectedPage,FallbackValue=2}">
-                <materialDesign:TransitionerSlide>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" Text="{Binding Notification.TimeLog.LoginDate,StringFormat='MMMM d, yyyy HH:mm:ss'}" IsReadOnly="True" materialDesign:HintAssist.Hint="Time-in"/>
-                            <Button Grid.Column="2" Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" Command="{Binding ChangePageCommand}" CommandParameter="1">
-                                <materialDesign:PackIcon Kind="Pencil"/>
-                            </Button>
-                        </Grid>
-                        <Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" Text="{Binding Notification.TimeLog.LogoutDate,StringFormat='MMMM d, yyyy HH:mm:ss'}" IsReadOnly="True" materialDesign:HintAssist.Hint="Time-out"/>
-                            <Button Grid.Column="2" Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" Command="{Binding ChangePageCommand}" CommandParameter="3">
-                                <materialDesign:PackIcon Kind="Pencil"/>
-                            </Button>
-                        </Grid>
+        <Grid Grid.Row="1" Margin="{DynamicResource ContainerMargin}" MinHeight="200" MinWidth="450">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <materialDesign:Card Grid.Column="0" VerticalAlignment="Stretch">
+                <Grid Margin="{DynamicResource ContainerMargin}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Login" Style="{DynamicResource MaterialDesignHeadlineTextBlock}"/>
+                        <ToggleButton Grid.Column="1" IsChecked="{Binding SetLogin}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked">
+                                    <i:InvokeCommandAction Command="{Binding LoginToggleCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="Unchecked">
+                                    <i:InvokeCommandAction Command="{Binding LoginToggleCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ToggleButton>
                     </Grid>
-                </materialDesign:TransitionerSlide>
-                <!-- Login: Date, Page: 1 -->
-                <materialDesign:TransitionerSlide>
-                    <materialDesign:Card VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Grid Margin="{DynamicResource DefaultMargin}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Select Date (Time-in)" Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
-                            <Calendar Grid.Row="2" SelectedDate="{Binding Notification.TimeLog.LoginDate}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectedDatesChanged">
-                                        <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Calendar>
-                            <Grid Grid.Row="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="1" Content="Select Time" Command="{Binding ChangePageCommand}" CommandParameter="2"/>
-                            </Grid>
-                        </Grid>
-                    </materialDesign:Card>
-                </materialDesign:TransitionerSlide>
-                <!-- Login: Time, Page: 2 -->
-                <materialDesign:TransitionerSlide>
-                    <materialDesign:Card VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Grid Margin="{DynamicResource DefaultMargin}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Select Time (Time-in)" Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
-                            <materialDesign:Clock Grid.Row="2" Time="{Binding Notification.TimeLog.LoginDate}"/>
-                            <Grid Grid.Row="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="1" Content="Done" Command="{Binding ChangePageCommand}" CommandParameter="0"/>
-                            </Grid>
-                        </Grid>
-                    </materialDesign:Card>
-                </materialDesign:TransitionerSlide>
-                <!-- Logout: Date, Page: 3 -->
-                <materialDesign:TransitionerSlide>
-                    <materialDesign:Card VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Grid Margin="{DynamicResource DefaultMargin}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Select Date (Time-out)" Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
-                            <Calendar Grid.Row="2" SelectedDate="{Binding Notification.TimeLog.LogoutDate}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="SelectedDatesChanged">
-                                        <i:InvokeCommandAction Command="{Binding ResetMouseCaptureCommand}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </Calendar>
-                            <Grid Grid.Row="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="1" Content="Select Time" Command="{Binding ChangePageCommand}" CommandParameter="4"/>
-                            </Grid>
-                        </Grid>
-                    </materialDesign:Card>
-                </materialDesign:TransitionerSlide>
-                <!-- Logout: Time, Page: 4 -->
-                <materialDesign:TransitionerSlide>
-                    <materialDesign:Card VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Grid Margin="{DynamicResource DefaultMargin}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Text="Select Time (Time-out)" Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
-                            <materialDesign:Clock Grid.Row="2" Time="{Binding Notification.TimeLog.LogoutDate}"/>
-                            <Grid Grid.Row="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Button Grid.Column="1" Content="Done" Command="{Binding ChangePageCommand}" CommandParameter="0"/>
-                            </Grid>
-                        </Grid>
-                    </materialDesign:Card>
-                </materialDesign:TransitionerSlide>
-            </materialDesign:Transitioner>
+                    <TextBlock Grid.Row="2" Text="Select Date" Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0" IsEnabled="{Binding SetLogin}" materialDesign:HintAssist.Hint="Year" Margin="0" ItemsSource="{Binding LoginYears}" SelectedItem="{Binding SelectedLoginYear}"/>
+                        <ComboBox Grid.Column="2" IsEnabled="{Binding SetLogin}" materialDesign:HintAssist.Hint="Month" Margin="0" ItemsSource="{Binding LoginMonths}" SelectedItem="{Binding SelectedLoginMonth}"/>
+                        <ComboBox Grid.Column="4" IsEnabled="{Binding SetLogin}" materialDesign:HintAssist.Hint="Day" Margin="0" ItemsSource="{Binding LoginDays}" SelectedItem="{Binding SelectedLoginDay}"/>
+                    </Grid>
+                    <TextBlock Grid.Row="6" Text="Select Time" Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
+                    <Grid Grid.Row="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0" IsEnabled="{Binding SetLogin}" materialDesign:HintAssist.Hint="Hour" Margin="0" ItemsSource="{Binding LoginHours}" SelectedItem="{Binding SelectedLoginHour}"/>
+                        <ComboBox Grid.Column="2" IsEnabled="{Binding SetLogin}" materialDesign:HintAssist.Hint="Minute" Margin="0" ItemsSource="{Binding LoginMinutes}" SelectedItem="{Binding SelectedLoginMinute}"/>
+                        <ComboBox Grid.Column="4" IsEnabled="{Binding SetLogin}" materialDesign:HintAssist.Hint="Second" Margin="0" ItemsSource="{Binding LoginSeconds}" SelectedItem="{Binding SelectedLoginSecond}"/>
+                    </Grid>
+                </Grid>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Column="2" VerticalAlignment="Stretch">
+                <Grid Margin="{DynamicResource ContainerMargin}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{DynamicResource DefaultGridSpace}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Logout" Style="{DynamicResource MaterialDesignHeadlineTextBlock}"/>
+                        <ToggleButton Grid.Column="1" IsChecked="{Binding SetLogout}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked">
+                                    <i:InvokeCommandAction Command="{Binding LogoutToggleCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="Unchecked">
+                                    <i:InvokeCommandAction Command="{Binding LogoutToggleCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ToggleButton>
+                    </Grid>
+                    <TextBlock Grid.Row="2" Text="Select Date" Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
+                    <Grid Grid.Row="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0" IsEnabled="{Binding SetLogout}" materialDesign:HintAssist.Hint="Year" Margin="0" ItemsSource="{Binding LogoutYears}" SelectedItem="{Binding SelectedLogoutYear}"/>
+                        <ComboBox Grid.Column="2" IsEnabled="{Binding SetLogout}" materialDesign:HintAssist.Hint="Month" Margin="0" ItemsSource="{Binding LogoutMonths}" SelectedItem="{Binding SelectedLogoutMonth}"/>
+                        <ComboBox Grid.Column="4" IsEnabled="{Binding SetLogout}" materialDesign:HintAssist.Hint="Day" Margin="0" ItemsSource="{Binding LogoutDays}" SelectedItem="{Binding SelectedLogoutDay}"/>
+                    </Grid>
+                    <TextBlock Grid.Row="6" Text="Select Time" Style="{DynamicResource MaterialDesignBody2TextBlock}"/>
+                    <Grid Grid.Row="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{DynamicResource DefaultGridSpace}"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0" IsEnabled="{Binding SetLogout}" materialDesign:HintAssist.Hint="Hour" Margin="0" ItemsSource="{Binding LogoutHours}" SelectedItem="{Binding SelectedLogoutHour}"/>
+                        <ComboBox Grid.Column="2" IsEnabled="{Binding SetLogout}" materialDesign:HintAssist.Hint="Minute" Margin="0" ItemsSource="{Binding LogoutMinutes}" SelectedItem="{Binding SelectedLogoutMinute}"/>
+                        <ComboBox Grid.Column="4" IsEnabled="{Binding SetLogout}" materialDesign:HintAssist.Hint="Second" Margin="0" ItemsSource="{Binding LogoutSeconds}" SelectedItem="{Binding SelectedLogoutSecond}"/>
+                    </Grid>
+                </Grid>
+            </materialDesign:Card>
         </Grid>
         <materialDesign:ColorZone Grid.Row="2" Style="{DynamicResource FooterColorZone}">
             <Grid>
