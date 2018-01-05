@@ -260,6 +260,10 @@
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditEmployeeDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditLocatorDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\AddEditTimeLogDialogViewModel.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\AddEditTimeLogDialogViewModel.Part.CommandHandler.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\AddEditTimeLogDialogViewModel.Part.Declaration.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\AddEditTimeLogDialogViewModel.Part.Loader.cs" />
+    <Compile Include="ViewModels\HumanResource\Dialogs\AddEditTimeLogDialogViewModel.Part.Validation.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\ContractualPayrollSignatoryDialogViewModel.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\EmployeeSearchDialogContent.cs" />
     <Compile Include="ViewModels\HumanResource\Dialogs\EmployeeSearchDialogViewModel.cs" />
