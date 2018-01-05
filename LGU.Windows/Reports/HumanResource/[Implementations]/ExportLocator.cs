@@ -1,7 +1,6 @@
 ﻿using LGU.Entities.HumanResource;
 using LGU.Utilities;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -11,17 +10,17 @@ namespace LGU.Reports.HumanResource
     {
         public ExportLocator(ILocatorReportInfoProvider infoProvider)
         {
-            r_InfoProvider = infoProvider;
+            _InfoProvider = infoProvider;
         }
 
-        private readonly ILocatorReportInfoProvider r_InfoProvider;
+        private readonly ILocatorReportInfoProvider _InfoProvider;
 
         public ILocator Locator { get; set; }
 
         public void Export()
         {
             Initialize();
-            OpenTemplate(r_InfoProvider.Template);
+            OpenTemplate(_InfoProvider.Template);
 
             string departmentHead = string.Empty;
             string departmentHeadTitle = string.Empty;
@@ -78,7 +77,7 @@ namespace LGU.Reports.HumanResource
             }
 
             string fileName = $"{Locator.Requestor?.Id}-{DateTime.Now.ToString("yyyyMMdd-hhmmss")}.docx";
-            DirectoryResolver.Resolve(r_InfoProvider.SaveDirectory);
+            DirectoryResolver.Resolve(_InfoProvider.SaveDirectory);
             Print();
             //SaveAs(Path.Combine(r_InfoProvider.SaveDirectory, fileName));
         }
