@@ -170,7 +170,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <CheckBox Grid.Column="0" Content="Print after export"/>
-                            <Button Grid.Column="1" Content="Export"/>
+                            <Button Grid.Column="1" Content="Export" Command="{Binding ExportCommand}"/>
                         </Grid>
                     </materialDesign:Card>
                 </materialDesign:TransitioningContent>
